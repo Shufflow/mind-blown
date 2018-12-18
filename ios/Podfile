@@ -17,6 +17,7 @@ target 'MindBlown' do
 
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'yoga', path: '../node_modules/react-native/ReactCommon/yoga'
+  pod 'Firebase', '~> 5.14.0'
 
   target 'MindBlownTests' do
     inherit! :search_paths
