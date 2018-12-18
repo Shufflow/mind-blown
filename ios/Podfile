@@ -1,0 +1,26 @@
+platform :ios, '9.0'
+
+target 'MindBlown' do
+  use_frameworks!
+  inhibit_all_warnings!
+
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge',
+    'DevSupport',
+    'RCTAnimation',
+    'RCTImage',
+    'RCTNetwork',
+    'RCTText',
+    'RCTWebSocket',
+  ]
+
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'yoga', path: '../node_modules/react-native/ReactCommon/yoga'
+
+  target 'MindBlownTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+end

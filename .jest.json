@@ -1,0 +1,36 @@
+{
+  "preset": "react-native",
+  "coverageDirectory": "<rootDir>/coverage/jest",
+  "moduleFileExtensions": [
+    "ts",
+    "tsx",
+    "js"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest",
+    "^.+\\.jsx?$": "<rootDir>/node_modules/react-native/jest/preprocessor.js"
+  },
+  "testRegex": "/__tests__/.*\\.(ts|tsx|js)$",
+  "moduleDirectories": [
+    "node_modules",
+    "src"
+  ],
+  "moduleNameMapper": {
+    "src/(.*)": "<rootDir>/src/$1"
+  },
+  "setupFiles": [
+    "<rootDir>/jest/commonMocks.ts"
+  ],
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/jest/"
+  ],
+  "collectCoverage": true,
+  "coverageReporters": [
+    "json",
+    "lcov"
+  ],
+  "testPathIgnorePatterns": [
+    "<rootDir>/build",
+    "node_modules"
+  ]
+}

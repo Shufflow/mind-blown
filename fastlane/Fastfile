@@ -1,0 +1,42 @@
+
+
+desc 'Execute js tests'
+lane :tests do
+  sh 'yarn lint'
+  sh 'yarn tsc'
+  sh 'yarn test'
+
+  if Helper.is_ci?
+    build_ios
+    build_android
+  end
+end
+
+before_all do
+  skip_docs
+  sh 'yarn install'
+end
+
+desc 'Build iOS app'
+lane :build_ios do
+  sh 'yarn install-ios'
+
+  build_ios_app(
+    export_method: 'development',
+    workspace: 'ios/MindBlown.xcworkspace',
+    scheme: 'MindBlown',
+    configuration: 'Debug',
+    skip_package_ipa: true,
+    skip_archive: true,
+    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.1'
+  )
+
+  # setup certificates
+  # setup build
+end
+
+desc 'Build Android app'
+lane :build_android do
+  gradle(task: 'clean', project_dir: 'android/')
+  gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
+end

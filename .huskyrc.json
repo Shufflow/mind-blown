@@ -1,0 +1,7 @@
+{
+  "hooks": {
+    "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+    "pre-commit": "bundle exec fastlane tests",
+    "pre-push": "bundle exec fastlane tests"
+  }
+}

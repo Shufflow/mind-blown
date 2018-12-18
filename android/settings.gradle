@@ -1,0 +1,3 @@
+rootProject.name = 'Mind Blown'
+
+include ':app'
