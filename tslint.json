@@ -22,7 +22,7 @@
         "no-duplicate-switch-case": true,
         "no-duplicate-variable": true,
         "no-empty": [true, "allow-empty-functions"],
-        "no-floating-promises": true,
+        "no-floating-promises": false,
         "no-inferred-empty-object-type": true,
         "no-invalid-template-strings": true,
         "no-invalid-this": true,
