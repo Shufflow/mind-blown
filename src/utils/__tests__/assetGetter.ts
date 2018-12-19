@@ -1,10 +1,10 @@
 import { createSandbox } from 'sinon';
 
-import colors from 'src/assets/colorPairs';
+import * as assets from '../assetGetter';
 
-import * as themes from '../themes';
-
-const { default: getColor, genIdx } = themes;
+const mockAssets = [1, 2, 3, 4];
+const getAsset = assets.default(mockAssets);
+const genIdx = assets.genIdx(mockAssets);
 
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
@@ -24,35 +24,35 @@ describe('index generation', () => {
 
     const result = genIdx();
 
-    expect(result).toEqual(colors.length);
+    expect(result).toEqual(mockAssets.length);
   });
 });
 
 describe('color generation', () => {
   it('generates a random index when arg is undefined', () => {
-    const fakeIdx = sandbox.stub(themes, 'genIdx').returns(0);
+    const fakeIdx = sandbox.stub(assets, 'genIdx').returns(() => 0);
 
-    getColor();
+    getAsset();
 
     expect(fakeIdx.called).toEqual(true);
   });
 
   it('uses the given idx', () => {
-    const fakeIdx = sandbox.stub(themes, 'genIdx').returns(0);
+    const fakeIdx = sandbox.stub(assets, 'genIdx').returns(() => 0);
 
-    const result = getColor(0);
+    const result = getAsset(0);
 
-    expect(result).toEqual(colors[0]);
+    expect(result).toEqual(mockAssets[0]);
     expect(fakeIdx.called).toEqual(false);
   });
 
-  it('generates a random idx if given is greater then colors length', () => {
-    const fakeIdx = sandbox.stub(themes, 'genIdx').returns(0);
-    const idx = colors.length;
+  it('generates a random idx if given is greater then mockAssets length', () => {
+    const fakeIdx = sandbox.stub(assets, 'genIdx').returns(() => 0);
+    const idx = mockAssets.length;
 
-    const result = getColor(idx);
+    const result = getAsset(idx);
 
-    expect(result).toEqual(colors[0]);
+    expect(result).toEqual(mockAssets[0]);
     expect(fakeIdx.called).toEqual(true);
   });
 });

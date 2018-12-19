@@ -16,6 +16,8 @@
         "encoding": true,
         "file-name-casing": [true, "camel-case"],
         "interface-name": false,
+        "jsx-boolean-value": false,
+        "jsx-no-multiline-js": false,
         "member-access": false,
         "no-boolean-literal-compare": true,
         "no-duplicate-imports": true,

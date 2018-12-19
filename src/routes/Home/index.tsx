@@ -1,8 +1,8 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 
+import { getColor } from 'src/models/assets';
 import PhrasesDataSource from 'src/models/phrases';
-import getTheme from 'src/models/themes';
 
 import Phrase from './components/Phrase';
 import styles from './styles';
@@ -24,7 +24,7 @@ class Home extends React.Component<{}, State> {
       phrase: null,
     };
 
-    const color = getTheme();
+    const color = getColor();
     this.backgroundColor = { backgroundColor: color.bg };
     this.textColor = color.fg;
   }
@@ -36,9 +36,16 @@ class Home extends React.Component<{}, State> {
   }
 
   render() {
+    const { phrase } = this.state;
     return (
       <View style={[styles.content, this.backgroundColor]}>
-        <Phrase content={this.state.phrase || ''} color={this.textColor} />
+        <ActivityIndicator
+          animating={!phrase}
+          color={this.textColor}
+          size='large'
+          hidesWhenStopped
+        />
+        <Phrase content={phrase || ''} color={this.textColor} />
       </View>
     );
   }
