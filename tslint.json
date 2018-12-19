@@ -59,7 +59,7 @@
         "promise-function-async": true,
         "quotemark": [true, "single"],
         "restrict-plus-operands": true,
-        "semicolon": [true, "always"],
+        "semicolon": [true, "always", "ignore-bound-class-methods"],
         "triple-equals": true
     },
     "rulesDirectory": []
