@@ -12,6 +12,7 @@ target 'MindBlown' do
     'RCTNetwork',
     'RCTText',
     'RCTWebSocket',
+    'RCTSettings',
   ]
 
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'

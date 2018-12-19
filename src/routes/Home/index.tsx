@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 
 import { getColor } from 'src/models/assets';
+import locale from 'src/models/locale';
 import PhrasesDataSource from 'src/models/phrases';
 
 import Phrase from './components/Phrase';
@@ -42,7 +43,7 @@ class Home extends React.Component<{}, State> {
       textColor: color.fg,
     });
 
-    this.dataSource.getRandomPhrase('pt-BR').then(phrase => {
+    this.dataSource.getRandomPhrase(locale).then(phrase => {
       this.setState({ phrase });
     });
   };

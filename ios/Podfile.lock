@@ -129,6 +129,8 @@ PODS:
     - React/RCTNetwork
   - React/RCTNetwork (0.57.7):
     - React/Core
+  - React/RCTSettings (0.57.7):
+    - React/Core
   - React/RCTText (0.57.7):
     - React/Core
   - React/RCTWebSocket (0.57.7):
@@ -149,6 +151,7 @@ DEPENDENCIES:
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
+  - React/RCTSettings (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios/RNFirebase.podspec`)
@@ -207,6 +210,6 @@ SPEC CHECKSUMS:
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: f96630b68e4417a89204f2ad359289f87734553d
+PODFILE CHECKSUM: 17b77405b17637c729bc24ee321087dd372a48f0
 
 COCOAPODS: 1.5.3

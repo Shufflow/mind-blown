@@ -36,7 +36,8 @@ class PhrasesDataSource {
     }
 
     const randIdx = Math.floor(Math.random() * len);
-    return this.phrases[randIdx][locale];
+    const content = this.phrases[randIdx];
+    return content[locale] || content.en;
   }
 }
 
