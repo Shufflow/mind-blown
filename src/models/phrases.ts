@@ -7,18 +7,11 @@ export interface Phrase {
 
 class PhrasesDataSource {
   firestore: RNFirebase.firestore.Firestore;
-  phrases: Phrase[];
-
-  loadPromise: Promise<Phrase[]>;
+  phrases: Promise<Phrase[]>;
 
   constructor() {
     this.firestore = firestore();
-    this.phrases = [];
-
-    this.loadPromise = this.loadAllPhrases();
-    this.loadPromise.then(phrases => {
-      this.phrases = phrases;
-    });
+    this.phrases = this.loadAllPhrases();
   }
 
   async loadAllPhrases(): Promise<Phrase[]> {
@@ -28,15 +21,15 @@ class PhrasesDataSource {
   }
 
   async getRandomPhrase(locale: string): Promise<string | null> {
-    await this.loadPromise;
+    const phrases = await this.phrases;
 
-    const len = this.phrases.length;
+    const len = phrases.length;
     if (len === 0) {
       return null;
     }
 
-    const randIdx = Math.floor(Math.random() * len);
-    const content = this.phrases[randIdx];
+    const randIdx = Math.floor(Math.random() * (len - 1));
+    const content = phrases[randIdx];
     return content[locale] || content.en;
   }
 }

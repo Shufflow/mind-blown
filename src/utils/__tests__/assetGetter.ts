@@ -24,7 +24,7 @@ describe('index generation', () => {
 
     const result = genIdx();
 
-    expect(result).toEqual(mockAssets.length);
+    expect(result).toEqual(mockAssets.length - 1);
   });
 });
 
