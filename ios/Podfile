@@ -1,7 +1,6 @@
 platform :ios, '9.0'
 
 target 'MindBlown' do
-  use_frameworks!
   inhibit_all_warnings!
 
   pod 'React', :path => '../node_modules/react-native', :subspecs => [
@@ -17,7 +16,8 @@ target 'MindBlown' do
 
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'yoga', path: '../node_modules/react-native/ReactCommon/yoga'
-  pod 'Firebase', '~> 5.14.0'
+  pod 'RNFirebase', path: '../node_modules/react-native-firebase/ios/RNFirebase.podspec'
+  pod 'Firebase/Firestore', '~> 5.15.0'
 
   target 'MindBlownTests' do
     inherit! :search_paths

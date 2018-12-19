@@ -12,8 +12,8 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		22E2F95531A2525FE7FA3F03 /* Pods_MindBlownTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 09392BD550DFB3164C18923B /* Pods_MindBlownTests.framework */; };
-		44373CD06464617E6EB6DC2C /* Pods_MindBlown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 318139DD907DC48C34ADAB42 /* Pods_MindBlown.framework */; };
+		1B4B4D9DA3726F1544047D4B /* libPods-MindBlownTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 569F087443CC147D91850510 /* libPods-MindBlownTests.a */; };
+		315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5561B9244953F7B94F14F517 /* libPods-MindBlown.a */; };
 		F24FAF4321C92C5B00C172C7 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F24FAF4221C92C5B00C172C7 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -32,7 +32,6 @@
 		00E356EE1AD99517003FC87E /* MindBlownTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MindBlownTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* MindBlownTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MindBlownTests.m; sourceTree = "<group>"; };
-		09392BD550DFB3164C18923B /* Pods_MindBlownTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindBlownTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07F961A680F5B00A75B9A /* MindBlown.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MindBlown.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = MindBlown/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = MindBlown/AppDelegate.m; sourceTree = "<group>"; };
@@ -41,8 +40,9 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MindBlown/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MindBlown/main.m; sourceTree = "<group>"; };
 		18E1EDE658EFBE40C462965F /* Pods-MindBlown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.release.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.release.xcconfig"; sourceTree = "<group>"; };
-		318139DD907DC48C34ADAB42 /* Pods_MindBlown.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MindBlown.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		54AB33EA00643CB4CB51DE49 /* Pods-MindBlownTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5561B9244953F7B94F14F517 /* libPods-MindBlown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MindBlown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		569F087443CC147D91850510 /* libPods-MindBlownTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MindBlownTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E46AF053D6EC583CCF153140 /* Pods-MindBlown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.debug.xcconfig"; sourceTree = "<group>"; };
 		E8B3809BF37B3F95319A3BB2 /* Pods-MindBlownTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.release.xcconfig"; sourceTree = "<group>"; };
 		F24FAF4221C92C5B00C172C7 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22E2F95531A2525FE7FA3F03 /* Pods_MindBlownTests.framework in Frameworks */,
+				1B4B4D9DA3726F1544047D4B /* libPods-MindBlownTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44373CD06464617E6EB6DC2C /* Pods_MindBlown.framework in Frameworks */,
+				315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,8 +103,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				318139DD907DC48C34ADAB42 /* Pods_MindBlown.framework */,
-				09392BD550DFB3164C18923B /* Pods_MindBlownTests.framework */,
+				5561B9244953F7B94F14F517 /* libPods-MindBlown.a */,
+				569F087443CC147D91850510 /* libPods-MindBlownTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,7 +174,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				C7253E03F0318F29CBEE2A42 /* [CP] Embed Pods Frameworks */,
+				79415759B04F10F794CE6A48 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -254,6 +254,28 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
+		79415759B04F10F794CE6A48 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown-resources.sh",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates-Firestore.bundle",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates-Firestore.bundle",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		B15D1411F50548E28AA48CDD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -296,40 +318,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C7253E03F0318F29CBEE2A42 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown-frameworks.sh",
-				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
-				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
-				"${BUILT_PRODUCTS_DIR}/React/React.framework",
-				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
-				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
-				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -396,6 +384,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
@@ -423,6 +412,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
