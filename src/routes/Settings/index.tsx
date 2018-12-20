@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
 import { getColor } from 'src/models/assets';
+import getLocale, { setLocale } from 'src/models/locale';
 
 import LanguagePicker from './components/LanguagePicker';
 
@@ -14,25 +15,30 @@ interface Props {
 interface State {
   fg: string | undefined;
   bg: string | undefined;
+  locale: string | undefined;
 }
 
 class Settings extends React.Component<Props, State> {
   state = {
     bg: undefined,
     fg: undefined,
+    locale: undefined,
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     this.setState({ ...getColor() });
+
+    const locale = await getLocale();
+    this.setState({ locale });
   }
 
   onSelectLanguage = (lang: string) => {
-    // TODO
+    setLocale(lang);
   };
 
   render() {
     const { dismiss } = this.props;
-    const { bg, fg } = this.state;
+    const { bg, fg, locale } = this.state;
     return (
       <React.Fragment>
         <SafeAreaView style={styles.background(bg)} />
@@ -46,6 +52,7 @@ class Settings extends React.Component<Props, State> {
           <LanguagePicker
             backgroundColor={bg || 'transparent'}
             foregroundColor={fg || 'transparent'}
+            locale={locale || ''}
             onSelectValue={this.onSelectLanguage}
           />
         </SafeAreaView>

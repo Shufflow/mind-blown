@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 import { getColor } from 'src/models/assets';
-import locale from 'src/models/locale';
+import getLocale from 'src/models/locale';
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
 
 import icons from 'src/assets/icons';
@@ -60,6 +60,7 @@ class Home extends React.Component<Props, State> {
       textColor: color.fg,
     });
 
+    const locale = await getLocale();
     const phrase = await this.dataSource.getRandomPhrase(locale);
     this.setState({ phrase, selectedThumb: null });
   };
@@ -101,10 +102,8 @@ class Home extends React.Component<Props, State> {
             <Phrase content={phraseContent} color={textColor} />
           ) : (
             <ActivityIndicator
-              animating={!!phrase}
               color={textColor}
               size='large'
-              hidesWhenStopped
               style={{ alignSelf: 'center' }}
             />
           )}

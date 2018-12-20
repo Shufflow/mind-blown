@@ -1,6 +1,8 @@
 import React from 'react';
 import { Modal, Picker, Text, TouchableOpacity, View } from 'react-native';
 
+import { Locales } from 'src/models/locale';
+
 import Item from '../Item';
 
 import styles from './styles';
@@ -8,6 +10,7 @@ import styles from './styles';
 interface Props {
   backgroundColor: string;
   foregroundColor: string;
+  locale: string;
   onSelectValue: (lang: string) => void;
 }
 
@@ -17,12 +20,21 @@ interface State {
 }
 
 class LanguagePicker extends React.Component<Props, State> {
-  committedLanguage: string = 'en';
+  committedLanguage: string;
+  pickerItems: Array<React.ReactElement<any>>;
 
-  state = {
-    isPickerVisible: false,
-    selectedValue: 'en',
-  };
+  constructor(props: Props) {
+    super(props);
+    this.committedLanguage = props.locale;
+    this.state = {
+      isPickerVisible: false,
+      selectedValue: props.locale,
+    };
+
+    this.pickerItems = Object.entries(Locales).map(([key, label]) => (
+      <Picker.Item key={key} label={label} value={key} />
+    ));
+  }
 
   togglePickerVisible = (isPickerVisible: boolean) => () => {
     this.setState({ isPickerVisible });
@@ -40,14 +52,14 @@ class LanguagePicker extends React.Component<Props, State> {
   };
 
   render() {
-    const { backgroundColor, foregroundColor } = this.props;
+    const { backgroundColor, foregroundColor, locale } = this.props;
     const { isPickerVisible, selectedValue } = this.state;
     return (
       <React.Fragment>
         <Item
           label='Language'
           onPress={this.togglePickerVisible(true)}
-          value={this.committedLanguage}
+          value={Locales[this.committedLanguage || locale]}
         />
         <Modal animationType='fade' transparent visible={isPickerVisible}>
           <View style={styles.pickerContainer}>
@@ -62,8 +74,7 @@ class LanguagePicker extends React.Component<Props, State> {
               style={styles.picker(foregroundColor)}
               itemStyle={styles.pickerItem(backgroundColor)}
             >
-              <Picker.Item label='English' value='en' />
-              <Picker.Item label='Português' value='pt-BR' />
+              {this.pickerItems}
             </Picker>
           </View>
         </Modal>
