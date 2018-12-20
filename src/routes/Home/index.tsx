@@ -44,7 +44,7 @@ class Home extends React.Component<{}, State> {
     });
 
     this.dataSource.getRandomPhrase(locale).then(phrase => {
-      this.setState({ phrase });
+      this.setState({ phrase: phrase && phrase.content });
     });
   };
 

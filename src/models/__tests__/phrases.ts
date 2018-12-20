@@ -5,12 +5,22 @@ import { stubFirebase } from 'src/utils/tests';
 
 import PhrasesDataSource from '../phrases';
 
-const mockPhrases = [{ en: 'foo' }, { en: 'bar' }, { en: 'xpto' }];
+const mockPhrases = [
+  { id: '0', en: 'foo' },
+  { id: '1', en: 'bar' },
+  { id: '2', en: 'xpto' },
+];
 jest.mock(
   'react-native-firebase',
   () =>
     new MockFirebase(
-      stubFirebase({ phrases: [{ en: 'foo' }, { en: 'bar' }, { en: 'xpto' }] }),
+      stubFirebase({
+        phrases: [
+          { id: '0', en: 'foo' },
+          { id: '1', en: 'bar' },
+          { id: '2', en: 'xpto' },
+        ],
+      }),
     ),
 );
 
@@ -36,7 +46,10 @@ describe('get random phrase', () => {
 
     const result = await dataSource.getRandomPhrase('en');
 
-    expect(result).toEqual(mockPhrases[0].en);
+    expect(result).toEqual({
+      content: mockPhrases[0].en,
+      id: mockPhrases[0].id,
+    });
   });
 
   it('fallsback to en for unknown locales', async () => {
@@ -44,7 +57,10 @@ describe('get random phrase', () => {
 
     const result = await dataSource.getRandomPhrase('foo');
 
-    expect(result).toEqual(mockPhrases[0].en);
+    expect(result).toEqual({
+      content: mockPhrases[0].en,
+      id: mockPhrases[0].id,
+    });
   });
 
   it('does not use index greater than array lenght', async () => {
@@ -52,7 +68,10 @@ describe('get random phrase', () => {
 
     const result = await dataSource.getRandomPhrase('en');
 
-    expect(result).toEqual(mockPhrases[2].en);
+    expect(result).toEqual({
+      content: mockPhrases[2].en,
+      id: mockPhrases[2].id,
+    });
   });
 
   it('returns null when array is empty', async () => {
@@ -74,5 +93,19 @@ describe('get random phrase', () => {
     } catch (e) {
       expect(e).toEqual(reason);
     }
+  });
+});
+
+describe('review phrases', () => {
+  const dataSource = new PhrasesDataSource();
+
+  it('adds a positive review', async () => {
+    const result = await dataSource.reviewPhrase('foobar', true);
+    expect(result).not.toBeNull();
+  });
+
+  it('adds a negative review', async () => {
+    const result = await dataSource.reviewPhrase('foobar', false);
+    expect(result).not.toBeNull();
   });
 });
