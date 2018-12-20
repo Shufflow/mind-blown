@@ -9,6 +9,10 @@ interface PhraseCollection {
   [locale: string]: string;
 }
 
+interface PhraseMap {
+  [id: string]: PhraseCollection;
+}
+
 export interface Phrase {
   id: string;
   content: string;
@@ -16,34 +20,48 @@ export interface Phrase {
 
 class PhrasesDataSource {
   firestore: RNFirebase.firestore.Firestore;
-  phrases: Promise<PhraseCollection[]>;
+  phrases: Promise<PhraseMap>;
+  usedPhrasesIds: string[];
 
   constructor() {
     this.firestore = firestore();
+    this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
   }
 
-  async loadAllPhrases(): Promise<PhraseCollection[]> {
+  async loadAllPhrases(): Promise<PhraseMap> {
     const { docs } = await this.firestore.collection('phrases').get();
-    const data = docs.map(
-      (doc: DocumentSnapshot): PhraseCollection => ({
-        ...doc.data(),
-        id: doc.id || '',
+    return docs.reduce(
+      (res: PhraseMap, doc: DocumentSnapshot): PhraseMap => ({
+        ...res,
+        [doc.id || '']: {
+          ...doc.data(),
+          id: doc.id || '',
+        },
       }),
+      {} as PhraseMap,
     );
-    return data;
   }
 
   async getRandomPhrase(locale: string): Promise<Phrase | null> {
     const phrases = await this.phrases;
 
-    const len = phrases.length;
+    const len = Object.keys(phrases).length;
     if (len === 0) {
       return null;
     }
 
-    const randIdx = Math.floor(Math.random() * (len - 1));
-    const content = phrases[randIdx];
+    if (len === this.usedPhrasesIds.length) {
+      this.usedPhrasesIds = [];
+    }
+
+    const availablePhraseIds = Object.keys(phrases).filter(
+      id => !this.usedPhrasesIds.includes(id),
+    );
+
+    const randIdx = Math.floor(Math.random() * (availablePhraseIds.length - 1));
+    const content = phrases[availablePhraseIds[randIdx]];
+    this.usedPhrasesIds.push(content.id);
     return {
       content: content[locale] || content.en,
       id: content.id,

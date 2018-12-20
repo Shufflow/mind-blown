@@ -5,11 +5,11 @@ import { stubFirebase } from 'src/utils/tests';
 
 import PhrasesDataSource from '../phrases';
 
-const mockPhrases = [
-  { id: '0', en: 'foo' },
-  { id: '1', en: 'bar' },
-  { id: '2', en: 'xpto' },
-];
+const mockPhrases = {
+  0: { id: '0', en: 'foo' },
+  1: { id: '1', en: 'bar' },
+  2: { id: '2', en: 'xpto' },
+};
 jest.mock(
   'react-native-firebase',
   () =>
@@ -58,8 +58,8 @@ describe('get random phrase', () => {
     const result = await dataSource.getRandomPhrase('foo');
 
     expect(result).toEqual({
-      content: mockPhrases[0].en,
-      id: mockPhrases[0].id,
+      content: mockPhrases[1].en,
+      id: mockPhrases[1].id,
     });
   });
 
@@ -107,5 +107,34 @@ describe('review phrases', () => {
   it('adds a negative review', async () => {
     const result = await dataSource.reviewPhrase('foobar', false);
     expect(result).not.toBeNull();
+  });
+});
+
+describe('phrase repetition', () => {
+  const dataSource = new PhrasesDataSource();
+
+  it('does not repeat a phrase', async () => {
+    sandbox.stub(dataSource, 'phrases').value(mockPhrases);
+    const yieldedPhrasesIds: string[] = [];
+
+    for (const _ of Object.keys(mockPhrases)) {
+      const phrase = await dataSource.getRandomPhrase('en');
+
+      expect(yieldedPhrasesIds).not.toContain(phrase!.id);
+      yieldedPhrasesIds.push(phrase!.id);
+    }
+  });
+
+  it('repeats when options have been exhausted', async () => {
+    sandbox.stub(dataSource, 'phrases').value(mockPhrases);
+    const yieldedPhrasesIds: string[] = [];
+
+    for (const _ of Object.keys(mockPhrases)) {
+      const p = await dataSource.getRandomPhrase('en');
+      yieldedPhrasesIds.push(p!.id);
+    }
+
+    const phrase = await dataSource.getRandomPhrase('en');
+    expect(yieldedPhrasesIds).toContain(phrase!.id);
   });
 });
