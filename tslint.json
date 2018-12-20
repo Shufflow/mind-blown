@@ -62,5 +62,10 @@
         "semicolon": [true, "always", "ignore-bound-class-methods"],
         "triple-equals": true
     },
-    "rulesDirectory": []
+    "rulesDirectory": [],
+    "linterOptions": {
+      "exclude": [
+        "src/assets/icons.ts"
+      ]
+    }
 }

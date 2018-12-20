@@ -56,7 +56,7 @@ The following scripts are embedded with the package:
 | `install-ios` | Installs iOS dependencies |
 | `lint` | Runs TSLint |
 | `test` | Runs tests in the application |
-| `postinstall` | Fixes possible types definition conflicts |
+| `update-icons` | Reads SVG files in assets/icons and stores in assets/icons.ts |
 
 ## License
 
