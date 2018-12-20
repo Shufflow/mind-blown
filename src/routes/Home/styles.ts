@@ -1,10 +1,17 @@
 import { StyleSheet } from 'react-native';
 
+import { Layouts } from 'src/utils/styles';
+
 const styles = StyleSheet.create({
   content: {
+    ...Layouts.container,
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
+  },
+  footer: {
+    ...Layouts.horizontal,
+    ...Layouts.fullWidth,
+    justifyContent: 'space-between',
   },
 });
 
