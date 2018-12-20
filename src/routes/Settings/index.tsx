@@ -1,5 +1,9 @@
 import React from 'react';
-import { TouchableWithoutFeedback, View } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+
+import { getColor } from 'src/models/assets';
+
+import LanguagePicker from './components/LanguagePicker';
 
 import styles from './styles';
 
@@ -7,13 +11,45 @@ interface Props {
   dismiss: () => void;
 }
 
-class Settings extends React.Component<Props> {
+interface State {
+  fg: string | undefined;
+  bg: string | undefined;
+}
+
+class Settings extends React.Component<Props, State> {
+  state = {
+    bg: undefined,
+    fg: undefined,
+  };
+
+  componentDidMount() {
+    this.setState({ ...getColor() });
+  }
+
+  onSelectLanguage = (lang: string) => {
+    // TODO
+  };
+
   render() {
     const { dismiss } = this.props;
+    const { bg, fg } = this.state;
     return (
-      <TouchableWithoutFeedback onPress={dismiss}>
-        <View style={styles.container} />
-      </TouchableWithoutFeedback>
+      <React.Fragment>
+        <SafeAreaView style={styles.background(bg)} />
+        <SafeAreaView style={styles.container(fg)}>
+          <View style={styles.header(bg)}>
+            <Text style={styles.title(fg)}>Settings</Text>
+            <TouchableOpacity onPress={dismiss}>
+              <Text style={styles.doneButton(fg)}>Done</Text>
+            </TouchableOpacity>
+          </View>
+          <LanguagePicker
+            backgroundColor={bg || 'transparent'}
+            foregroundColor={fg || 'transparent'}
+            onSelectValue={this.onSelectLanguage}
+          />
+        </SafeAreaView>
+      </React.Fragment>
     );
   }
 }
