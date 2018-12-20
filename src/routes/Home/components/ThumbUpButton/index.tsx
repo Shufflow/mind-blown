@@ -1,10 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import SVGUri from 'react-native-svg-uri';
 
 import icons from 'src/assets/icons';
 import pure from 'src/utils/hocs/pure';
-import { Spacing } from 'src/utils/styles';
+
+import SVGButton from 'src/components/SVGButton';
 
 import styles from './styles';
 
@@ -14,22 +13,18 @@ interface Props {
   onPress: () => void;
 }
 
-const ThumbsUp = ({
+const ThumbsUpButton = ({
   color,
   isSelected,
   onPress,
 }: Props): React.ReactElement<Props> => (
-  <TouchableOpacity onPress={onPress}>
-    <View style={styles.container}>
-      <SVGUri
-        fill={color}
-        fillAll
-        height={Spacing.size_30}
-        svgXmlData={isSelected ? icons.thumbsUpSolid : icons.thumbsUp}
-        width={Spacing.size_30}
-      />
-    </View>
-  </TouchableOpacity>
+  <SVGButton
+    color={color}
+    fillAll
+    icon={isSelected ? icons.thumbsUpSolid : icons.thumbsUp}
+    onPress={onPress}
+    style={styles.container}
+  />
 );
 
-export default pure(ThumbsUp);
+export default pure(ThumbsUpButton);

@@ -10,6 +10,9 @@ import { getColor } from 'src/models/assets';
 import locale from 'src/models/locale';
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
 
+import icons from 'src/assets/icons';
+import SVGButton from 'src/components/SVGButton';
+
 import Phrase from './components/Phrase';
 import ThumbDownButton from './components/ThumbDownButton';
 import ThumbUpButton from './components/ThumbUpButton';
@@ -20,6 +23,10 @@ enum SelectedThumb {
   Down = 'down',
 }
 
+interface Props {
+  onPressSettings: () => void;
+}
+
 interface State {
   backgroundColor: string;
   phrase: PhraseType | null;
@@ -27,10 +34,10 @@ interface State {
   textColor: string;
 }
 
-class Home extends React.Component<{}, State> {
+class Home extends React.Component<Props, State> {
   dataSource: PhrasesDataSource;
 
-  constructor(props: {}) {
+  constructor(props: Props) {
     super(props);
 
     this.dataSource = new PhrasesDataSource();
@@ -77,18 +84,30 @@ class Home extends React.Component<{}, State> {
   };
 
   render() {
+    const { onPressSettings } = this.props;
     const { backgroundColor, phrase, selectedThumb, textColor } = this.state;
     const phraseContent = phrase ? phrase.content : '';
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
         <SafeAreaView style={[styles.content, { backgroundColor }]}>
-          <ActivityIndicator
-            animating={!phrase}
+          <SVGButton
             color={textColor}
-            size='large'
-            hidesWhenStopped
+            fillAll
+            icon={icons.cog}
+            onPress={onPressSettings}
+            style={styles.settingsButton}
           />
-          <Phrase content={phraseContent} color={textColor} />
+          {!!phrase ? (
+            <Phrase content={phraseContent} color={textColor} />
+          ) : (
+            <ActivityIndicator
+              animating={!!phrase}
+              color={textColor}
+              size='large'
+              hidesWhenStopped
+              style={{ alignSelf: 'center' }}
+            />
+          )}
           <View style={styles.footer}>
             <ThumbDownButton
               color={textColor}

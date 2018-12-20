@@ -4,8 +4,9 @@ import { Spacing } from 'src/utils/styles';
 
 const styles = StyleSheet.create({
   container: {
-    padding: Spacing.size_10,
+    height: Spacing.size_30,
     transform: [{ rotateX: '180deg' }],
+    width: Spacing.size_30,
   },
 });
 

@@ -17,5 +17,7 @@ export const Layouts: any = {
 export const Spacing = {
   size_0: 0,
   size_10: 10,
+  size_20: 20,
   size_30: 30,
+  size_40: 40,
 };
