@@ -4,18 +4,13 @@ import {
   DocumentSnapshot,
 } from 'react-native-firebase/firestore';
 
-interface PhraseCollection {
+export interface Phrase {
   id: string;
   [locale: string]: string;
 }
 
 interface PhraseMap {
-  [id: string]: PhraseCollection;
-}
-
-export interface Phrase {
-  id: string;
-  content: string;
+  [id: string]: Phrase;
 }
 
 class PhrasesDataSource {
@@ -43,7 +38,7 @@ class PhrasesDataSource {
     );
   }
 
-  async getRandomPhrase(locale: string): Promise<Phrase | null> {
+  async getRandomPhrase(): Promise<Phrase | null> {
     const phrases = await this.phrases;
 
     const len = Object.keys(phrases).length;
@@ -62,10 +57,7 @@ class PhrasesDataSource {
     const randIdx = Math.floor(Math.random() * (availablePhraseIds.length - 1));
     const content = phrases[availablePhraseIds[randIdx]];
     this.usedPhrasesIds.push(content.id);
-    return {
-      content: content[locale] || content.en,
-      id: content.id,
-    };
+    return content;
   }
 
   async reviewPhrase(

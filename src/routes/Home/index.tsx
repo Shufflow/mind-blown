@@ -7,8 +7,8 @@ import {
 } from 'react-native';
 
 import { getColor } from 'src/models/assets';
-import getLocale from 'src/models/locale';
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
+import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import icons from 'src/assets/icons';
 import SVGButton from 'src/components/SVGButton';
@@ -23,7 +23,7 @@ enum SelectedThumb {
   Down = 'down',
 }
 
-interface Props {
+interface Props extends LocaleConsumerProps {
   onPressSettings: () => void;
 }
 
@@ -60,8 +60,7 @@ class Home extends React.Component<Props, State> {
       textColor: color.fg,
     });
 
-    const locale = await getLocale();
-    const phrase = await this.dataSource.getRandomPhrase(locale);
+    const phrase = await this.dataSource.getRandomPhrase();
     this.setState({ phrase, selectedThumb: null });
   };
 
@@ -84,10 +83,15 @@ class Home extends React.Component<Props, State> {
     }
   };
 
+  getPhraseContent = (): string => {
+    const { locale } = this.props;
+    const { phrase } = this.state;
+    return phrase ? phrase[locale] || phrase.en : '';
+  };
+
   render() {
     const { onPressSettings } = this.props;
     const { backgroundColor, phrase, selectedThumb, textColor } = this.state;
-    const phraseContent = phrase ? phrase.content : '';
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
         <SafeAreaView style={[styles.content, { backgroundColor }]}>
@@ -99,7 +103,7 @@ class Home extends React.Component<Props, State> {
             style={styles.settingsButton}
           />
           {!!phrase ? (
-            <Phrase content={phraseContent} color={textColor} />
+            <Phrase content={this.getPhraseContent()} color={textColor} />
           ) : (
             <ActivityIndicator
               color={textColor}
@@ -125,4 +129,4 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-export default Home;
+export default withLocale(Home);

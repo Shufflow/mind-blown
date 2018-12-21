@@ -44,40 +44,23 @@ describe('get random phrase', () => {
   it('returns a phrase', async () => {
     sandbox.stub(Math, 'random').returns(0);
 
-    const result = await dataSource.getRandomPhrase('en');
+    const result = await dataSource.getRandomPhrase();
 
-    expect(result).toEqual({
-      content: mockPhrases[0].en,
-      id: mockPhrases[0].id,
-    });
-  });
-
-  it('fallsback to en for unknown locales', async () => {
-    sandbox.stub(Math, 'random').returns(0);
-
-    const result = await dataSource.getRandomPhrase('foo');
-
-    expect(result).toEqual({
-      content: mockPhrases[1].en,
-      id: mockPhrases[1].id,
-    });
+    expect(result).toEqual(mockPhrases[0]);
   });
 
   it('does not use index greater than array lenght', async () => {
     sandbox.stub(Math, 'random').returns(1);
 
-    const result = await dataSource.getRandomPhrase('en');
+    const result = await dataSource.getRandomPhrase();
 
-    expect(result).toEqual({
-      content: mockPhrases[2].en,
-      id: mockPhrases[2].id,
-    });
+    expect(result).toEqual(mockPhrases[2]);
   });
 
   it('returns null when array is empty', async () => {
     sandbox.stub(dataSource, 'phrases').value([]);
 
-    const result = await dataSource.getRandomPhrase('en');
+    const result = await dataSource.getRandomPhrase();
 
     expect(result).toBeNull();
   });
@@ -87,7 +70,7 @@ describe('get random phrase', () => {
     sandbox.stub(dataSource, 'phrases').value(Promise.reject(reason));
 
     try {
-      await dataSource.getRandomPhrase('en');
+      await dataSource.getRandomPhrase();
 
       fail();
     } catch (e) {
@@ -118,7 +101,7 @@ describe('phrase repetition', () => {
     const yieldedPhrasesIds: string[] = [];
 
     for (const _ of Object.keys(mockPhrases)) {
-      const phrase = await dataSource.getRandomPhrase('en');
+      const phrase = await dataSource.getRandomPhrase();
 
       expect(yieldedPhrasesIds).not.toContain(phrase!.id);
       yieldedPhrasesIds.push(phrase!.id);
@@ -130,11 +113,11 @@ describe('phrase repetition', () => {
     const yieldedPhrasesIds: string[] = [];
 
     for (const _ of Object.keys(mockPhrases)) {
-      const p = await dataSource.getRandomPhrase('en');
+      const p = await dataSource.getRandomPhrase();
       yieldedPhrasesIds.push(p!.id);
     }
 
-    const phrase = await dataSource.getRandomPhrase('en');
+    const phrase = await dataSource.getRandomPhrase();
     expect(yieldedPhrasesIds).toContain(phrase!.id);
   });
 });

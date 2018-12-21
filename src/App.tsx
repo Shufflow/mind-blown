@@ -5,6 +5,7 @@ import { Modal } from 'react-native';
 
 import Home from './routes/Home';
 import Settings from './routes/Settings';
+import { withLocaleProvider } from './utils/hocs/withLocale';
 
 interface State {
   isSettingsVisible: boolean;
@@ -31,5 +32,5 @@ class App extends React.Component<{}, State> {
   }
 }
 
-export default App;
+export default withLocaleProvider(App);
 // tslint:enable:file-name-casing
