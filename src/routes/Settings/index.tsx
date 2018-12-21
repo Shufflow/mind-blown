@@ -15,7 +15,7 @@ interface Props extends LocaleConsumerProps, ColorProps {
 
 class Settings extends React.Component<Props> {
   render() {
-    const { bgColor, fgColor, locale, setLocale } = this.props;
+    const { bgColor, fgColor, newColor, locale, setLocale } = this.props;
     return (
       <React.Fragment>
         <LanguagePicker
@@ -24,7 +24,11 @@ class Settings extends React.Component<Props> {
           locale={locale}
           onSelectValue={setLocale}
         />
-        <SendSuggestion bgColor={bgColor} fgColor={fgColor} />
+        <SendSuggestion
+          bgColor={bgColor}
+          fgColor={fgColor}
+          newColor={newColor}
+        />
       </React.Fragment>
     );
   }

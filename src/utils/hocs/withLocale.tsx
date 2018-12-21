@@ -14,7 +14,7 @@ const { Provider, Consumer } = React.createContext<LocaleConsumerProps>({
   setLocale: () => {},
 });
 
-export const withLocaleProvider = <T extends any>(
+export const withLocaleProvider = <T extends Object>(
   WrappedComponent: React.ComponentType<T>,
 ): React.ComponentClass<T> => {
   class LocaleProvider extends React.Component<T, ProviderState> {

@@ -1,3 +1,4 @@
+import { compose } from '@typed/compose';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -6,8 +7,8 @@ import {
   View,
 } from 'react-native';
 
-import { getColor } from 'src/models/assets';
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
+import withColor, { ColorProps } from 'src/utils/hocs/withColors';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import icons from 'src/assets/icons';
@@ -23,15 +24,13 @@ enum SelectedThumb {
   Down = 'down',
 }
 
-interface Props extends LocaleConsumerProps {
+interface Props extends LocaleConsumerProps, ColorProps {
   onPressSettings: () => void;
 }
 
 interface State {
-  backgroundColor: string;
   phrase: PhraseType | null;
   selectedThumb: SelectedThumb | null;
-  textColor: string;
 }
 
 class Home extends React.Component<Props, State> {
@@ -42,10 +41,8 @@ class Home extends React.Component<Props, State> {
 
     this.dataSource = new PhrasesDataSource();
     this.state = {
-      backgroundColor: 'transparent',
       phrase: null,
       selectedThumb: null,
-      textColor: 'white',
     };
   }
 
@@ -54,11 +51,7 @@ class Home extends React.Component<Props, State> {
   }
 
   getRandomPhrase = async () => {
-    const color = getColor();
-    this.setState({
-      backgroundColor: color.bg,
-      textColor: color.fg,
-    });
+    this.props.newColor();
 
     const phrase = await this.dataSource.getRandomPhrase();
     this.setState({ phrase, selectedThumb: null });
@@ -90,35 +83,35 @@ class Home extends React.Component<Props, State> {
   };
 
   render() {
-    const { onPressSettings } = this.props;
-    const { backgroundColor, phrase, selectedThumb, textColor } = this.state;
+    const { bgColor, fgColor, onPressSettings } = this.props;
+    const { phrase, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
-        <SafeAreaView style={[styles.content, { backgroundColor }]}>
+        <SafeAreaView style={[styles.content, { backgroundColor: bgColor }]}>
           <SVGButton
-            color={textColor}
+            color={fgColor}
             fillAll
             icon={icons.cog}
             onPress={onPressSettings}
             style={styles.settingsButton}
           />
           {!!phrase ? (
-            <Phrase content={this.getPhraseContent()} color={textColor} />
+            <Phrase content={this.getPhraseContent()} color={fgColor} />
           ) : (
             <ActivityIndicator
-              color={textColor}
+              color={fgColor}
               size='large'
               style={{ alignSelf: 'center' }}
             />
           )}
           <View style={styles.footer}>
             <ThumbDownButton
-              color={textColor}
+              color={fgColor}
               isSelected={selectedThumb === SelectedThumb.Down}
               onPress={this.onPressReview(false)}
             />
             <ThumbUpButton
-              color={textColor}
+              color={fgColor}
               isSelected={selectedThumb === SelectedThumb.Up}
               onPress={this.onPressReview(true)}
             />
@@ -129,4 +122,8 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-export default withLocale(Home);
+const enhance = compose(
+  withLocale,
+  withColor,
+);
+export default enhance(Home);

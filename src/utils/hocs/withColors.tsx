@@ -5,20 +5,28 @@ import { getColor } from 'src/models/assets';
 export interface ColorProps {
   fgColor: string;
   bgColor: string;
+  newColor: () => void;
 }
 
 const withColor = <T extends Object>(
   WrappedComponent: React.ComponentType<T>,
-): React.ComponentClass<T> => {
+): React.ComponentClass<any> => {
   class ComponentWithColors extends React.PureComponent<T, ColorProps> {
-    state = {
-      bgColor: 'transparent',
-      fgColor: 'transparent',
-    };
+    constructor(props: T) {
+      super(props);
+
+      this.state = {
+        bgColor: 'transparent',
+        fgColor: 'transparent',
+        newColor: () => {
+          const { bg, fg } = getColor();
+          this.setState({ bgColor: bg, fgColor: fg });
+        },
+      };
+    }
 
     componentDidMount() {
-      const { bg, fg } = getColor();
-      this.setState({ bgColor: bg, fgColor: fg });
+      this.state.newColor();
     }
 
     render() {
