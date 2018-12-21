@@ -10,6 +10,7 @@
     "update-icons": "sh gen-icons.sh"
   },
   "dependencies": {
+    "@typed/compose": "^1.0.0",
     "mocha": "^5.2.0",
     "react": "16.6.1",
     "react-native": "0.57.7",

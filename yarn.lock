@@ -813,6 +813,11 @@
     array-from "^2.1.1"
     lodash.get "^4.4.2"
 
+"@typed/compose@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@typed/compose/-/compose-1.0.0.tgz#e4e5fc7132b84c701acb5346a361da28fad63081"
+  integrity sha1-5OX8cTK4THAay1NGo2HaKPrWMIE=
+
 "@types/jest@^23.3.10":
   version "23.3.10"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.10.tgz#4897974cc317bf99d4fe6af1efa15957fa9c94de"

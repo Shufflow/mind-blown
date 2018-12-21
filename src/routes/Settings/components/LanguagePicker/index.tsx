@@ -3,7 +3,7 @@ import { Modal, Picker, Text, TouchableOpacity, View } from 'react-native';
 
 import { Locales } from 'src/models/locale';
 
-import Item from '../Item';
+import Item from 'src/components/ListItem';
 
 import styles from './styles';
 

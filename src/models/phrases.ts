@@ -69,6 +69,12 @@ class PhrasesDataSource {
       phrase: this.firestore.collection('phrases').doc(id),
     });
   }
+
+  async sendSuggestion(content: string): Promise<void> {
+    this.firestore.collection('suggestion').add({
+      content,
+    });
+  }
 }
 
 export default PhrasesDataSource;

@@ -1,55 +1,47 @@
+import { compose } from '@typed/compose';
 import React from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
 
-import { getColor } from 'src/models/assets';
+import withColor, { ColorProps } from 'src/utils/hocs/withColors';
+import withHeader from 'src/utils/hocs/withHeader';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
+
+import SendSuggestion from '../SendSuggestion';
 
 import LanguagePicker from './components/LanguagePicker';
 
-import styles from './styles';
-
-interface Props extends LocaleConsumerProps {
+interface Props extends LocaleConsumerProps, ColorProps {
   dismiss: () => void;
 }
 
-interface State {
-  fg: string | undefined;
-  bg: string | undefined;
-}
-
-class Settings extends React.Component<Props, State> {
-  state = {
-    bg: undefined,
-    fg: undefined,
-  };
-
-  async componentDidMount() {
-    this.setState({ ...getColor() });
-  }
-
+class Settings extends React.Component<Props> {
   render() {
-    const { dismiss, locale, setLocale } = this.props;
-    const { bg, fg } = this.state;
+    const { bgColor, fgColor, locale, setLocale } = this.props;
     return (
       <React.Fragment>
-        <SafeAreaView style={styles.background(bg)} />
-        <SafeAreaView style={styles.container(fg)}>
-          <View style={styles.header(bg)}>
-            <Text style={styles.title(fg)}>Settings</Text>
-            <TouchableOpacity onPress={dismiss}>
-              <Text style={styles.doneButton(fg)}>Done</Text>
-            </TouchableOpacity>
-          </View>
-          <LanguagePicker
-            backgroundColor={bg || 'transparent'}
-            foregroundColor={fg || 'transparent'}
-            locale={locale}
-            onSelectValue={setLocale}
-          />
-        </SafeAreaView>
+        <LanguagePicker
+          backgroundColor={bgColor}
+          foregroundColor={fgColor}
+          locale={locale}
+          onSelectValue={setLocale}
+        />
+        <SendSuggestion bgColor={bgColor} fgColor={fgColor} />
       </React.Fragment>
     );
   }
 }
 
-export default withLocale(Settings);
+const enhance = compose(
+  withColor,
+  withLocale,
+  withHeader({
+    rightButton: {
+      label: 'Done',
+      onPress: ({ dismiss }: Props) => {
+        dismiss();
+      },
+    },
+    title: 'Settings',
+  }),
+);
+
+export default enhance(Settings);

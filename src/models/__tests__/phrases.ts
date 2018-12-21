@@ -121,3 +121,15 @@ describe('phrase repetition', () => {
     expect(yieldedPhrasesIds).toContain(phrase!.id);
   });
 });
+
+describe('suggestions', () => {
+  const dataSource = new PhrasesDataSource();
+
+  it('sends a suggestion', async () => {
+    const content = 'foobar';
+
+    expect(async () => {
+      await dataSource.sendSuggestion(content);
+    }).not.toThrow();
+  });
+});

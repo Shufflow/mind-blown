@@ -50,7 +50,7 @@ describe('getting the locale', () => {
 
 describe('set locale', () => {
   it('sets to async storage', async () => {
-    const asyncStorage = sandbox.stub(AsyncStorage, 'setItem').resolves(null);
+    const asyncStorage = sandbox.stub(AsyncStorage, 'setItem').resolves();
 
     await setLocale('foobar');
 
