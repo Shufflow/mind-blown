@@ -1,4 +1,5 @@
 import { compose } from '@typed/compose';
+import { isEqual } from 'lodash';
 import React from 'react';
 import {
   ActivityIndicator,
@@ -52,6 +53,7 @@ class Home extends React.Component<Props, State> {
 
   getRandomPhrase = async () => {
     this.props.newColor();
+    this.setState({ phrase: null });
 
     const phrase = await this.dataSource.getRandomPhrase();
     this.setState({ phrase, selectedThumb: null });
@@ -81,6 +83,13 @@ class Home extends React.Component<Props, State> {
     const { phrase } = this.state;
     return phrase ? phrase[locale] || phrase.en : '';
   };
+
+  shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
+    return (
+      (!isEqual(nextProps, this.props) || !isEqual(nextState, this.state)) &&
+      !!nextState.phrase
+    );
+  }
 
   render() {
     const { bgColor, fgColor, onPressSettings } = this.props;
