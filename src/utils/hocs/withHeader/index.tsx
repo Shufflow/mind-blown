@@ -1,5 +1,11 @@
 import React from 'react';
-import { SafeAreaView, Text, TouchableOpacity, View } from 'react-native';
+import {
+  SafeAreaView,
+  StatusBar,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 import { ColorProps } from '../withColors';
 
@@ -35,23 +41,24 @@ const withHeader = <T extends ColorProps>({
     };
 
     render() {
-      const { bgColor, fgColor } = this.props;
+      const { dark, light } = this.props;
       return (
         <React.Fragment>
-          <SafeAreaView style={styles.background(bgColor)} />
-          <SafeAreaView style={styles.container(fgColor)}>
-            <View style={styles.header(bgColor)}>
+          <StatusBar barStyle='light-content' />
+          <SafeAreaView style={styles.background(dark)} />
+          <SafeAreaView style={styles.container(light)}>
+            <View style={styles.header(dark)}>
               {!!leftButton && (
                 <TouchableOpacity onPress={this.onPressButton(leftButton)}>
-                  <Text style={styles.doneButton(fgColor)}>
+                  <Text style={styles.doneButton(light)}>
                     {leftButton.label}
                   </Text>
                 </TouchableOpacity>
               )}
-              <Text style={styles.title(fgColor)}>{title}</Text>
+              <Text style={styles.title(light)}>{title}</Text>
               {!!rightButton && (
                 <TouchableOpacity onPress={this.onPressButton(rightButton)}>
-                  <Text style={styles.doneButton(fgColor)}>
+                  <Text style={styles.doneButton(light)}>
                     {rightButton.label}
                   </Text>
                 </TouchableOpacity>

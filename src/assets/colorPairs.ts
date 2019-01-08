@@ -1,96 +1,96 @@
 export interface Color {
-  bg: string;
-  fg: string;
+  light: string;
+  dark: string;
 }
 
 const colors: Color[] = [
   {
-    bg: 'aliceblue',
-    fg: 'darkblue',
+    dark: 'darkblue',
+    light: 'aliceblue',
   },
   {
-    bg: 'antiquewhite',
-    fg: 'black',
+    dark: 'black',
+    light: 'antiquewhite',
   },
   {
-    bg: 'aquamarine',
-    fg: 'black',
+    dark: 'black',
+    light: 'aquamarine',
   },
   {
-    bg: 'blueviolet',
-    fg: 'white',
+    dark: 'blueviolet',
+    light: 'white',
   },
   {
-    bg: 'brown',
-    fg: 'white',
+    dark: 'brown',
+    light: 'white',
   },
   {
-    bg: 'burlywood',
-    fg: 'sienna',
+    dark: 'sienna',
+    light: 'burlywood',
   },
   {
-    bg: 'cadetblue',
-    fg: 'beige',
+    dark: 'cadetblue',
+    light: 'beige',
   },
   {
-    bg: 'chocolate',
-    fg: 'beige',
+    dark: 'chocolate',
+    light: 'beige',
   },
   {
-    bg: 'coral',
-    fg: 'white',
+    dark: 'coral',
+    light: 'white',
   },
   {
-    bg: 'cornflowerblue',
-    fg: 'azure',
+    dark: 'cornflowerblue',
+    light: 'azure',
   },
   {
-    bg: 'crimson',
-    fg: 'lavenderblush',
+    dark: 'crimson',
+    light: 'lavenderblush',
   },
   {
-    bg: 'darkblue',
-    fg: 'aliceblue',
+    dark: 'darkblue',
+    light: 'aliceblue',
   },
   {
-    bg: 'darkcyan',
-    fg: 'white',
+    dark: 'darkcyan',
+    light: 'white',
   },
   {
-    bg: 'darkmagenta',
-    fg: 'white',
+    dark: 'darkmagenta',
+    light: 'white',
   },
   {
-    bg: 'darksalmon',
-    fg: 'darkslategray',
+    dark: 'darkslategray',
+    light: 'darksalmon',
   },
   {
-    bg: 'darkseagreen',
-    fg: 'darkslategray',
+    dark: 'darkslategray',
+    light: 'darkseagreen',
   },
   {
-    bg: 'darkslateblue',
-    fg: 'antiquewhite',
+    dark: 'darkslateblue',
+    light: 'antiquewhite',
   },
   {
-    bg: 'darkslategray',
-    fg: 'azure',
+    dark: 'darkslategray',
+    light: 'azure',
   },
   {
-    bg: 'goldenrod',
-    fg: 'black',
+    dark: 'black',
+    light: 'goldenrod',
   },
   {
-    bg: 'goldenrod',
-    fg: 'ivory',
+    dark: 'goldenrod',
+    light: 'ivory',
   },
   {
-    bg: 'indigo',
-    fg: 'ivory',
+    dark: 'indigo',
+    light: 'ivory',
   },
   {
-    bg: 'sienna',
-    fg: 'seashell',
+    dark: 'sienna',
+    light: 'seashell',
   },
 ];
 

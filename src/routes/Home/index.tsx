@@ -4,6 +4,7 @@ import React from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
+  StatusBar,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -92,11 +93,12 @@ class Home extends React.Component<Props, State> {
   }
 
   render() {
-    const { bgColor, fgColor, onPressSettings } = this.props;
+    const { bgColor, isDark, fgColor, onPressSettings } = this.props;
     const { phrase, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
         <SafeAreaView style={[styles.content, { backgroundColor: bgColor }]}>
+          <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
           <SVGButton
             color={fgColor}
             fillAll

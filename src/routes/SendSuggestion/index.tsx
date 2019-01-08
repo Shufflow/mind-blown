@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-native';
 
-import { ColorProps } from 'src/utils/hocs/withColors';
+import { BasicColors } from 'src/utils/hocs/withColors';
 
 import ListItem from 'src/components/ListItem';
 
@@ -11,7 +11,7 @@ interface State {
   isModalVisible: boolean;
 }
 
-class SendSuggestion extends React.Component<ColorProps, State> {
+class SendSuggestion extends React.Component<BasicColors, State> {
   state = {
     isModalVisible: false,
   };

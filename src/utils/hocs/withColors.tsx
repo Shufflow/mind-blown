@@ -2,9 +2,15 @@ import React from 'react';
 
 import { getColor } from 'src/models/assets';
 
-export interface ColorProps {
-  fgColor: string;
+export interface BasicColors {
   bgColor: string;
+  fgColor: string;
+}
+
+export interface ColorProps extends BasicColors {
+  dark: string;
+  isDark: boolean;
+  light: string;
   newColor: () => void;
 }
 
@@ -17,10 +23,20 @@ const withColor = <T extends Object>(
 
       this.state = {
         bgColor: 'transparent',
+        dark: 'transparent',
         fgColor: 'transparent',
+        isDark: false,
+        light: 'transparent',
         newColor: () => {
-          const { bg, fg } = getColor();
-          this.setState({ bgColor: bg, fgColor: fg });
+          const { dark, light } = getColor();
+          const isDark = Math.round(Math.random() * 2) > 1;
+          this.setState({
+            dark,
+            isDark,
+            light,
+            bgColor: isDark ? dark : light,
+            fgColor: isDark ? light : dark,
+          });
         },
       };
     }

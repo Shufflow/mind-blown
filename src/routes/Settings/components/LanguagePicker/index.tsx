@@ -8,8 +8,8 @@ import Item from 'src/components/ListItem';
 import styles from './styles';
 
 interface Props {
-  backgroundColor: string;
-  foregroundColor: string;
+  dark: string;
+  light: string;
   locale: string;
   onSelectValue: (lang: string) => void;
 }
@@ -52,7 +52,7 @@ class LanguagePicker extends React.Component<Props, State> {
   };
 
   render() {
-    const { backgroundColor, foregroundColor, locale } = this.props;
+    const { dark, light, locale } = this.props;
     const { isPickerVisible, selectedValue } = this.state;
     return (
       <React.Fragment>
@@ -63,16 +63,16 @@ class LanguagePicker extends React.Component<Props, State> {
         />
         <Modal animationType='fade' transparent visible={isPickerVisible}>
           <View style={styles.pickerContainer}>
-            <View style={styles.pickerBar(backgroundColor)}>
+            <View style={styles.pickerBar(dark)}>
               <TouchableOpacity onPress={this.onPressDone}>
-                <Text style={styles.doneButton(foregroundColor)}>Done</Text>
+                <Text style={styles.doneButton(light)}>Done</Text>
               </TouchableOpacity>
             </View>
             <Picker
               selectedValue={selectedValue}
               onValueChange={this.onSelectValue}
-              style={styles.picker(foregroundColor)}
-              itemStyle={styles.pickerItem(backgroundColor)}
+              style={styles.picker(light)}
+              itemStyle={styles.pickerItem(dark)}
             >
               {this.pickerItems}
             </Picker>
