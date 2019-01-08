@@ -30,7 +30,7 @@ class Settings extends React.Component<Props> {
           locale={locale}
           onSelectValue={setLocale}
         />
-        <SendSuggestion bgColor={dark} fgColor={light} />
+        <SendSuggestion dark={dark} light={light} />
       </React.Fragment>
     );
   }

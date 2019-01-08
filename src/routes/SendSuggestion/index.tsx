@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-native';
 
-import { BasicColors } from 'src/utils/hocs/withColors';
+import { HeaderProps } from 'src/utils/hocs/withHeader';
 
 import ListItem from 'src/components/ListItem';
 
@@ -11,7 +11,7 @@ interface State {
   isModalVisible: boolean;
 }
 
-class SendSuggestion extends React.Component<BasicColors, State> {
+class SendSuggestion extends React.Component<HeaderProps, State> {
   state = {
     isModalVisible: false,
   };
@@ -21,7 +21,7 @@ class SendSuggestion extends React.Component<BasicColors, State> {
   };
 
   render() {
-    const { bgColor, fgColor } = this.props;
+    const { dark, light } = this.props;
     const { isModalVisible } = this.state;
     return (
       <React.Fragment>
@@ -32,8 +32,8 @@ class SendSuggestion extends React.Component<BasicColors, State> {
         <Modal animationType='slide' transparent visible={isModalVisible}>
           <SuggestionForm
             dismiss={this.toggleModalVisible(false)}
-            bgColor={bgColor}
-            fgColor={fgColor}
+            dark={dark}
+            light={light}
           />
         </Modal>
       </React.Fragment>

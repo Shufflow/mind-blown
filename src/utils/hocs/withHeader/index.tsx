@@ -7,9 +7,12 @@ import {
   View,
 } from 'react-native';
 
-import { ColorProps } from '../withColors';
-
 import styles from './styles';
+
+export interface HeaderProps {
+  dark: string;
+  light: string;
+}
 
 interface Button<T> {
   label: string;
@@ -22,14 +25,14 @@ interface HOCProps<T> {
   title: string;
 }
 
-const withHeader = <T extends ColorProps>({
+const withHeader = <T extends Object>({
   leftButton,
   title,
   rightButton,
 }: HOCProps<T>) => (
   WrappedComponent: React.ComponentType<T>,
-): React.ComponentClass<T> => {
-  class ComponentWithHeader extends React.PureComponent<T> {
+): React.ComponentType<T & HeaderProps> => {
+  class ComponentWithHeader extends React.PureComponent<T & HeaderProps> {
     wrappedRef?: any;
 
     onPressButton = (button: Button<T>) => () => {

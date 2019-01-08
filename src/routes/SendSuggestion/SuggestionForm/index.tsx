@@ -3,12 +3,11 @@ import React from 'react';
 import { TextInput } from 'react-native';
 
 import PhrasesDataSource from 'src/models/phrases';
-import { ColorProps } from 'src/utils/hocs/withColors';
 import withHeader from 'src/utils/hocs/withHeader';
 
 import styles from './styles';
 
-interface Props extends ColorProps {
+interface Props {
   dismiss: () => void;
 }
 
@@ -66,4 +65,5 @@ const enhance = compose(
     title: 'Send Suggestion',
   }),
 );
+
 export default enhance(SuggestionForm);
