@@ -7,6 +7,9 @@ export const Colors = {
 };
 
 export const Layouts: any = {
+  absolute: {
+    position: 'absolute',
+  },
   bottomBorder: (borderColor: string = Colors.offWhite) => ({
     borderColor,
     borderBottomWidth: 1,

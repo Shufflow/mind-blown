@@ -1,10 +1,11 @@
 import { compose } from '@typed/compose';
 import React from 'react';
-import { Text } from 'react-native';
 
 import withColor, { ColorProps } from 'src/utils/hocs/withColors';
 import withHeader from 'src/utils/hocs/withHeader';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
+
+import Dev from 'src/components/Dev';
 
 import SendSuggestion from '../SendSuggestion';
 
@@ -19,11 +20,6 @@ class Settings extends React.Component<Props> {
     const { dark, light, locale, setLocale } = this.props;
     return (
       <React.Fragment>
-        {__DEV__ && (
-          <Text>
-            {dark} - {light}
-          </Text>
-        )}
         <LanguagePicker
           dark={dark}
           light={light}
@@ -31,6 +27,9 @@ class Settings extends React.Component<Props> {
           onSelectValue={setLocale}
         />
         <SendSuggestion dark={dark} light={light} />
+        <Dev>
+          {dark} - {light}
+        </Dev>
       </React.Fragment>
     );
   }
