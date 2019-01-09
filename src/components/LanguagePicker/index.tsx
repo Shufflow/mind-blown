@@ -32,6 +32,10 @@ class LanguagePicker extends React.Component<Props, State> {
     ));
   }
 
+  show = () => {
+    this.togglePickerVisible(true)();
+  };
+
   togglePickerVisible = (isVisible: boolean) => () => {
     this.setState({ isVisible });
   };

@@ -15,9 +15,11 @@ const styles = {
     backgroundColor,
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: Spacing.size_40,
     padding: Spacing.size_20,
   }),
+  headerMargin: {
+    marginBottom: Spacing.size_40,
+  },
   title: (color: string = Colors.black): any => ({
     color,
     fontSize: Spacing.size_20,

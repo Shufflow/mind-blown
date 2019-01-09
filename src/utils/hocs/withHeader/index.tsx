@@ -23,9 +23,11 @@ interface HOCProps<T> {
   leftButton?: Button<T>;
   rightButton?: Button<T>;
   title: string;
+  addMargin?: boolean;
 }
 
 const withHeader = <T extends Object>({
+  addMargin = true,
   leftButton,
   title,
   rightButton,
@@ -50,7 +52,9 @@ const withHeader = <T extends Object>({
           <StatusBar barStyle='light-content' />
           <SafeAreaView style={styles.background(dark)} />
           <SafeAreaView style={styles.container(light)}>
-            <View style={styles.header(dark)}>
+            <View
+              style={[styles.header(dark), addMargin && styles.headerMargin]}
+            >
               {!!leftButton && (
                 <TouchableOpacity onPress={this.onPressButton(leftButton)}>
                   <Text style={styles.doneButton(light)}>

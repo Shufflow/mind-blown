@@ -8,6 +8,7 @@ import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import Dev from 'src/components/Dev';
 
 import SendSuggestion from '../SendSuggestion';
+import RedditPhrases from '../RedditPhrases';
 
 import LanguagePicker from './components/LanguagePicker';
 
@@ -27,6 +28,9 @@ class Settings extends React.Component<Props> {
           onSelectValue={setLocale}
         />
         <SendSuggestion dark={dark} light={light} />
+        <Dev>
+          <RedditPhrases dark={dark} light={light} />
+        </Dev>
         <Dev>
           {dark} - {light}
         </Dev>
