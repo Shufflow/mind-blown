@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 
 import { HeaderProps } from 'src/utils/hocs/withHeader';
 import { Colors } from 'src/utils/styles';
@@ -11,6 +11,7 @@ import LanguagePicker from 'src/components/LanguagePicker';
 import SVGButton from 'src/components/SVGButton';
 
 import styles from './styles';
+import Button from 'src/components/Button';
 
 interface Props extends HeaderProps {
   language: string;
@@ -69,11 +70,7 @@ class Translation extends React.Component<Props, State> {
     return (
       <View style={styles.container}>
         <View style={styles.buttonsContainer}>
-          <TouchableOpacity onPress={this.onPressLanguage}>
-            <View style={styles.languageButton}>
-              <Text>{Locales[language]}</Text>
-            </View>
-          </TouchableOpacity>
+          <Button onPress={this.onPressLanguage}>{Locales[language]}</Button>
           {!!onRemove && (
             <SVGButton
               color={Colors.darkGray}

@@ -29,6 +29,22 @@ const styles = StyleSheet.create({
     marginTop: Spacing.size_30,
     width: Spacing.size_15,
   },
+
+  footer: {
+    ...Layouts.horizontal,
+    flex: 1,
+    justifyContent: 'space-between',
+    marginTop: Spacing.size_30,
+  },
+  footerButton: {
+    width: '45%',
+  },
+
+  empty: {
+    fontSize: Spacing.size_40,
+    marginTop: Spacing.size_40,
+    textAlign: 'center',
+  },
 });
 
 export default styles;

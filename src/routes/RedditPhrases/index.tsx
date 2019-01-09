@@ -13,6 +13,7 @@ import icons from 'src/assets/icons';
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
 
 import SVGButton from 'src/components/SVGButton';
+import Button from 'src/components/Button';
 
 import Translation from './components/Translation';
 import styles from './styles';
@@ -26,14 +27,17 @@ interface State {
 }
 
 class RedditPhrases extends React.Component<SettingsModalProps, State> {
-  state = {
-    isLoading: false,
-    phrase: null,
-    translations: [emptyTranslation],
-  };
-
   dataSource = new RedditDataSource();
   translations: Array<{ language: string; content: string }> = [];
+
+  constructor(props: SettingsModalProps) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      phrase: null,
+      translations: [emptyTranslation],
+    };
+  }
 
   componentDidMount() {
     this.loadPhrase();
@@ -42,7 +46,11 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
   loadPhrase = async () => {
     this.setState({ isLoading: true });
     const phrase = await this.dataSource.loadPhrase();
-    this.setState({ isLoading: false, phrase });
+    this.setState({
+      phrase,
+      isLoading: false,
+      translations: [emptyTranslation],
+    });
   };
 
   handleTranslation = (idx: number) => (language: string, content: string) => {
@@ -80,8 +88,42 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
     ));
   };
 
+  onPressDiscard = async () => {
+    const { phrase } = this.state;
+    if (!phrase) {
+      return;
+    }
+
+    this.setState({ isLoading: true, phrase: null });
+
+    await this.dataSource.discardPhrase(phrase.id);
+    await this.loadPhrase();
+  };
+
+  onPressSave = async () => {
+    const { phrase, translations } = this.state;
+    if (!phrase) {
+      return;
+    }
+
+    this.setState({ isLoading: true, phrase: null });
+
+    await this.dataSource.savePhrase(
+      phrase.id,
+      translations.reduce(
+        (res, { language, content }) => ({
+          ...res,
+          [language]: content,
+        }),
+        {} as { [locale: string]: string },
+      ),
+    );
+    await this.loadPhrase();
+  };
+
   render() {
     const { isLoading, phrase } = this.state;
+    const isEmpty = !isLoading && !phrase;
     return (
       <ScrollView
         style={styles.container}
@@ -94,16 +136,10 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
             style={{ alignSelf: 'center' }}
           />
         )}
-        {!!phrase && (
-          <View>
-            <Text style={styles.text}>{(phrase as RedditPhrase).content}</Text>
-            <Text style={styles.text}>
-              Score - {(phrase as RedditPhrase).score}
-            </Text>
-          </View>
-        )}
-        {!isLoading && (
+        {!isLoading && !!phrase && (
           <React.Fragment>
+            <Text style={styles.text}>{phrase.content}</Text>
+            <Text style={styles.text}>Score - {phrase.score}</Text>
             {this.renderTranslations()}
             <SVGButton
               icon={icons.plus}
@@ -112,7 +148,18 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
               onPress={this.onPressAddTranslation}
               fillAll
             />
+            <View style={styles.footer}>
+              <Button onPress={this.onPressDiscard} style={styles.footerButton}>
+                Discard
+              </Button>
+              <Button onPress={this.onPressSave} style={styles.footerButton}>
+                Save
+              </Button>
+            </View>
           </React.Fragment>
+        )}
+        {isEmpty && (
+          <Text style={styles.empty}>No more phrases to review 🎉</Text>
         )}
       </ScrollView>
     );
