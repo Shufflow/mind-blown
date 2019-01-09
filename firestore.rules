@@ -2,12 +2,17 @@ service cloud.firestore {
   match /databases/{database}/documents {
     match /phrases/{document=**} {
       allow read;
+      allow create: if request.auth.uid in get(/databases/$(database)/documents/admin/phrases).data.create;
     }
     match /reviews/{document=**} {
       allow write;
     }
     match /suggestion/{document=**} {
       allow write;
+    }
+    match /reddit/{document=**} {
+      allow read: if request.auth.uid in get(/databases/$(database)/documents/admin/reddit).data.read;
+      allow delete: if request.auth.uid in get(/databases/$(database)/documents/admin/reddit).data.delete;
     }
   }
 }
