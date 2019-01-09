@@ -1,44 +1,69 @@
+import { compose } from '@typed/compose';
 import React from 'react';
-import { Modal } from 'react-native';
+import { TextInput } from 'react-native';
 
-import { HeaderProps } from 'src/utils/hocs/withHeader';
+import PhrasesDataSource from 'src/models/phrases';
+import withHeader from 'src/utils/hocs/withHeader';
 
-import ListItem from 'src/components/ListItem';
-
-import SuggestionForm from './SuggestionForm';
+import styles from './styles';
+import withSettingsModal, {
+  SettingsModalProps,
+} from 'src/utils/hocs/withSettingsModal';
 
 interface State {
-  isModalVisible: boolean;
+  text: string;
 }
 
-class SendSuggestion extends React.Component<HeaderProps, State> {
+class SuggestionForm extends React.Component<SettingsModalProps, State> {
+  dataSource: PhrasesDataSource = new PhrasesDataSource();
+
   state = {
-    isModalVisible: false,
+    text: '',
   };
 
-  toggleModalVisible = (isModalVisible: boolean) => () => {
-    this.setState({ isModalVisible });
+  onChangeText = (text: string) => {
+    this.setState({ text });
+  };
+
+  onPressDone = async () => {
+    const { text } = this.state;
+    if (text) {
+      await this.dataSource.sendSuggestion(text);
+    }
+
+    this.props.dismiss();
   };
 
   render() {
-    const { dark, light } = this.props;
-    const { isModalVisible } = this.state;
     return (
-      <React.Fragment>
-        <ListItem
-          label='Send Suggestion'
-          onPress={this.toggleModalVisible(true)}
-        />
-        <Modal animationType='slide' transparent visible={isModalVisible}>
-          <SuggestionForm
-            dismiss={this.toggleModalVisible(false)}
-            dark={dark}
-            light={light}
-          />
-        </Modal>
-      </React.Fragment>
+      <TextInput
+        onChangeText={this.onChangeText}
+        style={styles.container}
+        autoFocus
+        editable
+        multiline
+      />
     );
   }
 }
 
-export default SendSuggestion;
+const enhance = compose(
+  withSettingsModal('Send Suggestion'),
+  withHeader({
+    leftButton: {
+      label: 'Cancel',
+      onPress: ({ dismiss }: SettingsModalProps) => {
+        dismiss();
+      },
+    },
+    rightButton: {
+      label: 'Done',
+      onPress: (_, ref: SuggestionForm) => {
+        ref.onPressDone();
+      },
+    },
+    title: 'Send Suggestion',
+  }),
+);
+
+export default enhance(SuggestionForm);
