@@ -37,7 +37,6 @@
         "no-unnecessary-callback-wrapper": true,
         "no-unnecessary-class": true,
         "no-unused-expression": [true, "allow-fast-null-checks", "allow-new"],
-        "no-unused-variable": true,
         "no-use-before-declare": true,
         "no-void-expression": true,
         "number-literal-format": true,
@@ -45,10 +44,7 @@
         "object-literal-sort-keys": [true, "shorthand-first"],
         "one-line": true,
         "only-arrow-functions": true,
-        "ordered-imports": [true, {
-            "grouped-imports": true,
-            "module-source-path": "full"
-        }],
+        "ordered-imports": false,
         "prefer-conditional-expression": true,
         "prefer-object-spread": true,
         "prefer-switch": [true, {"min-cases": 2}],
@@ -65,7 +61,8 @@
     "rulesDirectory": [],
     "linterOptions": {
       "exclude": [
-        "src/assets/icons.ts"
+        "src/assets/icons.ts",
+        "node_modules/"
       ]
     }
 }

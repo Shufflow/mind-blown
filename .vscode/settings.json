@@ -1,8 +1,7 @@
 {
   "editor.formatOnSave": true,
   "editor.tabSize": 2,
-  "tslint.alwaysShowStatus": true,
   "tslint.configFile": "tslint.json",
-  "tslint.packageManager": "yarn",
-  "jest.pathToConfig": ".jest.json"
+  "jest.pathToConfig": ".jest.json",
+  "tslint.alwaysShowRuleFailuresAsWarnings": true,
 }
