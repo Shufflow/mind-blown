@@ -1,11 +1,10 @@
 import React from 'react';
-import { Modal, Picker, Text, TouchableOpacity, View } from 'react-native';
 
 import { Locales } from 'src/models/locale';
 
 import Item from 'src/components/ListItem';
 
-import styles from './styles';
+import LanguagePicker from 'src/components/LanguagePicker';
 
 interface Props {
   dark: string;
@@ -19,68 +18,43 @@ interface State {
   selectedValue: string;
 }
 
-class LanguagePicker extends React.Component<Props, State> {
-  committedLanguage: string;
-  pickerItems: Array<React.ReactElement<any>>;
+class SettingsLanguagePicker extends React.Component<Props, State> {
+  committedLanguage: string = '';
+  languagePicker: LanguagePicker | null = null;
 
-  constructor(props: Props) {
-    super(props);
-    this.committedLanguage = props.locale;
-    this.state = {
-      isPickerVisible: false,
-      selectedValue: props.locale,
-    };
-
-    this.pickerItems = Object.entries(Locales).map(([key, label]) => (
-      <Picker.Item key={key} label={label} value={key} />
-    ));
-  }
-
-  togglePickerVisible = (isPickerVisible: boolean) => () => {
-    this.setState({ isPickerVisible });
+  handleLanguagePickerRef = (ref: LanguagePicker) => {
+    this.languagePicker = ref;
   };
 
-  onSelectValue = (selectedValue: string) => {
-    this.setState({ selectedValue });
+  showLanguagePicker = () => {
+    if (this.languagePicker) {
+      this.languagePicker.togglePickerVisible(true)();
+    }
   };
 
-  onPressDone = () => {
-    const { selectedValue } = this.state;
-    this.props.onSelectValue(selectedValue);
-    this.committedLanguage = selectedValue;
-    this.togglePickerVisible(false)();
+  onSelectLanguage = (lang: string) => {
+    this.committedLanguage = lang;
   };
 
   render() {
-    const { dark, light, locale } = this.props;
-    const { isPickerVisible, selectedValue } = this.state;
+    const { dark, light, locale, onSelectValue } = this.props;
     return (
       <React.Fragment>
         <Item
           label='Language'
-          onPress={this.togglePickerVisible(true)}
+          onPress={this.showLanguagePicker}
           value={Locales[this.committedLanguage || locale]}
         />
-        <Modal animationType='fade' transparent visible={isPickerVisible}>
-          <View style={styles.pickerContainer}>
-            <View style={styles.pickerBar(dark)}>
-              <TouchableOpacity onPress={this.onPressDone}>
-                <Text style={styles.doneButton(light)}>Done</Text>
-              </TouchableOpacity>
-            </View>
-            <Picker
-              selectedValue={selectedValue}
-              onValueChange={this.onSelectValue}
-              style={styles.picker(light)}
-              itemStyle={styles.pickerItem(dark)}
-            >
-              {this.pickerItems}
-            </Picker>
-          </View>
-        </Modal>
+        <LanguagePicker
+          dark={dark}
+          light={light}
+          locale={locale}
+          onSelectValue={onSelectValue}
+          ref={this.handleLanguagePickerRef}
+        />
       </React.Fragment>
     );
   }
 }
 
-export default LanguagePicker;
+export default SettingsLanguagePicker;
