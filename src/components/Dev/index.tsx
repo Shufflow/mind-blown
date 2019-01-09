@@ -1,19 +1,50 @@
 import React from 'react';
-import { RegisteredStyle, Text } from 'react-native';
+import { RegisteredStyle, Text, View } from 'react-native';
 
 import styles from './styles';
 
 interface Props {
-  children: React.ReactNode[];
+  children: React.ReactNode | React.ReactNode[];
+  isAbsolute?: boolean;
   style?: RegisteredStyle<any>;
 }
 
-const Dev = ({ children, style }: Props): React.ReactElement<Props> | null => {
+const Dev = ({
+  isAbsolute,
+  children,
+  style,
+}: Props): React.ReactElement<Props> | null => {
   if (!__DEV__) {
     return null;
   }
 
-  return <Text style={[styles.container, style]}>{children}</Text>;
+  const isStringArray =
+    Array.isArray(children) &&
+    children.reduce(
+      (res: boolean, cur): boolean => res && typeof cur === 'string',
+      true,
+    );
+
+  if (isStringArray) {
+    return (
+      <Text
+        style={[
+          styles.container,
+          isAbsolute && styles.absolute,
+          styles.text,
+          style,
+        ]}
+      >
+        {children}
+      </Text>
+    );
+  }
+
+  return <View style={[styles.container, style]}>{children}</View>;
+};
+
+Dev.defaultProps = {
+  isAbsolute: true,
 };
 
 export default Dev;

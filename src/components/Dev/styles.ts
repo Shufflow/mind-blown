@@ -2,10 +2,14 @@ import { StyleSheet } from 'react-native';
 import { Layouts, Spacing } from 'src/utils/styles';
 
 const styles = StyleSheet.create({
-  container: {
+  absolute: {
     ...Layouts.absolute,
-    ...Layouts.fullWidth,
     bottom: Spacing.size_20,
+  },
+  container: {
+    ...Layouts.fullWidth,
+  },
+  text: {
     textAlign: 'center',
   },
 });
