@@ -16,6 +16,7 @@
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-firebase": "^5.1.1",
+    "react-native-google-signin": "^1.0.2",
     "react-native-svg": "^8.0.10",
     "react-native-svg-uri": "https://github.com/vault-development/react-native-svg-uri#c6841a6e7d1a6ee5cf5b515d4faea6002e166f3c"
   },
