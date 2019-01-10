@@ -7,7 +7,7 @@ import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import googleLogin from 'src/models/auth';
 import routeNames from 'src/routes';
-import { ColoredScreenProps } from 'src/navigators/settingsNavigator';
+import { ColoredScreenProps } from 'src/navigators/SettingsNavigator';
 
 import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';

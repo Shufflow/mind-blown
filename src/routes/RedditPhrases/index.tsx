@@ -5,7 +5,7 @@ import { Colors } from 'src/utils/styles';
 import icons from 'src/assets/icons';
 
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
-import { ColoredScreenProps, goBack } from 'src/navigators/settingsNavigator';
+import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
 
 import SVGButton from 'src/components/SVGButton';
 import Button from 'src/components/Button';

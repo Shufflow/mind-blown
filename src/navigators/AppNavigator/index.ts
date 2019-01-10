@@ -4,7 +4,7 @@ import routeNames from 'src/routes';
 
 import Home from 'src/routes/Home';
 
-import SettingsNavigator from './settingsNavigator';
+import SettingsNavigator from 'src/navigators/SettingsNavigator';
 
 const routes = {
   [routeNames.Home]: Home,

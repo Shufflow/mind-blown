@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import AppNavigator from 'src/navigators/appNavigator';
+import AppNavigator from 'src/navigators/AppNavigator';
 
 import { withLocaleProvider } from 'src/utils/hocs/withLocale';
 

@@ -17,7 +17,8 @@ import SendSuggestion from 'src/routes/SendSuggestion';
 
 import { getColor } from 'src/models/assets';
 import { Color } from 'src/assets/colorPairs';
-import { Spacing } from 'src/utils/styles';
+
+import styles from './styles';
 
 export interface ColoredScreenProps<Params = NavigationParams> {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params> & {
@@ -39,12 +40,10 @@ const SettingsNavigator = createStackNavigator(routes, {
 
     return {
       headerLeft: null,
-      headerStyle: { backgroundColor: navigation.color.dark },
+      headerStyle: styles.header(navigation.color.dark),
       headerTintColor: navigation.color.light,
       headerTitle: (
-        <Text
-          style={{ color: navigation.color.light, fontSize: Spacing.size_20 }}
-        >
+        <Text style={styles.text(navigation.color.light)}>
           {startCase(navigation.state.routeName)}
         </Text>
       ),

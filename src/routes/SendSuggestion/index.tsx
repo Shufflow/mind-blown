@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 
-import { ColoredScreenProps, goBack } from 'src/navigators/settingsNavigator';
+import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
 
 import PhrasesDataSource from 'src/models/phrases';
 
