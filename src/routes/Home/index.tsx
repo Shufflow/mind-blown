@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
 import withColor, { ColorProps } from 'src/utils/hocs/withColors';
@@ -20,15 +21,17 @@ import Phrase from './components/Phrase';
 import ThumbDownButton from './components/ThumbDownButton';
 import ThumbUpButton from './components/ThumbUpButton';
 import styles from './styles';
+import routeNames from '..';
 
 enum SelectedThumb {
   Up = 'up',
   Down = 'down',
 }
 
-interface Props extends LocaleConsumerProps, ColorProps {
-  onPressSettings: () => void;
-}
+interface Props
+  extends LocaleConsumerProps,
+    ColorProps,
+    NavigationScreenProps {}
 
 interface State {
   phrase: PhraseType | null;
@@ -92,8 +95,12 @@ class Home extends React.Component<Props, State> {
     );
   }
 
+  onPressSettings = () => {
+    this.props.navigation.navigate(routeNames.Settings);
+  };
+
   render() {
-    const { bgColor, isDark, fgColor, onPressSettings } = this.props;
+    const { bgColor, isDark, fgColor } = this.props;
     const { phrase, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
@@ -103,7 +110,7 @@ class Home extends React.Component<Props, State> {
             color={fgColor}
             fillAll
             icon={icons.cog}
-            onPress={onPressSettings}
+            onPress={this.onPressSettings}
             style={styles.settingsButton}
           />
           {!!phrase ? (
