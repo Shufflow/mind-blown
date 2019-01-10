@@ -25,10 +25,7 @@ export interface ColoredScreenProps<Params = NavigationParams> {
 }
 
 const routes = {
-  [routeNames.Settings]: {
-    ...Settings,
-    screen: (args: any) => <Settings {...args} />,
-  },
+  [routeNames.Settings]: Settings,
   [routeNames.RedditPhrases]: RedditPhrases,
   [routeNames.SendSuggestion]: SendSuggestion,
 };

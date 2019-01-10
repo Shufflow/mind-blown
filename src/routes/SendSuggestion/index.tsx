@@ -1,23 +1,49 @@
-import { compose } from '@typed/compose';
 import React from 'react';
 import { TextInput } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
+
+import { ColoredScreenProps } from 'src/navigators/settingsNavigator';
 
 import PhrasesDataSource from 'src/models/phrases';
-import withHeader from 'src/utils/hocs/withHeader';
 
 import styles from './styles';
+import HeaderButton from 'src/components/HeaderButton';
 
 interface State {
   text: string;
 }
 
-class SuggestionForm extends React.Component<NavigationScreenProps, State> {
-  dataSource: PhrasesDataSource = new PhrasesDataSource();
+/// POG: sending `navigation.goBack` to `onPress` doesn't work
+const goBack = ({ navigation }: ColoredScreenProps) => () =>
+  navigation.goBack();
 
+class SuggestionForm extends React.Component<ColoredScreenProps, State> {
+  static navigationOptions = (args: ColoredScreenProps) => ({
+    headerLeft: (
+      <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
+        Cancel
+      </HeaderButton>
+    ),
+    headerRight: (
+      <HeaderButton
+        color={args.navigation.color.light}
+        onPress={args.navigation.getParam('onPressDone')}
+      >
+        Done
+      </HeaderButton>
+    ),
+  });
+
+  dataSource: PhrasesDataSource = new PhrasesDataSource();
   state = {
     text: '',
   };
+
+  constructor(props: ColoredScreenProps) {
+    super(props);
+    props.navigation.setParams({
+      onPressDone: this.onPressDone,
+    });
+  }
 
   onChangeText = (text: string) => {
     this.setState({ text });
@@ -45,22 +71,4 @@ class SuggestionForm extends React.Component<NavigationScreenProps, State> {
   }
 }
 
-const enhance = compose(
-  withHeader({
-    leftButton: {
-      label: 'Cancel',
-      onPress: ({ navigation }: NavigationScreenProps) => {
-        navigation.goBack();
-      },
-    },
-    rightButton: {
-      label: 'Done',
-      onPress: (_, ref: SuggestionForm) => {
-        ref.onPressDone();
-      },
-    },
-    title: 'Send Suggestion',
-  }),
-);
-
-export default enhance(SuggestionForm);
+export default SuggestionForm;
