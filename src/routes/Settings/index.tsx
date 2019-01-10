@@ -1,25 +1,22 @@
 import { compose } from '@typed/compose';
 import React from 'react';
+import { View, StatusBar } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
-import { NavigationScreenProps } from 'react-navigation';
 
-import withColor, { ColorProps } from 'src/utils/hocs/withColors';
-import withHeader from 'src/utils/hocs/withHeader';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import googleLogin from 'src/models/auth';
 import routeNames from 'src/routes';
+import { ColoredScreenProps } from 'src/navigators/settingsNavigator';
 
 import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';
+import HeaderButton from 'src/components/HeaderButton';
 
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
 
-interface Props
-  extends LocaleConsumerProps,
-    ColorProps,
-    NavigationScreenProps {}
+interface Props extends LocaleConsumerProps, ColoredScreenProps {}
 
 interface State {
   isSignedIn: boolean;
@@ -45,7 +42,8 @@ class Settings extends React.Component<Props, State> {
   };
 
   navigate = (routeName: string) => () => {
-    const { dark, light, navigation } = this.props;
+    const { dark, light } = this.props.navigation.color;
+    const { navigation } = this.props;
     navigation.navigate(routeName, {
       dark,
       light,
@@ -53,11 +51,13 @@ class Settings extends React.Component<Props, State> {
   };
 
   render() {
-    const { dark, light, locale, setLocale } = this.props;
+    const { dark, light } = this.props.navigation.color;
+    const { locale, setLocale } = this.props;
     const { isSignedIn } = this.state;
 
     return (
-      <React.Fragment>
+      <View style={styles.container(light)}>
+        <StatusBar barStyle='light-content' />
         <LanguagePicker
           dark={dark}
           light={light}
@@ -85,23 +85,18 @@ class Settings extends React.Component<Props, State> {
         <Dev>
           {dark} - {light}
         </Dev>
-      </React.Fragment>
+      </View>
     );
   }
 }
 
-const enhance = compose(
-  withColor,
-  withLocale,
-  withHeader({
-    rightButton: {
-      label: 'Done',
-      onPress: ({ navigation }: Props) => {
-        navigation.goBack();
-      },
-    },
-    title: 'Settings',
-  }),
-);
+const Enhanced = compose(withLocale)(Settings);
+Enhanced.navigationOptions = ({ navigation }: Props) => ({
+  headerRight: (
+    <HeaderButton color={navigation.color.light} onPress={navigation.dismiss}>
+      Done
+    </HeaderButton>
+  ),
+});
 
-export default enhance(Settings);
+export default Enhanced;
