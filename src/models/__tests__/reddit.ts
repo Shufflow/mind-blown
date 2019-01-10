@@ -45,26 +45,34 @@ describe('save phrase', () => {
   const id = '0';
 
   it('saves a phrase into the "phrases" collection', async () => {
-    const phrases = sandbox.stub(dataSource.phrases, 'add');
+    const date = new Date();
+    sandbox.useFakeTimers(date);
+    const phrase = sandbox.stub().resolves();
+    const doc = sandbox.stub(dataSource.phrases, 'doc').returns({
+      set: phrase,
+    } as any);
 
     await dataSource.savePhrase(id, transl);
 
-    assert.calledWith(phrases, { ...transl, en: mockPhrases[id].content });
+    assert.calledWith(doc, id);
+    assert.calledWith(phrase, {
+      date,
+      en: mockPhrases[id].content,
+      ...transl,
+    });
   });
 
   it('deletes a phrase from the "reddit" collection after saving', async () => {
-    let called = false;
+    const del = sandbox.stub().resolves();
     const doc = sandbox.stub(dataSource.reddit, 'doc').returns({
-      delete: () => {
-        called = true;
-      },
+      delete: del,
       get: () => ({ data: () => ({ content: 'foobar' }) }),
     } as any);
 
     await dataSource.savePhrase(id, transl);
 
     assert.called(doc);
-    expect(called).toEqual(true);
+    expect(del.called).toEqual(true);
   });
 });
 
@@ -72,18 +80,16 @@ describe('discard phrase', () => {
   const dataSource = new RedditDataSource();
 
   it('deletes the phrase from the "reddit" collection', async () => {
-    let called = false;
     const id = '1';
+    const del = sandbox.stub().resolves();
     const doc = sandbox.stub(dataSource.reddit, 'doc').returns({
-      delete: () => {
-        called = true;
-      },
+      delete: del,
       get: () => ({ data: () => ({ content: 'foobar' }) }),
     } as any);
 
     await dataSource.discardPhrase(id);
 
     assert.called(doc);
-    expect(called).toEqual(true);
+    expect(del.called).toEqual(true);
   });
 });

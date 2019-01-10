@@ -45,9 +45,10 @@ class RedditDataSource {
     const doc = this.reddit.doc(id);
     const { content } = (await doc.get()).data() as any;
 
-    await this.phrases.add({
-      ...translations,
+    await this.phrases.doc(id).set({
+      date: new Date(),
       en: content,
+      ...translations,
     });
 
     await doc.delete();
