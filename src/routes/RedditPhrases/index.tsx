@@ -1,17 +1,15 @@
 import React from 'react';
 import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
-import { compose } from '@typed/compose';
-import { NavigationScreenProps } from 'react-navigation';
-
-import withHeader from 'src/utils/hocs/withHeader';
 
 import { Colors } from 'src/utils/styles';
 import icons from 'src/assets/icons';
 
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
+import { ColoredScreenProps, goBack } from 'src/navigators/settingsNavigator';
 
 import SVGButton from 'src/components/SVGButton';
 import Button from 'src/components/Button';
+import HeaderButton from 'src/components/HeaderButton';
 
 import Translation from './components/Translation';
 import styles from './styles';
@@ -24,11 +22,19 @@ interface State {
   translations: Array<{ language: string; content: string }>;
 }
 
-class RedditPhrases extends React.Component<NavigationScreenProps, State> {
+class RedditPhrases extends React.Component<ColoredScreenProps, State> {
+  static navigationOptions = (args: ColoredScreenProps) => ({
+    headerRight: (
+      <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
+        Done
+      </HeaderButton>
+    ),
+  });
+
   dataSource = new RedditDataSource();
   translations: Array<{ language: string; content: string }> = [];
 
-  constructor(props: NavigationScreenProps) {
+  constructor(props: ColoredScreenProps) {
     super(props);
     this.state = {
       isLoading: false,
@@ -165,17 +171,4 @@ class RedditPhrases extends React.Component<NavigationScreenProps, State> {
   }
 }
 
-const enhance = compose(
-  withHeader({
-    addMargin: false,
-    rightButton: {
-      label: 'Done',
-      onPress: ({ navigation }: NavigationScreenProps) => {
-        navigation.goBack();
-      },
-    },
-    title: 'Reddit Phrase',
-  }),
-);
-
-export default enhance(RedditPhrases);
+export default RedditPhrases;

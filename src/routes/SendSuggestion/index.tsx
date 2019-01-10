@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextInput } from 'react-native';
 
-import { ColoredScreenProps } from 'src/navigators/settingsNavigator';
+import { ColoredScreenProps, goBack } from 'src/navigators/settingsNavigator';
 
 import PhrasesDataSource from 'src/models/phrases';
 
@@ -11,10 +11,6 @@ import HeaderButton from 'src/components/HeaderButton';
 interface State {
   text: string;
 }
-
-/// POG: sending `navigation.goBack` to `onPress` doesn't work
-const goBack = ({ navigation }: ColoredScreenProps) => () =>
-  navigation.goBack();
 
 class SuggestionForm extends React.Component<ColoredScreenProps, State> {
   static navigationOptions = (args: ColoredScreenProps) => ({

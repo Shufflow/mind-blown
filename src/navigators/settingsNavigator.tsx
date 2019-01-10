@@ -17,6 +17,7 @@ import SendSuggestion from 'src/routes/SendSuggestion';
 
 import { getColor } from 'src/models/assets';
 import { Color } from 'src/assets/colorPairs';
+import { Spacing } from 'src/utils/styles';
 
 export interface ColoredScreenProps<Params = NavigationParams> {
   navigation: NavigationScreenProp<NavigationRoute<Params>, Params> & {
@@ -37,10 +38,13 @@ const SettingsNavigator = createStackNavigator(routes, {
     }
 
     return {
+      headerLeft: null,
       headerStyle: { backgroundColor: navigation.color.dark },
       headerTintColor: navigation.color.light,
       headerTitle: (
-        <Text style={{ color: navigation.color.light, fontSize: 20 }}>
+        <Text
+          style={{ color: navigation.color.light, fontSize: Spacing.size_20 }}
+        >
           {startCase(navigation.state.routeName)}
         </Text>
       ),
@@ -48,5 +52,9 @@ const SettingsNavigator = createStackNavigator(routes, {
   },
   mode: 'modal',
 });
+
+/// POG: sending `navigation.goBack` to `onPress` doesn't work
+export const goBack = ({ navigation }: ColoredScreenProps) => () =>
+  navigation.goBack();
 
 export default createAppContainer(SettingsNavigator);
