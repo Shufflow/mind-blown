@@ -1,17 +1,12 @@
 import React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  RegisteredStyle,
-  TextStyle,
-} from 'react-native';
+import { TouchableOpacity, Text, StyleProp, TextStyle } from 'react-native';
 
 import styles from './styles';
 
 interface Props {
   children: React.ReactNode;
   onPress: () => void;
-  style?: RegisteredStyle<TextStyle>;
+  style?: StyleProp<TextStyle>;
 }
 
 const Button = ({

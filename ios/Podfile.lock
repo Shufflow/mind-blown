@@ -148,6 +148,8 @@ PODS:
   - React/RCTImage (0.57.7):
     - React/Core
     - React/RCTNetwork
+  - React/RCTLinkingIOS (0.57.7):
+    - React/Core
   - React/RCTNetwork (0.57.7):
     - React/Core
   - React/RCTSettings (0.57.7):
@@ -160,6 +162,8 @@ PODS:
     - React/RCTBlob
   - RNFirebase (5.1.1):
     - Firebase/Core
+    - React
+  - RNGestureHandler (1.0.12):
     - React
   - RNGoogleSignin (1.0.2):
     - GoogleSignIn
@@ -177,11 +181,13 @@ DEPENDENCIES:
   - React/DevSupport (from `../node_modules/react-native`)
   - React/RCTAnimation (from `../node_modules/react-native`)
   - React/RCTImage (from `../node_modules/react-native`)
+  - React/RCTLinkingIOS (from `../node_modules/react-native`)
   - React/RCTNetwork (from `../node_modules/react-native`)
   - React/RCTSettings (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
   - RNFirebase (from `../node_modules/react-native-firebase/ios/RNFirebase.podspec`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -217,6 +223,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   RNFirebase:
     :path: "../node_modules/react-native-firebase/ios/RNFirebase.podspec"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
   RNSVG:
@@ -249,10 +257,11 @@ SPEC CHECKSUMS:
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
+  RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 06958c66a6eabeaf49d8064f40a6a38acc29c0a3
+PODFILE CHECKSUM: 423742abe7b4c512a2ded5e812011acb19929502
 
 COCOAPODS: 1.5.3

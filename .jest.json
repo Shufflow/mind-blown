@@ -16,7 +16,7 @@
     "src"
   ],
   "moduleNameMapper": {
-    "src/(.*)": "<rootDir>/src/$1"
+    "^src/(.*)": "<rootDir>/src/$1"
   },
   "setupFiles": [
     "<rootDir>/jest/commonMocks.ts"
@@ -32,5 +32,8 @@
   "testPathIgnorePatterns": [
     "<rootDir>/build",
     "node_modules"
+  ],
+  "transformIgnorePatterns": [
+    "node_modules/(?!(jest-)?react-native|@?react-navigation|react-navigation-redux-helpers)"
   ]
 }

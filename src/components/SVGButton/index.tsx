@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import {
-  RegisteredStyle,
+  StyleProp,
   StyleSheet,
   TextStyle,
   TouchableOpacity,
@@ -17,7 +17,7 @@ interface Props {
   fillAll?: boolean;
   icon: string;
   onPress: () => void;
-  style?: RegisteredStyle<TextStyle>;
+  style?: StyleProp<TextStyle>;
 }
 
 const SVGButton = ({
