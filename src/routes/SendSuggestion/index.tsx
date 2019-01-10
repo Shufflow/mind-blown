@@ -1,20 +1,18 @@
 import { compose } from '@typed/compose';
 import React from 'react';
 import { TextInput } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
 
 import PhrasesDataSource from 'src/models/phrases';
 import withHeader from 'src/utils/hocs/withHeader';
 
 import styles from './styles';
-import withSettingsModal, {
-  SettingsModalProps,
-} from 'src/utils/hocs/withSettingsModal';
 
 interface State {
   text: string;
 }
 
-class SuggestionForm extends React.Component<SettingsModalProps, State> {
+class SuggestionForm extends React.Component<NavigationScreenProps, State> {
   dataSource: PhrasesDataSource = new PhrasesDataSource();
 
   state = {
@@ -31,7 +29,7 @@ class SuggestionForm extends React.Component<SettingsModalProps, State> {
       await this.dataSource.sendSuggestion(text);
     }
 
-    this.props.dismiss();
+    this.props.navigation.goBack();
   };
 
   render() {
@@ -48,12 +46,11 @@ class SuggestionForm extends React.Component<SettingsModalProps, State> {
 }
 
 const enhance = compose(
-  withSettingsModal('Send Suggestion'),
   withHeader({
     leftButton: {
       label: 'Cancel',
-      onPress: ({ dismiss }: SettingsModalProps) => {
-        dismiss();
+      onPress: ({ navigation }: NavigationScreenProps) => {
+        navigation.goBack();
       },
     },
     rightButton: {

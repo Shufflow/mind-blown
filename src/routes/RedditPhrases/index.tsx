@@ -1,10 +1,8 @@
 import React from 'react';
 import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
 import { compose } from '@typed/compose';
+import { NavigationScreenProps } from 'react-navigation';
 
-import withSettingsModal, {
-  SettingsModalProps,
-} from 'src/utils/hocs/withSettingsModal';
 import withHeader from 'src/utils/hocs/withHeader';
 
 import { Colors } from 'src/utils/styles';
@@ -26,11 +24,11 @@ interface State {
   translations: Array<{ language: string; content: string }>;
 }
 
-class RedditPhrases extends React.Component<SettingsModalProps, State> {
+class RedditPhrases extends React.Component<NavigationScreenProps, State> {
   dataSource = new RedditDataSource();
   translations: Array<{ language: string; content: string }> = [];
 
-  constructor(props: SettingsModalProps) {
+  constructor(props: NavigationScreenProps) {
     super(props);
     this.state = {
       isLoading: false,
@@ -74,7 +72,8 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
   };
 
   renderTranslations = (): Array<React.ReactElement<any>> => {
-    const { dark, light } = this.props;
+    const dark = this.props.navigation.getParam('dark');
+    const light = this.props.navigation.getParam('light');
     return this.state.translations.map(({ language, content }, idx) => (
       <Translation
         key={`${language}-${content}-${idx.toString()}`}
@@ -167,13 +166,12 @@ class RedditPhrases extends React.Component<SettingsModalProps, State> {
 }
 
 const enhance = compose(
-  withSettingsModal('Review Reddit Phrases'),
   withHeader({
     addMargin: false,
     rightButton: {
       label: 'Done',
-      onPress: ({ dismiss }: SettingsModalProps) => {
-        dismiss();
+      onPress: ({ navigation }: NavigationScreenProps) => {
+        navigation.goBack();
       },
     },
     title: 'Reddit Phrase',

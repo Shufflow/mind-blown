@@ -23,12 +23,10 @@ const styles = {
   header: (backgroundColor: string = Colors.offWhite): any => ({
     ...Layouts.horizontal,
     ...Layouts.fullWidth,
-    ...Layouts.bottomBorder(Colors.gray),
     ...Constants.shadow,
     backgroundColor,
-    alignItems: 'center',
+    alignItems: 'flex-end',
     justifyContent: 'space-between',
-    padding: Spacing.size_20,
   }),
   headerMargin: {
     marginBottom: Spacing.size_40,
@@ -36,11 +34,13 @@ const styles = {
   title: (color: string = Colors.black): any => ({
     color,
     fontSize: Spacing.size_20,
+    margin: Spacing.size_20,
   }),
 
   doneButton: (color: string = Colors.black): any => ({
     color,
     fontWeight: '600',
+    padding: Spacing.size_10,
   }),
 };
 

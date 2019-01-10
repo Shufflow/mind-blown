@@ -1,11 +1,8 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StatusBar, Text, View, SafeAreaView } from 'react-native';
+import { NavigationScreenProps } from 'react-navigation';
+
+import Button, { ButtonTheme } from 'src/components/Button';
 
 import styles from './styles';
 
@@ -14,14 +11,14 @@ export interface HeaderProps {
   light: string;
 }
 
-interface Button<T> {
+interface ButtonType<T> {
   label: string;
   onPress: (props: T, ref: any) => void;
 }
 
 interface HOCProps<T> {
-  leftButton?: Button<T>;
-  rightButton?: Button<T>;
+  leftButton?: ButtonType<T>;
+  rightButton?: ButtonType<T>;
   title: string;
   addMargin?: boolean;
 }
@@ -33,11 +30,13 @@ const withHeader = <T extends Object>({
   rightButton,
 }: HOCProps<T>) => (
   WrappedComponent: React.ComponentType<T>,
-): React.ComponentType<T & HeaderProps> => {
-  class ComponentWithHeader extends React.PureComponent<T & HeaderProps> {
+): React.ComponentType<T & NavigationScreenProps> => {
+  class ComponentWithHeader extends React.PureComponent<
+    T & NavigationScreenProps
+  > {
     wrappedRef?: any;
 
-    onPressButton = (button: Button<T>) => () => {
+    onPressButton = (button: ButtonType<T>) => () => {
       button.onPress(this.props, this.wrappedRef);
     };
 
@@ -45,8 +44,14 @@ const withHeader = <T extends Object>({
       this.wrappedRef = ref;
     };
 
+    getParam = (name: string): string => {
+      const prop = (this.props as { [key: string]: any })[name];
+      return this.props.navigation.getParam(name, prop);
+    };
+
     render() {
-      const { dark, light } = this.props;
+      const dark = this.getParam('dark');
+      const light = this.getParam('light');
       return (
         <React.Fragment>
           <StatusBar barStyle='light-content' />
@@ -56,19 +61,23 @@ const withHeader = <T extends Object>({
               style={[styles.header(dark), addMargin && styles.headerMargin]}
             >
               {!!leftButton && (
-                <TouchableOpacity onPress={this.onPressButton(leftButton)}>
-                  <Text style={styles.doneButton(light)}>
-                    {leftButton.label}
-                  </Text>
-                </TouchableOpacity>
+                <Button
+                  onPress={this.onPressButton(leftButton)}
+                  textStyle={styles.doneButton(light)}
+                  theme={ButtonTheme.minimalist}
+                >
+                  {leftButton.label}
+                </Button>
               )}
               <Text style={styles.title(light)}>{title}</Text>
               {!!rightButton && (
-                <TouchableOpacity onPress={this.onPressButton(rightButton)}>
-                  <Text style={styles.doneButton(light)}>
-                    {rightButton.label}
-                  </Text>
-                </TouchableOpacity>
+                <Button
+                  onPress={this.onPressButton(rightButton)}
+                  textStyle={styles.doneButton(light)}
+                  theme={ButtonTheme.minimalist}
+                >
+                  {rightButton.label}
+                </Button>
               )}
             </View>
             <WrappedComponent ref={this.handleWrappedRef} {...this.props} />

@@ -4,7 +4,7 @@ import React from 'react';
 
 import AppNavigator from 'src/navigators/appNavigator';
 
-import { withLocaleProvider } from './utils/hocs/withLocale';
+import { withLocaleProvider } from 'src/utils/hocs/withLocale';
 
 const App = (): React.ReactElement<{}> => <AppNavigator />;
 

@@ -14,6 +14,7 @@ const routes = {
 
 const SettingsNavigator = createStackNavigator(routes, {
   headerMode: 'none',
+  mode: 'modal',
 });
 
 export default createAppContainer(SettingsNavigator);
