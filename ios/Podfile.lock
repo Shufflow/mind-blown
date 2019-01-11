@@ -160,13 +160,15 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNFirebase (5.1.1):
+  - RNFirebase (5.2.0):
     - Firebase/Core
     - React
   - RNGestureHandler (1.0.12):
     - React
   - RNGoogleSignin (1.0.2):
     - GoogleSignIn
+    - React
+  - RNScreens (1.0.0-alpha.21):
     - React
   - RNSVG (8.0.10):
     - React
@@ -189,6 +191,7 @@ DEPENDENCIES:
   - RNFirebase (from `../node_modules/react-native-firebase/ios/RNFirebase.podspec`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -227,6 +230,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   yoga:
@@ -256,12 +261,13 @@ SPEC CHECKSUMS:
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  RNFirebase: 2b25fd2e60269f26bb0a76c71dcc942b35a77df0
+  RNFirebase: 57f6c2adb24355b4e6211e028a8e97e473432245
   RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
+  RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 423742abe7b4c512a2ded5e812011acb19929502
+PODFILE CHECKSUM: 9e4a4e1085e19ef200c516a912e344eab5a07fe4
 
 COCOAPODS: 1.5.3

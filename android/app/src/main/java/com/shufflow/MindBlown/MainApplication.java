@@ -3,11 +3,14 @@ package com.shufflow.MindBlown;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.horcrux.svg.SvgPackage;
 import io.invertase.firebase.RNFirebasePackage;
 import io.invertase.firebase.RNFirebasePackage;
+import io.invertase.firebase.auth.RNFirebaseAuthPackage;
+import io.invertase.firebase.firestore.RNFirebaseFirestorePackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -31,27 +34,19 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNScreensPackage(),
             new RNGestureHandlerPackage(),
             new RNGoogleSigninPackage(),
             new SvgPackage(),
             new RNFirebasePackage(),
-            new RNFirebaseAuthPackage()
+            new RNFirebaseAuthPackage(),
+            new RNFirebaseFirestorePackage()
       );
     }
 
     @Override
     protected String getJSMainModuleName() {
       return "index";
-    }
-
-    @Override
-    protected ReactActivityDelegate createReactActivityDelegate() {
-      return new ReactActivityDelegate(this, getMainComponentName()) {
-        @Override
-        protected ReactRootView createRootView() {
-         return new RNGestureHandlerEnabledRootView(MainActivity.this);
-        }
-      };
     }
   };
 
