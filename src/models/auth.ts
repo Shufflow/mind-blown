@@ -1,5 +1,5 @@
 import { GoogleSignin, statusCodes } from 'react-native-google-signin';
-import firebase from 'react-native-firebase';
+import firebase from 'firebase';
 
 const googleLogin = async () => {
   try {
@@ -12,7 +12,7 @@ const googleLogin = async () => {
       data.accessToken!,
     );
 
-    await firebase.auth().signInWithCredential(credential);
+    await firebase.auth().signInAndRetrieveDataWithCredential(credential);
   } catch (e) {
     if (e.code !== statusCodes.SIGN_IN_CANCELLED) {
       // tslint:disable-next-line: no-console

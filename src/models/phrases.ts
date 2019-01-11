@@ -1,8 +1,5 @@
-import { firestore, RNFirebase } from 'react-native-firebase';
-import {
-  DocumentReference,
-  DocumentSnapshot,
-} from 'react-native-firebase/firestore';
+import { firestore } from 'firebase';
+import 'firebase/firestore';
 
 export interface Phrase {
   id: string;
@@ -14,12 +11,16 @@ interface PhraseMap {
 }
 
 class PhrasesDataSource {
-  firestore: RNFirebase.firestore.Firestore;
+  firestore: firebase.firestore.Firestore;
   phrases: Promise<PhraseMap>;
   usedPhrasesIds: string[];
 
   constructor() {
     this.firestore = firestore();
+    this.firestore.settings({
+      timestampsInSnapshots: true,
+    });
+
     this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
   }
@@ -27,7 +28,7 @@ class PhrasesDataSource {
   async loadAllPhrases(): Promise<PhraseMap> {
     const { docs } = await this.firestore.collection('phrases').get();
     return docs.reduce(
-      (res: PhraseMap, doc: DocumentSnapshot): PhraseMap => ({
+      (res: PhraseMap, doc): PhraseMap => ({
         ...res,
         [doc.id || '']: {
           ...doc.data(),
@@ -63,7 +64,7 @@ class PhrasesDataSource {
   async reviewPhrase(
     id: string,
     positive: boolean,
-  ): Promise<DocumentReference> {
+  ): Promise<firebase.firestore.DocumentReference> {
     return this.firestore.collection('reviews').add({
       positive,
       phrase: this.firestore.collection('phrases').doc(id),

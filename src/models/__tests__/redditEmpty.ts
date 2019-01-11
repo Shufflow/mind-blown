@@ -6,7 +6,7 @@ import { stubFirebase } from 'src/utils/tests';
 import RedditDataSource from '../reddit';
 
 jest.mock(
-  'react-native-firebase',
+  'firebase',
   () =>
     new MockFirebase(
       stubFirebase({

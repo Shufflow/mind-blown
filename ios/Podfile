@@ -16,12 +16,8 @@ target 'MindBlown' do
     'RCTSettings',
   ]
 
-  pod 'Firebase/Firestore', '~> 5.15.0'
-  pod 'Firebase/Auth', '~> 5.15.0'
-
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'yoga', path: '../node_modules/react-native/ReactCommon/yoga'
-  pod 'RNFirebase', path: '../node_modules/react-native-firebase/ios/RNFirebase.podspec'
   pod 'RNSVG', :path => '../node_modules/react-native-svg'
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'

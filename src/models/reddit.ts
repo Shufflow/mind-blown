@@ -1,5 +1,5 @@
-import { firestore } from 'react-native-firebase';
-import { CollectionReference } from 'react-native-firebase/firestore';
+import { firestore } from 'firebase';
+import 'firebase/firestore';
 
 export interface RedditPhrase {
   id: string;
@@ -8,8 +8,8 @@ export interface RedditPhrase {
 }
 
 class RedditDataSource {
-  reddit: CollectionReference;
-  phrases: CollectionReference;
+  reddit: firestore.CollectionReference;
+  phrases: firestore.CollectionReference;
 
   constructor() {
     const fs = firestore();
@@ -34,7 +34,7 @@ class RedditDataSource {
     return {
       content,
       score,
-      id: ref.id as string,
+      id: ref.id,
     };
   }
 

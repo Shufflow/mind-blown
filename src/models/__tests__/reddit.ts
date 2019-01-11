@@ -11,7 +11,7 @@ const mockPhrases = {
   2: { score: 2, content: 'xpto' },
 };
 jest.mock(
-  'react-native-firebase',
+  'firebase',
   () =>
     new MockFirebase(
       stubFirebase({
