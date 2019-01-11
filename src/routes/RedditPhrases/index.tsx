@@ -1,5 +1,6 @@
 import React from 'react';
 import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
+import { isEqual, omit } from 'lodash';
 
 import { Colors } from 'src/utils/styles';
 import icons from 'src/assets/icons';
@@ -45,6 +46,16 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
 
   componentDidMount() {
     this.loadPhrase();
+  }
+
+  shouldComponentUpdate(nextProps: ColoredScreenProps, nextState: State) {
+    return (
+      !isEqual(this.props, nextProps) ||
+      !isEqual(
+        omit(this.state, 'translations.content'),
+        omit(nextState, 'translations.content'),
+      )
+    );
   }
 
   loadPhrase = async () => {
