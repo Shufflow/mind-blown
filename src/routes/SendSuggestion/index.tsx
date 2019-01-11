@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput } from 'react-native';
+import { View, TextInput } from 'react-native';
 
 import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
 
@@ -55,14 +55,20 @@ class SuggestionForm extends React.Component<ColoredScreenProps, State> {
   };
 
   render() {
+    const {
+      navigation: { color },
+    } = this.props;
+
     return (
-      <TextInput
-        onChangeText={this.onChangeText}
-        style={styles.container}
-        autoFocus
-        editable
-        multiline
-      />
+      <View style={styles.container(color.light)}>
+        <TextInput
+          onChangeText={this.onChangeText}
+          style={styles.textInput}
+          autoFocus
+          editable
+          multiline
+        />
+      </View>
     );
   }
 }

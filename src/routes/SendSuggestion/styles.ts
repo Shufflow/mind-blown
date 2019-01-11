@@ -1,8 +1,12 @@
-import { StyleSheet } from 'react-native';
 import { Colors, Layouts, Spacing } from 'src/utils/styles';
 
-const styles = StyleSheet.create({
-  container: {
+const styles = {
+  container: (backgroundColor: string = Colors.white) => ({
+    ...Layouts.container,
+    backgroundColor,
+    paddingVertical: Spacing.size_40,
+  }),
+  textInput: {
     ...Layouts.flex,
     backgroundColor: Colors.white,
     borderColor: Colors.lightGray,
@@ -12,6 +16,6 @@ const styles = StyleSheet.create({
     margin: Spacing.size_20,
     padding: Spacing.size_10,
   },
-});
+};
 
 export default styles;
