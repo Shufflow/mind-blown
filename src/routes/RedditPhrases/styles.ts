@@ -1,5 +1,4 @@
-import { StyleSheet } from 'react-native';
-
+import { TextStyle } from 'react-native';
 import { Layouts, Spacing, Colors } from 'src/utils/styles';
 
 const Constants = {
@@ -7,13 +6,14 @@ const Constants = {
   borderWidth: 1,
 };
 
-const styles = StyleSheet.create({
-  container: {
+const styles = {
+  container: (backgroundColor: string = Colors.white) => ({
+    backgroundColor,
     ...Layouts.container,
-  },
+  }),
   scrollViewContent: {
     padding: Spacing.size_20,
-    paddingBottom: Spacing.size_40,
+    paddingVertical: Spacing.size_40,
   },
   text: {
     fontSize: Spacing.size_20,
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: Spacing.size_15,
     marginTop: Spacing.size_30,
     width: Spacing.size_15,
-  },
+  } as TextStyle,
 
   footer: {
     ...Layouts.horizontal,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     fontSize: Spacing.size_40,
     marginTop: Spacing.size_40,
     textAlign: 'center',
-  },
-});
+  } as TextStyle,
+};
 
 export default styles;

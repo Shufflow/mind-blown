@@ -128,10 +128,14 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
 
   render() {
     const { isLoading, phrase } = this.state;
+    const {
+      navigation: { color },
+    } = this.props;
+
     const isEmpty = !isLoading && !phrase;
     return (
       <ScrollView
-        style={styles.container}
+        style={styles.container(color.light)}
         contentContainerStyle={styles.scrollViewContent}
       >
         {isLoading && (
