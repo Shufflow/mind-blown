@@ -25,7 +25,7 @@ const Dev = ({
       true,
     );
 
-  if (isStringArray) {
+  if (typeof children === 'string' || isStringArray) {
     return (
       <Text
         style={[

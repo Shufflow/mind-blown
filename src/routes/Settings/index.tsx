@@ -2,6 +2,7 @@ import { compose } from '@typed/compose';
 import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import Config from 'react-native-config';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
@@ -84,6 +85,8 @@ class Settings extends React.Component<Props, State> {
         </Dev>
         <Dev>
           {dark} - {light}
+          {`\n`}
+          {Config.FIREBASE_PROJECT_ID}
         </Dev>
       </View>
     );
