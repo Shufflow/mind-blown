@@ -49,6 +49,7 @@ const SettingsNavigator = createStackNavigator(routes, {
       ),
     };
   },
+  headerLayoutPreset: 'center',
   mode: 'modal',
 });
 
