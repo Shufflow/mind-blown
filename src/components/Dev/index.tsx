@@ -1,12 +1,12 @@
 import React from 'react';
-import { RegisteredStyle, Text, View } from 'react-native';
+import { Text, View, StyleProp } from 'react-native';
 
 import styles from './styles';
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
   isAbsolute?: boolean;
-  style?: RegisteredStyle<any>;
+  style?: StyleProp<any>;
 }
 
 const Dev = ({

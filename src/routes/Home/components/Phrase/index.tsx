@@ -20,7 +20,7 @@ const Phrase = ({ content, color }: Props): React.ReactElement<Props> => {
       <Text style={[styles.text, { color, fontFamily }]} allowFontScaling>
         {content}
       </Text>
-      <Dev>fontFamily - {fontFamily}</Dev>
+      <Dev style={{ color }}>fontFamily - {fontFamily}</Dev>
     </React.Fragment>
   );
 };
