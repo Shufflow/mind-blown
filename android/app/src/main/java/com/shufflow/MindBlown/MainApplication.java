@@ -3,6 +3,7 @@ package com.shufflow.MindBlown;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import co.apptailor.googlesignin.RNGoogleSigninPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new ReactNativeConfigPackage(),
             new RNScreensPackage(),
             new RNGestureHandlerPackage(),
             new RNGoogleSigninPackage(),

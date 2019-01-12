@@ -7,7 +7,10 @@ jest.mock('react-native-google-signin', () => {
   const GoogleSigninButton = () => React.createElement<any>(View);
   GoogleSigninButton.Size = { Wide: 0 };
 
-  return { GoogleSigninButton };
+  return {
+    GoogleSigninButton,
+    GoogleSignin: { configure: jest.fn },
+  };
 });
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};

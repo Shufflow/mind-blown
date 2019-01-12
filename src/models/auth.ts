@@ -3,8 +3,6 @@ import firebase from 'firebase';
 
 const googleLogin = async () => {
   try {
-    GoogleSignin.configure();
-
     const data = await GoogleSignin.signIn();
 
     const credential = firebase.auth.GoogleAuthProvider.credential(
