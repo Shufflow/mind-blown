@@ -85,7 +85,6 @@ class Translation extends React.Component<Props, State> {
           onChangeText={this.onChangeText}
           value={content}
           style={styles.textInput}
-          autoFocus
           editable
           multiline
         />
