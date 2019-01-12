@@ -12,9 +12,9 @@ export const getLocale = async (): Promise<string> => {
   return (
     locale ||
     Platform.select({
-      android: NativeModules.I18nManager.localeIdentifier,
-      ios: NativeModules.SettingsManager.settings.AppleLanguages[0],
-    })
+      android: () => NativeModules.I18nManager.localeIdentifier,
+      ios: () => NativeModules.SettingsManager.settings.AppleLanguages[0],
+    })()
   );
 };
 

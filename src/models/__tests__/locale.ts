@@ -38,7 +38,7 @@ describe('getting the locale', () => {
 
   it('gets from device if storage empty', async () => {
     const asyncStorage = sandbox.stub(AsyncStorage, 'getItem').resolves(null);
-    const platform = sandbox.stub(Platform, 'select').returns('foobar');
+    const platform = sandbox.stub(Platform, 'select').returns(() => 'foobar');
 
     const result = await getLocale();
 

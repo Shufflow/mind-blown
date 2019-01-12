@@ -54,7 +54,12 @@ class LanguagePicker extends React.Component<Props, State> {
     const { dark, light } = this.props;
     const { isVisible, selectedValue } = this.state;
     return (
-      <Modal animationType='fade' transparent visible={isVisible}>
+      <Modal
+        animationType='fade'
+        transparent
+        visible={isVisible}
+        onRequestClose={this.togglePickerVisible(false)}
+      >
         <View style={styles.pickerContainer}>
           <View style={styles.pickerBar(dark)}>
             <TouchableOpacity onPress={this.onPressDone}>
