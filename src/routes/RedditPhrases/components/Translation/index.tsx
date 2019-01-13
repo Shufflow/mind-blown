@@ -91,7 +91,8 @@ class Translation extends React.Component<Props, State> {
         <LanguagePicker
           dark={dark}
           light={light}
-          locale={language || Locales.en}
+          locale={language || Locales.pt}
+          omitKeys={['en']}
           onSelectValue={this.onSelectLanguage}
           ref={this.handleLanguagePickerRef}
         />

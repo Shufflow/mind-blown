@@ -15,7 +15,7 @@ import HeaderButton from 'src/components/HeaderButton';
 import Translation from './components/Translation';
 import styles from './styles';
 
-const emptyTranslation = { language: 'en', content: '' };
+const emptyTranslation = { language: 'pt-BR', content: '' };
 
 interface State {
   isLoading: boolean;

@@ -9,6 +9,7 @@ import styles from './styles';
 
 interface Props extends HeaderProps {
   locale: string;
+  omitKeys: string[];
   onSelectValue: (lang: string) => void;
 }
 
@@ -18,6 +19,10 @@ interface State {
 }
 
 class LanguagePicker extends React.Component<Props, State> {
+  static defaultProps = {
+    omitKeys: [],
+  };
+
   pickerItems: Array<React.ReactElement<any>>;
 
   constructor(props: Props) {
@@ -27,9 +32,11 @@ class LanguagePicker extends React.Component<Props, State> {
       selectedValue: props.locale,
     };
 
-    this.pickerItems = Object.entries(Locales).map(([key, label]) => (
-      <Picker.Item key={key} label={label} value={key} />
-    ));
+    this.pickerItems = Object.entries(Locales)
+      .filter(([key]) => !props.omitKeys.includes(key))
+      .map(([key, label]) => (
+        <Picker.Item key={key} label={label} value={key} />
+      ));
   }
 
   show = () => {
