@@ -3,6 +3,8 @@ export const Colors = {
   darkGray: '#777',
   gray: '#AAA',
   lightGray: '#D0D0D0',
+  lightGreen: '#D6FFD6',
+  lightRed: '#FFD6D6',
   offWhite: '#F8F8F8',
   white: 'white',
 };
@@ -37,4 +39,5 @@ export const Spacing = {
   size_20: 20,
   size_30: 30,
   size_40: 40,
+  size_45: 45,
 };

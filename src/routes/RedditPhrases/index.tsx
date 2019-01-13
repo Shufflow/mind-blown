@@ -158,21 +158,26 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
         )}
         {!isLoading && !!phrase && (
           <React.Fragment>
-            <Text style={styles.text}>{phrase.content}</Text>
-            <Text style={styles.text}>Score - {phrase.score}</Text>
-            {this.renderTranslations()}
-            <SVGButton
-              icon={icons.plus}
-              color={Colors.darkGray}
-              style={styles.plusButton}
-              onPress={this.onPressAddTranslation}
-              fillAll
-            />
+            <View style={styles.content}>
+              <Text style={styles.text}>{phrase.content}</Text>
+              <Text style={styles.text}>Score - {phrase.score}</Text>
+              {this.renderTranslations()}
+              <SVGButton
+                icon={icons.plus}
+                color={Colors.darkGray}
+                style={styles.plusButton}
+                onPress={this.onPressAddTranslation}
+                fillAll
+              />
+            </View>
             <View style={styles.footer}>
-              <Button onPress={this.onPressDiscard} style={styles.footerButton}>
+              <Button
+                onPress={this.onPressDiscard}
+                style={styles.discardButton}
+              >
                 Discard
               </Button>
-              <Button onPress={this.onPressSave} style={styles.footerButton}>
+              <Button onPress={this.onPressSave} style={styles.saveButton}>
                 Save
               </Button>
             </View>
