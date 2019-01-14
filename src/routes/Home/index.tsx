@@ -12,7 +12,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { AdMobBanner } from 'react-native-admob';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
-import AdIds from 'src/models/ads';
+import AdIds, { onFailToLoadAd } from 'src/models/ads';
 import withColor, { ColorProps } from 'src/utils/hocs/withColors';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import routeNames from 'src/routes';
@@ -101,13 +101,6 @@ class Home extends React.Component<Props, State> {
     this.props.navigation.navigate(routeNames.Settings);
   };
 
-  onFailToLoadAd = (e: Error) => {
-    if (__DEV__) {
-      // tslint:disable-next-line: no-console
-      console.warn(e);
-    }
-  };
-
   render() {
     const { bgColor, isDark, fgColor } = this.props;
     const { phrase, selectedThumb } = this.state;
@@ -118,7 +111,7 @@ class Home extends React.Component<Props, State> {
             adSize='fullBanner'
             adUnitID={AdIds.homeTopBanner}
             testDevices={[AdMobBanner.simulatorId]}
-            onAdFailedToLoad={this.onFailToLoadAd}
+            onAdFailedToLoad={onFailToLoadAd}
           />
           <SafeAreaView style={styles.content}>
             <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
@@ -155,7 +148,7 @@ class Home extends React.Component<Props, State> {
             adSize='fullBanner'
             adUnitID={AdIds.homeBottomBanner}
             testDevices={[AdMobBanner.simulatorId]}
-            onAdFailedToLoad={this.onFailToLoadAd}
+            onAdFailedToLoad={onFailToLoadAd}
           />
         </View>
       </TouchableWithoutFeedback>

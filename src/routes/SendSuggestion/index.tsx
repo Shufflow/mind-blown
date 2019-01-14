@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
+import { AdMobBanner } from 'react-native-admob';
 
+import AdIds, { onFailToLoadAd } from 'src/models/ads';
 import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
 
 import PhrasesDataSource from 'src/models/phrases';
@@ -60,6 +62,12 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
           autoFocus
           editable
           multiline
+        />
+        <AdMobBanner
+          adSize='fullBanner'
+          adUnitID={AdIds.settingsBottomBanner}
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={onFailToLoadAd}
         />
       </View>
     );
