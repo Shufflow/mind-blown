@@ -8,11 +8,7 @@ import PhrasesDataSource from 'src/models/phrases';
 import styles from './styles';
 import HeaderButton from 'src/components/HeaderButton';
 
-interface State {
-  text: string;
-}
-
-class SuggestionForm extends React.Component<ColoredScreenProps, State> {
+class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
   static navigationOptions = (args: ColoredScreenProps) => ({
     headerLeft: (
       <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
@@ -30,9 +26,7 @@ class SuggestionForm extends React.Component<ColoredScreenProps, State> {
   });
 
   dataSource: PhrasesDataSource = new PhrasesDataSource();
-  state = {
-    text: '',
-  };
+  text = '';
 
   constructor(props: ColoredScreenProps) {
     super(props);
@@ -42,13 +36,12 @@ class SuggestionForm extends React.Component<ColoredScreenProps, State> {
   }
 
   onChangeText = (text: string) => {
-    this.setState({ text });
+    this.text = text;
   };
 
   onPressDone = async () => {
-    const { text } = this.state;
-    if (text) {
-      await this.dataSource.sendSuggestion(text);
+    if (this.text) {
+      await this.dataSource.sendSuggestion(this.text);
     }
 
     this.props.navigation.goBack();

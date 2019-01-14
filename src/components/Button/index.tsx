@@ -1,6 +1,8 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleProp, TextStyle } from 'react-native';
 
+import pure from 'src/utils/hocs/pure';
+
 import styles, { themes } from './styles';
 import { ButtonTheme } from './types';
 
@@ -11,7 +13,7 @@ interface Props {
   onPress: () => void;
   style?: StyleProp<TextStyle>;
   textStyle?: StyleProp<TextStyle>;
-  theme: ButtonTheme;
+  theme?: ButtonTheme;
 }
 
 const Button = ({
@@ -19,7 +21,7 @@ const Button = ({
   onPress,
   style,
   textStyle,
-  theme,
+  theme = ButtonTheme.default,
 }: Props): React.ReactElement<Props> => (
   <TouchableOpacity
     onPress={onPress}
@@ -29,8 +31,4 @@ const Button = ({
   </TouchableOpacity>
 );
 
-Button.defaultProps = {
-  theme: ButtonTheme.default,
-};
-
-export default Button;
+export default pure(Button);

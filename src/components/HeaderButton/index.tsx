@@ -1,5 +1,7 @@
 import React from 'react';
 
+import pure from 'src/utils/hocs/pure';
+
 import Button, { ButtonTheme } from 'src/components/Button';
 
 import styles from './styles';
@@ -24,4 +26,4 @@ const HeaderButton = ({
   </Button>
 );
 
-export default HeaderButton;
+export default pure(HeaderButton);

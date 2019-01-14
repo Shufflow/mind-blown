@@ -1,9 +1,10 @@
 import React from 'react';
 
+import pure from 'src/utils/hocs/pure';
+
 import { Locales } from 'src/models/locale';
 
 import Item from 'src/components/ListItem';
-
 import LanguagePicker from 'src/components/LanguagePicker';
 
 interface Props {
@@ -57,4 +58,4 @@ class SettingsLanguagePicker extends React.Component<Props, State> {
   }
 }
 
-export default SettingsLanguagePicker;
+export default pure(SettingsLanguagePicker);

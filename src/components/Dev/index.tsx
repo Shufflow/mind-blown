@@ -1,6 +1,8 @@
 import React from 'react';
 import { Text, View, StyleProp } from 'react-native';
 
+import pure from 'src/utils/hocs/pure';
+
 import styles from './styles';
 
 interface Props {
@@ -47,4 +49,4 @@ Dev.defaultProps = {
   isAbsolute: true,
 };
 
-export default Dev;
+export default pure(Dev);
