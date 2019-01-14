@@ -29,7 +29,7 @@ const withColor = <T extends Object>(
         light: 'transparent',
         newColor: () => {
           const { dark, light } = getColor();
-          const isDark = !!Math.floor(Math.random());
+          const isDark = !!Math.round(Math.random());
           this.setState({
             dark,
             isDark,
