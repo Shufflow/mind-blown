@@ -22,6 +22,7 @@ target 'MindBlown' do
   pod 'RNGoogleSignin', :path => '../node_modules/react-native-google-signin'
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
+  pod 'RNAdMob', :path => '../node_modules/react-native-admob'
 
   target 'MindBlownTests' do
     inherit! :search_paths

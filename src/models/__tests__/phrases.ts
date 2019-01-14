@@ -1,5 +1,6 @@
 import MockFirebase from 'mock-cloud-firestore';
-import { createSandbox } from 'sinon';
+import { createSandbox, SinonStub } from 'sinon';
+import { AdMobInterstitial } from 'react-native-admob';
 
 import { stubFirebase } from 'src/utils/tests';
 
@@ -25,7 +26,6 @@ jest.mock(
 );
 
 const sandbox = createSandbox();
-
 afterEach(sandbox.restore);
 
 describe('load all phrases', () => {
@@ -39,7 +39,13 @@ describe('load all phrases', () => {
 });
 
 describe('get random phrase', () => {
-  const dataSource = new PhrasesDataSource();
+  let dataSource: PhrasesDataSource;
+  let ad: SinonStub;
+
+  beforeEach(() => {
+    ad = sandbox.stub(AdMobInterstitial, 'showAd');
+    dataSource = new PhrasesDataSource();
+  });
 
   it('returns a phrase', async () => {
     sandbox.stub(Math, 'random').returns(0);
@@ -47,6 +53,7 @@ describe('get random phrase', () => {
     const result = await dataSource.getRandomPhrase();
 
     expect(result).toEqual(mockPhrases[0]);
+    expect(ad.called).toEqual(false);
   });
 
   it('does not use index greater than array lenght', async () => {
@@ -55,6 +62,7 @@ describe('get random phrase', () => {
     const result = await dataSource.getRandomPhrase();
 
     expect(result).toEqual(mockPhrases[2]);
+    expect(ad.called).toEqual(false);
   });
 
   it('returns null when array is empty', async () => {
@@ -63,6 +71,7 @@ describe('get random phrase', () => {
     const result = await dataSource.getRandomPhrase();
 
     expect(result).toBeNull();
+    expect(ad.called).toEqual(false);
   });
 
   it('fails if loading fails', async () => {
@@ -75,7 +84,18 @@ describe('get random phrase', () => {
       fail();
     } catch (e) {
       expect(e).toEqual(reason);
+      expect(ad.called).toEqual(false);
     }
+  });
+
+  it('shows ad after 3 phrases', async () => {
+    sandbox.stub(Math, 'random').returns(0);
+
+    for (let i = 0; i < 3; i++) {
+      await dataSource.getRandomPhrase();
+    }
+
+    expect(ad.called).toEqual(true);
   });
 });
 

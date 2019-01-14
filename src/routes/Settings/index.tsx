@@ -3,12 +3,14 @@ import React from 'react';
 import { View, StatusBar } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import Config from 'react-native-config';
+import { AdMobBanner } from 'react-native-admob';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import googleLogin from 'src/models/auth';
-import routeNames from 'src/routes';
+import AdIds from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator';
+import routeNames from 'src/routes';
 
 import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';
@@ -51,6 +53,13 @@ class Settings extends React.Component<Props, State> {
     });
   };
 
+  onFailToLoadAd = (e: Error) => {
+    if (__DEV__) {
+      // tslint:disable-next-line: no-console
+      console.warn(e);
+    }
+  };
+
   render() {
     const { dark, light } = this.props.navigation.color;
     const { locale, setLocale } = this.props;
@@ -58,36 +67,44 @@ class Settings extends React.Component<Props, State> {
 
     return (
       <View style={styles.container(light)}>
-        <StatusBar barStyle='light-content' />
-        <LanguagePicker
-          dark={dark}
-          light={light}
-          locale={locale}
-          onSelectValue={setLocale}
+        <View style={styles.itemsContainer}>
+          <StatusBar barStyle='light-content' />
+          <LanguagePicker
+            dark={dark}
+            light={light}
+            locale={locale}
+            onSelectValue={setLocale}
+          />
+          <ListItem
+            label='Send Suggestion'
+            onPress={this.navigate(routeNames.SendSuggestion)}
+          />
+          <Dev>
+            {isSignedIn ? (
+              <ListItem
+                label='Review Reddit Phrases'
+                onPress={this.navigate(routeNames.RedditPhrases)}
+              />
+            ) : (
+              <GoogleSigninButton
+                onPress={this.onPressSignIn}
+                size={GoogleSigninButton.Size.Wide}
+                style={styles.googleButton}
+              />
+            )}
+          </Dev>
+          <Dev>
+            {dark} - {light}
+            {`\n`}
+            {Config.FIREBASE_PROJECT_ID}
+          </Dev>
+        </View>
+        <AdMobBanner
+          adSize='fullBanner'
+          adUnitID={AdIds.settingsBottomBanner}
+          testDevices={[AdMobBanner.simulatorId]}
+          onAdFailedToLoad={this.onFailToLoadAd}
         />
-        <ListItem
-          label='Send Suggestion'
-          onPress={this.navigate(routeNames.SendSuggestion)}
-        />
-        <Dev>
-          {isSignedIn ? (
-            <ListItem
-              label='Review Reddit Phrases'
-              onPress={this.navigate(routeNames.RedditPhrases)}
-            />
-          ) : (
-            <GoogleSigninButton
-              onPress={this.onPressSignIn}
-              size={GoogleSigninButton.Size.Wide}
-              style={styles.googleButton}
-            />
-          )}
-        </Dev>
-        <Dev>
-          {dark} - {light}
-          {`\n`}
-          {Config.FIREBASE_PROJECT_ID}
-        </Dev>
       </View>
     );
   }

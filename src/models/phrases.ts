@@ -1,5 +1,8 @@
 import { firestore } from 'firebase';
 import 'firebase/firestore';
+import { AdMobInterstitial } from 'react-native-admob';
+
+import AdIds from './ads';
 
 export interface Phrase {
   id: string;
@@ -23,6 +26,10 @@ class PhrasesDataSource {
 
     this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
+
+    AdMobInterstitial.setAdUnitID(AdIds.phrasesInterstitial);
+    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
+    AdMobInterstitial.requestAd();
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -41,6 +48,11 @@ class PhrasesDataSource {
 
   async getRandomPhrase(): Promise<Phrase | null> {
     const phrases = await this.phrases;
+
+    if (this.usedPhrasesIds.length % 3 === 2) {
+      AdMobInterstitial.showAd();
+      AdMobInterstitial.requestAd();
+    }
 
     const len = Object.keys(phrases).length;
     if (len === 0) {

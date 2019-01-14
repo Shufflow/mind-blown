@@ -3,6 +3,9 @@ import { StyleSheet } from 'react-native';
 import { Layouts, Spacing } from 'src/utils/styles';
 
 const styles = StyleSheet.create({
+  container: {
+    ...Layouts.container,
+  },
   content: {
     ...Layouts.container,
     justifyContent: 'space-between',

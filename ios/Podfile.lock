@@ -6,6 +6,7 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.4)
+  - Google-Mobile-Ads-SDK (7.37.0)
   - GoogleSignIn (4.4.0):
     - "GoogleToolboxForMac/NSDictionary+URLArguments (~> 2.1)"
     - "GoogleToolboxForMac/NSString+URLArguments (~> 2.1)"
@@ -60,6 +61,9 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNAdMob (2.0.0-beta.5):
+    - Google-Mobile-Ads-SDK
+    - React
   - RNGestureHandler (1.0.12):
     - React
   - RNGoogleSignin (1.0.2):
@@ -83,6 +87,7 @@ DEPENDENCIES:
   - React/RCTSettings (from `../node_modules/react-native`)
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNAdMob (from `../node_modules/react-native-admob`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -94,6 +99,7 @@ SPEC REPOS:
     - boost-for-react-native
     - DoubleConversion
     - glog
+    - Google-Mobile-Ads-SDK
     - GoogleSignIn
     - GoogleToolboxForMac
     - GTMSessionFetcher
@@ -103,6 +109,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   React:
     :path: "../node_modules/react-native"
+  RNAdMob:
+    :path: "../node_modules/react-native-admob"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -119,16 +127,18 @@ SPEC CHECKSUMS:
   DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
+  Google-Mobile-Ads-SDK: d028682d7450749a1955679da050eaf70d997b3e
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  RNAdMob: 23b7801a217af31ff9e575815264a41d8c4838a0
   RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
   RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: c8beed44566191150e21b4842edb13ab20a64e26
+PODFILE CHECKSUM: e35d9b298bc807e47a145adcc33fdf2568ef61cc
 
 COCOAPODS: 1.5.3

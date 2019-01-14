@@ -12,6 +12,20 @@ jest.mock('react-native-google-signin', () => {
     GoogleSignin: { configure: jest.fn },
   };
 });
+jest.mock('react-native-admob', () => {
+  const AdMobBanner = () => React.createElement<any>(View);
+  AdMobBanner.simulatorId = '';
+
+  return {
+    AdMobBanner,
+    AdMobInterstitial: {
+      requestAd: jest.fn,
+      setAdUnitID: jest.fn,
+      setTestDevices: jest.fn,
+      showAd: jest.fn,
+    },
+  };
+});
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};

@@ -9,10 +9,13 @@ import {
   View,
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
+import { AdMobBanner } from 'react-native-admob';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
+import AdIds from 'src/models/ads';
 import withColor, { ColorProps } from 'src/utils/hocs/withColors';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
+import routeNames from 'src/routes';
 
 import icons from 'src/assets/icons';
 import SVGButton from 'src/components/SVGButton';
@@ -21,7 +24,6 @@ import Phrase from './components/Phrase';
 import ThumbDownButton from './components/ThumbDownButton';
 import ThumbUpButton from './components/ThumbUpButton';
 import styles from './styles';
-import routeNames from '..';
 
 enum SelectedThumb {
   Up = 'up',
@@ -99,42 +101,63 @@ class Home extends React.Component<Props, State> {
     this.props.navigation.navigate(routeNames.Settings);
   };
 
+  onFailToLoadAd = (e: Error) => {
+    if (__DEV__) {
+      // tslint:disable-next-line: no-console
+      console.warn(e);
+    }
+  };
+
   render() {
     const { bgColor, isDark, fgColor } = this.props;
     const { phrase, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
-        <SafeAreaView style={[styles.content, { backgroundColor: bgColor }]}>
-          <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-          <SVGButton
-            color={fgColor}
-            fillAll
-            icon={icons.cog}
-            onPress={this.onPressSettings}
-            style={styles.settingsButton}
+        <View style={[styles.container, { backgroundColor: bgColor }]}>
+          <AdMobBanner
+            adSize='fullBanner'
+            adUnitID={AdIds.homeTopBanner}
+            testDevices={[AdMobBanner.simulatorId]}
+            onAdFailedToLoad={this.onFailToLoadAd}
           />
-          {!!phrase ? (
-            <Phrase content={this.getPhraseContent()} color={fgColor} />
-          ) : (
-            <ActivityIndicator
+          <SafeAreaView style={styles.content}>
+            <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
+            <SVGButton
               color={fgColor}
-              size='large'
-              style={{ alignSelf: 'center' }}
+              fillAll
+              icon={icons.cog}
+              onPress={this.onPressSettings}
+              style={styles.settingsButton}
             />
-          )}
-          <View style={styles.footer}>
-            <ThumbDownButton
-              color={fgColor}
-              isSelected={selectedThumb === SelectedThumb.Down}
-              onPress={this.onPressReview(false)}
-            />
-            <ThumbUpButton
-              color={fgColor}
-              isSelected={selectedThumb === SelectedThumb.Up}
-              onPress={this.onPressReview(true)}
-            />
-          </View>
-        </SafeAreaView>
+            {!!phrase ? (
+              <Phrase content={this.getPhraseContent()} color={fgColor} />
+            ) : (
+              <ActivityIndicator
+                color={fgColor}
+                size='large'
+                style={{ alignSelf: 'center' }}
+              />
+            )}
+            <View style={styles.footer}>
+              <ThumbDownButton
+                color={fgColor}
+                isSelected={selectedThumb === SelectedThumb.Down}
+                onPress={this.onPressReview(false)}
+              />
+              <ThumbUpButton
+                color={fgColor}
+                isSelected={selectedThumb === SelectedThumb.Up}
+                onPress={this.onPressReview(true)}
+              />
+            </View>
+          </SafeAreaView>
+          <AdMobBanner
+            adSize='fullBanner'
+            adUnitID={AdIds.homeBottomBanner}
+            testDevices={[AdMobBanner.simulatorId]}
+            onAdFailedToLoad={this.onFailToLoadAd}
+          />
+        </View>
       </TouchableWithoutFeedback>
     );
   }

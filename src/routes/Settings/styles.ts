@@ -8,11 +8,15 @@ const styles = {
   container: (backgroundColor: string = Colors.white) => ({
     ...Layouts.container,
     backgroundColor,
-    paddingVertical: Spacing.size_40,
+    justifyContent: 'space-between',
   }),
   googleButton: {
     height: Constants.googleButtonHeight,
     marginTop: Spacing.size_30,
+  },
+  itemsContainer: {
+    ...Layouts.container,
+    paddingVertical: Spacing.size_40,
   },
 };
 
