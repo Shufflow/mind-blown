@@ -9,7 +9,7 @@ import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import googleLogin from 'src/models/auth';
 import AdIds, { onFailToLoadAd } from 'src/models/ads';
-import { ColoredScreenProps } from 'src/navigators/SettingsNavigator';
+import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 
 import Dev from 'src/components/Dev';

@@ -2,9 +2,10 @@ import React from 'react';
 import { View, TextInput } from 'react-native';
 import { AdMobBanner } from 'react-native-admob';
 
-import AdIds, { onFailToLoadAd } from 'src/models/ads';
-import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
+import { goBack } from 'src/utils/navigation';
+import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
+import AdIds, { onFailToLoadAd } from 'src/models/ads';
 import PhrasesDataSource from 'src/models/phrases';
 
 import styles from './styles';

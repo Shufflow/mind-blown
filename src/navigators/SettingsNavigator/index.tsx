@@ -1,12 +1,6 @@
 import React from 'react';
 import { Text } from 'react-native';
-import {
-  createStackNavigator,
-  createAppContainer,
-  NavigationParams,
-  NavigationScreenProp,
-  NavigationRoute,
-} from 'react-navigation';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { startCase } from 'lodash';
 
 import routeNames from 'src/routes';
@@ -16,15 +10,8 @@ import RedditPhrases from 'src/routes/RedditPhrases';
 import SendSuggestion from 'src/routes/SendSuggestion';
 
 import { getColor } from 'src/models/assets';
-import { Color } from 'src/assets/colorPairs';
 
 import styles from './styles';
-
-export interface ColoredScreenProps<Params = NavigationParams> {
-  navigation: NavigationScreenProp<NavigationRoute<Params>, Params> & {
-    color: Color;
-  };
-}
 
 const routes = {
   [routeNames.Settings]: Settings,
@@ -52,9 +39,5 @@ const SettingsNavigator = createStackNavigator(routes, {
   headerLayoutPreset: 'center',
   mode: 'modal',
 });
-
-/// POG: sending `navigation.goBack` to `onPress` doesn't work
-export const goBack = ({ navigation }: ColoredScreenProps) => () =>
-  navigation.goBack();
 
 export default createAppContainer(SettingsNavigator);

@@ -3,10 +3,11 @@ import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
 import { isEqual, omit } from 'lodash';
 
 import { Colors } from 'src/utils/styles';
+import { goBack } from 'src/utils/navigation';
 import icons from 'src/assets/icons';
 
+import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
-import { ColoredScreenProps, goBack } from 'src/navigators/SettingsNavigator';
 
 import SVGButton from 'src/components/SVGButton';
 import Button from 'src/components/Button';
