@@ -29,7 +29,7 @@ class PhrasesDataSource {
 
     AdMobInterstitial.setAdUnitID(AdIds.phrasesInterstitial);
     AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-    AdMobInterstitial.requestAd();
+    AdMobInterstitial.requestAd().catch(() => {});
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -49,7 +49,7 @@ class PhrasesDataSource {
   async getRandomPhrase(): Promise<Phrase | null> {
     const phrases = await this.phrases;
 
-    if (this.usedPhrasesIds.length % 3 === 2) {
+    if (this.usedPhrasesIds.length % 3 === 2 && !__DEV__) {
       AdMobInterstitial.showAd();
       AdMobInterstitial.requestAd();
     }

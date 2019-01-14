@@ -19,10 +19,10 @@ jest.mock('react-native-admob', () => {
   return {
     AdMobBanner,
     AdMobInterstitial: {
-      requestAd: jest.fn,
+      requestAd: Promise.resolve,
       setAdUnitID: jest.fn,
       setTestDevices: jest.fn,
-      showAd: jest.fn,
+      showAd: Promise.resolve,
     },
   };
 });

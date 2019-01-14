@@ -90,6 +90,7 @@ describe('get random phrase', () => {
 
   it('shows ad after 3 phrases', async () => {
     sandbox.stub(Math, 'random').returns(0);
+    (__DEV__ as any) = false;
 
     for (let i = 0; i < 3; i++) {
       await dataSource.getRandomPhrase();
