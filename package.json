@@ -19,7 +19,7 @@
     "react-native-admob": "https://github.com/yptech/react-native-admob#1b142d75fb0d6fa463231bab629a2f852b32816f",
     "react-native-config": "^0.11.7",
     "react-native-google-signin": "^1.0.2",
-    "react-native-screens": "^1.0.0-alpha.21",
+    "react-native-screens": "^1.0.0-alpha.22",
     "react-native-svg": "^8.0.10",
     "react-native-svg-uri": "https://github.com/vault-development/react-native-svg-uri#c6841a6e7d1a6ee5cf5b515d4faea6002e166f3c",
     "react-navigation": "^3.0.9"
