@@ -22,6 +22,8 @@ PODS:
   - GTMSessionFetcher/Core (1.2.1)
   - React (0.57.7):
     - React/Core (= 0.57.7)
+  - react-native-splash-screen (3.1.1):
+    - React
   - React/Core (0.57.7):
     - yoga (= 0.57.7.React)
   - React/CxxBridge (0.57.7):
@@ -69,7 +71,7 @@ PODS:
   - RNGoogleSignin (1.0.2):
     - GoogleSignIn
     - React
-  - RNScreens (1.0.0-alpha.21):
+  - RNScreens (1.0.0-alpha.22):
     - React
   - RNSVG (8.0.10):
     - React
@@ -77,6 +79,7 @@ PODS:
 
 DEPENDENCIES:
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/DevSupport (from `../node_modules/react-native`)
@@ -109,6 +112,8 @@ EXTERNAL SOURCES:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   React:
     :path: "../node_modules/react-native"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   RNAdMob:
     :path: "../node_modules/react-native-admob"
   RNGestureHandler:
@@ -132,6 +137,7 @@ SPEC CHECKSUMS:
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
+  react-native-splash-screen: 8e3f866dc79bfe533baeffd0a38c33f7a7eae7f8
   RNAdMob: 23b7801a217af31ff9e575815264a41d8c4838a0
   RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
@@ -139,6 +145,6 @@ SPEC CHECKSUMS:
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: e35d9b298bc807e47a145adcc33fdf2568ef61cc
+PODFILE CHECKSUM: a1f642a3d6d23ef9f0eb996c41e78d2cc9acd963
 
 COCOAPODS: 1.5.3

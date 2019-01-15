@@ -23,6 +23,7 @@ target 'MindBlown' do
   pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNAdMob', :path => '../node_modules/react-native-admob'
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
   target 'MindBlownTests' do
     inherit! :search_paths

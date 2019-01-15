@@ -26,6 +26,10 @@ jest.mock('react-native-admob', () => {
     },
   };
 });
+jest.mock('react-native-splash-screen', () => ({
+  hide: jest.fn,
+  show: jest.fn,
+}));
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};
