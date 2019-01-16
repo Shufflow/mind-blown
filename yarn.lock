@@ -5978,9 +5978,9 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-"react-native-admob@https://github.com/yptech/react-native-admob#1b142d75fb0d6fa463231bab629a2f852b32816f":
+"react-native-admob@https://github.com/fjcaetano/react-native-admob.git":
   version "2.0.0-beta.5"
-  resolved "https://github.com/yptech/react-native-admob#1b142d75fb0d6fa463231bab629a2f852b32816f"
+  resolved "https://github.com/fjcaetano/react-native-admob.git#54a1ba6795166216a18c8731a2d64d622fa5bc9c"
   dependencies:
     prop-types "^15.5.10"
 
