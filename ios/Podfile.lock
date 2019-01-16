@@ -1,5 +1,11 @@
 PODS:
+  - Base64 (1.1.2)
   - boost-for-react-native (1.63.0)
+  - CodePush (5.5.1):
+    - Base64 (~> 1.1)
+    - JWT (~> 3.0.0-beta.7)
+    - React
+    - SSZipArchive (~> 2.1)
   - DoubleConversion (1.1.5)
   - Folly (2016.10.31.00):
     - boost-for-react-native
@@ -20,6 +26,8 @@ PODS:
     - "GoogleToolboxForMac/NSString+URLArguments (= 2.2.0)"
   - "GoogleToolboxForMac/NSString+URLArguments (2.2.0)"
   - GTMSessionFetcher/Core (1.2.1)
+  - JWT (3.0.0-beta.11):
+    - Base64 (~> 1.1.2)
   - React (0.57.7):
     - React/Core (= 0.57.7)
   - react-native-splash-screen (3.1.1):
@@ -75,9 +83,11 @@ PODS:
     - React
   - RNSVG (8.0.10):
     - React
+  - SSZipArchive (2.1.4)
   - yoga (0.57.7.React)
 
 DEPENDENCIES:
+  - CodePush (from `../node_modules/react-native-code-push`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React/Core (from `../node_modules/react-native`)
@@ -99,6 +109,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - Base64
     - boost-for-react-native
     - DoubleConversion
     - glog
@@ -106,8 +117,12 @@ SPEC REPOS:
     - GoogleSignIn
     - GoogleToolboxForMac
     - GTMSessionFetcher
+    - JWT
+    - SSZipArchive
 
 EXTERNAL SOURCES:
+  CodePush:
+    :path: "../node_modules/react-native-code-push"
   Folly:
     :podspec: "../node_modules/react-native/third-party-podspecs/Folly.podspec"
   React:
@@ -128,7 +143,9 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  Base64: cecfb41a004124895a7bcee567a89bae5a89d49b
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  CodePush: f6b348759cdc42c734d9c3a46ceb2997c270b12e
   DoubleConversion: e22e0762848812a87afd67ffda3998d9ef29170c
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: 1de0bb937dccdc981596d3b5825ebfb765017ded
@@ -136,6 +153,7 @@ SPEC CHECKSUMS:
   GoogleSignIn: 7ff245e1a7b26d379099d3243a562f5747e23d39
   GoogleToolboxForMac: ff31605b7d66400dcec09bed5861689aebadda4d
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  JWT: 05028b9624591bba9681bb57df2c5f95fa258bad
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-splash-screen: 8e3f866dc79bfe533baeffd0a38c33f7a7eae7f8
   RNAdMob: 23b7801a217af31ff9e575815264a41d8c4838a0
@@ -143,8 +161,9 @@ SPEC CHECKSUMS:
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
   RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
+  SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: a1f642a3d6d23ef9f0eb996c41e78d2cc9acd963
+PODFILE CHECKSUM: 4547e06ee8ad29b6116b588d00b47f2bb76c6eef
 
 COCOAPODS: 1.5.3

@@ -24,6 +24,7 @@ target 'MindBlown' do
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
   pod 'RNAdMob', :path => '../node_modules/react-native-admob'
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
 
   target 'MindBlownTests' do
     inherit! :search_paths

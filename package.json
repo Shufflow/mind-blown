@@ -17,6 +17,7 @@
     "react": "16.6.1",
     "react-native": "0.57.7",
     "react-native-admob": "https://github.com/yptech/react-native-admob#1b142d75fb0d6fa463231bab629a2f852b32816f",
+    "react-native-code-push": "^5.5.1",
     "react-native-config": "^0.11.7",
     "react-native-google-signin": "^1.0.2",
     "react-native-screens": "^1.0.0-alpha.22",

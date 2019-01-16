@@ -31,6 +31,12 @@ jest.mock('react-native-splash-screen', () => ({
   hide: jest.fn,
   show: jest.fn,
 }));
+jest.mock('react-native-code-push', () => {
+  const fn: any = () => (a: any) => a;
+  fn.CheckFrequency = {};
+  fn.InstallMode = {};
+  return fn;
+});
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};
