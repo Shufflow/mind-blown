@@ -1,8 +1,7 @@
 import { firestore } from 'firebase';
 import 'firebase/firestore';
-import { AdMobInterstitial } from 'react-native-admob';
 
-import AdIds from './ads';
+import AdIds, { InterstitialAd } from './ads';
 
 export interface Phrase {
   id: string;
@@ -27,9 +26,8 @@ class PhrasesDataSource {
     this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
 
-    AdMobInterstitial.setAdUnitID(AdIds.phrasesInterstitial);
-    AdMobInterstitial.setTestDevices([AdMobInterstitial.simulatorId]);
-    AdMobInterstitial.requestAd().catch(() => {});
+    InterstitialAd.setAdUnitId(AdIds.phrasesInterstitial);
+    InterstitialAd.requestAdIfNeeded();
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -50,8 +48,7 @@ class PhrasesDataSource {
     const phrases = await this.phrases;
 
     if (this.usedPhrasesIds.length % 3 === 2 && !__DEV__) {
-      AdMobInterstitial.showAd();
-      AdMobInterstitial.requestAd();
+      InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
     }
 
     const len = Object.keys(phrases).length;

@@ -1,10 +1,10 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { createSandbox, SinonStub } from 'sinon';
-import { AdMobInterstitial } from 'react-native-admob';
 
 import { stubFirebase } from 'src/utils/tests';
 
 import PhrasesDataSource from '../phrases';
+import { InterstitialAd } from '../ads';
 
 const mockPhrases = {
   0: { id: '0', en: 'foo' },
@@ -43,8 +43,8 @@ describe('get random phrase', () => {
   let ad: SinonStub;
 
   beforeEach(() => {
-    ad = sandbox.stub(AdMobInterstitial, 'showAd');
     dataSource = new PhrasesDataSource();
+    ad = sandbox.stub(InterstitialAd, 'showAd').resolves();
   });
 
   it('returns a phrase', async () => {
