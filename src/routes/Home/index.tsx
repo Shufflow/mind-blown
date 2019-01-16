@@ -13,8 +13,8 @@ import { AdMobBanner } from 'react-native-admob';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
 import AdIds, { onFailToLoadAd } from 'src/models/ads';
-import withColor, { ColorProps } from 'src/utils/hocs/withColors';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
+import { getColor } from 'src/models/assets';
 import routeNames from 'src/routes';
 
 import icons from 'src/assets/icons';
@@ -30,12 +30,12 @@ enum SelectedThumb {
   Down = 'down',
 }
 
-interface Props
-  extends LocaleConsumerProps,
-    ColorProps,
-    NavigationScreenProps {}
+interface Props extends LocaleConsumerProps, NavigationScreenProps {}
 
 interface State {
+  bgColor: string;
+  fgColor: string;
+  isDark: boolean;
   phrase: PhraseType | null;
   selectedThumb: SelectedThumb | null;
 }
@@ -48,21 +48,37 @@ class Home extends React.Component<Props, State> {
 
     this.dataSource = new PhrasesDataSource();
     this.state = {
+      ...this.genColors(),
       phrase: null,
       selectedThumb: null,
     };
   }
 
   componentDidMount() {
-    this.getRandomPhrase();
+    this.loadPhrase();
   }
 
-  getRandomPhrase = async () => {
-    this.props.newColor();
+  genColors = () => {
+    const { dark, light } = getColor();
+    const isDark = !!Math.round(Math.random());
+
+    return {
+      isDark,
+      bgColor: isDark ? dark : light,
+      fgColor: isDark ? light : dark,
+    };
+  };
+
+  loadPhrase = async () => {
     this.setState({ phrase: null });
 
     const phrase = await this.dataSource.getRandomPhrase();
     this.setState({ phrase, selectedThumb: null });
+  };
+
+  getRandomPhrase = async () => {
+    this.setState(this.genColors());
+    await this.loadPhrase();
   };
 
   onPressReview = (review: boolean) => async () => {
@@ -102,8 +118,7 @@ class Home extends React.Component<Props, State> {
   };
 
   render() {
-    const { bgColor, isDark, fgColor } = this.props;
-    const { phrase, selectedThumb } = this.state;
+    const { bgColor, fgColor, isDark, phrase, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
         <View style={[styles.container, { backgroundColor: bgColor }]}>
@@ -156,8 +171,5 @@ class Home extends React.Component<Props, State> {
   }
 }
 
-const enhance = compose(
-  withLocale,
-  withColor,
-);
+const enhance = compose(withLocale);
 export default enhance(Home);
