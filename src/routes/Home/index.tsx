@@ -12,7 +12,7 @@ import { NavigationScreenProps } from 'react-navigation';
 import { AdMobBanner } from 'react-native-admob';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
-import AdIds, { onFailToLoadAd } from 'src/models/ads';
+import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import { getColor } from 'src/models/assets';
 import routeNames from 'src/routes';
@@ -125,7 +125,7 @@ class Home extends React.Component<Props, State> {
           <AdMobBanner
             adSize='fullBanner'
             adUnitID={AdIds.homeTopBanner}
-            testDevices={[AdMobBanner.simulatorId]}
+            testDevices={BannerTestIds}
             onAdFailedToLoad={onFailToLoadAd}
           />
           <SafeAreaView style={styles.content}>
@@ -162,7 +162,7 @@ class Home extends React.Component<Props, State> {
           <AdMobBanner
             adSize='fullBanner'
             adUnitID={AdIds.homeBottomBanner}
-            testDevices={[AdMobBanner.simulatorId]}
+            testDevices={BannerTestIds}
             onAdFailedToLoad={onFailToLoadAd}
           />
         </View>

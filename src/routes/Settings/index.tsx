@@ -8,7 +8,7 @@ import { AdMobBanner } from 'react-native-admob';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 
 import googleLogin from 'src/models/auth';
-import AdIds, { onFailToLoadAd } from 'src/models/ads';
+import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 
@@ -95,7 +95,7 @@ class Settings extends React.Component<Props, State> {
         <AdMobBanner
           adSize='fullBanner'
           adUnitID={AdIds.settingsBottomBanner}
-          testDevices={[AdMobBanner.simulatorId]}
+          testDevices={BannerTestIds}
           onAdFailedToLoad={onFailToLoadAd}
         />
       </View>

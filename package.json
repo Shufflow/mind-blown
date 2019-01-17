@@ -7,7 +7,8 @@
     "test": "jest -c .jest.json",
     "install-ios": "bundle install --frozen && pushd ios; bundle exec pod install",
     "lint": "tslint --project tsconfig.json --config tslint.json",
-    "update-icons": "sh gen-icons.sh"
+    "update-icons": "sh gen-icons.sh",
+    "android:release": "ENVFILE=.env.prod react-native run-android --variant=release"
   },
   "dependencies": {
     "@typed/compose": "^1.0.0",

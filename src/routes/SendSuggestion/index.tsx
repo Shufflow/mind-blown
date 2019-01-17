@@ -5,11 +5,11 @@ import { AdMobBanner } from 'react-native-admob';
 import { goBack } from 'src/utils/navigation';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
-import AdIds, { onFailToLoadAd } from 'src/models/ads';
+import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
 import PhrasesDataSource from 'src/models/phrases';
+import HeaderButton from 'src/components/HeaderButton';
 
 import styles from './styles';
-import HeaderButton from 'src/components/HeaderButton';
 
 class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
   static navigationOptions = (args: ColoredScreenProps) => ({
@@ -67,7 +67,7 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
         <AdMobBanner
           adSize='fullBanner'
           adUnitID={AdIds.settingsBottomBanner}
-          testDevices={[AdMobBanner.simulatorId]}
+          testDevices={BannerTestIds}
           onAdFailedToLoad={onFailToLoadAd}
         />
       </View>

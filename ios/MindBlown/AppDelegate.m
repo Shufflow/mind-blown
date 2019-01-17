@@ -21,7 +21,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   NSURL *jsCodeLocation;
-  [GADMobileAds configureWithApplicationID:[ReactNativeConfig envFor:@"ADMOB_APP_ID"]];
+  [GADMobileAds configureWithApplicationID:[ReactNativeConfig envFor:@"ADMOB_IOS_ID"]];
 
   #ifdef DEBUG
       jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
