@@ -22,13 +22,6 @@ export const BannerTestIds = __DEV__
   ? [AdMobBanner.simulatorId, '92C9DAEF6B2CB164ABBAEA44A039E9D2']
   : [];
 
-export const onFailToLoadAd = (e: Error) => {
-  if (__DEV__) {
-    // tslint:disable-next-line: no-console
-    console.warn(e);
-  }
-};
-
 class AdManager {
   isLoadingAd = false;
   adRequest: Promise<void> | undefined;

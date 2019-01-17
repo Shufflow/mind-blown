@@ -1,7 +1,7 @@
 import { AdMobInterstitial } from 'react-native-admob';
 import { createSandbox } from 'sinon';
 
-import { InterstitialAd, onFailToLoadAd } from '../ads';
+import { InterstitialAd } from '../ads';
 
 const sandbox = createSandbox();
 afterEach(() => {
@@ -102,26 +102,5 @@ describe('show ad', () => {
     expect(show.called).toEqual(true);
     expect(request.called).toEqual(true);
     expect(request.calledBefore(show)).toEqual(true);
-  });
-});
-
-describe('on fail to load ad', () => {
-  it('calls console on dev', () => {
-    const cons = sandbox.stub(console, 'warn');
-    (__DEV__ as any) = true;
-
-    const error = new Error('foobar');
-    onFailToLoadAd(error);
-
-    expect(cons.calledWith(error)).toEqual(true);
-  });
-
-  it('does not call console on release', () => {
-    const cons = sandbox.stub(console, 'warn');
-    (__DEV__ as any) = false;
-
-    onFailToLoadAd(new Error('foobar'));
-
-    expect(cons.called).toEqual(false);
   });
 });

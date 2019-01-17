@@ -14,6 +14,7 @@ import {
   withLocaleProvider,
   LocaleProviderProps,
 } from 'src/utils/hocs/withLocale';
+import { withAdsProvider } from 'src/utils/hocs/withAds';
 
 firebaseInit();
 
@@ -36,6 +37,7 @@ class App extends React.PureComponent<LocaleProviderProps> {
 
 const enhance = compose(
   withLocaleProvider,
+  withAdsProvider,
   codePush({
     checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
     installMode: codePush.InstallMode.ON_NEXT_SUSPEND,

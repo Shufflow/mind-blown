@@ -9,16 +9,16 @@ import {
   View,
 } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
-import { AdMobBanner } from 'react-native-admob';
 
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
-import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
+import AdIds from 'src/models/ads';
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import { getColor } from 'src/models/assets';
 import routeNames from 'src/routes';
 
 import icons from 'src/assets/icons';
 import SVGButton from 'src/components/SVGButton';
+import AdBanner from 'src/components/AdBanner';
 
 import Phrase from './components/Phrase';
 import ThumbDownButton from './components/ThumbDownButton';
@@ -130,12 +130,7 @@ class Home extends React.Component<Props, State> {
     return (
       <TouchableWithoutFeedback onPress={this.getRandomPhrase}>
         <View style={[styles.container, { backgroundColor: bgColor }]}>
-          <AdMobBanner
-            adSize='fullBanner'
-            adUnitID={AdIds.homeTopBanner}
-            testDevices={BannerTestIds}
-            onAdFailedToLoad={onFailToLoadAd}
-          />
+          <AdBanner adUnitID={AdIds.homeTopBanner} />
           <SafeAreaView style={styles.content}>
             <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
             <SVGButton
@@ -167,12 +162,7 @@ class Home extends React.Component<Props, State> {
               />
             </View>
           </SafeAreaView>
-          <AdMobBanner
-            adSize='fullBanner'
-            adUnitID={AdIds.homeBottomBanner}
-            testDevices={BannerTestIds}
-            onAdFailedToLoad={onFailToLoadAd}
-          />
+          <AdBanner adUnitID={AdIds.homeBottomBanner} />
         </View>
       </TouchableWithoutFeedback>
     );

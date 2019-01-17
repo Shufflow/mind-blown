@@ -5,6 +5,7 @@ import { compose } from '@typed/compose';
 
 import t, { DevMenu as strings, Global as globalStrings } from 'src/locales';
 import { goBack } from 'src/utils/navigation';
+import { withAds, AdsConsumerProps } from 'src/utils/hocs/withAds';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 
@@ -18,15 +19,18 @@ import styles from './styles';
 interface State {
   isLoading: boolean;
   isSignedIn: boolean;
-  showAds: boolean;
 }
 
-class DevMenu extends React.Component<ColoredScreenProps, State> {
-  state = {
-    isLoading: true,
-    isSignedIn: false,
-    showAds: false,
-  };
+interface Props extends ColoredScreenProps, AdsConsumerProps {}
+
+class DevMenu extends React.Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      isSignedIn: false,
+    };
+  }
 
   componentDidMount() {
     this.checkSignIn();
@@ -49,10 +53,6 @@ class DevMenu extends React.Component<ColoredScreenProps, State> {
     navigation.navigate(routeNames.RedditPhrases, { dark, light });
   };
 
-  onToggleSwitch = (showAds: boolean) => {
-    this.setState({ showAds });
-  };
-
   onPressLogout = async () => {
     this.setState({ isLoading: true });
     await GoogleSignin.signOut();
@@ -67,9 +67,9 @@ class DevMenu extends React.Component<ColoredScreenProps, State> {
       />
       <ListItem label={t(strings.showAds)} style={styles.switchContainer}>
         <Switch
-          value={this.state.showAds}
+          value={this.props.showAds}
           trackColor={{ true: this.props.navigation.color.dark } as any}
-          onValueChange={this.onToggleSwitch}
+          onValueChange={this.props.setShowAds}
         />
       </ListItem>
       <ListItem
@@ -109,7 +109,7 @@ class DevMenu extends React.Component<ColoredScreenProps, State> {
   }
 }
 
-const Enhanced = compose((a: any) => a)(DevMenu); // TODO
+const Enhanced = compose(withAds)(DevMenu);
 Enhanced.navigationOptions = (props: ColoredScreenProps) => ({
   headerRight: (
     <HeaderButton color={props.navigation.color.light} onPress={goBack(props)}>

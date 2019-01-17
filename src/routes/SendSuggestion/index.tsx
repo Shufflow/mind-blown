@@ -1,14 +1,14 @@
 import React from 'react';
 import { View, TextInput } from 'react-native';
-import { AdMobBanner } from 'react-native-admob';
 
 import { goBack } from 'src/utils/navigation';
 import t, { Global as strings } from 'src/locales';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
-import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
+import AdIds from 'src/models/ads';
 import PhrasesDataSource from 'src/models/phrases';
 import HeaderButton from 'src/components/HeaderButton';
+import AdBanner from 'src/components/AdBanner';
 
 import styles from './styles';
 
@@ -65,12 +65,7 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
           editable
           multiline
         />
-        <AdMobBanner
-          adSize='fullBanner'
-          adUnitID={AdIds.settingsBottomBanner}
-          testDevices={BannerTestIds}
-          onAdFailedToLoad={onFailToLoadAd}
-        />
+        <AdBanner adUnitID={AdIds.settingsBottomBanner} />
       </View>
     );
   }
