@@ -9,7 +9,10 @@ jest.mock('react-native-google-signin', () => {
 
   return {
     GoogleSigninButton,
-    GoogleSignin: { configure: jest.fn },
+    GoogleSignin: {
+      configure: jest.fn,
+      signInSilently: Promise.resolve,
+    },
   };
 });
 jest.mock('react-native-admob', () => {
