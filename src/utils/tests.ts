@@ -6,7 +6,7 @@ export const stubFirebase = (fixtureData: Object) => {
         __doc__: value.reduce(
           (r: Object, v: any, i: number): any => ({
             ...r,
-            [i.toString()]: v,
+            [v.id || `_${i.toString()}`]: v,
           }),
           {},
         ),

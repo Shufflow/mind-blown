@@ -6,9 +6,9 @@ import { stubFirebase } from 'src/utils/tests';
 import RedditDataSource from '../reddit';
 
 const mockPhrases = {
-  0: { score: 0, content: 'foo' },
-  1: { score: 1, content: 'bar' },
-  2: { score: 2, content: 'xpto' },
+  _0: { score: 0, content: 'foo', id: '_0' },
+  _1: { score: 1, content: 'bar', id: '_1' },
+  _2: { score: 2, content: 'xpto', id: '_2' },
 };
 jest.mock(
   'firebase',
@@ -16,33 +16,31 @@ jest.mock(
     new MockFirebase(
       stubFirebase({
         reddit: [
-          { score: 0, content: 'foo' },
-          { score: 1, content: 'bar' },
-          { score: 2, content: 'xpto' },
+          { score: 0, content: 'foo', id: '_0' },
+          { score: 1, content: 'bar', id: '_1' },
+          { score: 2, content: 'xpto', id: '_2' },
         ],
       }),
     ),
 );
 
 const sandbox = createSandbox();
-
 afterEach(sandbox.restore);
 
-// TODO: orderBy is not working on mock-cloud-firebase
-// describe('load phrase', () => {
-//   const dataSource = new RedditDataSource();
+describe('load phrase', () => {
+  const dataSource = new RedditDataSource();
 
-//   it('loads the phrase with highest score', async () => {
-//     const result = await dataSource.loadPhrase();
+  it('loads the phrase with highest score', async () => {
+    const result = await dataSource.loadPhrase();
 
-//     expect(result).toEqual(mockPhrases[2]);
-//   });
-// });
+    expect(result).toEqual(mockPhrases._2);
+  });
+});
 
 describe('save phrase', () => {
   const dataSource = new RedditDataSource();
   const transl = { 'pt-BR': 'xpto' };
-  const id = '0';
+  const id = '_0';
 
   it('saves a phrase into the "phrases" collection', async () => {
     const date = new Date();
