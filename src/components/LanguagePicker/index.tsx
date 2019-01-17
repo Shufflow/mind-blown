@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal, Picker, Text, TouchableOpacity, View } from 'react-native';
 
 import { HeaderProps } from 'src/utils/hocs/withHeader';
+import t, { Global as strings } from 'src/locales';
 
 import { Locales } from 'src/models/locale';
 
@@ -70,7 +71,7 @@ class LanguagePicker extends React.Component<Props, State> {
         <View style={styles.pickerContainer}>
           <View style={styles.pickerBar(dark)}>
             <TouchableOpacity onPress={this.onPressDone}>
-              <Text style={styles.doneButton(light)}>Done</Text>
+              <Text style={styles.doneButton(light)}>{t(strings.done)}</Text>
             </TouchableOpacity>
           </View>
           <Picker

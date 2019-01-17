@@ -960,6 +960,11 @@
   resolved "https://registry.yarnpkg.com/@typed/compose/-/compose-1.0.0.tgz#e4e5fc7132b84c701acb5346a361da28fad63081"
   integrity sha1-5OX8cTK4THAay1NGo2HaKPrWMIE=
 
+"@types/i18n-js@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/i18n-js/-/i18n-js-3.0.1.tgz#e027d35513b2703e5d48b82771e7fcb3b664e2fb"
+  integrity sha512-m7tWPh9zKpQoYenIpkmeREb2oMaZiZB8qfGv+2ucDg1LgFnETAxYIXkT8dASGyVRWZyEhNEPlfODP4+QfXI3KQ==
+
 "@types/jest@^23.3.10":
   version "23.3.12"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.12.tgz#7e0ced251fa94c3bc2d1023d4b84b2992fa06376"
@@ -3409,6 +3414,11 @@ husky@^1.2.1:
     read-pkg "^4.0.1"
     run-node "^1.0.0"
     slash "^2.0.0"
+
+i18n-js@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/i18n-js/-/i18n-js-3.1.0.tgz#4ec474b2b7ba8175284a0003804c7bf713991919"
+  integrity sha512-xkpkBgf7anfmoRnJFdTqSQuv3phuP2DHEakWbNJUQMZxaLf146dcYWscOyN6wlG6R2WgS6AE7y664yiAaXXDwg==
 
 iconv-lite@0.4.23:
   version "0.4.23"
@@ -6014,6 +6024,11 @@ react-native-google-signin@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/react-native-google-signin/-/react-native-google-signin-1.0.2.tgz#027b2bba3c03504170fdf6e44cd44bf65ecdbc7f"
   integrity sha512-4HPPSecI29gX0Pu7h2E7ZYXnKO4r+6eh5f+Unm67liE1RfvCQfOqoDliPbK96Mb/91VgHwqyxi0sUEC4j54/AQ==
+
+react-native-languages@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-native-languages/-/react-native-languages-3.0.2.tgz#c2c4c5050974fe4b50f7372051ca1f9824c1c778"
+  integrity sha512-LGsTfixFM6hXDhcFJI6mrtrNBsGPSvXT9RtZQ0tlqmGFKmMyZW6eQgJ7kLw8lISD2FIGl4jJwY06EAJpbMsNxg==
 
 react-native-safe-area-view@^0.11.0:
   version "0.11.0"

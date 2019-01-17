@@ -151,7 +151,7 @@ class Home extends React.Component<Props, State> {
               <ActivityIndicator
                 color={fgColor}
                 size='large'
-                style={{ alignSelf: 'center' }}
+                style={styles.activityIndicator}
               />
             )}
             <View style={styles.footer}>

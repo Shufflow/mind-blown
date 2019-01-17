@@ -1,4 +1,5 @@
 import { AsyncStorage, NativeModules, Platform } from 'react-native';
+import i18n from 'i18n-js';
 
 const LOCALE_KEY = 'LOCALE_KEY';
 
@@ -18,7 +19,9 @@ export const getLocale = async (): Promise<string> => {
   );
 };
 
-export const setLocale = async (locale: string): Promise<void> =>
-  AsyncStorage.setItem(LOCALE_KEY, locale);
+export const setLocale = async (locale: string): Promise<void> => {
+  i18n.locale = locale;
+  await AsyncStorage.setItem(LOCALE_KEY, locale);
+};
 
 export default getLocale;

@@ -1,4 +1,4 @@
-import { TextStyle } from 'react-native';
+import { TextStyle, ViewStyle } from 'react-native';
 import { Layouts, Spacing, Colors } from 'src/utils/styles';
 
 const Constants = {
@@ -19,6 +19,9 @@ const styles = {
     paddingVertical: Spacing.size_40,
   },
 
+  activityIndicator: {
+    alignSelf: 'center',
+  } as ViewStyle,
   content: {
     flex: 0,
   },

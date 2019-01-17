@@ -1,5 +1,6 @@
 import { AsyncStorage, Platform } from 'react-native';
 import { createSandbox } from 'sinon';
+import i18n from 'i18n-js';
 
 import { getLocale, setLocale } from '../locale';
 
@@ -56,5 +57,13 @@ describe('set locale', () => {
 
     expect(asyncStorage.called).toEqual(true);
     expect(asyncStorage.calledWith(LOCALE_KEY, 'foobar')).toEqual(true);
+  });
+
+  it('sets i18n locale', async () => {
+    const stub = sandbox.stub(i18n);
+
+    await setLocale('foobar');
+
+    expect(stub.locale).toEqual('foobar');
   });
 });

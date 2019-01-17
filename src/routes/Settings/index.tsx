@@ -12,6 +12,8 @@ import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 
+import t, { Settings as strings, Global as globalStrings } from 'src/locales';
+
 import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';
 import HeaderButton from 'src/components/HeaderButton';
@@ -69,13 +71,13 @@ class Settings extends React.Component<Props, State> {
             onSelectValue={setLocale}
           />
           <ListItem
-            label='Send Suggestion'
+            label={t(strings.sendSuggestion)}
             onPress={this.navigate(routeNames.SendSuggestion)}
           />
           <Dev>
             {isSignedIn ? (
               <ListItem
-                label='Review Reddit Phrases'
+                label={t(strings.reviewRedditPhrases)}
                 onPress={this.navigate(routeNames.RedditPhrases)}
               />
             ) : (
@@ -107,7 +109,7 @@ const Enhanced = compose(withLocale)(Settings);
 Enhanced.navigationOptions = ({ navigation }: Props) => ({
   headerRight: (
     <HeaderButton color={navigation.color.light} onPress={navigation.dismiss}>
-      Done
+      {t(globalStrings.done)}
     </HeaderButton>
   ),
 });

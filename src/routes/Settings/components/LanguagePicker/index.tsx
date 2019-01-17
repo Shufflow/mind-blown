@@ -1,6 +1,7 @@
 import React from 'react';
 
 import pure from 'src/utils/hocs/pure';
+import t, { Settings as strings } from 'src/locales';
 
 import { Locales } from 'src/models/locale';
 
@@ -42,7 +43,7 @@ class SettingsLanguagePicker extends React.Component<Props, State> {
     return (
       <React.Fragment>
         <Item
-          label='Language'
+          label={t(strings.language)}
           onPress={this.showLanguagePicker}
           value={Locales[this.committedLanguage || locale]}
         />

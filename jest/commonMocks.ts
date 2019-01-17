@@ -53,3 +53,6 @@ RNNativeModules.RNGestureHandlerModule = RNNativeModules.RNGestureHandlerModule 
 RNNativeModules.PlatformConstants = RNNativeModules.PlatformConstants || {
   forceTouchAvailable: false,
 };
+RNNativeModules.RNLanguages = {
+  locale: 'en',
+};

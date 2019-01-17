@@ -13,6 +13,7 @@
   "dependencies": {
     "@typed/compose": "^1.0.0",
     "firebase": "^5.7.3",
+    "i18n-js": "^3.1.0",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
     "react": "16.6.1",
@@ -21,6 +22,7 @@
     "react-native-code-push": "^5.5.1",
     "react-native-config": "^0.11.7",
     "react-native-google-signin": "^1.0.2",
+    "react-native-languages": "^3.0.2",
     "react-native-screens": "^1.0.0-alpha.22",
     "react-native-splash-screen": "^3.1.1",
     "react-native-svg": "^8.0.10",
@@ -29,6 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",
+    "@types/i18n-js": "^3.0.1",
     "@types/jest": "^23.3.10",
     "@types/lodash": "^4.14.119",
     "@types/react": "^16.7.13",

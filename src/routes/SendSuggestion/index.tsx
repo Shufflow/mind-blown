@@ -3,6 +3,7 @@ import { View, TextInput } from 'react-native';
 import { AdMobBanner } from 'react-native-admob';
 
 import { goBack } from 'src/utils/navigation';
+import t, { Global as strings } from 'src/locales';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
@@ -15,7 +16,7 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
   static navigationOptions = (args: ColoredScreenProps) => ({
     headerLeft: (
       <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
-        Cancel
+        {t(strings.cancel)}
       </HeaderButton>
     ),
     headerRight: (
@@ -23,7 +24,7 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
         color={args.navigation.color.light}
         onPress={args.navigation.getParam('onPressDone')}
       >
-        Done
+        {t(strings.done)}
       </HeaderButton>
     ),
   });

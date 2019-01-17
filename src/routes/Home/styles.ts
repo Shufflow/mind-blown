@@ -6,6 +6,10 @@ const styles = StyleSheet.create({
   container: {
     ...Layouts.container,
   },
+
+  activityIndicator: {
+    alignSelf: 'center',
+  },
   content: {
     ...Layouts.container,
     justifyContent: 'space-between',

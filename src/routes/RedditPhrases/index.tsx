@@ -4,6 +4,7 @@ import { isEqual, omit } from 'lodash';
 
 import { Colors } from 'src/utils/styles';
 import { goBack } from 'src/utils/navigation';
+import t, { Global as globalStrings, Reddit as strings } from 'src/locales';
 import icons from 'src/assets/icons';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
@@ -28,7 +29,7 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
   static navigationOptions = (args: ColoredScreenProps) => ({
     headerRight: (
       <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
-        Done
+        {t(globalStrings.done)}
       </HeaderButton>
     ),
   });
@@ -154,14 +155,14 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
           <ActivityIndicator
             color={Colors.darkGray}
             size='large'
-            style={{ alignSelf: 'center' }}
+            style={styles.activityIndicator}
           />
         )}
         {!isLoading && !!phrase && (
           <React.Fragment>
             <View style={styles.content}>
               <Text style={styles.text}>{phrase.content}</Text>
-              <Text style={styles.text}>Score - {phrase.score}</Text>
+              <Text style={styles.text}>{t(strings.score, phrase)}</Text>
               {this.renderTranslations()}
               <SVGButton
                 icon={icons.plus}
@@ -176,17 +177,15 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
                 onPress={this.onPressDiscard}
                 style={styles.discardButton}
               >
-                Discard
+                {t(strings.discard)}
               </Button>
               <Button onPress={this.onPressSave} style={styles.saveButton}>
-                Save
+                {t(strings.save)}
               </Button>
             </View>
           </React.Fragment>
         )}
-        {isEmpty && (
-          <Text style={styles.empty}>No more phrases to review 🎉</Text>
-        )}
+        {isEmpty && <Text style={styles.empty}>{t(strings.emptyList)}</Text>}
       </ScrollView>
     );
   }
