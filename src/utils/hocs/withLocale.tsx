@@ -1,13 +1,19 @@
 import React from 'react';
-import { getLocale, setLocale as asyncSetLocale } from 'src/models/locale';
+import i18n from 'i18n-js';
+
+import { setLocale as asyncSetLocale } from 'src/locales';
 
 interface ProviderState {
   locale: string;
 }
 
-export interface LocaleConsumerProps extends ProviderState {
+export interface LocaleProviderProps {
   setLocale: (locale: string) => void;
 }
+
+export interface LocaleConsumerProps
+  extends ProviderState,
+    LocaleProviderProps {}
 
 const { Provider, Consumer } = React.createContext<LocaleConsumerProps>({
   locale: '',
@@ -18,12 +24,7 @@ export const withLocaleProvider = <T extends Object>(
   WrappedComponent: React.ComponentType<T>,
 ): React.ComponentClass<T> => {
   class LocaleProvider extends React.Component<T, ProviderState> {
-    state = { locale: '' };
-
-    async componentDidMount() {
-      const locale = await getLocale();
-      this.setLocale(locale);
-    }
+    state = { locale: i18n.locale };
 
     setLocale = async (locale: string) => {
       this.setState({ locale });
@@ -34,7 +35,7 @@ export const withLocaleProvider = <T extends Object>(
       const { locale } = this.state;
       return (
         <Provider value={{ locale, setLocale: this.setLocale }}>
-          <WrappedComponent {...this.props} />
+          <WrappedComponent setLocale={this.setLocale} {...this.props} />
         </Provider>
       );
     }

@@ -1,8 +1,8 @@
-import { AsyncStorage, Platform } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { createSandbox } from 'sinon';
 import i18n from 'i18n-js';
 
-import { getLocale, setLocale } from '../locale';
+import { setupLocale, setLocale } from '..';
 
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
@@ -14,38 +14,28 @@ jest.mock('react-native', () => ({
     getItem: jest.fn,
     setItem: jest.fn,
   },
-  NativeModules: {
-    I18nManager: { localeIdentifier: 'xpto' },
-    SettingsManager: { settings: { AppleLanguages: ['foobar'] } },
-  },
-  Platform: {
-    select: jest.fn,
-  },
 }));
 
-describe('getting the locale', () => {
-  it('gets from async storage', async () => {
+describe('setup locale', () => {
+  it('sets from async storage is not empty', async () => {
     const asyncStorage = sandbox
       .stub(AsyncStorage, 'getItem')
       .resolves('foobar');
-    const platform = sandbox.stub(Platform, 'select');
 
-    const result = await getLocale();
+    await setupLocale();
 
-    expect(result).toEqual('foobar');
+    expect(i18n.locale).toEqual('foobar');
     expect(asyncStorage.called).toEqual(true);
-    expect(platform.called).toEqual(false);
   });
 
-  it('gets from device if storage empty', async () => {
+  it('does not set if async storage is empty', async () => {
+    i18n.locale = 'foobar';
     const asyncStorage = sandbox.stub(AsyncStorage, 'getItem').resolves(null);
-    const platform = sandbox.stub(Platform, 'select').returns(() => 'foobar');
 
-    const result = await getLocale();
+    await setupLocale();
 
-    expect(result).toEqual('foobar');
+    expect(i18n.locale).toEqual('foobar');
     expect(asyncStorage.called).toEqual(true);
-    expect(platform.called).toEqual(true);
   });
 });
 

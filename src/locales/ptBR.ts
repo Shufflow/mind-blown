@@ -1,6 +1,8 @@
 import { Global, Settings, Reddit } from './strings';
 
 export default {
+  name: 'Português',
+
   [Global.cancel]: 'Cancelar',
   [Global.done]: 'OK',
 

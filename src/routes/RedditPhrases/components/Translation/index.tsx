@@ -4,8 +4,7 @@ import { TextInput, View } from 'react-native';
 import { HeaderProps } from 'src/utils/hocs/withHeader';
 import { Colors } from 'src/utils/styles';
 import icons from 'src/assets/icons';
-
-import { Locales } from 'src/models/locale';
+import { Locales } from 'src/locales';
 
 import LanguagePicker from 'src/components/LanguagePicker';
 import SVGButton from 'src/components/SVGButton';
@@ -91,7 +90,7 @@ class Translation extends React.Component<Props, State> {
         <LanguagePicker
           dark={dark}
           light={light}
-          locale={language || Locales.pt}
+          locale={language}
           onSelectValue={this.onSelectLanguage}
           ref={this.handleLanguagePickerRef}
         />

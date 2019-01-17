@@ -40,6 +40,9 @@ jest.mock('react-native-code-push', () => {
   fn.InstallMode = {};
   return fn;
 });
+jest.mock('react-native-languages', () => ({
+  locale: 'en',
+}));
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};
@@ -52,7 +55,4 @@ RNNativeModules.RNGestureHandlerModule = RNNativeModules.RNGestureHandlerModule 
 };
 RNNativeModules.PlatformConstants = RNNativeModules.PlatformConstants || {
   forceTouchAvailable: false,
-};
-RNNativeModules.RNLanguages = {
-  locale: 'en',
 };

@@ -11,7 +11,6 @@ import googleLogin from 'src/models/auth';
 import AdIds, { onFailToLoadAd, BannerTestIds } from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
-
 import t, { Settings as strings, Global as globalStrings } from 'src/locales';
 
 import Dev from 'src/components/Dev';

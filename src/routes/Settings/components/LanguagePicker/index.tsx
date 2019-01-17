@@ -1,9 +1,7 @@
 import React from 'react';
 
 import pure from 'src/utils/hocs/pure';
-import t, { Settings as strings } from 'src/locales';
-
-import { Locales } from 'src/models/locale';
+import t, { Settings as strings, Locales } from 'src/locales';
 
 import Item from 'src/components/ListItem';
 import LanguagePicker from 'src/components/LanguagePicker';

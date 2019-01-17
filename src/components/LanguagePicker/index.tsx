@@ -2,9 +2,7 @@ import React from 'react';
 import { Modal, Picker, Text, TouchableOpacity, View } from 'react-native';
 
 import { HeaderProps } from 'src/utils/hocs/withHeader';
-import t, { Global as strings } from 'src/locales';
-
-import { Locales } from 'src/models/locale';
+import t, { Global as strings, Locales } from 'src/locales';
 
 import styles from './styles';
 

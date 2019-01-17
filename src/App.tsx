@@ -8,8 +8,12 @@ import { compose } from '@typed/compose';
 
 import AppNavigator from 'src/navigators/AppNavigator';
 import firebaseInit from 'src/models/firebase';
+import { setupLocale } from 'src/locales';
 
-import { withLocaleProvider } from 'src/utils/hocs/withLocale';
+import {
+  withLocaleProvider,
+  LocaleProviderProps,
+} from 'src/utils/hocs/withLocale';
 
 firebaseInit();
 
@@ -17,10 +21,12 @@ const Constants = {
   minimumBkgDurationForInstall: 10,
 };
 
-class App extends React.PureComponent<{}> {
-  componentDidMount() {
+class App extends React.PureComponent<LocaleProviderProps> {
+  async componentDidMount() {
     useScreens();
     SplashScreen.hide();
+
+    this.props.setLocale(await setupLocale());
   }
 
   render() {
