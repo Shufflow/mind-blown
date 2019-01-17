@@ -41,6 +41,7 @@ interface State {
 }
 
 class Home extends React.Component<Props, State> {
+  mounted = false;
   dataSource: PhrasesDataSource;
 
   constructor(props: Props) {
@@ -55,7 +56,12 @@ class Home extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    this.mounted = true;
     this.loadPhrase();
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   genColors = () => {
@@ -73,7 +79,9 @@ class Home extends React.Component<Props, State> {
     this.setState({ phrase: null });
 
     const phrase = await this.dataSource.getRandomPhrase();
-    this.setState({ phrase, selectedThumb: null });
+    if (this.mounted) {
+      this.setState({ phrase, selectedThumb: null });
+    }
   };
 
   getRandomPhrase = async () => {
