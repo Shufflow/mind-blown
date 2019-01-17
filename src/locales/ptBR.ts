@@ -1,4 +1,4 @@
-import { Global, Settings, Reddit } from './strings';
+import { Global, Settings, Reddit, DevMenu } from './strings';
 
 export default {
   name: 'Português',
@@ -7,11 +7,15 @@ export default {
   [Global.done]: 'OK',
 
   [Settings.language]: 'Idioma',
-  [Settings.reviewRedditPhrases]: 'Revisar Frases do Reddit',
+  [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Enviar Sugestão',
 
   [Reddit.discard]: 'Descartar',
   [Reddit.emptyList]: 'Sem frases para revisar 🎉',
   [Reddit.save]: 'Salvar',
   [Reddit.score]: 'Pontos - {{score}}',
+
+  [DevMenu.reviewRedditPhrases]: 'Revisar Frases do Reddit',
+  [DevMenu.showAds]: 'Mostrar Ads',
+  [DevMenu.logout]: 'Logout',
 };

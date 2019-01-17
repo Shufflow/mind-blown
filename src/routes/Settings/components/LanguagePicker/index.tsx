@@ -40,11 +40,9 @@ class SettingsLanguagePicker extends React.Component<Props, State> {
     const { dark, light, locale, onSelectValue } = this.props;
     return (
       <React.Fragment>
-        <Item
-          label={t(strings.language)}
-          onPress={this.showLanguagePicker}
-          value={Locales[this.committedLanguage || locale]}
-        />
+        <Item label={t(strings.language)} onPress={this.showLanguagePicker}>
+          {Locales[this.committedLanguage || locale]}
+        </Item>
         <LanguagePicker
           dark={dark}
           light={light}

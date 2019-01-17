@@ -14,7 +14,7 @@ const firebaseInit = () => {
   GoogleSignin.configure({
     iosClientId: Config.FIREBASE_IOS_CLIENT_ID,
   });
-  GoogleSignin.signInSilently().catch();
+  GoogleSignin.signInSilently().catch(() => {});
 };
 
 export default firebaseInit;

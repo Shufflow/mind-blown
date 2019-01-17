@@ -5,6 +5,7 @@ const styles = StyleSheet.create({
   container: {
     ...Layouts.horizontal,
     ...Layouts.bottomBorder(Colors.lightGray),
+    alignItems: 'center',
     backgroundColor: Colors.offWhite,
     justifyContent: 'space-between',
     padding: Spacing.size_20,

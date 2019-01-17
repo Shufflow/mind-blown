@@ -8,6 +8,7 @@ import routeNames from 'src/routes';
 import Settings from 'src/routes/Settings';
 import RedditPhrases from 'src/routes/RedditPhrases';
 import SendSuggestion from 'src/routes/SendSuggestion';
+import DevMenu from 'src/routes/DevMenu';
 
 import { getColor } from 'src/models/assets';
 
@@ -17,6 +18,7 @@ const routes = {
   [routeNames.Settings]: Settings,
   [routeNames.RedditPhrases]: RedditPhrases,
   [routeNames.SendSuggestion]: SendSuggestion,
+  [routeNames.DevMenu]: DevMenu,
 };
 
 const SettingsNavigator = createStackNavigator(routes, {

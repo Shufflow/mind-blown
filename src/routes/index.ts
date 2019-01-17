@@ -1,4 +1,5 @@
 const routeNames = {
+  DevMenu: 'DevMenu',
   Home: 'Home',
   RedditPhrases: 'RedditPhrases',
   SendSuggestion: 'SendSuggestion',

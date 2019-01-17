@@ -1,4 +1,4 @@
-import { Global, Settings, Reddit } from './strings';
+import { Global, Settings, Reddit, DevMenu } from './strings';
 
 export default {
   name: 'English',
@@ -7,11 +7,15 @@ export default {
   [Global.done]: 'Done',
 
   [Settings.language]: 'Language',
-  [Settings.reviewRedditPhrases]: 'Review Reddit Phrases',
+  [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Send Suggestion',
 
   [Reddit.discard]: 'Discard',
   [Reddit.emptyList]: 'No more phrases to review 🎉',
   [Reddit.save]: 'Save',
   [Reddit.score]: 'Score - {{score}}',
+
+  [DevMenu.reviewRedditPhrases]: 'Review Reddit Phrases',
+  [DevMenu.showAds]: 'Show Ads',
+  [DevMenu.logout]: 'Logout',
 };

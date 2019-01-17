@@ -3,8 +3,8 @@ export enum Global {
   done = 'done',
 }
 export enum Settings {
+  devMenu = 'devMenu',
   language = 'language',
-  reviewRedditPhrases = 'reviewRedditPhrases',
   sendSuggestion = 'sendSuggestion',
 }
 
@@ -13,4 +13,10 @@ export enum Reddit {
   emptyList = 'emptyList',
   score = 'score',
   save = 'save',
+}
+
+export enum DevMenu {
+  reviewRedditPhrases = 'reviewRedditPhrases',
+  showAds = 'showAds',
+  logout = 'logout',
 }
