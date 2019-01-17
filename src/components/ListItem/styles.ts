@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     padding: Spacing.size_20,
   },
   label: {
+    color: Colors.black,
     fontSize: Spacing.size_15,
   },
 });
