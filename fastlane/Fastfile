@@ -41,18 +41,30 @@ lane :build_android_dev do
   gradle(task: 'clean', project_dir: 'android/')
   gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
 
-  move_to_deploy()
+  cp_to_deploy()
+end
+
+desc 'Build Android Release app'
+lane :build_android_release do
+  gradle(task: 'clean', project_dir: 'android/')
+  gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+
+  cp_to_deploy()
 end
 
 desc 'Release Android app'
 lane :release_android do
-  gradle(task: 'clean', project_dir: 'android/')
-  gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+  build_android_release
 
-  move_to_deploy()
+  upload_to_play_store(
+    package_name: 'com.shufflow.MindBlown',
+    track: 'internal',
+    json_key: 'google_play_key.json',
+    apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+  )
 end
 
-def move_to_deploy()
+def cp_to_deploy()
   apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
   out_dir = ENV['BITRISE_DEPLOY_DIR'] || '../build/'
 
