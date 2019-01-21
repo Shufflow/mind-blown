@@ -39,4 +39,22 @@ desc 'Build Android app'
 lane :build_android do
   gradle(task: 'clean', project_dir: 'android/')
   gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
+
+  move_to_deploy()
+end
+
+desc 'Release Android app'
+lane :release_android do
+  gradle(task: 'clean', project_dir: 'android/')
+  gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
+
+  move_to_deploy()
+end
+
+def move_to_deploy()
+  apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+  out_dir = ENV['BITRISE_DEPLOY_DIR'] || '../build/'
+
+  UI.message "Moving bundle to \"#{out_dir}\""
+  sh "cp #{apk_location} #{out_dir}"
 end
