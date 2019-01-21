@@ -1,6 +1,7 @@
 import { compose } from '@typed/compose';
 import React from 'react';
 import { View, StatusBar, Linking } from 'react-native';
+import Config from 'react-native-config';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import pure from 'src/utils/hocs/pure';
@@ -61,7 +62,7 @@ const Settings = (props: Props) => {
           label={t(strings.licenses)}
           onPress={navigate(props, routeNames.Licenses)}
         />
-        <Dev>
+        <Dev condition={Config.SHOW_DEV_MENU}>
           <ListItem
             label={t(strings.devMenu)}
             onPress={navigate(props, routeNames.DevMenu)}

@@ -7,16 +7,18 @@ import styles from './styles';
 
 interface Props {
   children: React.ReactNode | React.ReactNode[];
+  condition?: boolean;
   isAbsolute?: boolean;
   style?: StyleProp<any>;
 }
 
 const Dev = ({
   isAbsolute,
+  condition = __DEV__,
   children,
   style,
 }: Props): React.ReactElement<Props> | null => {
-  if (!__DEV__) {
+  if (!condition) {
     return null;
   }
 
