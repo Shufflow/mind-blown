@@ -28,7 +28,7 @@ lane :build_ios do
     configuration: 'Debug',
     skip_package_ipa: true,
     skip_archive: true,
-    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.1'
+    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.0'
   )
 
   # setup certificates
