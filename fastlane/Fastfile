@@ -5,11 +5,6 @@ lane :tests do
   sh 'yarn lint'
   sh 'yarn tsc'
   sh 'yarn test'
-
-  if Helper.is_ci?
-    build_ios
-    build_android
-  end
 end
 
 before_all do
@@ -17,8 +12,14 @@ before_all do
   sh 'yarn install'
 end
 
-desc 'Build iOS app'
-lane :build_ios do
+desc 'Build Dev apps'
+lane :build_dev do
+  build_ios_dev
+  build_android_dev
+end
+
+desc 'Build iOS Dev app'
+lane :build_ios_dev do
   sh 'yarn install-ios'
 
   build_ios_app(
@@ -35,8 +36,8 @@ lane :build_ios do
   # setup build
 end
 
-desc 'Build Android app'
-lane :build_android do
+desc 'Build Android Dev app'
+lane :build_android_dev do
   gradle(task: 'clean', project_dir: 'android/')
   gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
 
