@@ -18,9 +18,9 @@ const Constants = {
 
 const styles = StyleSheet.create({
   container: {
-    ...Constants.shadow,
     borderRadius: Constants.borderRadius,
   },
+  shadow: Constants.shadow,
   text: {
     textAlign: 'center',
   },
