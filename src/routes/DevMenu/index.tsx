@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, ActivityIndicator, Switch } from 'react-native';
+import { View, ActivityIndicator, Switch, Text } from 'react-native';
 import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { compose } from '@typed/compose';
+import Config from 'react-native-config';
 
 import t, { DevMenu as strings, Global as globalStrings } from 'src/locales';
 import { goBack } from 'src/utils/navigation';
@@ -104,6 +105,11 @@ class DevMenu extends React.Component<Props, State> {
         ) : (
           this.renderSignedOff()
         )}
+        <Text style={styles.footer}>
+          {dark} - {light}
+          {`\n`}
+          {Config.FIREBASE_PROJECT_ID}
+        </Text>
       </View>
     );
   }

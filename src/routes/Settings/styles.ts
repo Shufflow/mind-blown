@@ -10,6 +10,10 @@ const styles = {
     ...Layouts.container,
     paddingVertical: Spacing.size_40,
   },
+
+  devItem: {
+    marginTop: Spacing.size_40,
+  },
 };
 
 export default styles;

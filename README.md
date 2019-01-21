@@ -51,12 +51,13 @@ You should run tests by calling `yarn test`, but if you want to debug unit tests
 
 The following scripts are embedded with the package:
 
-| Name | Description
-|--|--|
-| `install-ios` | Installs iOS dependencies |
-| `lint` | Runs TSLint |
-| `test` | Runs tests in the application |
+| Name           | Description                                                   |
+| -------------- | ------------------------------------------------------------- |
+| `install-ios`  | Installs iOS dependencies                                     |
+| `lint`         | Runs TSLint                                                   |
+| `test`         | Runs tests in the application                                 |
 | `update-icons` | Reads SVG files in assets/icons and stores in assets/icons.ts |
+| `gen-licenses` | Compiles the dependencies' licenses into a single file        |
 
 ## License
 

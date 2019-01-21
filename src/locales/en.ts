@@ -9,6 +9,7 @@ export default {
   [Settings.language]: 'Language',
   [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Send Suggestion',
+  [Settings.licenses]: 'Licenses',
 
   [Reddit.discard]: 'Discard',
   [Reddit.emptyList]: 'No more phrases to review 🎉',

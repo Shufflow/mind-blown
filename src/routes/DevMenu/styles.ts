@@ -20,6 +20,13 @@ const styles = {
   switchContainer: {
     paddingVertical: Constants.switchContainerPadding,
   },
+
+  footer: {
+    ...Layouts.fullWidth,
+    ...Layouts.absolute,
+    bottom: Spacing.size_20,
+    textAlign: 'center',
+  },
 };
 
 export default styles;

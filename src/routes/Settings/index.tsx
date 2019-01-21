@@ -54,16 +54,16 @@ const Settings = (props: Props) => {
           label={t(strings.sendSuggestion)}
           onPress={navigate(props, routeNames.SendSuggestion)}
         />
+        <ListItem
+          label={t(strings.licenses)}
+          onPress={navigate(props, routeNames.Licenses)}
+        />
         <Dev>
           <ListItem
             label={t(strings.devMenu)}
             onPress={navigate(props, routeNames.DevMenu)}
+            style={styles.devItem}
           />
-        </Dev>
-        <Dev>
-          {dark} - {light}
-          {`\n`}
-          {Config.FIREBASE_PROJECT_ID}
         </Dev>
       </View>
       <AdBanner adUnitID={AdIds.settingsBottomBanner} />

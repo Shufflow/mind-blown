@@ -6,6 +6,7 @@ export enum Settings {
   devMenu = 'devMenu',
   language = 'language',
   sendSuggestion = 'sendSuggestion',
+  licenses = 'licenses',
 }
 
 export enum Reddit {
