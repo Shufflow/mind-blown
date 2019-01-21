@@ -10,6 +10,8 @@ export default {
   [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Send Suggestion',
   [Settings.licenses]: 'Licenses',
+  [Settings.madeBy]: 'Made with ❤️ by Flavio Caetano',
+  [Settings.artBy]: 'Art by Agnes Pinhanelli',
 
   [Reddit.discard]: 'Discard',
   [Reddit.emptyList]: 'No more phrases to review 🎉',

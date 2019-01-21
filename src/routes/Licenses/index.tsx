@@ -8,15 +8,9 @@ import t, { Global as strings } from 'src/locales';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 import HeaderButton from 'src/components/HeaderButton';
+import Constants from 'src/utils/constants';
 
-const Licenses = () => (
-  <WebView
-    source={{
-      uri:
-        'https://raw.githubusercontent.com/fjcaetano/mind-blown/master/compiled_licenses.txt',
-    }}
-  />
-);
+const Licenses = () => <WebView source={{ uri: Constants.licensesURL }} />;
 
 const Enhanced: any = pure(Licenses);
 Enhanced.navigationOptions = (props: ColoredScreenProps) => ({

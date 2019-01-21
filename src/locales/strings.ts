@@ -7,6 +7,8 @@ export enum Settings {
   language = 'language',
   sendSuggestion = 'sendSuggestion',
   licenses = 'licenses',
+  madeBy = 'madeBy',
+  artBy = 'artBy',
 }
 
 export enum Reddit {

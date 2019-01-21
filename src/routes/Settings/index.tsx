@@ -1,10 +1,10 @@
 import { compose } from '@typed/compose';
 import React from 'react';
-import { View, StatusBar } from 'react-native';
-import Config from 'react-native-config';
+import { View, StatusBar, Linking } from 'react-native';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import pure from 'src/utils/hocs/pure';
+import Constants from 'src/utils/constants';
 
 import AdIds from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
@@ -15,6 +15,7 @@ import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';
 import HeaderButton from 'src/components/HeaderButton';
 import AdBanner from 'src/components/AdBanner';
+import Button, { ButtonTheme } from 'src/components/Button';
 
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
@@ -31,6 +32,8 @@ const navigate = (
     light,
   });
 };
+
+const openURL = (url: string) => async () => Linking.openURL(url);
 
 const Settings = (props: Props) => {
   const {
@@ -66,7 +69,27 @@ const Settings = (props: Props) => {
           />
         </Dev>
       </View>
-      <AdBanner adUnitID={AdIds.settingsBottomBanner} />
+      <React.Fragment>
+        <View style={styles.footerLinksContainer}>
+          <Button
+            hasShadow={false}
+            theme={ButtonTheme.minimalist}
+            onPress={openURL(Constants.repoURL)}
+            style={styles.footerLink}
+          >
+            {t(strings.madeBy)}
+          </Button>
+          <Button
+            hasShadow={false}
+            theme={ButtonTheme.minimalist}
+            onPress={openURL(Constants.agnesURL)}
+            style={styles.footerLink}
+          >
+            {t(strings.artBy)}
+          </Button>
+        </View>
+        <AdBanner adUnitID={AdIds.settingsBottomBanner} />
+      </React.Fragment>
     </View>
   );
 };
