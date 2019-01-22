@@ -22,6 +22,7 @@ desc 'Build iOS Dev app'
 lane :build_ios_dev do
   sh 'yarn install-ios'
 
+  ENV["ENVFILE"] = ".env.dev"
   build_ios_app(
     export_method: 'development',
     workspace: 'ios/MindBlown.xcworkspace',
@@ -38,6 +39,8 @@ end
 
 desc 'Build Android Dev app'
 lane :build_android_dev do
+  ENV["ENVFILE"] = ".env.dev"
+
   gradle(task: 'clean', project_dir: 'android/')
   gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
 
@@ -46,6 +49,8 @@ end
 
 desc 'Build Android Release app'
 lane :build_android_release do
+  ENV["ENVFILE"] = ".env.prod"
+
   gradle(task: 'clean', project_dir: 'android/')
   gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
 
@@ -59,7 +64,7 @@ lane :release_android do
   upload_to_play_store(
     package_name: 'com.shufflow.MindBlown',
     track: 'internal',
-    json_key: 'google_play_key.json',
+    json_key: 'google_api_key.json',
     apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
   )
 end

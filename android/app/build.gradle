@@ -104,7 +104,7 @@ android {
         applicationId "com.shufflow.MindBlown"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode project.env.get('BITRISE_BUILD_NUMBER')
+        versionCode 3
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
@@ -120,10 +120,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file(project.env.get('BITRISEIO_ANDROID_KEYSTORE_ALIAS') + ".keystore")
-            storePassword project.env.get('BITRISEIO_ANDROID_KEYSTORE_PASSWORD')
-            keyAlias project.env.get('BITRISEIO_ANDROID_KEYSTORE_ALIAS')
-            keyPassword project.env.get('BITRISEIO_ANDROID_KEYSTORE_PRIVATE_KEY_PASSWORD')
+            storeFile file(project.env.get('KEYSTORE_ALIAS') + ".keystore")
+            storePassword project.env.get('KEYSTORE_PWD')
+            keyAlias project.env.get('KEYSTORE_ALIAS')
+            keyPassword project.env.get('KEYSTORE_PWD')
         }
     }
     buildTypes {
