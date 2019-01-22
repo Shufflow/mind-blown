@@ -8,7 +8,8 @@
     "install-ios": "bundle install --frozen && pushd ios; bundle exec pod install",
     "lint": "tslint --project tsconfig.json --config tslint.json",
     "update-icons": "scripts/gen-icons.sh",
-    "postinstall": "scripts/gen-licenses.sh"
+    "postinstall": "scripts/gen-licenses.sh",
+    "postversion": "react-native-version"
   },
   "dependencies": {
     "@typed/compose": "^1.0.0",
@@ -49,6 +50,7 @@
     "mock-cloud-firestore": "^0.9.0",
     "prettier": "^1.15.3",
     "react-native-typescript-transformer": "^1.2.10",
+    "react-native-version": "^2.6.6",
     "react-test-renderer": "16.6.1",
     "sinon": "^7.2.2",
     "ts-jest": "^23.10.5",
