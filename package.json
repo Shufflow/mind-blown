@@ -7,9 +7,8 @@
     "test": "jest -c .jest.json",
     "install-ios": "bundle install --frozen && pushd ios; bundle exec pod install",
     "lint": "tslint --project tsconfig.json --config tslint.json",
-    "update-icons": "sh gen-icons.sh",
-    "gen-licenses": "yarn licenses generate-disclaimer -s > compiled_licenses.txt",
-    "postinstall": "yarn gen-licenses"
+    "update-icons": "scripts/gen-icons.sh",
+    "postinstall": "scripts/gen-licenses.sh"
   },
   "dependencies": {
     "@typed/compose": "^1.0.0",
