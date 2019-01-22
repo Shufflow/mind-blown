@@ -80,5 +80,5 @@ ios/.bundle
 *.jsbundle
 
 # Env
-.env.prod
+.env*
 google_api_key.json
