@@ -19,7 +19,7 @@ const AdIds = Platform.select({
 });
 
 export const BannerTestIds = __DEV__
-  ? [AdMobBanner.simulatorId, '92C9DAEF6B2CB164ABBAEA44A039E9D2']
+  ? [AdMobBanner.simulatorId, '7390EF66B0FC00613A785C98A5DBBDDB']
   : [];
 
 class AdManager {
@@ -30,7 +30,7 @@ class AdManager {
     if (__DEV__) {
       AdMobInterstitial.setTestDevices([
         AdMobInterstitial.simulatorId,
-        '92C9DAEF6B2CB164ABBAEA44A039E9D2',
+        '7390EF66B0FC00613A785C98A5DBBDDB',
       ]);
     }
   }

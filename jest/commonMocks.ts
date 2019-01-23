@@ -43,6 +43,12 @@ jest.mock('react-native-code-push', () => {
 jest.mock('react-native-languages', () => ({
   locale: 'en',
 }));
+jest.mock('react-native-iap', () => ({
+  buyProduct: Promise.resolve,
+  getAvailablePurchases: async () => Promise.resolve([]),
+  getProducts: async () => Promise.resolve([]),
+  initConnection: Promise.resolve,
+}));
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};

@@ -60,6 +60,7 @@ class DevMenu extends React.Component<Props, State> {
     this.setState({ isLoading: false, isSignedIn: false });
   };
 
+  // TODO: ShowAds Switch
   renderSignedIn = () => (
     <React.Fragment>
       <ListItem
@@ -70,7 +71,7 @@ class DevMenu extends React.Component<Props, State> {
         <Switch
           value={this.props.showAds}
           trackColor={{ true: this.props.navigation.color.dark } as any}
-          onValueChange={this.props.setShowAds}
+          disabled
         />
       </ListItem>
       <ListItem

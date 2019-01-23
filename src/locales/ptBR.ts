@@ -12,6 +12,8 @@ export default {
   [Settings.licenses]: 'Licenças',
   [Settings.madeBy]: 'Feito com ❤️ por Flavio Caetano',
   [Settings.artBy]: 'Arte de Agnes Pinhanelli',
+  [Settings.removeAds]: 'Remover Anúncios',
+  [Settings.removeAdsDiscount]: 'Remover Anúncios - 50% Desconto',
 
   [Reddit.discard]: 'Descartar',
   [Reddit.emptyList]: 'Sem frases para revisar 🎉',

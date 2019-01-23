@@ -1,18 +1,17 @@
 import React from 'react';
-import { AsyncStorage } from 'react-native';
 
-const SHOW_ADS_KEY = 'SHOW_ADS_KEY';
+import IAP from 'src/models/iap';
 
 interface ProviderState {
   showAds: boolean;
 }
 
 export interface AdsConsumerProps extends ProviderState {
-  setShowAds: (value: boolean) => void;
+  checkShowAds: () => void;
 }
 
 const { Provider, Consumer } = React.createContext<AdsConsumerProps>({
-  setShowAds: () => {},
+  checkShowAds: () => {},
   showAds: !__DEV__,
 });
 
@@ -22,22 +21,24 @@ export const withAdsProvider = <Props extends Object>(
   class ShowAdsProvider extends React.Component<Props, ProviderState> {
     state = { showAds: !__DEV__ };
 
-    async componentDidMount() {
-      const showAds = await AsyncStorage.getItem(SHOW_ADS_KEY);
-      this.setState({
-        showAds: showAds !== 'false',
-      });
+    componentDidMount() {
+      this.checkShowAds();
     }
 
-    setShowAds = async (showAds: boolean) => {
-      this.setState({ showAds });
-      await AsyncStorage.setItem(SHOW_ADS_KEY, showAds.toString());
+    checkShowAds = async () => {
+      const isAdFree = await IAP.isAdFree();
+      this.setState({ showAds: !isAdFree });
     };
 
     render() {
       const { showAds } = this.state;
       return (
-        <Provider value={{ showAds, setShowAds: this.setShowAds }}>
+        <Provider
+          value={{
+            showAds,
+            checkShowAds: this.checkShowAds,
+          }}
+        >
           <WrappedComponent {...this.props} />
         </Provider>
       );
@@ -52,13 +53,5 @@ export const withAds = <Props extends Object>(
 ): React.ComponentType<Props & AdsConsumerProps> => (
   props: Props,
 ): React.ReactElement<Props> => (
-  <Consumer>
-    {({ setShowAds, showAds }) => (
-      <WrappedComponent
-        setShowAds={setShowAds}
-        showAds={!__DEV__ || showAds}
-        {...props}
-      />
-    )}
-  </Consumer>
+  <Consumer>{args => <WrappedComponent {...args} {...props} />}</Consumer>
 );

@@ -15,12 +15,11 @@ const styles = {
     ...Layouts.container,
   },
 
-  devItem: {
+  itemMarginTop: {
     marginTop: Spacing.size_40,
   },
 
   footerContainer: {
-    marginBottom: Spacing.size_20,
     marginTop: Spacing.size_40,
   },
   footerLink: {

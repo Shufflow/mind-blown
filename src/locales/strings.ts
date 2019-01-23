@@ -9,6 +9,8 @@ export enum Settings {
   licenses = 'licenses',
   madeBy = 'madeBy',
   artBy = 'artBy',
+  removeAds = 'removeAds',
+  removeAdsDiscount = 'removeAdsDiscount',
 }
 
 export enum Reddit {
