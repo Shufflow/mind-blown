@@ -49,10 +49,6 @@ const colors: Color[] = [
     light: 'lavenderblush',
   },
   {
-    dark: 'darkblue',
-    light: 'aliceblue',
-  },
-  {
     dark: 'darkcyan',
     light: 'white',
   },
