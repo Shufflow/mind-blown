@@ -29,17 +29,17 @@ class IAPManager {
     );
   });
 
-  isAdFree = memoize(async () => {
+  constructor() {
+    this.setup();
+  }
+
+  isAdFree = async () => {
     await this.setup();
     const purchases = await RNIap.getAvailablePurchases();
     return !!purchases.find(purchase =>
       Object.values(SKU).includes(purchase.productId),
     );
-  });
-
-  constructor() {
-    this.setup();
-  }
+  };
 
   buyProduct = async (sku: SKU) => {
     try {

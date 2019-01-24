@@ -37,9 +37,8 @@ class Settings extends React.Component<Props, State> {
   };
 
   async componentDidMount() {
-    const isAdFree = await IAP.isAdFree();
     this.setState({
-      showBuyAds: !isAdFree && IAP.canBuyAdFree,
+      showBuyAds: !this.props.showAds && IAP.canBuyAdFree,
     });
   }
 
