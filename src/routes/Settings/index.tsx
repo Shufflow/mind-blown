@@ -1,6 +1,6 @@
 import { compose } from '@typed/compose';
 import React from 'react';
-import { View, StatusBar, Linking } from 'react-native';
+import { View, StatusBar, Linking, ScrollView } from 'react-native';
 import Config from 'react-native-config';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
@@ -46,37 +46,38 @@ const Settings = (props: Props) => {
   } = props;
   return (
     <View style={styles.container(light)}>
-      <View style={styles.itemsContainer}>
-        <StatusBar barStyle='light-content' />
-        <LanguagePicker
-          dark={dark}
-          light={light}
-          locale={locale}
-          onSelectValue={setLocale}
-        />
-        <ListItem
-          label={t(strings.sendSuggestion)}
-          onPress={navigate(props, routeNames.SendSuggestion)}
-        />
-        <ListItem
-          label={t(strings.licenses)}
-          onPress={navigate(props, routeNames.Licenses)}
-        />
-        <Dev condition={Config.SHOW_DEV_MENU}>
-          <ListItem
-            label={t(strings.devMenu)}
-            onPress={navigate(props, routeNames.DevMenu)}
-            style={styles.devItem}
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.itemsContainer}>
+          <StatusBar barStyle='light-content' />
+          <LanguagePicker
+            dark={dark}
+            light={light}
+            locale={locale}
+            onSelectValue={setLocale}
           />
-        </Dev>
-      </View>
-      <React.Fragment>
-        <View style={styles.footerLinksContainer}>
+          <ListItem
+            label={t(strings.sendSuggestion)}
+            onPress={navigate(props, routeNames.SendSuggestion)}
+          />
+          <ListItem
+            label={t(strings.licenses)}
+            onPress={navigate(props, routeNames.Licenses)}
+          />
+          <Dev condition={Config.SHOW_DEV_MENU}>
+            <ListItem
+              label={t(strings.devMenu)}
+              onPress={navigate(props, routeNames.DevMenu)}
+              style={styles.devItem}
+            />
+          </Dev>
+        </View>
+        <View style={styles.footerContainer}>
           <Button
             hasShadow={false}
             theme={ButtonTheme.minimalist}
             onPress={openURL(Constants.repoURL)}
             style={styles.footerLink}
+            textStyle={styles.footerLinkText}
           >
             {t(strings.madeBy)}
           </Button>
@@ -85,12 +86,13 @@ const Settings = (props: Props) => {
             theme={ButtonTheme.minimalist}
             onPress={openURL(Constants.agnesURL)}
             style={styles.footerLink}
+            textStyle={styles.footerLinkText}
           >
             {t(strings.artBy)}
           </Button>
         </View>
-        <AdBanner adUnitID={AdIds.settingsBottomBanner} />
-      </React.Fragment>
+      </ScrollView>
+      <AdBanner adUnitID={AdIds.settingsBottomBanner} />
     </View>
   );
 };
