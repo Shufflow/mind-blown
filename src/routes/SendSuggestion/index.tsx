@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, ActivityIndicator } from 'react-native';
 
 import { goBack } from 'src/utils/navigation';
 import t, { Global as strings } from 'src/locales';
@@ -19,7 +19,12 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
         {t(strings.cancel)}
       </HeaderButton>
     ),
-    headerRight: (
+    headerRight: args.navigation.getParam('isLoading', false) ? (
+      <ActivityIndicator
+        color={args.navigation.color.light}
+        style={styles.loading}
+      />
+    ) : (
       <HeaderButton
         color={args.navigation.color.light}
         onPress={args.navigation.getParam('onPressDone')}
@@ -44,11 +49,15 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
   };
 
   onPressDone = async () => {
-    if (this.text) {
-      await this.dataSource.sendSuggestion(this.text);
+    if (!this.text) {
+      return;
     }
 
-    this.props.navigation.goBack();
+    const { navigation } = this.props;
+    navigation.setParams({ isLoading: true });
+    await this.dataSource.sendSuggestion(this.text);
+    navigation.setParams({ isLoading: false });
+    navigation.goBack();
   };
 
   render() {

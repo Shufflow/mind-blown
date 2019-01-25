@@ -17,10 +17,16 @@ const styles = {
     backgroundColor: Colors.white,
     borderColor: Colors.lightGray,
     borderWidth: Constants.borderWidth,
+    color: Colors.black,
     fontSize: Spacing.size_20,
     height: Constants.textInputHeight,
     margin: Spacing.size_20,
     padding: Spacing.size_10,
+    textAlignVertical: 'top',
+  },
+
+  loading: {
+    marginHorizontal: Spacing.size_10,
   },
 };
 
