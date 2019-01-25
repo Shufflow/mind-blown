@@ -46,13 +46,17 @@ class Settings extends React.Component<Props, State> {
     this.setState({ canBuyDiscount: true });
   };
 
+  setLocale = (locale: string) => {
+    this.props.setLocale(locale);
+    this.props.navigation.setParams({ updateLocale: '' });
+  };
+
   render() {
     const {
       navigation: {
         color: { dark, light },
       },
       locale,
-      setLocale,
     } = this.props;
     const { canBuyDiscount } = this.state;
     return (
@@ -63,7 +67,7 @@ class Settings extends React.Component<Props, State> {
             dark={dark}
             light={light}
             locale={locale}
-            onSelectValue={setLocale}
+            onSelectValue={this.setLocale}
           />
           <ListItem
             label={t(strings.sendSuggestion)}
