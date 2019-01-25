@@ -1,13 +1,12 @@
 import React from 'react';
-import { View, StatusBar, Linking, ScrollView } from 'react-native';
+import { View, StatusBar, ScrollView } from 'react-native';
 import Config from 'react-native-config';
 
 import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import { AdsConsumerProps, withAds } from 'src/utils/hocs/withAds';
 import Constants from 'src/utils/constants';
 
-import AdIds, { InterstitialAd } from 'src/models/ads';
-import IAP from 'src/models/iap';
+import AdIds from 'src/models/ads';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 import t, { Settings as strings, Global as globalStrings } from 'src/locales';
@@ -21,6 +20,7 @@ import Button, { ButtonTheme } from 'src/components/Button';
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
 import { compose } from '@typed/compose';
+import SettingsViewModel from 'src/viewModels/settings';
 
 interface Props
   extends LocaleConsumerProps,
@@ -29,44 +29,21 @@ interface Props
 
 interface State {
   canBuyDiscount: boolean;
-  showBuyAds: boolean;
 }
 
 class Settings extends React.Component<Props, State> {
+  viewModel: SettingsViewModel;
   state = {
     canBuyDiscount: false,
-    showBuyAds: false,
   };
 
-  async componentDidMount() {
-    this.setState({
-      showBuyAds: this.props.showAds && IAP.canBuyAdFree,
-    });
-
-    InterstitialAd.handleRewardedVideo = () => {
-      this.setState({ canBuyDiscount: true });
-    };
+  constructor(props: Props) {
+    super(props);
+    this.viewModel = new SettingsViewModel(props, this.enableBuyDiscount);
   }
 
-  navigate = (routeName: string) => () => {
-    const { dark, light } = this.props.navigation.color;
-    this.props.navigation.navigate(routeName, { dark, light });
-  };
-
-  openURL = (url: string) => async () => Linking.openURL(url);
-
-  buyAdFree = async () => {
-    try {
-      if (this.state.canBuyDiscount) {
-        await IAP.buyAdFreeDiscount();
-      } else {
-        await IAP.buyAdFree();
-      }
-
-      this.props.checkShowAds();
-    } catch (e) {
-      // TODO
-    }
+  enableBuyDiscount = () => {
+    this.setState({ canBuyDiscount: true });
   };
 
   render() {
@@ -77,7 +54,7 @@ class Settings extends React.Component<Props, State> {
       locale,
       setLocale,
     } = this.props;
-    const { showBuyAds, canBuyDiscount } = this.state;
+    const { canBuyDiscount } = this.state;
     return (
       <View style={styles.container(light)}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -90,25 +67,25 @@ class Settings extends React.Component<Props, State> {
           />
           <ListItem
             label={t(strings.sendSuggestion)}
-            onPress={this.navigate(routeNames.SendSuggestion)}
+            onPress={this.viewModel.handleNavigate(routeNames.SendSuggestion)}
           />
           <ListItem
             label={t(strings.licenses)}
-            onPress={this.navigate(routeNames.Licenses)}
+            onPress={this.viewModel.handleNavigate(routeNames.Licenses)}
           />
-          {showBuyAds && (
+          {this.viewModel.showBuyAds && (
             <ListItem
               label={t(
                 canBuyDiscount ? strings.removeAdsDiscount : strings.removeAds,
               )}
-              onPress={this.buyAdFree}
+              onPress={this.viewModel.handleBuyAdFree}
               style={styles.itemMarginTop}
             />
           )}
           <Dev condition={Config.SHOW_DEV_MENU}>
             <ListItem
               label={t(strings.devMenu)}
-              onPress={this.navigate(routeNames.DevMenu)}
+              onPress={this.viewModel.handleNavigate(routeNames.DevMenu)}
               style={styles.itemMarginTop}
             />
           </Dev>
@@ -116,7 +93,7 @@ class Settings extends React.Component<Props, State> {
             <Button
               hasShadow={false}
               theme={ButtonTheme.minimalist}
-              onPress={this.openURL(Constants.repoURL)}
+              onPress={this.viewModel.handleOpenURL(Constants.repoURL)}
               style={styles.footerLink}
               textStyle={styles.footerLinkText}
             >
@@ -125,7 +102,7 @@ class Settings extends React.Component<Props, State> {
             <Button
               hasShadow={false}
               theme={ButtonTheme.minimalist}
-              onPress={this.openURL(Constants.agnesURL)}
+              onPress={this.viewModel.handleOpenURL(Constants.agnesURL)}
               style={styles.footerLink}
               textStyle={styles.footerLinkText}
             >

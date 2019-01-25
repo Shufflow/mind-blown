@@ -1,8 +1,6 @@
 import * as RNIap from 'react-native-iap';
-import { Alert } from 'react-native';
 
 import memoize from 'src/utils/memoize';
-import t, { AdDiscountAlert as strings } from 'src/locales';
 
 import { InterstitialAd } from 'src/models/ads';
 
@@ -56,33 +54,9 @@ class IAPManager {
     }
   };
 
-  buyAdFree = async () => {
-    try {
-      await this.buyProduct(SKU.adFree);
-    } catch (e) {
-      if (e.code === IAPErrorCodes.cancelled && this.canBuyAdsDiscount) {
-        Alert.alert(t(strings.title), t(strings.message), [
-          {
-            style: 'cancel',
-            text: t(strings.cancel),
-          },
-          {
-            onPress: this.showRewardedAd,
-            text: t(strings.confirm),
-          },
-        ]);
-      }
-    }
-  };
+  buyAdFree = async () => this.buyProduct(SKU.adFree);
 
-  buyAdFreeDiscount = async () => {
-    await this.buyProduct(SKU.adFreeDiscount);
-  };
-
-  showRewardedAd = async () => {
-    await InterstitialAd.showRewardedAd();
-    await this.buyAdFreeDiscount();
-  };
+  buyAdFreeDiscount = async () => this.buyProduct(SKU.adFreeDiscount);
 }
 
 export default new IAPManager();
