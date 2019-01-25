@@ -7,6 +7,7 @@ const styles = {
     backgroundColor,
   }),
   scrollViewContent: {
+    ...Layouts.container,
     justifyContent: 'space-between',
     paddingVertical: Spacing.size_40,
   } as ViewStyle,

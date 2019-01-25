@@ -61,38 +61,42 @@ class Settings extends React.Component<Props, State> {
     const { canBuyDiscount } = this.state;
     return (
       <View style={styles.container(light)}>
+        <StatusBar barStyle='light-content' />
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <StatusBar barStyle='light-content' />
-          <LanguagePicker
-            dark={dark}
-            light={light}
-            locale={locale}
-            onSelectValue={this.setLocale}
-          />
-          <ListItem
-            label={t(strings.sendSuggestion)}
-            onPress={this.viewModel.handleNavigate(routeNames.SendSuggestion)}
-          />
-          <ListItem
-            label={t(strings.licenses)}
-            onPress={this.viewModel.handleNavigate(routeNames.Licenses)}
-          />
-          {this.viewModel.showBuyAds && (
-            <ListItem
-              label={t(
-                canBuyDiscount ? strings.removeAdsDiscount : strings.removeAds,
-              )}
-              onPress={this.viewModel.handleBuyAdFree}
-              style={styles.itemMarginTop}
+          <View>
+            <LanguagePicker
+              dark={dark}
+              light={light}
+              locale={locale}
+              onSelectValue={this.setLocale}
             />
-          )}
-          <Dev condition={Config.SHOW_DEV_MENU}>
             <ListItem
-              label={t(strings.devMenu)}
-              onPress={this.viewModel.handleNavigate(routeNames.DevMenu)}
-              style={styles.itemMarginTop}
+              label={t(strings.sendSuggestion)}
+              onPress={this.viewModel.handleNavigate(routeNames.SendSuggestion)}
             />
-          </Dev>
+            <ListItem
+              label={t(strings.licenses)}
+              onPress={this.viewModel.handleNavigate(routeNames.Licenses)}
+            />
+            {this.viewModel.showBuyAds && (
+              <ListItem
+                label={t(
+                  canBuyDiscount
+                    ? strings.removeAdsDiscount
+                    : strings.removeAds,
+                )}
+                onPress={this.viewModel.handleBuyAdFree}
+                style={styles.itemMarginTop}
+              />
+            )}
+            <Dev condition={Config.SHOW_DEV_MENU}>
+              <ListItem
+                label={t(strings.devMenu)}
+                onPress={this.viewModel.handleNavigate(routeNames.DevMenu)}
+                style={styles.itemMarginTop}
+              />
+            </Dev>
+          </View>
           <View style={styles.footerContainer}>
             <Button
               hasShadow={false}
