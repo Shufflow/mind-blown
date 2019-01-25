@@ -6,7 +6,7 @@ import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
 import { AdsConsumerProps, withAds } from 'src/utils/hocs/withAds';
 import Constants from 'src/utils/constants';
 
-import AdIds from 'src/models/ads';
+import AdIds, { InterstitialAd } from 'src/models/ads';
 import IAP from 'src/models/iap';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
@@ -28,18 +28,24 @@ interface Props
     AdsConsumerProps {}
 
 interface State {
+  canBuyDiscount: boolean;
   showBuyAds: boolean;
 }
 
 class Settings extends React.Component<Props, State> {
   state = {
+    canBuyDiscount: false,
     showBuyAds: false,
   };
 
   async componentDidMount() {
     this.setState({
-      showBuyAds: !this.props.showAds && IAP.canBuyAdFree,
+      showBuyAds: this.props.showAds && IAP.canBuyAdFree,
     });
+
+    InterstitialAd.handleRewardedVideo = () => {
+      this.setState({ canBuyDiscount: true });
+    };
   }
 
   navigate = (routeName: string) => () => {
@@ -51,7 +57,12 @@ class Settings extends React.Component<Props, State> {
 
   buyAdFree = async () => {
     try {
-      await IAP.buyAdFree();
+      if (this.state.canBuyDiscount) {
+        await IAP.buyAdFreeDiscount();
+      } else {
+        await IAP.buyAdFree();
+      }
+
       this.props.checkShowAds();
     } catch (e) {
       // TODO
@@ -66,6 +77,7 @@ class Settings extends React.Component<Props, State> {
       locale,
       setLocale,
     } = this.props;
+    const { showBuyAds, canBuyDiscount } = this.state;
     return (
       <View style={styles.container(light)}>
         <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -84,9 +96,11 @@ class Settings extends React.Component<Props, State> {
             label={t(strings.licenses)}
             onPress={this.navigate(routeNames.Licenses)}
           />
-          {this.state.showBuyAds && (
+          {showBuyAds && (
             <ListItem
-              label={t(strings.removeAds)}
+              label={t(
+                canBuyDiscount ? strings.removeAdsDiscount : strings.removeAds,
+              )}
               onPress={this.buyAdFree}
               style={styles.itemMarginTop}
             />

@@ -1,4 +1,4 @@
-import { Global, Settings, Reddit, DevMenu } from './strings';
+import { Global, Settings, Reddit, DevMenu, AdDiscountAlert } from './strings';
 
 export default {
   name: 'English',
@@ -23,4 +23,10 @@ export default {
   [DevMenu.reviewRedditPhrases]: 'Review Reddit Phrases',
   [DevMenu.showAds]: 'Show Ads',
   [DevMenu.logout]: 'Logout',
+
+  [AdDiscountAlert.title]: 'Get 50% OFF',
+  [AdDiscountAlert.message]:
+    "Don't want to pay full price? Watch a video and get 50% OFF the price!",
+  [AdDiscountAlert.cancel]: 'No Thanks',
+  [AdDiscountAlert.confirm]: 'I want it!',
 };

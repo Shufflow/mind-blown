@@ -1,8 +1,12 @@
 import { createSandbox } from 'sinon';
 import * as RNIap from 'react-native-iap';
+import { Alert } from 'react-native';
+import { AdMobRewarded } from 'react-native-admob';
+
+import { wipeMemoizeCache } from 'src/utils/memoize';
 
 import IAP, { SKU, IAPErrorCodes } from '../iap';
-import { wipeMemoizeCache } from 'src/utils/memoize';
+import { InterstitialAd } from '../ads';
 
 jest.unmock('react-native-iap');
 
@@ -136,18 +140,28 @@ describe('buy ad free', () => {
     expect(buy.calledWith(SKU.adFree)).toEqual(true);
   });
 
-  it('rethrows exception', async () => {
-    const error = { code: IAPErrorCodes.developerError };
-    const buy = sandbox.stub(RNIap, 'buyProduct').rejects(error);
+  it('shows discount alert on cancel if can buy discount', async () => {
+    sandbox
+      .stub(RNIap, 'buyProduct')
+      .rejects({ code: IAPErrorCodes.cancelled });
+    sandbox.stub(IAP, 'canBuyAdsDiscount').value(true);
+    const alert = sandbox.stub(Alert, 'alert');
 
-    try {
-      await IAP.buyAdFree();
-      fail('should have thrown error');
-    } catch (e) {
-      expect(e).toEqual(error);
-    }
+    await IAP.buyAdFree();
 
-    expect(buy.calledWith(SKU.adFree)).toEqual(true);
+    expect(alert.called).toEqual(true);
+  });
+
+  it('does not show alert if cannot buy discount', async () => {
+    sandbox
+      .stub(RNIap, 'buyProduct')
+      .rejects({ code: IAPErrorCodes.cancelled });
+    sandbox.stub(IAP, 'canBuyAdsDiscount').value(false);
+    const alert = sandbox.stub(Alert, 'alert');
+
+    await IAP.buyAdFree();
+
+    expect(alert.called).toEqual(false);
   });
 });
 
@@ -184,5 +198,41 @@ describe('buy ad free discount', () => {
     }
 
     expect(buy.calledWith(SKU.adFreeDiscount)).toEqual(true);
+  });
+});
+
+describe('show rewarded ad', () => {
+  it('shows the ad', async () => {
+    const ad = sandbox.stub(InterstitialAd, 'showRewardedAd');
+    sandbox.stub(RNIap, 'buyProduct');
+
+    await IAP.showRewardedAd();
+
+    expect(ad.called).toEqual(true);
+  });
+
+  it('calls buy discounted when reward is given', async () => {
+    const reward = sandbox.stub(AdMobRewarded, 'addEventListener');
+    const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
+
+    const result = IAP.showRewardedAd();
+    reward.callArg(1);
+
+    await result;
+
+    expect(discount.called).toEqual(true);
+  });
+
+  it('does not buy discounted ad when reward is not given', async () => {
+    sandbox.stub(AdMobRewarded, 'addEventListener');
+    const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
+    let resolved = false;
+
+    IAP.showRewardedAd().then(() => {
+      resolved = true;
+    });
+
+    expect(discount.called).toEqual(false);
+    expect(resolved).toEqual(false);
   });
 });

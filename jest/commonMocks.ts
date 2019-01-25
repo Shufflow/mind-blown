@@ -28,6 +28,14 @@ jest.mock('react-native-admob', () => {
       setTestDevices: jest.fn,
       showAd: Promise.resolve,
     },
+    AdMobRewarded: {
+      addEventListener: jest.fn,
+      removeEventListener: jest.fn,
+      requestAd: Promise.resolve,
+      setAdUnitID: jest.fn,
+      setTestDevices: jest.fn,
+      showAd: Promise.resolve,
+    },
   };
 });
 jest.mock('react-native-splash-screen', () => ({

@@ -53,7 +53,7 @@
           ".prettierrc"
         ],
         "promise-function-async": true,
-        "quotemark": [true, "single"],
+        "quotemark": [false, "single"],
         "restrict-plus-operands": true,
         "semicolon": [true, "always", "ignore-bound-class-methods"],
         "triple-equals": true

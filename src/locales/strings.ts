@@ -25,3 +25,10 @@ export enum DevMenu {
   showAds = 'showAds',
   logout = 'logout',
 }
+
+export enum AdDiscountAlert {
+  title = 'discountAlertTitle',
+  message = 'dicountAlertMessage',
+  cancel = 'discountAlertCancel',
+  confirm = 'discountAlertConfirm',
+}
