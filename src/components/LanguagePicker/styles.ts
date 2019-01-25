@@ -9,6 +9,7 @@ const styles = {
 
   picker: (backgroundColor: string = Colors.white): any => ({
     backgroundColor,
+    color: Colors.black,
   }),
   pickerBar: (backgroundColor: string = Colors.offWhite): any => ({
     ...Layouts.bottomBorder(Colors.lightGray),

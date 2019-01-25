@@ -49,9 +49,5 @@ export const withLocale = <T extends Object>(
 ): React.ComponentType<T & LocaleConsumerProps> => (
   props: T,
 ): React.ReactElement<T> => (
-  <Consumer>
-    {({ locale, setLocale }) => (
-      <WrappedComponent locale={locale} setLocale={setLocale} {...props} />
-    )}
-  </Consumer>
+  <Consumer>{args => <WrappedComponent {...args} {...props} />}</Consumer>
 );
