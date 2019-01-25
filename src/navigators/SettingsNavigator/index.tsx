@@ -1,9 +1,9 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { startCase } from 'lodash';
 
 import routeNames from 'src/routes';
+import t from 'src/locales';
 
 import Settings from 'src/routes/Settings';
 import RedditPhrases from 'src/routes/RedditPhrases';
@@ -35,7 +35,7 @@ const SettingsNavigator = createStackNavigator(routes, {
       headerTintColor: navigation.color.light,
       headerTitle: (
         <Text style={styles.text(navigation.color.light)}>
-          {startCase(navigation.state.routeName)}
+          {t(navigation.state.routeName)}
         </Text>
       ),
     };

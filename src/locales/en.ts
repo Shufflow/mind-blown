@@ -1,7 +1,14 @@
+import routeNames from 'src/routes';
+
 import { Global, Settings, Reddit, DevMenu, AdDiscountAlert } from './strings';
 
 export default {
   name: 'English',
+  [routeNames.Settings]: 'Settings',
+  [routeNames.RedditPhrases]: 'Reddit Phrases',
+  [routeNames.SendSuggestion]: 'Send Suggestion',
+  [routeNames.DevMenu]: 'Dev Menu',
+  [routeNames.Licenses]: 'Licenses',
 
   [Global.cancel]: 'Cancel',
   [Global.done]: 'Done',
