@@ -2,12 +2,11 @@ import React from 'react';
 import { View, StatusBar, ScrollView } from 'react-native';
 import Config from 'react-native-config';
 
-import { LocaleConsumerProps, withLocale } from 'src/utils/hocs/withLocale';
-import { AdsConsumerProps, withAds } from 'src/utils/hocs/withAds';
+import { withLocale } from 'src/utils/hocs/withLocale';
+import { withAds } from 'src/utils/hocs/withAds';
 import Constants from 'src/utils/constants';
 
 import AdIds from 'src/models/ads';
-import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import routeNames from 'src/routes';
 import t, { Settings as strings, Global as globalStrings } from 'src/locales';
 
