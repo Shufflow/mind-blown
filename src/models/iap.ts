@@ -44,12 +44,15 @@ class IAPManager {
   buyProduct = async (sku: SKU) => {
     try {
       await RNIap.buyProduct(sku);
+      return true;
     } catch (e) {
       if (e.code !== IAPErrorCodes.unknown) {
         // Usually means payment declined
         throw e;
       }
     }
+
+    return false;
   };
 
   buyAdFree = async () => this.buyProduct(SKU.adFree);

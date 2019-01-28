@@ -50,10 +50,12 @@ class SettingsViewModel {
   };
 
   handleBuyAdFree = async () => {
-    if (this.getState().canBuyDiscount) {
-      await IAP.buyAdFreeDiscount();
-    } else {
-      await this.buyAdFree();
+    const result = this.getState().canBuyDiscount
+      ? await IAP.buyAdFreeDiscount()
+      : await this.buyAdFree();
+
+    if (result) {
+      this.props.checkShowAds();
     }
   };
 
@@ -68,7 +70,7 @@ class SettingsViewModel {
 
   buyAdFree = async () => {
     try {
-      await IAP.buyAdFree();
+      return await IAP.buyAdFree();
     } catch (e) {
       if (e.code === IAPErrorCodes.cancelled && IAP.canBuyAdsDiscount) {
         await sleep(Constants.alertTimeout);
@@ -84,6 +86,8 @@ class SettingsViewModel {
         ]);
       }
     }
+
+    return false;
   };
 
   showRewardedAd = async () => {
