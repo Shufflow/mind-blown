@@ -9,6 +9,8 @@ import t, { AdDiscountAlert as strings } from 'src/locales';
 import IAP, { IAPErrorCodes } from 'src/models/iap';
 import { InterstitialAd } from 'src/models/ads';
 
+import { ViewModel } from 'src/components/SmartComponent';
+
 const Constants = {
   alertTimeout: 500,
 };
@@ -22,22 +24,16 @@ export interface State {
   canBuyDiscount: boolean;
 }
 
-class SettingsViewModel {
-  props: Props;
+class SettingsViewModel extends ViewModel<Props, State> {
   showBuyAds: boolean;
-
-  updateState: (state: State) => void;
-  getState: () => State;
 
   constructor(
     props: Props,
-    updateState: (state: State) => void,
     getState: () => State,
+    setState: (state: State) => void,
   ) {
-    this.props = props;
+    super(props, getState, setState);
     this.showBuyAds = props.showAds && IAP.canBuyAdFree;
-    this.updateState = updateState;
-    this.getState = getState;
   }
 
   getInitialState = (props: Props): State => ({
@@ -92,7 +88,7 @@ class SettingsViewModel {
 
   showRewardedAd = async () => {
     await InterstitialAd.showRewardedAd();
-    this.updateState({ canBuyDiscount: true });
+    this.setState({ canBuyDiscount: true });
     await IAP.buyAdFreeDiscount();
   };
 }

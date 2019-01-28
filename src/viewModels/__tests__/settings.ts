@@ -11,8 +11,8 @@ import SettingsViewModel from '../settings';
 const sandbox = createSandbox();
 const viewModel = new SettingsViewModel(
   { showAds: false } as any,
-  () => {},
   () => ({ canBuyDiscount: false }),
+  () => {},
 );
 afterEach(sandbox.restore);
 
@@ -183,11 +183,11 @@ describe('show rewarded ad', () => {
 
   it('updates view when discount is available', async () => {
     sandbox.stub(InterstitialAd, 'showRewardedAd').resolves();
-    const update = sandbox.stub(viewModel, 'updateState');
+    const setState = sandbox.stub(viewModel, 'setState');
 
     await viewModel.showRewardedAd();
 
-    expect(update.calledWith({ canBuyDiscount: true })).toEqual(true);
+    expect(setState.calledWith({ canBuyDiscount: true })).toEqual(true);
   });
 });
 

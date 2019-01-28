@@ -20,20 +20,11 @@ import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
 import { compose } from '@typed/compose';
 import SettingsViewModel, { State, Props } from 'src/viewModels/settings';
+import SmartComponent from 'src/components/SmartComponent';
 
-class Settings extends React.Component<Props, State> {
-  viewModel: SettingsViewModel;
-
+class Settings extends SmartComponent<Props, State, SettingsViewModel> {
   constructor(props: Props) {
-    super(props);
-    this.viewModel = new SettingsViewModel(
-      props,
-      state => {
-        this.setState(state);
-      },
-      () => this.state,
-    );
-    this.state = this.viewModel.getInitialState(props);
+    super(props, SettingsViewModel);
   }
 
   render() {
