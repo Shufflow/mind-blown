@@ -5,6 +5,7 @@ import { stubFirebase } from 'src/utils/tests';
 
 import PhrasesDataSource from '../phrases';
 import { InterstitialAd } from '../ads';
+import IAP from '../iap';
 
 const mockPhrases = {
   0: { id: '0', en: 'foo' },
@@ -87,17 +88,6 @@ describe('get random phrase', () => {
       expect(ad.called).toEqual(false);
     }
   });
-
-  it('shows ad after 3 phrases', async () => {
-    sandbox.stub(Math, 'random').returns(0);
-    (__DEV__ as any) = false;
-
-    for (let i = 0; i < 3; i++) {
-      await dataSource.getRandomPhrase();
-    }
-
-    expect(ad.called).toEqual(true);
-  });
 });
 
 describe('review phrases', () => {
@@ -152,5 +142,37 @@ describe('suggestions', () => {
     expect(async () => {
       await dataSource.sendSuggestion(content);
     }).not.toThrow();
+  });
+});
+
+describe('ads', () => {
+  let dataSource: PhrasesDataSource;
+  let ad: SinonStub;
+
+  beforeEach(() => {
+    dataSource = new PhrasesDataSource();
+    ad = sandbox.stub(InterstitialAd, 'showAd').resolves();
+  });
+
+  it('shows ad after 3 phrases', async () => {
+    sandbox.stub(Math, 'random').returns(0);
+    (__DEV__ as any) = false;
+
+    for (let i = 0; i < 3; i++) {
+      await dataSource.getRandomPhrase();
+    }
+
+    expect(ad.called).toEqual(true);
+  });
+
+  it('does not show ads if is adfree', async () => {
+    sandbox.stub(IAP, 'isAdFree').resolves(true);
+    (__DEV__ as any) = false;
+
+    for (let i = 0; i < 3; i++) {
+      await dataSource.getRandomPhrase();
+    }
+
+    expect(ad.called).toEqual(false);
   });
 });
