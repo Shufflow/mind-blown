@@ -13,22 +13,36 @@ const Constants = {
   alertTimeout: 500,
 };
 
-interface Props
+export interface Props
   extends LocaleConsumerProps,
     ColoredScreenProps,
     AdsConsumerProps {}
 
+export interface State {
+  canBuyDiscount: boolean;
+}
+
 class SettingsViewModel {
   props: Props;
   showBuyAds: boolean;
-  canBuyDiscount = false;
-  enableBuyDiscount: () => void;
 
-  constructor(props: Props, enableBuyDiscount: () => void) {
+  updateState: (state: State) => void;
+  getState: () => State;
+
+  constructor(
+    props: Props,
+    updateState: (state: State) => void,
+    getState: () => State,
+  ) {
     this.props = props;
     this.showBuyAds = props.showAds && IAP.canBuyAdFree;
-    this.enableBuyDiscount = enableBuyDiscount;
+    this.updateState = updateState;
+    this.getState = getState;
   }
+
+  getInitialState = (props: Props): State => ({
+    canBuyDiscount: false,
+  });
 
   handleNavigate = (routeName: string) => () => {
     const { dark, light } = this.props.navigation.color;
@@ -36,7 +50,7 @@ class SettingsViewModel {
   };
 
   handleBuyAdFree = async () => {
-    if (this.canBuyDiscount) {
+    if (this.getState().canBuyDiscount) {
       await IAP.buyAdFreeDiscount();
     } else {
       await this.buyAdFree();
@@ -44,6 +58,13 @@ class SettingsViewModel {
   };
 
   handleOpenURL = (url: string) => async () => Linking.openURL(url);
+
+  handleSetLocale = (locale: string) => {
+    this.props.setLocale(locale);
+    this.props.navigation.setParams({ updateLocale: '' });
+  };
+
+  // Private Methods
 
   buyAdFree = async () => {
     try {
@@ -67,7 +88,7 @@ class SettingsViewModel {
 
   showRewardedAd = async () => {
     await InterstitialAd.showRewardedAd();
-    this.enableBuyDiscount();
+    this.updateState({ canBuyDiscount: true });
     await IAP.buyAdFreeDiscount();
   };
 }

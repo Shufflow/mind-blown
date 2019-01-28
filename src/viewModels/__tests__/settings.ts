@@ -9,7 +9,11 @@ import { InterstitialAd } from 'src/models/ads';
 import SettingsViewModel from '../settings';
 
 const sandbox = createSandbox();
-const viewModel = new SettingsViewModel({ showAds: false } as any, () => {});
+const viewModel = new SettingsViewModel(
+  { showAds: false } as any,
+  () => {},
+  () => ({ canBuyDiscount: false }),
+);
 afterEach(sandbox.restore);
 
 describe('handle navigate', () => {
@@ -27,7 +31,7 @@ describe('handle navigate', () => {
 
 describe('handle buy ad free', () => {
   it('buys with discount if can', async () => {
-    sandbox.stub(viewModel, 'canBuyDiscount').value(true);
+    sandbox.stub(viewModel, 'getState').returns({ canBuyDiscount: true });
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
     const fullPrice = sandbox.stub(IAP, 'buyAdFree');
 
@@ -38,7 +42,7 @@ describe('handle buy ad free', () => {
   });
 
   it('buys full price if discount not available', async () => {
-    sandbox.stub(viewModel, 'canBuyDiscount').value(false);
+    sandbox.stub(viewModel, 'getState').returns({ canBuyDiscount: false });
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
     const fullPrice = sandbox.stub(IAP, 'buyAdFree');
 
@@ -128,10 +132,40 @@ describe('show rewarded ad', () => {
 
   it('updates view when discount is available', async () => {
     sandbox.stub(InterstitialAd, 'showRewardedAd').resolves();
-    const update = sandbox.stub(viewModel, 'enableBuyDiscount');
+    const update = sandbox.stub(viewModel, 'updateState');
 
     await viewModel.showRewardedAd();
 
-    expect(update.called).toEqual(true);
+    expect(update.calledWith({ canBuyDiscount: true })).toEqual(true);
+  });
+});
+
+describe('handle set locale', () => {
+  it("sets the context's provider locale", () => {
+    const setLocale = sandbox.stub();
+    sandbox.stub(viewModel, 'props').value({
+      setLocale,
+      navigation: {
+        setParams: sandbox.stub(),
+      },
+    });
+
+    viewModel.handleSetLocale('foobar');
+
+    expect(setLocale.calledWith('foobar')).toEqual(true);
+  });
+
+  it('updates navigation params', () => {
+    const setParams = sandbox.stub();
+    sandbox.stub(viewModel, 'props').value({
+      navigation: {
+        setParams,
+      },
+      setLocale: sandbox.stub(),
+    });
+
+    viewModel.handleSetLocale('foobar');
+
+    expect(setParams.called).toEqual(true);
   });
 });

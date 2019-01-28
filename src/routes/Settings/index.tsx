@@ -20,36 +20,22 @@ import Button, { ButtonTheme } from 'src/components/Button';
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
 import { compose } from '@typed/compose';
-import SettingsViewModel from 'src/viewModels/settings';
-
-interface Props
-  extends LocaleConsumerProps,
-    ColoredScreenProps,
-    AdsConsumerProps {}
-
-interface State {
-  canBuyDiscount: boolean;
-}
+import SettingsViewModel, { State, Props } from 'src/viewModels/settings';
 
 class Settings extends React.Component<Props, State> {
   viewModel: SettingsViewModel;
-  state = {
-    canBuyDiscount: false,
-  };
 
   constructor(props: Props) {
     super(props);
-    this.viewModel = new SettingsViewModel(props, this.enableBuyDiscount);
+    this.viewModel = new SettingsViewModel(
+      props,
+      state => {
+        this.setState(state);
+      },
+      () => this.state,
+    );
+    this.state = this.viewModel.getInitialState(props);
   }
-
-  enableBuyDiscount = () => {
-    this.setState({ canBuyDiscount: true });
-  };
-
-  setLocale = (locale: string) => {
-    this.props.setLocale(locale);
-    this.props.navigation.setParams({ updateLocale: '' });
-  };
 
   render() {
     const {
@@ -68,7 +54,7 @@ class Settings extends React.Component<Props, State> {
               dark={dark}
               light={light}
               locale={locale}
-              onSelectValue={this.setLocale}
+              onSelectValue={this.viewModel.handleSetLocale}
             />
             <ListItem
               label={t(strings.sendSuggestion)}
