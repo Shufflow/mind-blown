@@ -2,11 +2,16 @@ import { Alert, Linking } from 'react-native';
 
 import { LocaleConsumerProps } from 'src/utils/hocs/withLocale';
 import { AdsConsumerProps } from 'src/utils/hocs/withAds';
+import sleep from 'src/utils/sleep';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import t, { AdDiscountAlert as strings } from 'src/locales';
 
 import IAP, { IAPErrorCodes } from 'src/models/iap';
 import { InterstitialAd } from 'src/models/ads';
+
+const Constants = {
+  alertTimeout: 500,
+};
 
 interface Props
   extends LocaleConsumerProps,
@@ -45,6 +50,7 @@ class SettingsViewModel {
       await IAP.buyAdFree();
     } catch (e) {
       if (e.code === IAPErrorCodes.cancelled && IAP.canBuyAdsDiscount) {
+        await sleep(Constants.alertTimeout);
         Alert.alert(t(strings.title), t(strings.message), [
           {
             style: 'cancel',

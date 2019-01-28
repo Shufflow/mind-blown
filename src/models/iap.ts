@@ -2,8 +2,6 @@ import * as RNIap from 'react-native-iap';
 
 import memoize from 'src/utils/memoize';
 
-import { InterstitialAd } from 'src/models/ads';
-
 export enum SKU {
   adFree = 'ad_free',
   adFreeDiscount = 'ad_free_2',
