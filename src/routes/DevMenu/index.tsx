@@ -16,6 +16,7 @@ import ListItem from 'src/components/ListItem';
 import HeaderButton from 'src/components/HeaderButton';
 
 import styles from './styles';
+import IAP from 'src/models/iap';
 
 interface State {
   isLoading: boolean;
@@ -60,7 +61,11 @@ class DevMenu extends React.Component<Props, State> {
     this.setState({ isLoading: false, isSignedIn: false });
   };
 
-  // TODO: ShowAds Switch
+  onToggleAdFree = (value: boolean) => {
+    IAP.forceAdFree = !value;
+    this.props.checkShowAds();
+  };
+
   renderSignedIn = () => (
     <React.Fragment>
       <ListItem
@@ -71,7 +76,7 @@ class DevMenu extends React.Component<Props, State> {
         <Switch
           value={this.props.showAds}
           trackColor={{ true: this.props.navigation.color.dark } as any}
-          disabled
+          onValueChange={this.onToggleAdFree}
         />
       </ListItem>
       <ListItem

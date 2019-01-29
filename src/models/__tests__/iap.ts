@@ -114,6 +114,15 @@ describe('is ad free', () => {
 
     expect(result).toEqual(false);
   });
+
+  it('forces ad free', async () => {
+    sandbox.stub(RNIap, 'getAvailablePurchases').resolves([]);
+    sandbox.stub(IAP, 'forceAdFree').value(true);
+
+    const result = await IAP.isAdFree();
+
+    expect(result).toEqual(true);
+  });
 });
 
 describe('buy ad free', () => {

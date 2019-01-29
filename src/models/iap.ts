@@ -18,6 +18,8 @@ class IAPManager {
   canBuyAdFree = false;
   canBuyAdsDiscount = false;
 
+  forceAdFree = false;
+
   setup = memoize(async () => {
     const conn = await RNIap.initConnection();
     const prods = await RNIap.getProducts(Object.values(SKU));
@@ -35,9 +37,16 @@ class IAPManager {
 
   isAdFree = async () => {
     await this.setup();
-    const purchases = await RNIap.getAvailablePurchases();
-    return !!purchases.find(purchase =>
-      Object.values(SKU).includes(purchase.productId),
+    let purchases: RNIap.Purchase[];
+    try {
+      purchases = await RNIap.getAvailablePurchases();
+    } catch (e) {
+      purchases = [];
+    }
+    return (
+      !!purchases.find(purchase =>
+        Object.values(SKU).includes(purchase.productId),
+      ) || this.forceAdFree
     );
   };
 
