@@ -48,6 +48,16 @@ lane :build_ios_adhoc do
   )
 end
 
+desc 'Release iOS AdHoc to TestFlight'
+lane :release_ios_adhoc do
+  build_ios_adhoc
+
+  upload_to_testflight(
+    ipa: 'build/MindBlown.ipa',
+    skip_waiting_for_build_processing: true,
+  )
+end
+
 desc 'Build Android Dev app'
 lane :build_android_dev do
   ENV["ENVFILE"] = ".env.dev"

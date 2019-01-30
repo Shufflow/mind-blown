@@ -65,6 +65,7 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
+Appfile
 
 /artifacts
 /.bundle
