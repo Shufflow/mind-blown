@@ -4,7 +4,7 @@ import * as RNIap from 'react-native-iap';
 import { AdMobRewarded } from 'react-native-admob';
 
 import IAP, { IAPErrorCodes } from 'src/models/iap';
-import { InterstitialAd } from 'src/models/ads';
+import RewardedAd from 'src/models/rewardedAd';
 
 import SettingsViewModel from '../settings';
 
@@ -126,6 +126,7 @@ describe('buy ad free', () => {
   it('shows discount alert on cancel if can buy discount', async () => {
     sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
     sandbox.stub(IAP, 'canBuyAdsDiscount').value(true);
+    sandbox.stub(RewardedAd, 'requestAdIfNeeded').resolves();
     const alert = sandbox.stub(Alert, 'alert');
 
     const result = await viewModel.buyAdFree();
@@ -144,11 +145,27 @@ describe('buy ad free', () => {
     expect(result).toEqual(false);
     expect(alert.called).toEqual(false);
   });
+
+  it('does not show alert if ad fails to load', async () => {
+    const error = new Error('fail');
+    sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
+    sandbox.stub(IAP, 'canBuyAdsDiscount').value(true);
+    sandbox.stub(RewardedAd, 'requestAdIfNeeded').rejects(error);
+    const alert = sandbox.stub(Alert, 'alert');
+
+    try {
+      await viewModel.buyAdFree();
+    } catch (e) {
+      fail('should not have thrown error');
+    }
+
+    expect(alert.called).toEqual(false);
+  });
 });
 
 describe('show rewarded ad', () => {
   it('shows the ad', async () => {
-    const ad = sandbox.stub(InterstitialAd, 'showRewardedAd');
+    const ad = sandbox.stub(RewardedAd, 'showAd');
     sandbox.stub(RNIap, 'buyProduct');
 
     await viewModel.showRewardedAd();
@@ -157,13 +174,10 @@ describe('show rewarded ad', () => {
   });
 
   it('calls buy discounted when reward is given', async () => {
-    const reward = sandbox.stub(AdMobRewarded, 'addEventListener');
+    sandbox.stub(RewardedAd, 'showAd');
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
 
-    const result = viewModel.showRewardedAd();
-    reward.callArg(1);
-
-    await result;
+    await viewModel.showRewardedAd();
 
     expect(discount.called).toEqual(true);
   });
@@ -182,7 +196,7 @@ describe('show rewarded ad', () => {
   });
 
   it('updates view when discount is available', async () => {
-    sandbox.stub(InterstitialAd, 'showRewardedAd').resolves();
+    sandbox.stub(RewardedAd, 'showAd').resolves();
     const setState = sandbox.stub(viewModel, 'setState');
 
     await viewModel.showRewardedAd();

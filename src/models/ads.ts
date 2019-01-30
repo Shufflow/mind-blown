@@ -1,9 +1,5 @@
 import { Platform } from 'react-native';
-import {
-  AdMobBanner,
-  AdMobInterstitial,
-  AdMobRewarded,
-} from 'react-native-admob';
+import { AdMobBanner, AdMobInterstitial } from 'react-native-admob';
 
 const AdIds = Platform.select({
   android: {
@@ -24,11 +20,6 @@ const AdIds = Platform.select({
   },
 });
 
-enum RewardedAdEvents {
-  adClosed = 'adClosed',
-  rewarded = 'rewarded',
-}
-
 export const BannerTestIds = __DEV__
   ? [AdMobBanner.simulatorId, '7390EF66B0FC00613A785C98A5DBBDDB']
   : [];
@@ -36,7 +27,6 @@ export const BannerTestIds = __DEV__
 export class AdManager {
   isLoadingAd = false;
   adRequest: Promise<void> | undefined;
-  handleRewardedVideo: (() => void) | undefined;
 
   constructor() {
     if (__DEV__) {
@@ -44,17 +34,7 @@ export class AdManager {
         AdMobInterstitial.simulatorId,
         '7390EF66B0FC00613A785C98A5DBBDDB',
       ]);
-      AdMobRewarded.setTestDevices([
-        AdMobRewarded.simulatorId,
-        '7390EF66B0FC00613A785C98A5DBBDDB',
-      ]);
     }
-
-    AdMobRewarded.addEventListener(
-      RewardedAdEvents.adClosed,
-      this.requestRewardedAd,
-    );
-    this.requestRewardedAd();
   }
 
   setAdUnitId = (unitId: string) => {
@@ -86,34 +66,6 @@ export class AdManager {
     if (isReady) {
       await AdMobInterstitial.showAd();
     }
-  };
-
-  requestRewardedAd = () => {
-    AdMobRewarded.setAdUnitID(AdIds.rewarded);
-    AdMobRewarded.requestAd().catch(() => {});
-  };
-
-  handleRewardedVideoCompleted = (resolve: () => void) => () => {
-    resolve();
-
-    if (this.handleRewardedVideo) {
-      this.handleRewardedVideo();
-    }
-
-    AdMobRewarded.removeEventListener(
-      RewardedAdEvents.rewarded,
-      this.handleRewardedVideoCompleted(resolve),
-    );
-  };
-
-  showRewardedAd = async () => {
-    return new Promise<void>(resolve => {
-      AdMobRewarded.addEventListener(
-        RewardedAdEvents.rewarded,
-        this.handleRewardedVideoCompleted(resolve),
-      );
-      AdMobRewarded.showAd();
-    });
   };
 }
 

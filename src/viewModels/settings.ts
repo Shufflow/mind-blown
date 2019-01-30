@@ -2,18 +2,14 @@ import { Alert, Linking } from 'react-native';
 
 import { LocaleConsumerProps } from 'src/utils/hocs/withLocale';
 import { AdsConsumerProps } from 'src/utils/hocs/withAds';
-import sleep from 'src/utils/sleep';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import t, { AdDiscountAlert as strings } from 'src/locales';
 
 import IAP, { IAPErrorCodes } from 'src/models/iap';
-import { InterstitialAd } from 'src/models/ads';
+import AdIds from 'src/models/ads';
 
 import { ViewModel } from 'src/components/SmartComponent';
-
-const Constants = {
-  alertTimeout: 500,
-};
+import RewardedAd from 'src/models/rewardedAd';
 
 export interface Props
   extends LocaleConsumerProps,
@@ -34,6 +30,8 @@ class SettingsViewModel extends ViewModel<Props, State> {
   ) {
     super(props, getState, setState);
     this.showBuyAds = props.showAds && IAP.canBuyAdFree;
+
+    RewardedAd.setAdUnitId(AdIds.rewarded);
   }
 
   getInitialState = (props: Props): State => ({
@@ -65,21 +63,30 @@ class SettingsViewModel extends ViewModel<Props, State> {
   // Private Methods
 
   buyAdFree = async () => {
+    let loadRewardedAd: Promise<void> = Promise.reject();
     try {
+      loadRewardedAd = RewardedAd.requestAdIfNeeded();
       return await IAP.buyAdFree();
     } catch (e) {
-      if (e.code === IAPErrorCodes.cancelled && IAP.canBuyAdsDiscount) {
-        await sleep(Constants.alertTimeout);
-        Alert.alert(t(strings.title), t(strings.message), [
-          {
-            style: 'cancel',
-            text: t(strings.cancel),
-          },
-          {
-            onPress: this.showRewardedAd,
-            text: t(strings.confirm),
-          },
-        ]);
+      try {
+        if (e.code === IAPErrorCodes.cancelled && IAP.canBuyAdsDiscount) {
+          await loadRewardedAd;
+          Alert.alert(t(strings.title), t(strings.message), [
+            {
+              style: 'cancel',
+              text: t(strings.cancel),
+            },
+            {
+              onPress: this.showRewardedAd,
+              text: t(strings.confirm),
+            },
+          ]);
+        }
+      } catch (e2) {
+        if (__DEV__) {
+          // tslint:disable-next-line: no-console
+          console.warn(e2);
+        }
       }
     }
 
@@ -87,7 +94,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
   };
 
   showRewardedAd = async () => {
-    await InterstitialAd.showRewardedAd();
+    await RewardedAd.showAd();
     this.setState({ canBuyDiscount: true });
     await IAP.buyAdFreeDiscount();
   };
