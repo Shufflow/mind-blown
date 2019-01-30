@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1B4B4D9DA3726F1544047D4B /* libPods-MindBlownTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 569F087443CC147D91850510 /* libPods-MindBlownTests.a */; };
 		315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5561B9244953F7B94F14F517 /* libPods-MindBlown.a */; };
+		F2C0CB3221FFBE5200A2F8F6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */; };
 		F484CFA058D84DCA98CB88BE /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0528C0C2A25A412FBBA6199D /* libReactNativeConfig.a */; };
 /* End PBXBuildFile section */
 
@@ -55,13 +56,16 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = MindBlown/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = MindBlown/main.m; sourceTree = "<group>"; };
 		18E1EDE658EFBE40C462965F /* Pods-MindBlown.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.release.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.release.xcconfig"; sourceTree = "<group>"; };
+		2F8D09BFA160038D2DE7B2F1 /* Pods-MindBlown.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.adhoc.xcconfig"; sourceTree = "<group>"; };
 		54AB33EA00643CB4CB51DE49 /* Pods-MindBlownTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5561B9244953F7B94F14F517 /* libPods-MindBlown.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MindBlown.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		569F087443CC147D91850510 /* libPods-MindBlownTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MindBlownTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9853DDBD7B1E4E6B8C9363B2 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
+		BAC6958FC324B50E8ECF139D /* Pods-MindBlownTests.adhoc.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.adhoc.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.adhoc.xcconfig"; sourceTree = "<group>"; };
 		E46AF053D6EC583CCF153140 /* Pods-MindBlown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.debug.xcconfig"; sourceTree = "<group>"; };
 		E8B3809BF37B3F95319A3BB2 /* Pods-MindBlownTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.release.xcconfig"; sourceTree = "<group>"; };
 		F2330B6E21F10249005BFA90 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2C0CB3221FFBE5200A2F8F6 /* StoreKit.framework in Frameworks */,
 				315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */,
 				F484CFA058D84DCA98CB88BE /* libReactNativeConfig.a in Frameworks */,
 			);
@@ -119,6 +124,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */,
 				5561B9244953F7B94F14F517 /* libPods-MindBlown.a */,
 				569F087443CC147D91850510 /* libPods-MindBlownTests.a */,
 			);
@@ -132,6 +138,8 @@
 				18E1EDE658EFBE40C462965F /* Pods-MindBlown.release.xcconfig */,
 				54AB33EA00643CB4CB51DE49 /* Pods-MindBlownTests.debug.xcconfig */,
 				E8B3809BF37B3F95319A3BB2 /* Pods-MindBlownTests.release.xcconfig */,
+				2F8D09BFA160038D2DE7B2F1 /* Pods-MindBlown.adhoc.xcconfig */,
+				BAC6958FC324B50E8ECF139D /* Pods-MindBlownTests.adhoc.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -239,11 +247,17 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = BJEFN42V49;
+						DevelopmentTeam = 58EEZG76L8;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = BJEFN42V49;
+						DevelopmentTeam = 58EEZG76L8;
+						ProvisioningStyle = Manual;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -438,7 +452,7 @@
 			baseConfigurationReference = 54AB33EA00643CB4CB51DE49 /* Pods-MindBlownTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = BJEFN42V49;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -472,7 +486,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = BJEFN42V49;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -501,9 +515,11 @@
 			baseConfigurationReference = E46AF053D6EC583CCF153140 /* Pods-MindBlown.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = BJEFN42V49;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -518,8 +534,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shufflow.MindBlown;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
 				PRODUCT_NAME = MindBlown;
+				PROVISIONING_PROFILE_SPECIFIER = "MindBlown - Development";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -529,9 +546,12 @@
 			baseConfigurationReference = 18E1EDE658EFBE40C462965F /* Pods-MindBlown.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
 				CURRENT_PROJECT_VERSION = 3;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = BJEFN42V49;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -546,8 +566,9 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.shufflow.MindBlown;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
 				PRODUCT_NAME = MindBlown;
+				PROVISIONING_PROFILE_SPECIFIER = "MindBlown] AdHoc";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -653,6 +674,140 @@
 			};
 			name = Release;
 		};
+		F2C0CB2321FFB4B300A2F8F6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = AdHoc;
+		};
+		F2C0CB2421FFB4B300A2F8F6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F8D09BFA160038D2DE7B2F1 /* Pods-MindBlown.adhoc.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)";
+				CURRENT_PROJECT_VERSION = 3;
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+					"$(BUILD_DIR)/Release-$(PLATFORM_NAME)/include",
+				);
+				INFOPLIST_FILE = MindBlown/Info.plist;
+				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
+				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
+				INFOPLIST_PREPROCESS = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Base64\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/CodePush\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/DoubleConversion\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/Folly\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GTMSessionFetcher\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/GoogleToolboxForMac\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/JWT\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNAdMob\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNGestureHandler\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNGoogleSignin\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNIap\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNLanguages\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNSVG\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/RNScreens\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/React\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/SSZipArchive\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/glog\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/react-native-splash-screen\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/yoga\"",
+					"\"${PODS_ROOT}/Google-Mobile-Ads-SDK/Libraries\"",
+					"$(BUILD_DIR)/Release$(EFFECTIVE_PLATFORM_NAME)",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
+				PRODUCT_NAME = MindBlown;
+				PROVISIONING_PROFILE_SPECIFIER = "MindBlown] AdHoc";
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = AdHoc;
+		};
+		F2C0CB2521FFB4B300A2F8F6 /* AdHoc */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BAC6958FC324B50E8ECF139D /* Pods-MindBlownTests.adhoc.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = 58EEZG76L8;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
+				);
+				INFOPLIST_FILE = MindBlownTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindBlown.app/MindBlown";
+			};
+			name = AdHoc;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -661,6 +816,7 @@
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
 				00E356F71AD99517003FC87E /* Release */,
+				F2C0CB2521FFB4B300A2F8F6 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -670,6 +826,7 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+				F2C0CB2421FFB4B300A2F8F6 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -679,6 +836,7 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+				F2C0CB2321FFB4B300A2F8F6 /* AdHoc */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

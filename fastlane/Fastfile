@@ -32,9 +32,20 @@ lane :build_ios_dev do
     skip_archive: true,
     destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.0'
   )
+end
 
-  # setup certificates
-  # setup build
+desc 'Build iOS AdHoc'
+lane :build_ios_adhoc do
+  sh 'yarn install-ios'
+
+  ENV["ENVFILE"] = ".env.adhoc"
+  build_ios_app(
+    export_method: 'ad-hoc',
+    workspace: 'ios/MindBlown.xcworkspace',
+    scheme: 'MindBlown',
+    configuration: 'AdHoc',
+    output_directory: 'build/',
+  )
 end
 
 desc 'Build Android Dev app'
@@ -63,7 +74,7 @@ lane :release_android do
 
   upload_to_play_store(
     package_name: 'com.shufflow.MindBlown',
-    track: 'internal',
+    track: 'alpha',
     json_key: 'google_api_key.json',
     apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
   )
