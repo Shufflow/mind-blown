@@ -17,6 +17,7 @@ class IAPManager {
   isAvailable = false;
   canBuyAdFree = false;
   canBuyAdsDiscount = false;
+  isAdFree = Promise.resolve(false);
 
   forceAdFree = false;
 
@@ -33,9 +34,19 @@ class IAPManager {
 
   constructor() {
     this.setup();
+    this.refreshAdFree();
   }
 
-  isAdFree = async () => {
+  refreshAdFree = async () => {
+    this.isAdFree = this.checkIsAdFree();
+    return this.isAdFree;
+  };
+
+  buyAdFree = async () => this.buyProduct(SKU.adFree);
+
+  buyAdFreeDiscount = async () => this.buyProduct(SKU.adFreeDiscount);
+
+  private checkIsAdFree = async () => {
     await this.setup();
     let purchases: RNIap.Purchase[];
     try {
@@ -50,7 +61,7 @@ class IAPManager {
     );
   };
 
-  buyProduct = async (sku: SKU) => {
+  private buyProduct = async (sku: SKU) => {
     try {
       await RNIap.buyProduct(sku);
       return true;
@@ -63,10 +74,6 @@ class IAPManager {
 
     return false;
   };
-
-  buyAdFree = async () => this.buyProduct(SKU.adFree);
-
-  buyAdFreeDiscount = async () => this.buyProduct(SKU.adFreeDiscount);
 }
 
 export default new IAPManager();

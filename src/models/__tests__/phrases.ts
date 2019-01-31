@@ -166,7 +166,7 @@ describe('ads', () => {
   });
 
   it('does not show ads if is adfree', async () => {
-    sandbox.stub(IAP, 'isAdFree').resolves(true);
+    sandbox.stub(IAP, 'isAdFree').value(Promise.resolve(true));
     (__DEV__ as any) = false;
 
     for (let i = 0; i < 3; i++) {

@@ -81,7 +81,7 @@ describe('can buy ad free discount', () => {
   });
 });
 
-describe('is ad free', () => {
+describe('refresh ad free', () => {
   beforeEach(() => {
     sandbox.stub(RNIap, 'initConnection').resolves('true');
     sandbox.stub(RNIap, 'getProducts').resolves([]);
@@ -92,7 +92,7 @@ describe('is ad free', () => {
       .stub(RNIap, 'getAvailablePurchases')
       .resolves([{ productId: SKU.adFree }] as any);
 
-    const result = await IAP.isAdFree();
+    const result = await IAP.refreshAdFree();
 
     expect(result).toEqual(true);
   });
@@ -102,7 +102,7 @@ describe('is ad free', () => {
       .stub(RNIap, 'getAvailablePurchases')
       .resolves([{ productId: SKU.adFreeDiscount }] as any);
 
-    const result = await IAP.isAdFree();
+    const result = await IAP.refreshAdFree();
 
     expect(result).toEqual(true);
   });
@@ -110,7 +110,7 @@ describe('is ad free', () => {
   it('has not purchased anything', async () => {
     sandbox.stub(RNIap, 'getAvailablePurchases').resolves([]);
 
-    const result = await IAP.isAdFree();
+    const result = await IAP.refreshAdFree();
 
     expect(result).toEqual(false);
   });
@@ -119,7 +119,7 @@ describe('is ad free', () => {
     sandbox.stub(RNIap, 'getAvailablePurchases').resolves([]);
     sandbox.stub(IAP, 'forceAdFree').value(true);
 
-    const result = await IAP.isAdFree();
+    const result = await IAP.refreshAdFree();
 
     expect(result).toEqual(true);
   });

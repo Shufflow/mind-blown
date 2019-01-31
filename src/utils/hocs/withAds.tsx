@@ -26,7 +26,7 @@ export const withAdsProvider = <Props extends Object>(
     }
 
     checkIsAdFree = async () => {
-      const isAdFree = await IAP.isAdFree();
+      const isAdFree = await IAP.refreshAdFree();
       this.setState({ showAds: !isAdFree });
 
       return isAdFree;

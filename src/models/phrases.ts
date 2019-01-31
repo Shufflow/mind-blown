@@ -48,7 +48,7 @@ class PhrasesDataSource {
   async getRandomPhrase(): Promise<Phrase | null> {
     const phrases = await this.phrases;
 
-    const isAdFree = await IAP.isAdFree();
+    const isAdFree = await IAP.isAdFree;
     if (this.usedPhrasesIds.length % 3 === 2 && !isAdFree && !__DEV__) {
       InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
     }

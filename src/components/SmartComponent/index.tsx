@@ -50,7 +50,9 @@ class SmartComponent<
   ) {
     super(props);
 
-    this.viewModel = new Shaddow(props, () => this.state, this.setState);
+    this.viewModel = new Shaddow(props, () => this.state, this.setState.bind(
+      this,
+    ) as SetState<Props, State>);
     this.state = this.viewModel.getInitialState(props);
   }
 }
