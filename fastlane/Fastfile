@@ -34,13 +34,13 @@ lane :build_ios_dev do
   )
 end
 
-desc 'Build iOS AdHoc'
-lane :build_ios_adhoc do
+desc 'Build iOS Distribution'
+lane :build_ios_dist do
   sh 'yarn install-ios'
 
   ENV["ENVFILE"] = ".env.adhoc"
   build_ios_app(
-    export_method: 'ad-hoc',
+    export_method: 'app-store',
     workspace: 'ios/MindBlown.xcworkspace',
     scheme: 'MindBlown',
     configuration: 'AdHoc',
@@ -48,9 +48,9 @@ lane :build_ios_adhoc do
   )
 end
 
-desc 'Release iOS AdHoc to TestFlight'
-lane :release_ios_adhoc do
-  build_ios_adhoc
+desc 'Release iOS Dist to TestFlight'
+lane :release_ios_dist do
+  build_ios_dist
 
   upload_to_testflight(
     ipa: 'build/MindBlown.ipa',
