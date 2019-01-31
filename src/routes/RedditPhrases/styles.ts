@@ -26,6 +26,7 @@ const styles = {
     flex: 0,
   },
   text: {
+    color: Colors.black,
     fontSize: Spacing.size_20,
     marginBottom: Spacing.size_10,
   },
@@ -56,6 +57,7 @@ const styles = {
   },
 
   empty: {
+    color: Colors.black,
     fontSize: Spacing.size_40,
     marginTop: Spacing.size_40,
     textAlign: 'center',

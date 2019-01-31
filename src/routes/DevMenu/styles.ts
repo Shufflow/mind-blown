@@ -25,6 +25,7 @@ const styles = {
     ...Layouts.fullWidth,
     ...Layouts.absolute,
     bottom: Spacing.size_20,
+    color: Colors.darkGray,
     textAlign: 'center',
   },
 };

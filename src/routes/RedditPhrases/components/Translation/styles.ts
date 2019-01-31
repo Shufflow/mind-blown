@@ -18,8 +18,10 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderColor: Colors.lightGray,
     borderWidth: Constants.borderWidth,
+    color: Colors.black,
     height: Constants.inputHeight,
     padding: Spacing.size_10,
+    textAlignVertical: 'top',
   },
 
   buttonsContainer: {

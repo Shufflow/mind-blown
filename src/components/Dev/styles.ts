@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { Layouts, Spacing } from 'src/utils/styles';
+import { Layouts, Spacing, Colors } from 'src/utils/styles';
 
 const styles = StyleSheet.create({
   absolute: {
@@ -10,6 +10,7 @@ const styles = StyleSheet.create({
     ...Layouts.fullWidth,
   },
   text: {
+    color: Colors.black,
     textAlign: 'center',
   },
 });
