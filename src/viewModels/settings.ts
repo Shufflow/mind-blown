@@ -18,24 +18,13 @@ export interface Props
 
 export interface State {
   canBuyDiscount: boolean;
+  showBuyAds: boolean;
 }
 
 class SettingsViewModel extends ViewModel<Props, State> {
-  showBuyAds: boolean;
-
-  constructor(
-    props: Props,
-    getState: () => State,
-    setState: (state: State) => void,
-  ) {
-    super(props, getState, setState);
-    this.showBuyAds = props.showAds && IAP.canBuyAdFree;
-
-    RewardedAd.setAdUnitId(AdIds.rewarded);
-  }
-
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
+    showBuyAds: props.showAds && IAP.canBuyAdFree,
   });
 
   handleNavigate = (routeName: string) => () => {
@@ -49,7 +38,8 @@ class SettingsViewModel extends ViewModel<Props, State> {
       : await this.buyAdFree();
 
     if (result) {
-      this.props.checkShowAds();
+      const isAdFree = await this.props.checkIsAdFree();
+      this.setState({ showBuyAds: !isAdFree });
     }
   };
 
@@ -62,7 +52,8 @@ class SettingsViewModel extends ViewModel<Props, State> {
 
   // Private Methods
 
-  buyAdFree = async () => {
+  private buyAdFree = async () => {
+    RewardedAd.setAdUnitId(AdIds.rewarded);
     let loadRewardedAd: Promise<void> = Promise.reject();
     try {
       loadRewardedAd = RewardedAd.requestAdIfNeeded();
@@ -93,7 +84,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
     return false;
   };
 
-  showRewardedAd = async () => {
+  private showRewardedAd = async () => {
     await RewardedAd.showAd();
     this.setState({ canBuyDiscount: true });
     await IAP.buyAdFreeDiscount();

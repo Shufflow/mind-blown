@@ -1,14 +1,24 @@
 import React from 'react';
 
+export type SetState<Props, State> = <K extends keyof State>(
+  state:
+    | ((
+        prevState: Readonly<State>,
+        props: Readonly<Props>,
+      ) => Pick<State, K> | State | null)
+    | (Pick<State, K> | State | null),
+  callback?: () => void,
+) => void;
+
 export class ViewModel<Props extends Object, State extends Object> {
   props: Props;
   getState: () => State;
-  setState: (state: State) => void;
+  setState: SetState<Props, State>;
 
   constructor(
     props: Props,
     getState: () => State,
-    setState: (state: State) => void,
+    setState: SetState<Props, State>,
   ) {
     this.props = props;
     this.getState = getState;
@@ -35,19 +45,12 @@ class SmartComponent<
     Shaddow: new (
       props: Props,
       getState: () => State,
-      setState: (state: State) => void,
+      setState: SetState<Props, State>,
     ) => VM,
   ) {
     super(props);
 
-    this.viewModel = new Shaddow(
-      props,
-      () => this.state,
-      state => {
-        this.setState(state);
-      },
-    );
-
+    this.viewModel = new Shaddow(props, () => this.state, this.setState);
     this.state = this.viewModel.getInitialState(props);
   }
 }

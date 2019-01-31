@@ -63,7 +63,7 @@ class DevMenu extends React.Component<Props, State> {
 
   onToggleAdFree = (value: boolean) => {
     IAP.forceAdFree = !value;
-    this.props.checkShowAds();
+    this.props.checkIsAdFree();
   };
 
   renderSignedIn = () => (

@@ -6,12 +6,13 @@ import { AdMobRewarded } from 'react-native-admob';
 import IAP, { IAPErrorCodes } from 'src/models/iap';
 import RewardedAd from 'src/models/rewardedAd';
 
-import SettingsViewModel from '../settings';
+import SettingsViewModel, { State } from '../settings';
 
 const sandbox = createSandbox();
+const state: State = { canBuyDiscount: false, showBuyAds: false };
 const viewModel = new SettingsViewModel(
   { showAds: false } as any,
-  () => ({ canBuyDiscount: false }),
+  () => state,
   () => {},
 );
 afterEach(sandbox.restore);
@@ -32,7 +33,9 @@ describe('handle navigate', () => {
 describe('handle buy ad free', () => {
   describe('discount', () => {
     beforeEach(() => {
-      sandbox.stub(viewModel, 'getState').returns({ canBuyDiscount: true });
+      sandbox
+        .stub(viewModel, 'getState')
+        .returns({ ...state, canBuyDiscount: true });
     });
 
     it('purchase', async () => {
@@ -46,29 +49,44 @@ describe('handle buy ad free', () => {
     });
 
     it('notifies ad provider when purchase is successful', async () => {
-      const checkShowAds = sandbox.stub();
+      const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(true);
-      sandbox.stub(viewModel, 'props').value({ checkShowAds });
+      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
 
       await viewModel.handleBuyAdFree();
 
-      expect(checkShowAds.called).toEqual(true);
+      expect(checkIsAdFree.called).toEqual(true);
     });
 
     it('does not notify ad provider when purchase is not successful', async () => {
-      const checkShowAds = sandbox.stub();
+      const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(false);
-      sandbox.stub(viewModel, 'props').value({ checkShowAds });
+      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
 
       await viewModel.handleBuyAdFree();
 
-      expect(checkShowAds.called).toEqual(false);
+      expect(checkIsAdFree.called).toEqual(false);
+    });
+
+    it('updates the state when becomes ad free', async () => {
+      const checkIsAdFree = sandbox.stub().resolves(true);
+      const setState = sandbox.stub();
+      sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(true);
+      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'setState').value(setState);
+
+      await viewModel.handleBuyAdFree();
+
+      expect(checkIsAdFree.called).toEqual(true);
+      expect(setState.calledWith({ showBuyAds: false }));
     });
   });
 
   describe('full price', () => {
     beforeEach(() => {
-      sandbox.stub(viewModel, 'getState').returns({ canBuyDiscount: false });
+      sandbox
+        .stub(viewModel, 'getState')
+        .returns({ ...state, canBuyDiscount: false });
     });
 
     it('purchase', async () => {
@@ -82,23 +100,23 @@ describe('handle buy ad free', () => {
     });
 
     it('notifies ad provider when purchase is successful', async () => {
-      const checkShowAds = sandbox.stub();
+      const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFree').resolves(true);
-      sandbox.stub(viewModel, 'props').value({ checkShowAds });
+      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
 
       await viewModel.handleBuyAdFree();
 
-      expect(checkShowAds.called).toEqual(true);
+      expect(checkIsAdFree.called).toEqual(true);
     });
 
     it('does not notify ad provider when purchase is not successful', async () => {
-      const checkShowAds = sandbox.stub();
+      const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFree').resolves(false);
-      sandbox.stub(viewModel, 'props').value({ checkShowAds });
+      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
 
       await viewModel.handleBuyAdFree();
 
-      expect(checkShowAds.called).toEqual(false);
+      expect(checkIsAdFree.called).toEqual(false);
     });
   });
 });
@@ -117,7 +135,7 @@ describe('buy ad free', () => {
   it('buys ad free', async () => {
     const buy = sandbox.stub(IAP, 'buyAdFree').resolves(true);
 
-    const result = await viewModel.buyAdFree();
+    const result = await (viewModel as any).buyAdFree();
 
     expect(result).toEqual(true);
     expect(buy.called).toEqual(true);
@@ -129,7 +147,7 @@ describe('buy ad free', () => {
     sandbox.stub(RewardedAd, 'requestAdIfNeeded').resolves();
     const alert = sandbox.stub(Alert, 'alert');
 
-    const result = await viewModel.buyAdFree();
+    const result = await (viewModel as any).buyAdFree();
 
     expect(result).toEqual(false);
     expect(alert.called).toEqual(true);
@@ -140,7 +158,7 @@ describe('buy ad free', () => {
     sandbox.stub(IAP, 'canBuyAdsDiscount').value(false);
     const alert = sandbox.stub(Alert, 'alert');
 
-    const result = await viewModel.buyAdFree();
+    const result = await (viewModel as any).buyAdFree();
 
     expect(result).toEqual(false);
     expect(alert.called).toEqual(false);
@@ -154,7 +172,7 @@ describe('buy ad free', () => {
     const alert = sandbox.stub(Alert, 'alert');
 
     try {
-      await viewModel.buyAdFree();
+      await (viewModel as any).buyAdFree();
     } catch (e) {
       fail('should not have thrown error');
     }
@@ -168,7 +186,7 @@ describe('show rewarded ad', () => {
     const ad = sandbox.stub(RewardedAd, 'showAd');
     sandbox.stub(RNIap, 'buyProduct');
 
-    await viewModel.showRewardedAd();
+    await (viewModel as any).showRewardedAd();
 
     expect(ad.called).toEqual(true);
   });
@@ -177,7 +195,7 @@ describe('show rewarded ad', () => {
     sandbox.stub(RewardedAd, 'showAd');
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
 
-    await viewModel.showRewardedAd();
+    await (viewModel as any).showRewardedAd();
 
     expect(discount.called).toEqual(true);
   });
@@ -187,7 +205,7 @@ describe('show rewarded ad', () => {
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
     let resolved = false;
 
-    viewModel.showRewardedAd().then(() => {
+    (viewModel as any).showRewardedAd().then(() => {
       resolved = true;
     });
 
@@ -197,9 +215,10 @@ describe('show rewarded ad', () => {
 
   it('updates view when discount is available', async () => {
     sandbox.stub(RewardedAd, 'showAd').resolves();
-    const setState = sandbox.stub(viewModel, 'setState');
+    const setState = sandbox.stub();
+    sandbox.stub(viewModel, 'setState').value(setState);
 
-    await viewModel.showRewardedAd();
+    await (viewModel as any).showRewardedAd();
 
     expect(setState.calledWith({ canBuyDiscount: true })).toEqual(true);
   });

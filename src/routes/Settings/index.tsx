@@ -34,7 +34,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
       },
       locale,
     } = this.props;
-    const { canBuyDiscount } = this.state;
+    const { canBuyDiscount, showBuyAds } = this.state;
     return (
       <View style={styles.container(light)}>
         <StatusBar barStyle='light-content' />
@@ -54,7 +54,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
               label={t(strings.licenses)}
               onPress={this.viewModel.handleNavigate(routeNames.Licenses)}
             />
-            {this.viewModel.showBuyAds && (
+            {showBuyAds && (
               <ListItem
                 label={t(
                   canBuyDiscount

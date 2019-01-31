@@ -7,11 +7,11 @@ interface ProviderState {
 }
 
 export interface AdsConsumerProps extends ProviderState {
-  checkShowAds: () => void;
+  checkIsAdFree: () => Promise<boolean>;
 }
 
 const { Provider, Consumer } = React.createContext<AdsConsumerProps>({
-  checkShowAds: () => {},
+  checkIsAdFree: async () => Promise.resolve(false),
   showAds: !__DEV__,
 });
 
@@ -22,12 +22,14 @@ export const withAdsProvider = <Props extends Object>(
     state = { showAds: !__DEV__ };
 
     componentDidMount() {
-      this.checkShowAds();
+      this.checkIsAdFree();
     }
 
-    checkShowAds = async () => {
+    checkIsAdFree = async () => {
       const isAdFree = await IAP.isAdFree();
       this.setState({ showAds: !isAdFree });
+
+      return isAdFree;
     };
 
     render() {
@@ -36,7 +38,7 @@ export const withAdsProvider = <Props extends Object>(
         <Provider
           value={{
             showAds,
-            checkShowAds: this.checkShowAds,
+            checkIsAdFree: this.checkIsAdFree,
           }}
         >
           <WrappedComponent {...this.props} />
