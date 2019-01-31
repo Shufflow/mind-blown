@@ -61,13 +61,18 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
   }
 
   loadPhrase = async () => {
-    this.setState({ isLoading: true });
-    const phrase = await this.dataSource.loadPhrase();
-    this.setState({
-      phrase,
-      isLoading: false,
-      translations: [emptyTranslation],
-    });
+    try {
+      this.setState({ isLoading: true });
+      const phrase = await this.dataSource.loadPhrase();
+      this.setState({
+        phrase,
+        isLoading: false,
+        translations: [emptyTranslation],
+      });
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.warn(e);
+    }
   };
 
   handleTranslation = (idx: number) => (language: string, content: string) => {
@@ -153,7 +158,7 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
       >
         {isLoading && (
           <ActivityIndicator
-            color={Colors.darkGray}
+            color={color.dark}
             size='large'
             style={styles.activityIndicator}
           />

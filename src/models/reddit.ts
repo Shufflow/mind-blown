@@ -21,6 +21,7 @@ class RedditDataSource {
     const {
       docs: [ref],
     } = await this.reddit
+      .where('discarded', '==', false)
       .orderBy('score', 'desc')
       .limit(1)
       .get();
@@ -29,7 +30,7 @@ class RedditDataSource {
       return null;
     }
 
-    const { content, score } = ref.data() as any;
+    const { content, score } = ref.data();
 
     return {
       content,
@@ -55,7 +56,9 @@ class RedditDataSource {
   }
 
   async discardPhrase(id: string): Promise<void> {
-    await this.reddit.doc(id).delete();
+    await this.reddit.doc(id).update({
+      discarded: true,
+    });
   }
 }
 
