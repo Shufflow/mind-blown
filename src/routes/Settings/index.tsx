@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StatusBar, ScrollView } from 'react-native';
+import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import Config from 'react-native-config';
 
 import { withLocale } from 'src/utils/hocs/withLocale';
@@ -8,7 +8,11 @@ import Constants from 'src/utils/constants';
 
 import AdIds from 'src/models/ads';
 import RouteName from 'src/routes';
-import t, { Settings as strings, Global as globalStrings } from 'src/locales';
+import t, {
+  Settings as strings,
+  Global as globalStrings,
+  AdFreeErrorAlert as errorAlert,
+} from 'src/locales';
 
 import Dev from 'src/components/Dev';
 import ListItem from 'src/components/ListItem';
@@ -26,6 +30,19 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
   constructor(props: Props) {
     super(props, SettingsViewModel);
   }
+
+  onBuyAdFree = async () => {
+    try {
+      await this.viewModel.handleBuyAdFree();
+    } catch (e) {
+      if (__DEV__) {
+        // tslint:disable-next-line: no-console
+        console.warn(e);
+      }
+
+      Alert.alert(t(errorAlert.title), t(errorAlert.message));
+    }
+  };
 
   render() {
     const {
@@ -61,7 +78,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
                     ? strings.removeAdsDiscount
                     : strings.removeAds,
                 )}
-                onPress={this.viewModel.handleBuyAdFree}
+                onPress={this.onBuyAdFree}
                 style={styles.itemMarginTop}
               />
             )}

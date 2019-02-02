@@ -8,6 +8,7 @@ import {
   AdDiscountAlert,
   Home,
   Strings,
+  AdFreeErrorAlert,
 } from './strings';
 
 const strings: Strings = {
@@ -48,6 +49,10 @@ const strings: Strings = {
     "Don't want to pay full price? Watch a video and get 50% OFF the price!",
   [AdDiscountAlert.cancel]: 'No Thanks',
   [AdDiscountAlert.confirm]: 'I want it!',
+
+  [AdFreeErrorAlert.title]: 'Purchase Failed',
+  [AdFreeErrorAlert.message]:
+    "Your purchase wasn't completed due to an unexpected error. Please, try again.",
 };
 
 export default strings;

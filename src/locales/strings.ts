@@ -40,6 +40,11 @@ export enum Home {
   tryAgainButton = 'tryAgainButton',
 }
 
+export enum AdFreeErrorAlert {
+  title = 'adFreeErrorAlertTitle',
+  message = 'adFreeErrorAlertMessage',
+}
+
 type Key =
   | Global
   | Settings
@@ -48,6 +53,7 @@ type Key =
   | AdDiscountAlert
   | Home
   | RouteName
+  | AdFreeErrorAlert
   | 'name';
 
 export type Strings = { [key in Key]: string };
