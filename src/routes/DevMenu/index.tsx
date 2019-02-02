@@ -8,7 +8,7 @@ import t, { DevMenu as strings, Global as globalStrings } from 'src/locales';
 import { goBack } from 'src/utils/navigation';
 import { withAds, AdsConsumerProps } from 'src/utils/hocs/withAds';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 
 import googleLogin from 'src/models/auth';
 
@@ -52,7 +52,7 @@ class DevMenu extends React.Component<Props, State> {
   onPressRedditPhrases = () => {
     const { dark, light } = this.props.navigation.color;
     const { navigation } = this.props;
-    navigation.navigate(routeNames.RedditPhrases, { dark, light });
+    navigation.navigate(RouteName.RedditPhrases, { dark, light });
   };
 
   onPressLogout = async () => {

@@ -7,7 +7,7 @@ import { withAds } from 'src/utils/hocs/withAds';
 import Constants from 'src/utils/constants';
 
 import AdIds from 'src/models/ads';
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 import t, { Settings as strings, Global as globalStrings } from 'src/locales';
 
 import Dev from 'src/components/Dev';
@@ -48,11 +48,11 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
             />
             <ListItem
               label={t(strings.sendSuggestion)}
-              onPress={this.viewModel.handleNavigate(routeNames.SendSuggestion)}
+              onPress={this.viewModel.handleNavigate(RouteName.SendSuggestion)}
             />
             <ListItem
               label={t(strings.licenses)}
-              onPress={this.viewModel.handleNavigate(routeNames.Licenses)}
+              onPress={this.viewModel.handleNavigate(RouteName.Licenses)}
             />
             {showBuyAds && (
               <ListItem
@@ -68,7 +68,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
             <Dev condition={Config.SHOW_DEV_MENU}>
               <ListItem
                 label={t(strings.devMenu)}
-                onPress={this.viewModel.handleNavigate(routeNames.DevMenu)}
+                onPress={this.viewModel.handleNavigate(RouteName.DevMenu)}
                 style={styles.itemMarginTop}
               />
             </Dev>

@@ -1,6 +1,6 @@
 import { createSandbox } from 'sinon';
 
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 import sleep from 'src/utils/sleep';
 
 import HomeViewModel, { SelectedThumb } from '../home';
@@ -138,7 +138,7 @@ describe('handle press settings', () => {
 
     viewModel.handlePressSettings();
 
-    expect(navigate.calledWith(routeNames.Settings)).toEqual(true);
+    expect(navigate.calledWith(RouteName.Settings)).toEqual(true);
   });
 });
 

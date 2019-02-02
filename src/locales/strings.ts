@@ -1,3 +1,5 @@
+import RouteName from 'src/routes';
+
 export enum Global {
   cancel = 'cancel',
   done = 'done',
@@ -37,3 +39,15 @@ export enum Home {
   errorMessage = 'errorMessage',
   tryAgainButton = 'tryAgainButton',
 }
+
+type Key =
+  | Global
+  | Settings
+  | Reddit
+  | DevMenu
+  | AdDiscountAlert
+  | Home
+  | RouteName
+  | 'name';
+
+export type Strings = { [key in Key]: string };

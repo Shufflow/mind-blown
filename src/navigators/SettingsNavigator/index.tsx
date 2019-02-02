@@ -2,7 +2,7 @@ import React from 'react';
 import { Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 import t from 'src/locales';
 
 import Settings from 'src/routes/Settings';
@@ -16,11 +16,11 @@ import { getColor } from 'src/models/assets';
 import styles from './styles';
 
 const routes = {
-  [routeNames.Settings]: Settings,
-  [routeNames.RedditPhrases]: RedditPhrases,
-  [routeNames.SendSuggestion]: SendSuggestion,
-  [routeNames.DevMenu]: DevMenu,
-  [routeNames.Licenses]: Licenses,
+  [RouteName.Settings]: Settings,
+  [RouteName.RedditPhrases]: RedditPhrases,
+  [RouteName.SendSuggestion]: SendSuggestion,
+  [RouteName.DevMenu]: DevMenu,
+  [RouteName.Licenses]: Licenses,
 };
 
 const SettingsNavigator = createStackNavigator(routes, {

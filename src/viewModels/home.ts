@@ -1,6 +1,6 @@
 import { NavigationScreenProps } from 'react-navigation';
 
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 import { LocaleConsumerProps } from 'src/utils/hocs/withLocale';
 
 import { getColor } from 'src/models/assets';
@@ -84,7 +84,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   };
 
   handlePressSettings = () => {
-    this.props.navigation.navigate(routeNames.Settings);
+    this.props.navigation.navigate(RouteName.Settings);
   };
 
   private genColors = () => {

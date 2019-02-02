@@ -1,14 +1,14 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 
 import Home from 'src/routes/Home';
 
 import SettingsNavigator from 'src/navigators/SettingsNavigator';
 
 const routes = {
-  [routeNames.Home]: Home,
-  [routeNames.Settings]: SettingsNavigator,
+  [RouteName.Home]: Home,
+  [RouteName.Settings]: SettingsNavigator,
 };
 
 const AppNavigator = createStackNavigator(routes, {

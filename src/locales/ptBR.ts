@@ -1,4 +1,4 @@
-import routeNames from 'src/routes';
+import RouteName from 'src/routes';
 
 import {
   Global,
@@ -7,15 +7,17 @@ import {
   DevMenu,
   AdDiscountAlert,
   Home,
+  Strings,
 } from './strings';
 
-export default {
+const strings: Strings = {
   name: 'Português',
-  [routeNames.Settings]: 'Configurações',
-  [routeNames.RedditPhrases]: 'Frases do Reddit',
-  [routeNames.SendSuggestion]: 'Enviar Sugestão',
-  [routeNames.DevMenu]: 'Dev Menu',
-  [routeNames.Licenses]: 'Licenças',
+  [RouteName.Home]: 'Home',
+  [RouteName.Settings]: 'Configurações',
+  [RouteName.RedditPhrases]: 'Frases do Reddit',
+  [RouteName.SendSuggestion]: 'Enviar Sugestão',
+  [RouteName.DevMenu]: 'Dev Menu',
+  [RouteName.Licenses]: 'Licenças',
 
   [Home.errorMessage]: 'Ocorreu um erro',
   [Home.tryAgainButton]: 'Tentar Novamente',
@@ -47,3 +49,5 @@ export default {
   [AdDiscountAlert.cancel]: 'Não, obrigado',
   [AdDiscountAlert.confirm]: 'Eu quero!',
 };
+
+export default strings;
