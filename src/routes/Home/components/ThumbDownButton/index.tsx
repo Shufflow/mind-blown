@@ -9,17 +9,20 @@ import styles from './styles';
 
 interface Props {
   color: string;
+  disabled?: boolean;
   isSelected?: boolean;
   onPress: () => void;
 }
 
 const ThumbsDownButton = ({
   color,
+  disabled = false,
   isSelected,
   onPress,
 }: Props): React.ReactElement<Props> => (
   <SVGButton
     color={color}
+    disabled={disabled}
     fillAll
     icon={isSelected ? icons.thumbsUpSolid : icons.thumbsUp}
     onPress={onPress}

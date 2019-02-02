@@ -14,6 +14,7 @@ import styles from './styles';
 
 interface Props {
   color?: string;
+  disabled?: boolean;
   fillAll?: boolean;
   icon: string;
   onPress: () => void;
@@ -22,6 +23,7 @@ interface Props {
 
 const SVGButton = ({
   color,
+  disabled = false,
   fillAll,
   icon,
   onPress,
@@ -31,7 +33,7 @@ const SVGButton = ({
     StyleSheet.flatten(style) || ({} as any);
 
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity onPress={onPress} disabled={disabled}>
       <View style={[styles.container, flattenedStyle]}>
         <SVGUri
           fill={styleColor || color}

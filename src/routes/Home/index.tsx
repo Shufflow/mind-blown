@@ -80,11 +80,13 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
         <View style={styles.footer}>
           <ThumbDownButton
             color={fgColor}
+            disabled={!phrase}
             isSelected={selectedThumb === SelectedThumb.Down}
             onPress={this.viewModel.handlePressReview(false)}
           />
           <ThumbUpButton
             color={fgColor}
+            disabled={!phrase}
             isSelected={selectedThumb === SelectedThumb.Up}
             onPress={this.viewModel.handlePressReview(true)}
           />
