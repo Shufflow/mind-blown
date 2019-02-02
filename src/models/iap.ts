@@ -1,11 +1,15 @@
 import * as RNIap from 'react-native-iap';
+import { Platform } from 'react-native';
 
 import memoize from 'src/utils/memoize';
 
-export enum SKU {
-  adFree = 'ad_free',
-  adFreeDiscount = 'ad_free_2',
-}
+export const SKU = {
+  adFree: Platform.select({
+    android: 'ad_free',
+    ios: 'ad_free_full',
+  }),
+  adFreeDiscount: 'ad_free_2',
+};
 
 export const IAPErrorCodes = {
   cancelled: 'E_USER_CANCELLED',
@@ -61,7 +65,7 @@ class IAPManager {
     );
   };
 
-  private buyProduct = async (sku: SKU) => {
+  private buyProduct = async (sku: string) => {
     try {
       await RNIap.buyProduct(sku);
       return true;
