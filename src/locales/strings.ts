@@ -32,3 +32,8 @@ export enum AdDiscountAlert {
   cancel = 'discountAlertCancel',
   confirm = 'discountAlertConfirm',
 }
+
+export enum Home {
+  errorMessage = 'errorMessage',
+  tryAgainButton = 'tryAgainButton',
+}

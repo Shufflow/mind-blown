@@ -1,10 +1,20 @@
 import { StyleSheet } from 'react-native';
 
-import { Layouts, Spacing } from 'src/utils/styles';
+import { Layouts, Spacing, Colors } from 'src/utils/styles';
 
 const styles = StyleSheet.create({
   container: {
     ...Layouts.container,
+  },
+
+  errorContainer: {
+    paddingHorizontal: Spacing.size_40,
+  },
+  errorTitle: {
+    color: Colors.black,
+    fontSize: Spacing.size_30,
+    marginBottom: Spacing.size_30,
+    textAlign: 'center',
   },
 
   activityIndicator: {

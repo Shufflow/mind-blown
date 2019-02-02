@@ -1,6 +1,13 @@
 import routeNames from 'src/routes';
 
-import { Global, Settings, Reddit, DevMenu, AdDiscountAlert } from './strings';
+import {
+  Global,
+  Settings,
+  Reddit,
+  DevMenu,
+  AdDiscountAlert,
+  Home,
+} from './strings';
 
 export default {
   name: 'English',
@@ -9,6 +16,9 @@ export default {
   [routeNames.SendSuggestion]: 'Send Suggestion',
   [routeNames.DevMenu]: 'Dev Menu',
   [routeNames.Licenses]: 'Licenses',
+
+  [Home.errorMessage]: 'An error occurred',
+  [Home.tryAgainButton]: 'Try Again',
 
   [Global.cancel]: 'Cancel',
   [Global.done]: 'Done',

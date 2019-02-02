@@ -48,6 +48,7 @@ class HomeViewModel extends ViewModel<Props, State> {
       clearTimeout(timeout);
       this.setState({ hasError: false, phrase, selectedThumb: null });
     } catch (e) {
+      clearTimeout(timeout);
       this.setState({ hasError: true });
     }
   };
