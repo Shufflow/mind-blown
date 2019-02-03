@@ -1,4 +1,4 @@
-import { Alert, Linking } from 'react-native';
+import { Alert } from 'react-native';
 
 import t, { AdDiscountAlert as strings } from '@locales';
 import { LocaleConsumerProps } from '@hocs/withLocale';
@@ -43,8 +43,6 @@ class SettingsViewModel extends ViewModel<Props, State> {
       this.setState({ showBuyAds: !isAdFree });
     }
   };
-
-  handleOpenURL = (url: string) => async () => Linking.openURL(url);
 
   handleSetLocale = (locale: string) => {
     this.props.setLocale(locale);

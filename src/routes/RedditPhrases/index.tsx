@@ -4,12 +4,11 @@ import { isEqual, omit } from 'lodash';
 
 import { Colors } from '@styles';
 import icons from '@icons';
-import t, { Global as globalStrings, Reddit as strings } from '@locales';
-import { goBack } from '@utils/navigation';
+import t, { Reddit as strings } from '@locales';
+import withDoneButton from '@hocs/withDoneButton';
 
 import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
-import HeaderButton from '@components/HeaderButton';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
@@ -26,14 +25,6 @@ interface State {
 }
 
 class RedditPhrases extends React.Component<ColoredScreenProps, State> {
-  static navigationOptions = (args: ColoredScreenProps) => ({
-    headerRight: (
-      <HeaderButton color={args.navigation.color.light} onPress={goBack(args)}>
-        {t(globalStrings.done)}
-      </HeaderButton>
-    ),
-  });
-
   dataSource = new RedditDataSource();
   translations: Array<{ language: string; content: string }> = [];
 
@@ -196,4 +187,4 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
   }
 }
 
-export default RedditPhrases;
+export default withDoneButton(RedditPhrases);

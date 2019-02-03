@@ -5,12 +5,10 @@ export enum Global {
   done = 'done',
 }
 export enum Settings {
+  about = 'about',
   devMenu = 'devMenu',
   language = 'language',
   sendSuggestion = 'sendSuggestion',
-  licenses = 'licenses',
-  madeBy = 'madeBy',
-  artBy = 'artBy',
   removeAds = 'removeAds',
   removeAdsDiscount = 'removeAdsDiscount',
 }
@@ -45,6 +43,13 @@ export enum AdFreeErrorAlert {
   message = 'adFreeErrorAlertMessage',
 }
 
+export enum About {
+  licenses = 'licenses',
+  version = 'version',
+  madeBy = 'madeBy',
+  artBy = 'artBy',
+}
+
 type Key =
   | Global
   | Settings
@@ -54,6 +59,7 @@ type Key =
   | Home
   | RouteName
   | AdFreeErrorAlert
+  | About
   | 'name';
 
 export type Strings = { [key in Key]: string };

@@ -9,6 +9,7 @@ import {
   Home,
   Strings,
   AdFreeErrorAlert,
+  About,
 } from './strings';
 
 const strings: Strings = {
@@ -19,6 +20,7 @@ const strings: Strings = {
   [RouteName.SendSuggestion]: 'Enviar Sugestão',
   [RouteName.DevMenu]: 'Dev Menu',
   [RouteName.Licenses]: 'Licenças',
+  [RouteName.About]: 'Sobre',
 
   [Home.errorMessage]: 'Ocorreu um erro',
   [Home.tryAgainButton]: 'Tentar Novamente',
@@ -29,11 +31,9 @@ const strings: Strings = {
   [Settings.language]: 'Idioma',
   [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Enviar Sugestão',
-  [Settings.licenses]: 'Licenças',
-  [Settings.madeBy]: 'Feito com ❤️ por Flavio Caetano',
-  [Settings.artBy]: 'Arte de Agnes Pinhanelli',
   [Settings.removeAds]: 'Remover Anúncios',
   [Settings.removeAdsDiscount]: 'Remover Anúncios - 50% Desconto',
+  [Settings.about]: 'Sobre',
 
   [Reddit.discard]: 'Descartar',
   [Reddit.emptyList]: 'Sem frases para revisar 🎉',
@@ -53,6 +53,11 @@ const strings: Strings = {
   [AdFreeErrorAlert.title]: 'Erro na Compra',
   [AdFreeErrorAlert.message]:
     'Sua compra não foi completada em função de um erro inesperado. Por favor, tente novamente.',
+
+  [About.licenses]: 'Licenças',
+  [About.madeBy]: 'Feito com ❤️ por Flavio Caetano',
+  [About.artBy]: 'Arte de Agnes Pinhanelli',
+  [About.version]: 'Versão',
 };
 
 export default strings;

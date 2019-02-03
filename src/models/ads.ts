@@ -3,16 +3,20 @@ import { AdMobBanner, AdMobInterstitial } from 'react-native-admob';
 
 const AdIds = Platform.select({
   android: {
+    about: 'ca-app-pub-3166606200488630/6961200221',
     homeBottomBanner: 'ca-app-pub-3166606200488630/4628621329',
     homeTopBanner: 'ca-app-pub-3166606200488630/7446356351',
+    licenses: 'ca-app-pub-3166606200488630/3896053180',
     phrasesInterstitial: 'ca-app-pub-3166606200488630/4245477945',
     rewarded: 'ca-app-pub-3166606200488630/8120141755',
     sendSuggestionBottomBanner: 'ca-app-pub-3166606200488630/6871641282',
     settingsBottomBanner: 'ca-app-pub-3166606200488630/8376294647',
   },
   ios: {
+    about: 'ca-app-pub-3166606200488630/3677148063',
     homeBottomBanner: 'ca-app-pub-3166606200488630/1078897744',
     homeTopBanner: 'ca-app-pub-3166606200488630/6109423644',
+    licenses: 'ca-app-pub-3166606200488630/7982514149',
     phrasesInterstitial: 'ca-app-pub-3166606200488630/7403922502',
     rewarded: 'ca-app-pub-3166606200488630/5229544095',
     sendSuggestionBottomBanner: 'ca-app-pub-3166606200488630/5095617078',

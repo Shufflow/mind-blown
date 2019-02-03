@@ -1,4 +1,5 @@
 enum RouteName {
+  About = 'About',
   DevMenu = 'DevMenu',
   Home = 'Home',
   Licenses = 'Licenses',

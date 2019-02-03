@@ -9,6 +9,7 @@ import {
   Home,
   Strings,
   AdFreeErrorAlert,
+  About,
 } from './strings';
 
 const strings: Strings = {
@@ -19,6 +20,7 @@ const strings: Strings = {
   [RouteName.SendSuggestion]: 'Send Suggestion',
   [RouteName.DevMenu]: 'Dev Menu',
   [RouteName.Licenses]: 'Licenses',
+  [RouteName.About]: 'About',
 
   [Home.errorMessage]: 'An error occurred',
   [Home.tryAgainButton]: 'Try Again',
@@ -29,11 +31,9 @@ const strings: Strings = {
   [Settings.language]: 'Language',
   [Settings.devMenu]: 'Dev Menu',
   [Settings.sendSuggestion]: 'Send Suggestion',
-  [Settings.licenses]: 'Licenses',
-  [Settings.madeBy]: 'Made with ❤️ by Flavio Caetano',
-  [Settings.artBy]: 'Art by Agnes Pinhanelli',
   [Settings.removeAds]: 'Remove Ads',
   [Settings.removeAdsDiscount]: 'Remove Ads - 50% OFF',
+  [Settings.about]: 'About',
 
   [Reddit.discard]: 'Discard',
   [Reddit.emptyList]: 'No more phrases to review 🎉',
@@ -53,6 +53,11 @@ const strings: Strings = {
   [AdFreeErrorAlert.title]: 'Purchase Failed',
   [AdFreeErrorAlert.message]:
     "Your purchase wasn't completed due to an unexpected error. Please, try again.",
+
+  [About.licenses]: 'Licenses',
+  [About.madeBy]: 'Made with ❤️ by Flavio Caetano',
+  [About.artBy]: 'Art by Agnes Pinhanelli',
+  [About.version]: 'Version',
 };
 
 export default strings;

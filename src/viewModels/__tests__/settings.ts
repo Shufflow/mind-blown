@@ -1,5 +1,5 @@
 import { createSandbox } from 'sinon';
-import { Alert, Linking } from 'react-native';
+import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { AdMobRewarded } from 'react-native-admob';
 
@@ -118,16 +118,6 @@ describe('handle buy ad free', () => {
 
       expect(checkIsAdFree.called).toEqual(false);
     });
-  });
-});
-
-describe('handle open URL', () => {
-  it('opens the given url', async () => {
-    const link = sandbox.stub(Linking, 'openURL').resolves();
-
-    await viewModel.handleOpenURL('foobar')();
-
-    expect(link.calledWith('foobar')).toEqual(true);
   });
 });
 

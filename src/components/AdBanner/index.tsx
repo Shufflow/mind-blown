@@ -7,7 +7,7 @@ import pure from '@hocs/pure';
 
 import { BannerTestIds } from 'src/models/ads';
 
-interface Props extends AdsConsumerProps {
+interface Props {
   adUnitID: string;
 }
 
@@ -18,7 +18,7 @@ const onFailToLoadAd = (e: Error) => {
   }
 };
 
-const AdBanner = ({ adUnitID, showAds }: Props) => {
+const AdBanner = ({ adUnitID, showAds }: Props & AdsConsumerProps) => {
   if (!showAds) {
     return null;
   }
@@ -37,4 +37,4 @@ const enhance = compose(
   pure,
   withAds,
 );
-export default enhance(AdBanner);
+export default enhance(AdBanner) as React.ComponentType<Props>;

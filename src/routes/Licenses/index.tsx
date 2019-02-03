@@ -1,24 +1,22 @@
 import React from 'react';
 import { WebView } from 'react-native';
 
-import t, { Global as strings } from '@locales';
 import pure from '@hocs/pure';
-import { goBack } from '@utils/navigation';
+import withDoneButton from '@hocs/withDoneButton';
 import Constants from '@utils/constants';
 
-import HeaderButton from '@components/HeaderButton';
+import AdBanner from '@components/AdBanner';
 
-import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
+import AdIds from 'src/models/ads';
 
-const Licenses = () => <WebView source={{ uri: Constants.licensesURL }} />;
+const WebViewSource = { uri: Constants.licensesURL };
+
+const Licenses = () => (
+  <React.Fragment>
+    <WebView source={WebViewSource} />
+    <AdBanner adUnitID={AdIds.licenses} />
+  </React.Fragment>
+);
 
 const Enhanced: any = pure(Licenses);
-Enhanced.navigationOptions = (props: ColoredScreenProps) => ({
-  headerRight: (
-    <HeaderButton color={props.navigation.color.light} onPress={goBack(props)}>
-      {t(strings.done)}
-    </HeaderButton>
-  ),
-});
-
-export default Enhanced;
+export default withDoneButton(Enhanced);

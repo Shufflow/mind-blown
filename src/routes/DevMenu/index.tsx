@@ -4,13 +4,12 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { compose } from '@typed/compose';
 import Config from 'react-native-config';
 
-import t, { DevMenu as strings, Global as globalStrings } from '@locales';
+import t, { DevMenu as strings } from '@locales';
 import RouteName from '@routes';
 import { withAds, AdsConsumerProps } from '@hocs/withAds';
-import { goBack } from '@utils/navigation';
+import withDoneButton from '@hocs/withDoneButton';
 
 import ListItem from '@components/ListItem';
-import HeaderButton from '@components/HeaderButton';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
@@ -123,12 +122,4 @@ class DevMenu extends React.Component<Props, State> {
 }
 
 const Enhanced = compose(withAds)(DevMenu);
-Enhanced.navigationOptions = (props: ColoredScreenProps) => ({
-  headerRight: (
-    <HeaderButton color={props.navigation.color.light} onPress={goBack(props)}>
-      {t(globalStrings.done)}
-    </HeaderButton>
-  ),
-});
-
-export default Enhanced;
+export default withDoneButton(Enhanced);
