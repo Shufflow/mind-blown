@@ -247,7 +247,7 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = 58EEZG76L8;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
@@ -452,7 +452,9 @@
 			baseConfigurationReference = 54AB33EA00643CB4CB51DE49 /* Pods-MindBlownTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
-				DEVELOPMENT_TEAM = 58EEZG76L8;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -476,6 +478,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindBlown.app/MindBlown";
 			};
 			name = Debug;
@@ -485,8 +488,10 @@
 			baseConfigurationReference = E8B3809BF37B3F95319A3BB2 /* Pods-MindBlownTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 58EEZG76L8;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -506,6 +511,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindBlown.app/MindBlown";
 			};
 			name = Release;
@@ -536,7 +542,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
 				PRODUCT_NAME = MindBlown;
-				PROVISIONING_PROFILE_SPECIFIER = "MindBlown - Development";
+				PROVISIONING_PROFILE_SPECIFIER = "match Development com.shufflow.mind-blown";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -568,7 +574,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
 				PRODUCT_NAME = MindBlown;
-				PROVISIONING_PROFILE_SPECIFIER = "MindBlown - Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.shufflow.mind-blown";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
@@ -773,7 +779,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.shufflow.mind-blown";
 				PRODUCT_NAME = MindBlown;
-				PROVISIONING_PROFILE_SPECIFIER = "MindBlown - Distribution";
+				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.shufflow.mind-blown";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = AdHoc;
@@ -783,8 +789,10 @@
 			baseConfigurationReference = BAC6958FC324B50E8ECF139D /* Pods-MindBlownTests.adhoc.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				DEVELOPMENT_TEAM = 58EEZG76L8;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-config/ios/ReactNativeConfig",
@@ -804,6 +812,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MindBlown.app/MindBlown";
 			};
 			name = AdHoc;

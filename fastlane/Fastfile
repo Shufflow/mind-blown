@@ -22,6 +22,11 @@ desc 'Build iOS Dev app'
 lane :build_ios_dev do
   sh 'yarn install-ios'
 
+  match(
+    type: 'development',
+    readonly: true,
+  )
+
   ENV["ENVFILE"] = ".env.dev"
   build_ios_app(
     export_method: 'development',
@@ -30,13 +35,18 @@ lane :build_ios_dev do
     configuration: 'Debug',
     skip_package_ipa: true,
     skip_archive: true,
-    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.0'
+    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.1'
   )
 end
 
-desc 'Build iOS Distribution'
-lane :build_ios_dist do
+desc 'Build iOS QA'
+lane :build_ios_qa do
   sh 'yarn install-ios'
+
+  match(
+    type: 'appstore',
+    readonly: true,
+  )
 
   ENV["ENVFILE"] = ".env.adhoc"
   build_ios_app(
@@ -48,7 +58,29 @@ lane :build_ios_dist do
   )
 end
 
-desc 'Release iOS Dist to TestFlight'
+
+desc 'Build iOS Distribution'
+lane :build_ios_dist do
+  sh 'yarn install-ios'
+
+  match(
+    type: 'appstore',
+    readonly: true,
+  )
+
+  ENV["ENVFILE"] = ".env.prod"
+  build_ios_app(
+    export_method: 'app-store',
+    workspace: 'ios/MindBlown.xcworkspace',
+    scheme: 'MindBlown',
+    configuration: 'Release',
+    output_directory: 'build/',
+  )
+end
+
+
+
+desc 'Release iOS QA to TestFlight'
 lane :release_ios_dist do
   build_ios_dist
 
