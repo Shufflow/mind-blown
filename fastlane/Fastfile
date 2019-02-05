@@ -12,114 +12,118 @@ before_all do
   sh 'yarn install'
 end
 
-desc 'Build Dev apps'
-lane :build_dev do
-  build_ios_dev
-  build_android_dev
+platform :ios do
+  before_all do
+    sh 'yarn install-ios'
+  end
+
+  desc 'Build iOS Dev app'
+  lane :build_dev do
+    match(
+      type: 'development',
+      readonly: true,
+    )
+
+    ENV["ENVFILE"] = ".env.dev"
+    build_ios_app(
+      export_method: 'development',
+      workspace: 'ios/MindBlown.xcworkspace',
+      scheme: 'MindBlown',
+      configuration: 'Debug',
+      skip_package_ipa: true,
+      skip_archive: true,
+      destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.1'
+    )
+  end
+
+  desc 'Build iOS QA'
+  lane :build_qa do
+    match(
+      type: 'appstore',
+      readonly: true,
+    )
+
+    ENV["ENVFILE"] = ".env.adhoc"
+    build_ios_app(
+      export_method: 'app-store',
+      workspace: 'ios/MindBlown.xcworkspace',
+      scheme: 'MindBlown',
+      configuration: 'AdHoc',
+      output_directory: 'build/',
+    )
+  end
+
+
+  desc 'Build iOS Distribution'
+  lane :build_dist do
+    match(
+      type: 'appstore',
+      readonly: true,
+    )
+
+    ENV["ENVFILE"] = ".env.prod"
+    build_ios_app(
+      export_method: 'app-store',
+      workspace: 'ios/MindBlown.xcworkspace',
+      scheme: 'MindBlown',
+      configuration: 'Release',
+      output_directory: 'build/',
+    )
+  end
+
+  desc 'Release iOS QA to TestFlight'
+  lane :release_qa do
+    build_qa
+
+    upload_to_testflight(
+      ipa: 'build/MindBlown.ipa',
+      skip_waiting_for_build_processing: true,
+    )
+  end
 end
 
-desc 'Build iOS Dev app'
-lane :build_ios_dev do
-  sh 'yarn install-ios'
+platform :android do
+  desc 'Build Android Dev app'
+  lane :build_dev do
+    ENV["ENVFILE"] = ".env.dev"
 
-  match(
-    type: 'development',
-    readonly: true,
-  )
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
 
-  ENV["ENVFILE"] = ".env.dev"
-  build_ios_app(
-    export_method: 'development',
-    workspace: 'ios/MindBlown.xcworkspace',
-    scheme: 'MindBlown',
-    configuration: 'Debug',
-    skip_package_ipa: true,
-    skip_archive: true,
-    destination: 'platform=iOS Simulator,name=iPhone 8,OS=12.1'
-  )
-end
+    cp_to_deploy()
+  end
 
-desc 'Build iOS QA'
-lane :build_ios_qa do
-  sh 'yarn install-ios'
+  desc 'Build Android QA app'
+  lane :build_qa do
+    ENV["ENVFILE"] = ".env.adhoc"
 
-  match(
-    type: 'appstore',
-    readonly: true,
-  )
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
 
-  ENV["ENVFILE"] = ".env.adhoc"
-  build_ios_app(
-    export_method: 'app-store',
-    workspace: 'ios/MindBlown.xcworkspace',
-    scheme: 'MindBlown',
-    configuration: 'AdHoc',
-    output_directory: 'build/',
-  )
-end
+    cp_to_deploy()
+  end
 
+  desc 'Build Android Release app'
+  lane :build_release do
+    ENV["ENVFILE"] = ".env.prod"
 
-desc 'Build iOS Distribution'
-lane :build_ios_dist do
-  sh 'yarn install-ios'
+    gradle(task: 'clean', project_dir: 'android/')
+    gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
 
-  match(
-    type: 'appstore',
-    readonly: true,
-  )
+    cp_to_deploy()
+  end
 
-  ENV["ENVFILE"] = ".env.prod"
-  build_ios_app(
-    export_method: 'app-store',
-    workspace: 'ios/MindBlown.xcworkspace',
-    scheme: 'MindBlown',
-    configuration: 'Release',
-    output_directory: 'build/',
-  )
-end
+  desc 'Release Android QA app'
+  lane :release_android do
+    build_qa
 
-
-
-desc 'Release iOS QA to TestFlight'
-lane :release_ios_dist do
-  build_ios_dist
-
-  upload_to_testflight(
-    ipa: 'build/MindBlown.ipa',
-    skip_waiting_for_build_processing: true,
-  )
-end
-
-desc 'Build Android Dev app'
-lane :build_android_dev do
-  ENV["ENVFILE"] = ".env.dev"
-
-  gradle(task: 'clean', project_dir: 'android/')
-  gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
-
-  cp_to_deploy()
-end
-
-desc 'Build Android Release app'
-lane :build_android_release do
-  ENV["ENVFILE"] = ".env.prod"
-
-  gradle(task: 'clean', project_dir: 'android/')
-  gradle(task: 'assemble', build_type: 'Release', project_dir: 'android/')
-
-  cp_to_deploy()
-end
-
-desc 'Release Android app'
-lane :release_android do
-  build_android_release
-
-  upload_to_play_store(
-    package_name: 'com.shufflow.MindBlown',
-    track: 'alpha',
-    json_key: 'google_api_key.json',
-    apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
-  )
+    upload_to_play_store(
+      package_name: 'com.shufflow.MindBlown',
+      track: 'alpha',
+      json_key: 'google_api_key.json',
+      apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+    )
+  end
 end
 
 def cp_to_deploy()
