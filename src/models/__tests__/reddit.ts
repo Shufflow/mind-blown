@@ -1,7 +1,7 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { assert, createSandbox } from 'sinon';
 
-import { stubFirebase } from 'src/utils/tests';
+import { stubFirebase } from '@utils/tests';
 
 import RedditDataSource from '../reddit';
 

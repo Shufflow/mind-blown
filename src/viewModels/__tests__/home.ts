@@ -1,7 +1,7 @@
 import { createSandbox } from 'sinon';
 
-import RouteName from 'src/routes';
-import sleep from 'src/utils/sleep';
+import RouteName from '@routes';
+import sleep from '@utils/sleep';
 
 import HomeViewModel, { SelectedThumb } from '../home';
 

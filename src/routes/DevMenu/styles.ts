@@ -1,4 +1,4 @@
-import { Spacing, Layouts, Colors } from 'src/utils/styles';
+import { Spacing, Layouts, Colors } from '@styles';
 
 const Constants = {
   googleButtonHeight: 48,

@@ -1,14 +1,14 @@
 import React from 'react';
 import { WebView } from 'react-native';
 
-import pure from 'src/utils/hocs/pure';
-import { goBack } from 'src/utils/navigation';
-import t, { Global as strings } from 'src/locales';
+import t, { Global as strings } from '@locales';
+import pure from '@hocs/pure';
+import { goBack } from '@utils/navigation';
+import Constants from '@utils/constants';
+
+import HeaderButton from '@components/HeaderButton';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-
-import HeaderButton from 'src/components/HeaderButton';
-import Constants from 'src/utils/constants';
 
 const Licenses = () => <WebView source={{ uri: Constants.licensesURL }} />;
 

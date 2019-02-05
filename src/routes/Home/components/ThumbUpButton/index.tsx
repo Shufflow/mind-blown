@@ -1,9 +1,8 @@
 import React from 'react';
 
-import icons from 'src/assets/icons';
-import pure from 'src/utils/hocs/pure';
-
-import SVGButton from 'src/components/SVGButton';
+import icons from '@icons';
+import pure from '@hocs/pure';
+import SVGButton from '@components/SVGButton';
 
 import styles from './styles';
 

@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, TextInput, ActivityIndicator } from 'react-native';
 
-import { goBack } from 'src/utils/navigation';
-import t, { Global as strings } from 'src/locales';
+import t, { Global as strings } from '@locales';
+import { goBack } from '@utils/navigation';
+
+import HeaderButton from '@components/HeaderButton';
+import AdBanner from '@components/AdBanner';
+
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 import AdIds from 'src/models/ads';
 import PhrasesDataSource from 'src/models/phrases';
-import HeaderButton from 'src/components/HeaderButton';
-import AdBanner from 'src/components/AdBanner';
 
 import styles from './styles';
 

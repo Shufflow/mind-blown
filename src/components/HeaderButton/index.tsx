@@ -1,8 +1,8 @@
 import React from 'react';
 
-import pure from 'src/utils/hocs/pure';
+import Button, { ButtonTheme } from '@components/Button';
 
-import Button, { ButtonTheme } from 'src/components/Button';
+import pure from '@hocs/pure';
 
 import styles from './styles';
 

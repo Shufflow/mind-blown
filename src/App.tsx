@@ -6,15 +6,13 @@ import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
 import { compose } from '@typed/compose';
 
+import { setupLocale } from '@locales';
+
+import { withLocaleProvider, LocaleProviderProps } from '@hocs/withLocale';
+import { withAdsProvider } from '@hocs/withAds';
+
 import AppNavigator from 'src/navigators/AppNavigator';
 import firebaseInit from 'src/models/firebase';
-import { setupLocale } from 'src/locales';
-
-import {
-  withLocaleProvider,
-  LocaleProviderProps,
-} from 'src/utils/hocs/withLocale';
-import { withAdsProvider } from 'src/utils/hocs/withAds';
 
 firebaseInit();
 

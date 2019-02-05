@@ -1,4 +1,4 @@
-import { Colors } from 'src/utils/styles';
+import { Colors } from '@styles';
 
 const styles = {
   button: (color: string = Colors.black): any => ({

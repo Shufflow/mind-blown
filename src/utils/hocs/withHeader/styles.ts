@@ -1,4 +1,4 @@
-import { Colors, Layouts, Spacing } from 'src/utils/styles';
+import { Colors, Layouts, Spacing } from '@styles';
 
 const Constants = {
   shadow: {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, StyleProp } from 'react-native';
 
-import pure from 'src/utils/hocs/pure';
+import pure from '@hocs/pure';
 
 import styles from './styles';
 

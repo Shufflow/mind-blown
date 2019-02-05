@@ -1,12 +1,11 @@
 import { NavigationScreenProps } from 'react-navigation';
 
-import RouteName from 'src/routes';
-import { LocaleConsumerProps } from 'src/utils/hocs/withLocale';
+import RouteName from '@routes';
+import { ViewModel } from '@components/SmartComponent';
+import { LocaleConsumerProps } from '@hocs/withLocale';
 
 import { getColor } from 'src/models/assets';
 import PhrasesDataSource, { Phrase as PhraseType } from 'src/models/phrases';
-
-import { ViewModel } from 'src/components/SmartComponent';
 
 export enum SelectedThumb {
   Up = 'up',

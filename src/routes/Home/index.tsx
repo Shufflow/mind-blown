@@ -10,15 +10,16 @@ import {
   Text,
 } from 'react-native';
 
-import t, { Home as strings } from 'src/locales';
-import AdIds from 'src/models/ads';
-import { withLocale } from 'src/utils/hocs/withLocale';
+import icons from '@icons';
+import t, { Home as strings } from '@locales';
+import { withLocale } from '@hocs/withLocale';
 
-import icons from 'src/assets/icons';
-import SVGButton from 'src/components/SVGButton';
-import AdBanner from 'src/components/AdBanner';
-import SmartComponent from 'src/components/SmartComponent';
-import Button from 'src/components/Button';
+import SVGButton from '@components/SVGButton';
+import AdBanner from '@components/AdBanner';
+import SmartComponent from '@components/SmartComponent';
+import Button from '@components/Button';
+
+import AdIds from 'src/models/ads';
 
 import HomeViewModel, {
   Props,

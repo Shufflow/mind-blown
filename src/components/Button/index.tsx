@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleProp, TextStyle } from 'react-native';
 
-import pure from 'src/utils/hocs/pure';
+import pure from '@hocs/pure';
 
 import styles, { themes } from './styles';
 import { ButtonTheme } from './types';

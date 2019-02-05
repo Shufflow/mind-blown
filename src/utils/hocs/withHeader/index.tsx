@@ -2,7 +2,7 @@ import React from 'react';
 import { StatusBar, Text, View, SafeAreaView } from 'react-native';
 import { NavigationScreenProps } from 'react-navigation';
 
-import Button, { ButtonTheme } from 'src/components/Button';
+import Button, { ButtonTheme } from '@components/Button';
 
 import styles from './styles';
 

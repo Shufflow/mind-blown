@@ -1,30 +1,31 @@
 import React from 'react';
 import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import Config from 'react-native-config';
+import { compose } from '@typed/compose';
 
-import { withLocale } from 'src/utils/hocs/withLocale';
-import { withAds } from 'src/utils/hocs/withAds';
-import Constants from 'src/utils/constants';
-
-import AdIds from 'src/models/ads';
-import RouteName from 'src/routes';
 import t, {
   Settings as strings,
   Global as globalStrings,
   AdFreeErrorAlert as errorAlert,
-} from 'src/locales';
+} from '@locales';
+import RouteName from '@routes';
+import { withLocale } from '@hocs/withLocale';
+import { withAds } from '@hocs/withAds';
+import Constants from '@utils/constants';
 
-import Dev from 'src/components/Dev';
-import ListItem from 'src/components/ListItem';
-import HeaderButton from 'src/components/HeaderButton';
-import AdBanner from 'src/components/AdBanner';
-import Button, { ButtonTheme } from 'src/components/Button';
+import Dev from '@components/Dev';
+import ListItem from '@components/ListItem';
+import HeaderButton from '@components/HeaderButton';
+import AdBanner from '@components/AdBanner';
+import Button, { ButtonTheme } from '@components/Button';
+import SmartComponent from '@components/SmartComponent';
+
+import AdIds from 'src/models/ads';
+
+import SettingsViewModel, { State, Props } from 'src/viewModels/settings';
 
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
-import { compose } from '@typed/compose';
-import SettingsViewModel, { State, Props } from 'src/viewModels/settings';
-import SmartComponent from 'src/components/SmartComponent';
 
 class Settings extends SmartComponent<Props, State, SettingsViewModel> {
   constructor(props: Props) {

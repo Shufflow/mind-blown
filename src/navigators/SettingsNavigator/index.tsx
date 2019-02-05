@@ -2,14 +2,14 @@ import React from 'react';
 import { Text } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import RouteName from 'src/routes';
-import t from 'src/locales';
+import t from '@locales';
+import RouteName from '@routes';
 
-import Settings from 'src/routes/Settings';
-import RedditPhrases from 'src/routes/RedditPhrases';
-import SendSuggestion from 'src/routes/SendSuggestion';
-import DevMenu from 'src/routes/DevMenu';
-import Licenses from 'src/routes/Licenses';
+import Settings from '@routes/Settings';
+import RedditPhrases from '@routes/RedditPhrases';
+import SendSuggestion from '@routes/SendSuggestion';
+import DevMenu from '@routes/DevMenu';
+import Licenses from '@routes/Licenses';
 
 import { getColor } from 'src/models/assets';
 

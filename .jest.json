@@ -16,7 +16,14 @@
     "src"
   ],
   "moduleNameMapper": {
-    "^src/(.*)": "<rootDir>/src/$1"
+    "^src/(.*)": "<rootDir>/src/$1",
+    "@components/(.*)": "<rootDir>/src/components/$1",
+    "@hocs/(.*)": "<rootDir>/src/utils/hocs/$1",
+    "@icons": "<rootDir>/src/assets/icons",
+    "@locales": "<rootDir>/src/locales",
+    "@routes(.*)": "<rootDir>/src/routes$1",
+    "@styles": "<rootDir>/src/utils/styles",
+    "@utils/(.*)": "<rootDir>/src/utils/$1"
   },
   "setupFiles": [
     "<rootDir>/jest/commonMocks.ts"

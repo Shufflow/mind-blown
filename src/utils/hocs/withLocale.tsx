@@ -1,7 +1,7 @@
 import React from 'react';
 import i18n from 'i18n-js';
 
-import { setLocale as asyncSetLocale } from 'src/locales';
+import { setLocale as asyncSetLocale } from '@locales';
 
 interface ProviderState {
   locale: string;

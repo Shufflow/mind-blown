@@ -1,16 +1,16 @@
 import React from 'react';
 import { TextInput, View } from 'react-native';
 
-import { HeaderProps } from 'src/utils/hocs/withHeader';
-import { Colors } from 'src/utils/styles';
-import icons from 'src/assets/icons';
-import { Locales } from 'src/locales';
+import { Colors } from '@styles';
+import icons from '@icons';
+import { Locales } from '@locales';
+import { HeaderProps } from '@hocs/withHeader';
 
-import LanguagePicker from 'src/components/LanguagePicker';
-import SVGButton from 'src/components/SVGButton';
+import LanguagePicker from '@components/LanguagePicker';
+import SVGButton from '@components/SVGButton';
+import Button from '@components/Button';
 
 import styles from './styles';
-import Button from 'src/components/Button';
 
 interface Props extends HeaderProps {
   language: string;

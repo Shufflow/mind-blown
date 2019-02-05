@@ -1,10 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 
-import { getFont } from 'src/models/assets';
-import pure from 'src/utils/hocs/pure';
+import Dev from '@components/Dev';
+import pure from '@hocs/pure';
 
-import Dev from 'src/components/Dev';
+import { getFont } from 'src/models/assets';
 
 import styles from './styles';
 

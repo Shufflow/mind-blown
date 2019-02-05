@@ -1,4 +1,4 @@
-import RouteName from 'src/routes';
+import RouteName from '@routes';
 
 import {
   Global,

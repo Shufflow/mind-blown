@@ -1,7 +1,7 @@
 import { createSandbox } from 'sinon';
 import * as RNIap from 'react-native-iap';
 
-import { wipeMemoizeCache } from 'src/utils/memoize';
+import { wipeMemoizeCache } from '@utils/memoize';
 
 import IAP, { SKU, IAPErrorCodes } from '../iap';
 

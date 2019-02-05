@@ -1,5 +1,6 @@
-import { Spacing, Layouts, Colors } from 'src/utils/styles';
 import { ViewStyle } from 'react-native';
+
+import { Spacing, Layouts, Colors } from '@styles';
 
 const styles = {
   container: (backgroundColor: string = Colors.white) => ({

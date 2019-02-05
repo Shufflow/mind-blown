@@ -4,19 +4,20 @@ import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
 import { compose } from '@typed/compose';
 import Config from 'react-native-config';
 
-import t, { DevMenu as strings, Global as globalStrings } from 'src/locales';
-import { goBack } from 'src/utils/navigation';
-import { withAds, AdsConsumerProps } from 'src/utils/hocs/withAds';
+import t, { DevMenu as strings, Global as globalStrings } from '@locales';
+import RouteName from '@routes';
+import { withAds, AdsConsumerProps } from '@hocs/withAds';
+import { goBack } from '@utils/navigation';
+
+import ListItem from '@components/ListItem';
+import HeaderButton from '@components/HeaderButton';
+
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-import RouteName from 'src/routes';
 
 import googleLogin from 'src/models/auth';
-
-import ListItem from 'src/components/ListItem';
-import HeaderButton from 'src/components/HeaderButton';
+import IAP from 'src/models/iap';
 
 import styles from './styles';
-import IAP from 'src/models/iap';
 
 interface State {
   isLoading: boolean;

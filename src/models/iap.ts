@@ -1,7 +1,7 @@
 import * as RNIap from 'react-native-iap';
 import { Platform } from 'react-native';
 
-import memoize from 'src/utils/memoize';
+import memoize from '@utils/memoize';
 
 export const SKU = {
   adFree: Platform.select({

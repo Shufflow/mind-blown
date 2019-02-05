@@ -1,7 +1,7 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { createSandbox, SinonStub } from 'sinon';
 
-import { stubFirebase } from 'src/utils/tests';
+import { stubFirebase } from '@utils/tests';
 
 import PhrasesDataSource from '../phrases';
 import { InterstitialAd } from '../ads';

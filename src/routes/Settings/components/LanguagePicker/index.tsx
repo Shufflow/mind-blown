@@ -1,10 +1,10 @@
 import React from 'react';
 
-import pure from 'src/utils/hocs/pure';
-import t, { Settings as strings, Locales } from 'src/locales';
+import t, { Settings as strings, Locales } from '@locales';
+import pure from '@hocs/pure';
 
-import Item from 'src/components/ListItem';
-import LanguagePicker from 'src/components/LanguagePicker';
+import Item from '@components/ListItem';
+import LanguagePicker from '@components/LanguagePicker';
 
 interface Props {
   dark: string;

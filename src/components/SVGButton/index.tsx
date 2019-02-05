@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import SVGUri from 'react-native-svg-uri';
 
-import pure from 'src/utils/hocs/pure';
+import pure from '@hocs/pure';
 
 import styles from './styles';
 

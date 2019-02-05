@@ -2,8 +2,8 @@ import React from 'react';
 import { AdMobBanner } from 'react-native-admob';
 import { compose } from '@typed/compose';
 
-import { AdsConsumerProps, withAds } from 'src/utils/hocs/withAds';
-import pure from 'src/utils/hocs/pure';
+import { AdsConsumerProps, withAds } from '@hocs/withAds';
+import pure from '@hocs/pure';
 
 import { BannerTestIds } from 'src/models/ads';
 

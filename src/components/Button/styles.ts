@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Spacing, Colors } from 'src/utils/styles';
+import { Spacing, Colors } from '@styles';
 
 import { ButtonTheme } from './types';
 

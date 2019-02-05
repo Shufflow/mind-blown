@@ -2,17 +2,17 @@ import React from 'react';
 import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
 import { isEqual, omit } from 'lodash';
 
-import { Colors } from 'src/utils/styles';
-import { goBack } from 'src/utils/navigation';
-import t, { Global as globalStrings, Reddit as strings } from 'src/locales';
-import icons from 'src/assets/icons';
+import { Colors } from '@styles';
+import icons from '@icons';
+import t, { Global as globalStrings, Reddit as strings } from '@locales';
+import { goBack } from '@utils/navigation';
+
+import SVGButton from '@components/SVGButton';
+import Button from '@components/Button';
+import HeaderButton from '@components/HeaderButton';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
-
-import SVGButton from 'src/components/SVGButton';
-import Button from 'src/components/Button';
-import HeaderButton from 'src/components/HeaderButton';
 
 import Translation from './components/Translation';
 import styles from './styles';

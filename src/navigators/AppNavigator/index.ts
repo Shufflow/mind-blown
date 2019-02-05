@@ -1,8 +1,7 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-import RouteName from 'src/routes';
-
-import Home from 'src/routes/Home';
+import RouteName from '@routes';
+import Home from '@routes/Home';
 
 import SettingsNavigator from 'src/navigators/SettingsNavigator';
 

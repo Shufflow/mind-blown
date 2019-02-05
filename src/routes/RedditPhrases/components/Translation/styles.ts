@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Layouts, Spacing, Colors } from 'src/utils/styles';
+
+import { Layouts, Spacing, Colors } from '@styles';
 
 const Constants = {
   borderWidth: 1,

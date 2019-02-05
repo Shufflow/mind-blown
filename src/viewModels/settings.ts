@@ -1,14 +1,15 @@
 import { Alert, Linking } from 'react-native';
 
-import { LocaleConsumerProps } from 'src/utils/hocs/withLocale';
-import { AdsConsumerProps } from 'src/utils/hocs/withAds';
+import t, { AdDiscountAlert as strings } from '@locales';
+import { LocaleConsumerProps } from '@hocs/withLocale';
+import { AdsConsumerProps } from '@hocs/withAds';
+import { ViewModel } from '@components/SmartComponent';
+
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-import t, { AdDiscountAlert as strings } from 'src/locales';
 
 import IAP, { IAPErrorCodes } from 'src/models/iap';
 import AdIds from 'src/models/ads';
 
-import { ViewModel } from 'src/components/SmartComponent';
 import RewardedAd from 'src/models/rewardedAd';
 
 export interface Props
