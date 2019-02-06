@@ -17,6 +17,10 @@ export const Layouts: any = {
     borderColor,
     borderBottomWidth: 1,
   }),
+  centered: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
   },

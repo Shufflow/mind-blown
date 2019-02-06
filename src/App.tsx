@@ -7,9 +7,10 @@ import codePush from 'react-native-code-push';
 import { compose } from '@typed/compose';
 
 import { setupLocale } from '@locales';
-
 import { withLocaleProvider, LocaleProviderProps } from '@hocs/withLocale';
 import { withAdsProvider } from '@hocs/withAds';
+
+import { LoaderComponent } from '@components/Loader';
 
 import AppNavigator from 'src/navigators/AppNavigator';
 import firebaseInit from 'src/models/firebase';
@@ -29,7 +30,12 @@ class App extends React.PureComponent<LocaleProviderProps> {
   }
 
   render() {
-    return <AppNavigator />;
+    return (
+      <React.Fragment>
+        <AppNavigator />
+        <LoaderComponent />
+      </React.Fragment>
+    );
   }
 }
 

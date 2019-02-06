@@ -16,6 +16,7 @@ import Dev from '@components/Dev';
 import ListItem from '@components/ListItem';
 import AdBanner from '@components/AdBanner';
 import SmartComponent from '@components/SmartComponent';
+import Loader from '@components/Loader';
 
 import AdIds from 'src/models/ads';
 
@@ -30,6 +31,8 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
   }
 
   onBuyAdFree = async () => {
+    Loader.show();
+
     try {
       await this.viewModel.handleBuyAdFree();
     } catch (e) {
@@ -40,6 +43,8 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
 
       Alert.alert(t(errorAlert.title), t(errorAlert.message));
     }
+
+    Loader.hide();
   };
 
   render() {
