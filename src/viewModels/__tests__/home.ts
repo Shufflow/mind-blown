@@ -9,7 +9,7 @@ const sandbox = createSandbox();
 let viewModel: HomeViewModel;
 
 beforeEach(() => {
-  viewModel = new HomeViewModel({} as any, () => ({} as any), () => {});
+  viewModel = new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
 });
 afterEach(sandbox.restore);
 
@@ -108,7 +108,7 @@ describe('get phrase content', () => {
 
   it('returns a phrase with the props locale', () => {
     const locale = 'foo';
-    sandbox.stub(viewModel, 'props').value({ locale });
+    sandbox.stub(viewModel, 'getProps').returns({ locale } as any);
     sandbox
       .stub(viewModel, 'getState')
       .returns({ phrase: { [locale]: 'bar' } } as any);
@@ -120,7 +120,7 @@ describe('get phrase content', () => {
 
   it('returns english when locale is not found', () => {
     const locale = 'foo';
-    sandbox.stub(viewModel, 'props').value({ locale });
+    sandbox.stub(viewModel, 'getProps').returns({ locale } as any);
     sandbox
       .stub(viewModel, 'getState')
       .returns({ phrase: { en: 'bar' } } as any);
@@ -134,7 +134,9 @@ describe('get phrase content', () => {
 describe('handle press settings', () => {
   it('navigates to settings screen', () => {
     const navigate = sandbox.stub();
-    sandbox.stub(viewModel, 'props').value({ navigation: { navigate } });
+    sandbox
+      .stub(viewModel, 'getProps')
+      .returns({ navigation: { navigate } } as any);
 
     viewModel.handlePressSettings();
 

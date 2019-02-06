@@ -11,7 +11,7 @@ import SettingsViewModel, { State } from '../settings';
 const sandbox = createSandbox();
 const state: State = { canBuyDiscount: false, showBuyAds: false };
 const viewModel = new SettingsViewModel(
-  { showAds: false } as any,
+  () => ({ showAds: false } as any),
   () => state,
   () => {},
 );
@@ -20,9 +20,9 @@ afterEach(sandbox.restore);
 describe('handle navigate', () => {
   it('calls navigate with the given routeName', () => {
     const navigate = sandbox.stub();
-    sandbox.stub(viewModel, 'props').value({
+    sandbox.stub(viewModel, 'getProps').returns({
       navigation: { navigate, color: {} },
-    });
+    } as any);
 
     viewModel.handleNavigate('foobar')();
 
@@ -51,7 +51,7 @@ describe('handle buy ad free', () => {
     it('notifies ad provider when purchase is successful', async () => {
       const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(true);
-      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
 
       await viewModel.handleBuyAdFree();
 
@@ -61,7 +61,7 @@ describe('handle buy ad free', () => {
     it('does not notify ad provider when purchase is not successful', async () => {
       const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(false);
-      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
 
       await viewModel.handleBuyAdFree();
 
@@ -72,7 +72,7 @@ describe('handle buy ad free', () => {
       const checkIsAdFree = sandbox.stub().resolves(true);
       const setState = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFreeDiscount').resolves(true);
-      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
       sandbox.stub(viewModel, 'setState').value(setState);
 
       await viewModel.handleBuyAdFree();
@@ -102,7 +102,7 @@ describe('handle buy ad free', () => {
     it('notifies ad provider when purchase is successful', async () => {
       const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFree').resolves(true);
-      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
 
       await viewModel.handleBuyAdFree();
 
@@ -112,7 +112,7 @@ describe('handle buy ad free', () => {
     it('does not notify ad provider when purchase is not successful', async () => {
       const checkIsAdFree = sandbox.stub();
       sandbox.stub(IAP, 'buyAdFree').resolves(false);
-      sandbox.stub(viewModel, 'props').value({ checkIsAdFree });
+      sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
 
       await viewModel.handleBuyAdFree();
 
@@ -217,12 +217,12 @@ describe('show rewarded ad', () => {
 describe('handle set locale', () => {
   it("sets the context's provider locale", () => {
     const setLocale = sandbox.stub();
-    sandbox.stub(viewModel, 'props').value({
+    sandbox.stub(viewModel, 'getProps').returns({
       setLocale,
       navigation: {
         setParams: sandbox.stub(),
       },
-    });
+    } as any);
 
     viewModel.handleSetLocale('foobar');
 
@@ -231,12 +231,12 @@ describe('handle set locale', () => {
 
   it('updates navigation params', () => {
     const setParams = sandbox.stub();
-    sandbox.stub(viewModel, 'props').value({
+    sandbox.stub(viewModel, 'getProps').returns({
       navigation: {
         setParams,
       },
       setLocale: sandbox.stub(),
-    });
+    } as any);
 
     viewModel.handleSetLocale('foobar');
 

@@ -58,7 +58,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   };
 
   getPhraseContent = (): string => {
-    const { locale } = this.props;
+    const { locale } = this.getProps();
     const { phrase } = this.getState();
     return phrase ? phrase[locale] || phrase.en : '';
   };
@@ -83,7 +83,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   };
 
   handlePressSettings = () => {
-    this.props.navigation.navigate(RouteName.Settings);
+    this.getProps().navigation.navigate(RouteName.Settings);
   };
 
   private genColors = () => {

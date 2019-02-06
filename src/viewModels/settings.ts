@@ -29,8 +29,8 @@ class SettingsViewModel extends ViewModel<Props, State> {
   });
 
   handleNavigate = (routeName: string) => () => {
-    const { dark, light } = this.props.navigation.color;
-    this.props.navigation.navigate(routeName, { dark, light });
+    const { dark, light } = this.getProps().navigation.color;
+    this.getProps().navigation.navigate(routeName, { dark, light });
   };
 
   handleBuyAdFree = async () => {
@@ -39,14 +39,14 @@ class SettingsViewModel extends ViewModel<Props, State> {
       : await this.buyAdFree();
 
     if (result) {
-      const isAdFree = await this.props.checkIsAdFree();
+      const isAdFree = await this.getProps().checkIsAdFree();
       this.setState({ showBuyAds: !isAdFree });
     }
   };
 
   handleSetLocale = (locale: string) => {
-    this.props.setLocale(locale);
-    this.props.navigation.setParams({ updateLocale: '' });
+    this.getProps().setLocale(locale);
+    this.getProps().navigation.setParams({ updateLocale: '' });
   };
 
   // Private Methods

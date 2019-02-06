@@ -11,16 +11,16 @@ export type SetState<Props, State> = <K extends keyof State>(
 ) => void;
 
 export class ViewModel<Props extends Object, State extends Object> {
-  props: Props;
+  getProps: () => Props;
   getState: () => State;
   setState: SetState<Props, State>;
 
   constructor(
-    props: Props,
+    getProps: () => Props,
     getState: () => State,
     setState: SetState<Props, State>,
   ) {
-    this.props = props;
+    this.getProps = getProps;
     this.getState = getState;
     this.setState = setState;
   }
@@ -43,16 +43,18 @@ class SmartComponent<
   constructor(
     props: Props,
     Shaddow: new (
-      props: Props,
+      getProps: () => Props,
       getState: () => State,
       setState: SetState<Props, State>,
     ) => VM,
   ) {
     super(props);
 
-    this.viewModel = new Shaddow(props, () => this.state, this.setState.bind(
-      this,
-    ) as SetState<Props, State>);
+    this.viewModel = new Shaddow(
+      () => this.props,
+      () => this.state,
+      this.setState.bind(this) as SetState<Props, State>,
+    );
     this.state = this.viewModel.getInitialState(props);
   }
 }
