@@ -48,6 +48,7 @@ export enum About {
   version = 'version',
   madeBy = 'madeBy',
   artBy = 'artBy',
+  storeReview = 'storeReview',
 }
 
 type Key =

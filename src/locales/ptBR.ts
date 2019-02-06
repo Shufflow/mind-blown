@@ -58,6 +58,7 @@ const strings: Strings = {
   [About.madeBy]: 'Feito com ❤️ por Flavio Caetano',
   [About.artBy]: 'Arte de Agnes Pinhanelli',
   [About.version]: 'Versão',
+  [About.storeReview]: 'Avaliar o app',
 };
 
 export default strings;

@@ -58,6 +58,7 @@ const strings: Strings = {
   [About.madeBy]: 'Made with ❤️ by Flavio Caetano',
   [About.artBy]: 'Art by Agnes Pinhanelli',
   [About.version]: 'Version',
+  [About.storeReview]: 'Rate us',
 };
 
 export default strings;

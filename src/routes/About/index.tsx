@@ -42,6 +42,10 @@ class About extends React.PureComponent<ColoredScreenProps> {
               label={t(strings.licenses)}
               onPress={this.handleNavigate(RouteName.Licenses)}
             />
+            <ListItem
+              label={t(strings.storeReview)}
+              onPress={this.handleOpenURL(Constants.storeReview)}
+            />
             <ListItem label={t(strings.version)} style={styles.itemMarginTop}>
               {version}
             </ListItem>
