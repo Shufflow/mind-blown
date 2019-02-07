@@ -80,6 +80,16 @@ platform :ios do
       skip_waiting_for_build_processing: true,
     )
   end
+
+  desc 'Release iOS Dist to TestFlight'
+  lane :release_dist do
+    build_dist
+
+    upload_to_testflight(
+      ipa: 'build/MindBlown.ipa',
+      skip_waiting_for_build_processing: true,
+    )
+  end
 end
 
 platform :android do
@@ -104,7 +114,7 @@ platform :android do
   end
 
   desc 'Build Android Release app'
-  lane :build_release do
+  lane :build_dist do
     ENV["ENVFILE"] = ".env.prod"
 
     gradle(task: 'clean', project_dir: 'android/')
@@ -114,8 +124,20 @@ platform :android do
   end
 
   desc 'Release Android QA app'
-  lane :release_android do
+  lane :release_qa do
     build_qa
+
+    upload_to_play_store(
+      package_name: 'com.shufflow.MindBlown',
+      track: 'alpha',
+      json_key: 'google_api_key.json',
+      apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+    )
+  end
+
+  desc 'Release Android Dist app'
+  lane :release_dist do
+    build_dist
 
     upload_to_play_store(
       package_name: 'com.shufflow.MindBlown',
