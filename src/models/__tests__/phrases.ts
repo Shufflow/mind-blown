@@ -88,6 +88,15 @@ describe('get random phrase', () => {
       expect(ad.called).toEqual(false);
     }
   });
+
+  it('processes a phrase', async () => {
+    sandbox.stub(Math, 'random').returns(0);
+    const process = sandbox.stub(dataSource, 'processPhrase').callsFake(f => f);
+
+    await dataSource.getRandomPhrase();
+
+    expect(process.called).toEqual(true);
+  });
 });
 
 describe('review phrases', () => {
@@ -174,5 +183,35 @@ describe('ads', () => {
     }
 
     expect(ad.called).toEqual(false);
+  });
+});
+
+describe('process phrases', () => {
+  let dataSource: PhrasesDataSource;
+
+  beforeEach(() => {
+    dataSource = new PhrasesDataSource();
+  });
+
+  it('unescapes new lines', () => {
+    const data = {
+      en: 'foo\\nbar',
+    };
+
+    const result = dataSource.processPhrase(data);
+
+    expect(result).toEqual({
+      en: 'foo\nbar',
+    });
+  });
+
+  it('keeps non-locale entries', () => {
+    const data = {
+      foo: 'bar\\n',
+    };
+
+    const result = dataSource.processPhrase(data);
+
+    expect(result).toEqual(data);
   });
 });

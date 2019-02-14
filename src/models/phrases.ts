@@ -1,6 +1,8 @@
 import { firestore } from 'firebase';
 import 'firebase/firestore';
 
+import { Locales } from '@locales';
+
 import AdIds, { InterstitialAd } from './ads';
 import IAP from './iap';
 
@@ -37,7 +39,7 @@ class PhrasesDataSource {
       (res: PhraseMap, doc): PhraseMap => ({
         ...res,
         [doc.id || '']: {
-          ...doc.data(),
+          ...this.processPhrase(doc.data()),
           id: doc.id || '',
         },
       }),
@@ -86,6 +88,14 @@ class PhrasesDataSource {
     this.firestore.collection('suggestion').add({
       content,
     });
+  }
+
+  processPhrase(data: firestore.DocumentData): firestore.DocumentData {
+    for (const locale of Object.keys(Locales)) {
+      data[locale] = data[locale] && data[locale].replace('\\n', '\n');
+    }
+
+    return data;
   }
 }
 
