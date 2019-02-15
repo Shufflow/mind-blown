@@ -11,7 +11,7 @@ export interface AdsConsumerProps extends ProviderState {
 }
 
 const { Provider, Consumer } = React.createContext<AdsConsumerProps>({
-  checkIsAdFree: async () => Promise.resolve(false),
+  checkIsAdFree: async () => Promise.resolve(true),
   showAds: !__DEV__,
 });
 
