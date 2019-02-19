@@ -61,4 +61,4 @@ The following scripts are embedded with the package:
 
 ## License
 
-ReCaptcha is available under the MIT license. See the LICENSE file for more info.
+See the LICENSE file for more info.
