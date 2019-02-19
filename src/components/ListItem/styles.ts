@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-import { Colors, Layouts, Spacing } from '@styles';
+import { Colors, Layouts, Spacing, Typescale } from '@styles';
 
 const styles = StyleSheet.create({
   container: {
@@ -9,11 +9,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.offWhite,
     justifyContent: 'space-between',
-    padding: Spacing.size_20,
+    paddingHorizontal: Spacing.horizontal.size_20,
+    paddingVertical: Spacing.vertical.size_20,
   },
   label: {
     color: Colors.black,
-    fontSize: Spacing.size_15,
+    fontSize: Typescale.size_15,
   },
 });
 

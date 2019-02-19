@@ -1,4 +1,4 @@
-import { Colors, Spacing } from '@styles';
+import { Colors, Typescale } from '@styles';
 
 const Constants = {
   shadow: {
@@ -18,7 +18,7 @@ const styles = {
   }),
   text: (color: string = Colors.black) => ({
     color,
-    fontSize: Spacing.size_20,
+    fontSize: Typescale.size_20,
   }),
 };
 

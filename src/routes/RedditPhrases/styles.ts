@@ -1,11 +1,13 @@
 import { TextStyle, ViewStyle } from 'react-native';
 
-import { Layouts, Spacing, Colors } from '@styles';
+import { Layouts, Spacing, Colors, Typescale } from '@styles';
+import { moderateScale } from '@utils/dimensions';
 
 const Constants = {
   addButtonRadius: 50,
   borderWidth: 1,
   footerButtonWidth: '45%',
+  plusButtonSize: moderateScale(15),
 };
 
 const styles = {
@@ -16,8 +18,8 @@ const styles = {
   scrollViewContent: {
     ...Layouts.container,
     justifyContent: 'space-between',
-    padding: Spacing.size_20,
-    paddingVertical: Spacing.size_40,
+    paddingHorizontal: Spacing.horizontal.size_20,
+    paddingVertical: Spacing.vertical.size_40,
   },
 
   activityIndicator: {
@@ -28,8 +30,8 @@ const styles = {
   },
   text: {
     color: Colors.black,
-    fontSize: Spacing.size_20,
-    marginBottom: Spacing.size_10,
+    fontSize: Typescale.size_20,
+    marginBottom: Spacing.vertical.size_10,
   },
 
   plusButton: {
@@ -37,15 +39,15 @@ const styles = {
     borderColor: Colors.darkGray,
     borderRadius: Constants.addButtonRadius,
     borderWidth: Constants.borderWidth,
-    height: Spacing.size_15,
-    marginTop: Spacing.size_30,
-    width: Spacing.size_15,
+    height: Constants.plusButtonSize,
+    marginTop: Spacing.vertical.size_30,
+    width: Constants.plusButtonSize,
   } as TextStyle,
 
   footer: {
     ...Layouts.horizontal,
     justifyContent: 'space-between',
-    marginTop: Spacing.size_30,
+    marginTop: Spacing.vertical.size_30,
   },
 
   discardButton: {
@@ -59,8 +61,8 @@ const styles = {
 
   empty: {
     color: Colors.black,
-    fontSize: Spacing.size_40,
-    marginTop: Spacing.size_40,
+    fontSize: Typescale.size_40,
+    marginTop: Spacing.vertical.size_40,
     textAlign: 'center',
   } as TextStyle,
 };

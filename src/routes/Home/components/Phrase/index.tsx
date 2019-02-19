@@ -1,7 +1,6 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 
-import Dev from '@components/Dev';
 import pure from '@hocs/pure';
 
 import { getFont } from 'src/models/assets';
@@ -16,12 +15,11 @@ interface Props {
 const Phrase = ({ content, color }: Props): React.ReactElement<Props> => {
   const fontFamily = getFont();
   return (
-    <React.Fragment>
-      <Text style={[styles.text, { color, fontFamily }]} allowFontScaling>
+    <View style={styles.container}>
+      <Text style={[styles.text, { color, fontFamily }]} adjustsFontSizeToFit>
         {content}
       </Text>
-      <Dev style={{ color }}>fontFamily - {fontFamily}</Dev>
-    </React.Fragment>
+    </View>
   );
 };
 

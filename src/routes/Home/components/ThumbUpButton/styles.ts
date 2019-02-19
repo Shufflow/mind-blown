@@ -1,11 +1,15 @@
 import { StyleSheet } from 'react-native';
 
-import { Spacing } from '@styles';
+import { moderateScale } from '@utils/dimensions';
+
+const Constants = {
+  size: moderateScale(30),
+};
 
 const styles = StyleSheet.create({
   container: {
-    height: Spacing.size_30,
-    width: Spacing.size_30,
+    height: Constants.size,
+    width: Constants.size,
   },
 });
 

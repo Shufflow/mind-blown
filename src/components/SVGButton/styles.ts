@@ -4,7 +4,8 @@ import { Spacing } from '@styles';
 
 const styles = StyleSheet.create({
   container: {
-    padding: Spacing.size_10,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
   },
 });
 

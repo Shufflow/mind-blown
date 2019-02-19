@@ -1,4 +1,4 @@
-import { Colors, Layouts, Spacing } from '@styles';
+import { Colors, Layouts, Spacing, Typescale } from '@styles';
 
 const Constants = {
   borderWidth: 1,
@@ -10,7 +10,7 @@ const styles = {
     ...Layouts.container,
     backgroundColor,
     justifyContent: 'space-between',
-    paddingTop: Spacing.size_40,
+    paddingTop: Spacing.vertical.size_40,
   }),
   textInput: {
     ...Layouts.flex,
@@ -18,15 +18,17 @@ const styles = {
     borderColor: Colors.lightGray,
     borderWidth: Constants.borderWidth,
     color: Colors.black,
-    fontSize: Spacing.size_20,
+    fontSize: Typescale.size_20,
     height: Constants.textInputHeight,
-    margin: Spacing.size_20,
-    padding: Spacing.size_10,
+    marginHorizontal: Spacing.horizontal.size_20,
+    marginVertical: Spacing.vertical.size_20,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
     textAlignVertical: 'top',
   },
 
   loading: {
-    marginHorizontal: Spacing.size_10,
+    marginHorizontal: Spacing.horizontal.size_10,
   },
 };
 

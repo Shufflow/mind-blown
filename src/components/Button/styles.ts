@@ -30,11 +30,13 @@ const styles = StyleSheet.create({
 export const themes = StyleSheet.create({
   [ButtonTheme.default]: {
     backgroundColor: Colors.lightGray,
-    padding: Spacing.size_20,
+    paddingHorizontal: Spacing.horizontal.size_20,
+    paddingVertical: Spacing.vertical.size_20,
   },
   [ButtonTheme.minimalist]: {
     backgroundColor: 'transparent',
-    padding: Spacing.size_10,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
   },
 });
 

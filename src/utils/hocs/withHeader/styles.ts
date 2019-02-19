@@ -1,4 +1,4 @@
-import { Colors, Layouts, Spacing } from '@styles';
+import { Colors, Layouts, Spacing, Typescale } from '@styles';
 
 const Constants = {
   shadow: {
@@ -29,18 +29,20 @@ const styles = {
     justifyContent: 'space-between',
   }),
   headerMargin: {
-    marginBottom: Spacing.size_40,
+    marginBottom: Spacing.vertical.size_40,
   },
   title: (color: string = Colors.black): any => ({
     color,
-    fontSize: Spacing.size_20,
-    margin: Spacing.size_20,
+    fontSize: Typescale.size_20,
+    marginHorizontal: Spacing.horizontal.size_20,
+    marginVertical: Spacing.vertical.size_20,
   }),
 
   doneButton: (color: string = Colors.black): any => ({
     color,
     fontWeight: '600',
-    padding: Spacing.size_10,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
   }),
 };
 

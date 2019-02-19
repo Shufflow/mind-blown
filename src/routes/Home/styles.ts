@@ -1,6 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-import { Layouts, Spacing, Colors } from '@styles';
+import { Layouts, Spacing, Colors, Typescale } from '@styles';
+import { moderateScale } from '@utils/dimensions';
+
+const Constants = {
+  settingsButtonSize: moderateScale(20),
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -8,12 +13,12 @@ const styles = StyleSheet.create({
   },
 
   errorContainer: {
-    paddingHorizontal: Spacing.size_40,
+    paddingHorizontal: Spacing.horizontal.size_40,
   },
   errorTitle: {
     color: Colors.black,
-    fontSize: Spacing.size_30,
-    marginBottom: Spacing.size_30,
+    fontSize: Typescale.size_30,
+    marginBottom: Spacing.vertical.size_30,
     textAlign: 'center',
   },
 
@@ -31,8 +36,8 @@ const styles = StyleSheet.create({
   },
   settingsButton: {
     alignSelf: 'flex-end',
-    height: Spacing.size_20,
-    width: Spacing.size_20,
+    height: Constants.settingsButtonSize,
+    width: Constants.settingsButtonSize,
   },
 });
 

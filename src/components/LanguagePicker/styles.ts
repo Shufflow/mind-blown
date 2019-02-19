@@ -14,7 +14,8 @@ const styles = {
   pickerBar: (backgroundColor: string = Colors.offWhite): any => ({
     ...Layouts.bottomBorder(Colors.lightGray),
     backgroundColor,
-    padding: Spacing.size_10,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
   }),
   pickerItem: (color: string = Colors.black): any => ({
     color,
@@ -24,7 +25,8 @@ const styles = {
     color,
     alignSelf: 'flex-end',
     fontWeight: '600',
-    padding: Spacing.size_10,
+    paddingHorizontal: Spacing.horizontal.size_10,
+    paddingVertical: Spacing.vertical.size_10,
   }),
 };
 

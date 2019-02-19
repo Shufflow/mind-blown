@@ -10,18 +10,20 @@ const styles = {
   scrollViewContent: {
     ...Layouts.container,
     justifyContent: 'space-between',
-    paddingVertical: Spacing.size_40,
+    paddingHorizontal: Spacing.horizontal.size_40,
+    paddingVertical: Spacing.vertical.size_40,
   } as ViewStyle,
 
   itemMarginTop: {
-    marginTop: Spacing.size_40,
+    marginTop: Spacing.vertical.size_40,
   },
 
   footerContainer: {
-    marginTop: Spacing.size_40,
+    marginTop: Spacing.vertical.size_40,
   },
   footerLink: {
-    padding: Spacing.size_05,
+    paddingHorizontal: Spacing.horizontal.size_05,
+    paddingVertical: Spacing.vertical.size_05,
   },
   footerLinkText: {
     color: Colors.black,

@@ -9,11 +9,11 @@ const styles = {
   }),
   scrollViewContent: {
     ...Layouts.container,
-    paddingVertical: Spacing.size_40,
+    paddingVertical: Spacing.vertical.size_40,
   } as ViewStyle,
 
   itemMarginTop: {
-    marginTop: Spacing.size_40,
+    marginTop: Spacing.vertical.size_40,
   },
 };
 
