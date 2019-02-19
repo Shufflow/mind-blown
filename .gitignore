@@ -67,6 +67,7 @@ fastlane/Preview.html
 fastlane/screenshots
 Appfile
 Matchfile
+Deliverfile
 
 /artifacts
 /.bundle

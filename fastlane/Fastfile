@@ -85,10 +85,7 @@ platform :ios do
   lane :release_dist do
     build_dist
 
-    upload_to_testflight(
-      ipa: 'build/MindBlown.ipa',
-      skip_waiting_for_build_processing: true,
-    )
+    deliver(ipa: 'build/MindBlown.ipa')
   end
 end
 
