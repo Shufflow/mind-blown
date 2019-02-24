@@ -27,7 +27,7 @@ const verticalScale = (size: number): number =>
  * @param size
  * @param factor
  */
-const moderateScale = (size: number, factor: number = 0.51): number =>
+const moderateScale = (size: number, factor: number = 1.26): number =>
   size + (horizontalScale(size) - size) * factor;
 
 export {

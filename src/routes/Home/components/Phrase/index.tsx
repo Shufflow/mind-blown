@@ -16,7 +16,11 @@ const Phrase = ({ content, color }: Props): React.ReactElement<Props> => {
   const fontFamily = getFont();
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { color, fontFamily }]} adjustsFontSizeToFit>
+      <Text
+        style={[styles.text, { color, fontFamily }]}
+        allowFontScaling
+        adjustsFontSizeToFit
+      >
         {content}
       </Text>
     </View>
