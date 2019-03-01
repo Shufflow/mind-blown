@@ -6185,6 +6185,10 @@ react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   dependencies:
     prop-types "^15.6.1"
 
+"react-native-text-size@https://github.com/fjcaetano/react-native-text-size.git":
+  version "3.0.0"
+  resolved "https://github.com/fjcaetano/react-native-text-size.git#5f679765d0c644e246bfb4c76b5d07d328ad3a0a"
+
 react-native-typescript-transformer@^1.2.10:
   version "1.2.11"
   resolved "https://registry.yarnpkg.com/react-native-typescript-transformer/-/react-native-typescript-transformer-1.2.11.tgz#679398c27262cf941e5a5f3ea45cf7eea715d557"

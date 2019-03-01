@@ -27,6 +27,7 @@ target 'MindBlown' do
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'RNLanguages', :path => '../node_modules/react-native-languages'
   pod 'RNIap', :path => '../node_modules/react-native-iap'
+  pod 'RNTextSize', :path => '../node_modules/react-native-text-size'
 
   target 'MindBlownTests' do
     inherit! :search_paths

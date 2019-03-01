@@ -87,6 +87,8 @@ PODS:
     - React
   - RNSVG (8.0.10):
     - React
+  - RNTextSize (3.0.0):
+    - React
   - SSZipArchive (2.1.4)
   - yoga (0.57.7.React)
 
@@ -111,6 +113,7 @@ DEPENDENCIES:
   - RNLanguages (from `../node_modules/react-native-languages`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
+  - RNTextSize (from `../node_modules/react-native-text-size`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -149,6 +152,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-screens"
   RNSVG:
     :path: "../node_modules/react-native-svg"
+  RNTextSize:
+    :path: "../node_modules/react-native-text-size"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -173,9 +178,10 @@ SPEC CHECKSUMS:
   RNLanguages: e3ae05ef105937645218272429dac0c3f7633451
   RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
+  RNTextSize: 7188d5295df00d487284730229ca370d02f8725a
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: 5aa6d302d354ecc971180c554c29f6c7a43f9554
+PODFILE CHECKSUM: d782fc987d29667081698e1e1ca814aee7cef74e
 
 COCOAPODS: 1.5.3

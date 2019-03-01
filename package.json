@@ -29,6 +29,7 @@
     "react-native-splash-screen": "^3.1.1",
     "react-native-svg": "^8.0.10",
     "react-native-svg-uri": "https://github.com/vault-development/react-native-svg-uri#c6841a6e7d1a6ee5cf5b515d4faea6002e166f3c",
+    "react-native-text-size": "https://github.com/fjcaetano/react-native-text-size.git",
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {
