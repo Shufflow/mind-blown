@@ -4,11 +4,12 @@ export const wipeMemoizeCache = () => {
   memoizeCache = {};
 };
 
-const memoize = (method: Function) =>
-  async function(this: any, ...args: any[]) {
-    const json = JSON.stringify(args);
-    memoizeCache[json] = memoizeCache[json] || method.apply(this, args);
-    return memoizeCache[json];
-  };
+const memoize = <TArgs extends any[], TRet>(
+  method: (...args: TArgs) => Promise<TRet>,
+) => async (...args: TArgs): Promise<TRet> => {
+  const json = JSON.stringify(args);
+  memoizeCache[json] = memoizeCache[json] || method.apply(undefined, args);
+  return memoizeCache[json];
+};
 
 export default memoize;

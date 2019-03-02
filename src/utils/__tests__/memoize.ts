@@ -1,4 +1,4 @@
-import { createSandbox } from 'sinon';
+import { createSandbox, assert } from 'sinon';
 
 import memoize, { wipeMemoizeCache } from '../memoize';
 
@@ -13,7 +13,7 @@ describe('func without arguments', () => {
     const func = memoize(stub);
     await func();
 
-    expect(stub.calledOnce).toEqual(true);
+    assert.calledOnce(stub);
   });
 
   it('calls memoized func once', async () => {
@@ -23,7 +23,7 @@ describe('func without arguments', () => {
     await func();
     await func();
 
-    expect(stub.calledOnce).toEqual(true);
+    assert.calledOnce(stub);
   });
 });
 
@@ -35,8 +35,8 @@ describe('func with one arg', () => {
     const func = memoize(stub);
     await func(arg);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg);
   });
 
   it('calls memoized func once', async () => {
@@ -47,8 +47,8 @@ describe('func with one arg', () => {
     await func(arg);
     await func(arg);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg);
   });
 
   it('handles multiple calls to funcs with different args', async () => {
@@ -60,9 +60,9 @@ describe('func with one arg', () => {
     await func(arg1);
     await func(arg2);
 
-    expect(stub.calledTwice).toEqual(true);
-    expect(stub.firstCall.calledWithExactly(arg1)).toEqual(true);
-    expect(stub.secondCall.calledWithExactly(arg2)).toEqual(true);
+    assert.calledTwice(stub);
+    assert.calledWithExactly(stub.firstCall, arg1);
+    assert.calledWithExactly(stub.secondCall, arg2);
   });
 });
 
@@ -75,8 +75,8 @@ describe('func with multiple args', () => {
     const func = memoize(stub);
     await func(arg1, arg2);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg1, arg2)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg1, arg2);
   });
 
   it('calls memoized func once', async () => {
@@ -88,8 +88,8 @@ describe('func with multiple args', () => {
     await func(arg1, arg2);
     await func(arg1, arg2);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg1, arg2)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg1, arg2);
   });
 
   it('handles multiple calls to funcs with different args', async () => {
@@ -101,9 +101,9 @@ describe('func with multiple args', () => {
     await func(arg1, arg2);
     await func(arg2, arg1);
 
-    expect(stub.calledTwice).toEqual(true);
-    expect(stub.firstCall.calledWithExactly(arg1, arg2)).toEqual(true);
-    expect(stub.secondCall.calledWithExactly(arg2, arg1)).toEqual(true);
+    assert.calledTwice(stub);
+    assert.calledWithExactly(stub.firstCall, arg1, arg2);
+    assert.calledWithExactly(stub.secondCall, arg2, arg1);
   });
 });
 
@@ -111,10 +111,10 @@ describe('return value', () => {
   it('works for func without args', async () => {
     const stub = sandbox.stub().resolves(42);
 
-    const func = memoize(stub);
+    const func = memoize(stub as () => Promise<number>);
     const result = await func();
 
-    expect(stub.calledOnce).toEqual(true);
+    assert.calledOnce(stub);
     expect(result).toEqual(42);
   });
 
@@ -122,11 +122,11 @@ describe('return value', () => {
     const arg = 1293847;
     const stub = sandbox.stub().resolves(42);
 
-    const func = memoize(stub);
+    const func = memoize(stub as (arg: number) => Promise<number>);
     const result = await func(arg);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg);
     expect(result).toEqual(42);
   });
 
@@ -135,11 +135,14 @@ describe('return value', () => {
     const arg2 = 1293847;
     const stub = sandbox.stub().resolves(42);
 
-    const func = memoize(stub);
+    const func = memoize(stub as (
+      arg1: number,
+      arg2: number,
+    ) => Promise<number>);
     const result = await func(arg1, arg2);
 
-    expect(stub.calledOnce).toEqual(true);
-    expect(stub.calledWithExactly(arg1, arg2)).toEqual(true);
+    assert.calledOnce(stub);
+    assert.calledWithExactly(stub, arg1, arg2);
     expect(result).toEqual(42);
   });
 });
