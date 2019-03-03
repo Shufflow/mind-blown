@@ -27,7 +27,6 @@ import HomeViewModel, {
   SelectedThumb,
 } from 'src/viewModels/home';
 
-import Phrase from './components/Phrase';
 import ThumbDownButton from './components/ThumbDownButton';
 import ThumbUpButton from './components/ThumbUpButton';
 import styles from './styles';
@@ -65,39 +64,31 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
   };
 
   renderPhrase = () => {
-    const { fgColor, phrase, selectedThumb } = this.state;
+    const { fgColor: color, phrase } = this.state;
     const phraseContent = this.viewModel.getPhraseContent();
     return (
       <React.Fragment>
         {!!phrase ? (
-          <Phrase content={phraseContent} color={fgColor} />
+          <Text
+            style={[styles.phraseText, { color }]}
+            allowFontScaling
+            adjustsFontSizeToFit
+          >
+            {phraseContent}
+          </Text>
         ) : (
           <ActivityIndicator
-            color={fgColor}
+            color={color}
             size='large'
             style={styles.activityIndicator}
           />
         )}
-        <View style={styles.footer}>
-          <ThumbDownButton
-            color={fgColor}
-            disabled={!phrase}
-            isSelected={selectedThumb === SelectedThumb.Down}
-            onPress={this.viewModel.handlePressReview(false)}
-          />
-          <ThumbUpButton
-            color={fgColor}
-            disabled={!phrase}
-            isSelected={selectedThumb === SelectedThumb.Up}
-            onPress={this.viewModel.handlePressReview(true)}
-          />
-        </View>
       </React.Fragment>
     );
   };
 
   render() {
-    const { bgColor, fgColor, hasError, isDark } = this.state;
+    const { bgColor, fgColor, hasError, isDark, selectedThumb } = this.state;
     return (
       <TouchableWithoutFeedback
         onPress={this.viewModel.getRandomPhrase}
@@ -114,7 +105,23 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
               onPress={this.viewModel.handlePressSettings}
               style={styles.settingsButton}
             />
-            {hasError ? this.renderError() : this.renderPhrase()}
+            <View style={styles.phraseContainer}>
+              {hasError ? this.renderError() : this.renderPhrase()}
+            </View>
+            {!hasError && (
+              <View style={styles.footer}>
+                <ThumbDownButton
+                  color={fgColor}
+                  isSelected={selectedThumb === SelectedThumb.Down}
+                  onPress={this.viewModel.handlePressReview(false)}
+                />
+                <ThumbUpButton
+                  color={fgColor}
+                  isSelected={selectedThumb === SelectedThumb.Up}
+                  onPress={this.viewModel.handlePressReview(true)}
+                />
+              </View>
+            )}
           </SafeAreaView>
           <AdBanner adUnitID={AdIds.homeBottomBanner} />
         </View>

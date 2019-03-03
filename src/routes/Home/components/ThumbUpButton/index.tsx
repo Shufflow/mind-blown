@@ -8,7 +8,7 @@ import styles from './styles';
 
 interface Props {
   color: string;
-  disabled: boolean;
+  disabled?: boolean;
   isSelected?: boolean;
   onPress: () => void;
 }

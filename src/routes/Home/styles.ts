@@ -21,6 +21,15 @@ const styles = StyleSheet.create({
     marginBottom: Spacing.vertical.size_30,
     textAlign: 'center',
   },
+  phraseContainer: {
+    ...Layouts.container,
+    flexShrink: 1,
+    justifyContent: 'center',
+    marginHorizontal: Spacing.horizontal.size_30,
+  },
+  phraseText: {
+    textAlign: 'center',
+  },
 
   activityIndicator: {
     alignSelf: 'center',
