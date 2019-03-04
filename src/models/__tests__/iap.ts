@@ -33,54 +33,6 @@ describe('setup', () => {
   });
 });
 
-describe('can buy ad free', () => {
-  it('has SKU available', async () => {
-    sandbox.stub(RNIap, 'initConnection').resolves('true');
-    const prods = sandbox
-      .stub(RNIap, 'getProducts')
-      .resolves([{ productId: SKU.adFree }] as any);
-
-    await IAP.setup();
-
-    expect(prods.called).toEqual(true);
-    expect(IAP.canBuyAdFree).toEqual(true);
-  });
-
-  it('has SKU unavailable', async () => {
-    sandbox.stub(RNIap, 'initConnection').resolves('true');
-    const prods = sandbox.stub(RNIap, 'getProducts').resolves([]);
-
-    await IAP.setup();
-
-    expect(prods.called).toEqual(true);
-    expect(IAP.canBuyAdFree).toEqual(false);
-  });
-});
-
-describe('can buy ad free discount', () => {
-  it('has SKU available', async () => {
-    sandbox.stub(RNIap, 'initConnection').resolves('true');
-    const prods = sandbox
-      .stub(RNIap, 'getProducts')
-      .resolves([{ productId: SKU.adFreeDiscount }] as any);
-
-    await IAP.setup();
-
-    expect(prods.called).toEqual(true);
-    expect(IAP.canBuyAdsDiscount).toEqual(true);
-  });
-
-  it('has SKU unavailable', async () => {
-    sandbox.stub(RNIap, 'initConnection').resolves('true');
-    const prods = sandbox.stub(RNIap, 'getProducts').resolves([]);
-
-    await IAP.setup();
-
-    expect(prods.called).toEqual(true);
-    expect(IAP.canBuyAdsDiscount).toEqual(false);
-  });
-});
-
 describe('refresh ad free', () => {
   beforeEach(() => {
     sandbox.stub(RNIap, 'initConnection').resolves('true');

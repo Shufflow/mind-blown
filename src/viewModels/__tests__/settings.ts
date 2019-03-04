@@ -133,7 +133,6 @@ describe('buy ad free', () => {
 
   it('shows discount alert on cancel if can buy discount', async () => {
     sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
-    sandbox.stub(IAP, 'canBuyAdsDiscount').value(true);
     sandbox.stub(RewardedAd, 'requestAdIfNeeded').resolves();
     const alert = sandbox.stub(Alert, 'alert');
 
@@ -143,21 +142,9 @@ describe('buy ad free', () => {
     expect(alert.called).toEqual(true);
   });
 
-  it('does not show alert if cannot buy discount', async () => {
-    sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
-    sandbox.stub(IAP, 'canBuyAdsDiscount').value(false);
-    const alert = sandbox.stub(Alert, 'alert');
-
-    const result = await (viewModel as any).buyAdFree();
-
-    expect(result).toEqual(false);
-    expect(alert.called).toEqual(false);
-  });
-
   it('does not show alert if ad fails to load', async () => {
     const error = new Error('fail');
     sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
-    sandbox.stub(IAP, 'canBuyAdsDiscount').value(true);
     sandbox.stub(RewardedAd, 'requestAdIfNeeded').rejects(error);
     const alert = sandbox.stub(Alert, 'alert');
 

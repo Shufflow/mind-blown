@@ -19,21 +19,13 @@ export const IAPErrorCodes = {
 
 class IAPManager {
   isAvailable = false;
-  canBuyAdFree = false;
-  canBuyAdsDiscount = false;
   isAdFree = Promise.resolve(false);
 
   forceAdFree = false;
 
   setup = memoize(async () => {
     const conn = await RNIap.initConnection();
-    const prods = await RNIap.getProducts(Object.values(SKU));
-
     this.isAvailable = conn === 'true';
-    this.canBuyAdFree = !!prods.find(p => p.productId === SKU.adFree);
-    this.canBuyAdsDiscount = !!prods.find(
-      p => p.productId === SKU.adFreeDiscount,
-    );
   });
 
   constructor() {

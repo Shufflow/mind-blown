@@ -25,7 +25,7 @@ export interface State {
 class SettingsViewModel extends ViewModel<Props, State> {
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
-    showBuyAds: props.showAds && IAP.canBuyAdFree,
+    showBuyAds: props.showAds,
   });
 
   handleNavigate = (routeName: string) => () => {
@@ -59,7 +59,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
       return await IAP.buyAdFree();
     } catch (e) {
       try {
-        if (e.code === IAPErrorCodes.cancelled && IAP.canBuyAdsDiscount) {
+        if (e.code === IAPErrorCodes.cancelled) {
           await loadRewardedAd;
           Alert.alert(t(strings.title), t(strings.message), [
             {
