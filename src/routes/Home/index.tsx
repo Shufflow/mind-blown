@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   View,
   Text,
+  LayoutChangeEvent,
 } from 'react-native';
 
 import icons from '@icons';
@@ -37,12 +38,16 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
   }
 
   componentDidMount() {
-    this.viewModel.loadPhrase();
+    this.viewModel.getRandomPhrase();
   }
 
   shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
     return !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
   }
+
+  handlePhraseLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
+    this.viewModel.handlePhraseContainerSize(layout);
+  };
 
   renderError = () => {
     const { fgColor, isDark } = this.state;
@@ -54,7 +59,7 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
           <Text style={[styles.errorTitle, { color: fgColor }]}>
             {t(strings.errorMessage)}
           </Text>
-          <Button onPress={this.viewModel.loadPhrase}>
+          <Button onPress={this.viewModel.getRandomPhrase}>
             {t(strings.tryAgainButton)}
           </Button>
         </View>
@@ -64,13 +69,18 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
   };
 
   renderPhrase = () => {
-    const { fgColor: color, phrase } = this.state;
+    const { fgColor: color, font, phrase } = this.state;
     const phraseContent = this.viewModel.getPhraseContent();
+    const textStyle = {
+      ...font,
+      color,
+    };
+    const isLoading = !phrase || !font.fontSize;
     return (
       <React.Fragment>
-        {!!phrase ? (
+        {!isLoading ? (
           <Text
-            style={[styles.phraseText, { color }]}
+            style={[styles.phraseText, textStyle]}
             allowFontScaling
             adjustsFontSizeToFit
           >
@@ -105,7 +115,10 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
               onPress={this.viewModel.handlePressSettings}
               style={styles.settingsButton}
             />
-            <View style={styles.phraseContainer}>
+            <View
+              style={styles.phraseContainer}
+              onLayout={this.handlePhraseLayout}
+            >
               {hasError ? this.renderError() : this.renderPhrase()}
             </View>
             {!hasError && (

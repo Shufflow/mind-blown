@@ -1,4 +1,5 @@
 import { createSandbox } from 'sinon';
+import { first } from 'rxjs/operators';
 
 import RouteName from '@routes';
 import sleep from '@utils/sleep';
@@ -10,31 +11,32 @@ let viewModel: HomeViewModel;
 
 beforeEach(() => {
   viewModel = new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
+  viewModel.handlePhraseContainerSize({ height: 100, width: 100 });
 });
 afterEach(sandbox.restore);
 
-describe('load phrase', () => {
+describe('get random phrase', () => {
+  const phrase = { id: 'foo', en: 'xpto' };
+  let random: sinon.SinonStub;
+
+  beforeEach(() => {
+    random = sandbox.stub(viewModel.dataSource, 'getRandomPhrase');
+  });
+
   it('returns a random phrase', async () => {
-    const phrase = { id: 'foo', en: 'xpto ' };
-    const setState = sandbox.stub(viewModel, 'setState');
-    sandbox.stub(viewModel.dataSource, 'getRandomPhrase').resolves(phrase);
+    random.resolves(phrase);
 
-    await viewModel.loadPhrase();
+    viewModel.getRandomPhrase();
+    const result = await viewModel.phraseSubject.pipe(first()).toPromise();
 
-    expect(
-      setState.calledWith({
-        phrase,
-        hasError: false,
-        selectedThumb: null,
-      } as any),
-    ).toEqual(true);
+    expect(result).toEqual(phrase);
   });
 
   it('suppresses errors as state', async () => {
     const setState = sandbox.stub(viewModel, 'setState');
-    sandbox.stub(viewModel.dataSource, 'getRandomPhrase').rejects('fail');
+    random.rejects('fail');
 
-    await viewModel.loadPhrase();
+    await viewModel.getRandomPhrase();
 
     expect(
       setState.calledWith({
@@ -45,11 +47,9 @@ describe('load phrase', () => {
 
   it('dispatches loading if request hangs', async () => {
     const setState = sandbox.stub(viewModel, 'setState');
-    sandbox
-      .stub(viewModel.dataSource, 'getRandomPhrase')
-      .returns(sleep(300) as any);
+    random.returns(sleep(300) as any);
 
-    await viewModel.loadPhrase();
+    await viewModel.getRandomPhrase();
 
     expect(
       setState.calledWith({ hasError: false, phrase: null } as any),
@@ -57,11 +57,10 @@ describe('load phrase', () => {
   });
 
   it('does not dispatch loading if request is fast', async () => {
-    const phrase = { id: 'foo', en: 'xpto ' };
     const setState = sandbox.stub(viewModel, 'setState');
-    sandbox.stub(viewModel.dataSource, 'getRandomPhrase').resolves(phrase);
+    random.resolves(phrase);
 
-    await viewModel.loadPhrase();
+    await viewModel.getRandomPhrase();
 
     expect(
       setState.calledWithMatch({
@@ -69,31 +68,15 @@ describe('load phrase', () => {
       } as any),
     ).toEqual(false);
   });
-});
-
-describe('get random phrase', () => {
-  it('loads a random phrase', async () => {
-    const phrase = { id: 'foo', en: 'xpto ' };
-    const setState = sandbox.stub(viewModel, 'setState');
-    sandbox.stub(viewModel.dataSource, 'getRandomPhrase').resolves(phrase);
-
-    await viewModel.getRandomPhrase();
-
-    expect(
-      setState.calledWithMatch({
-        phrase,
-      } as any),
-    ).toEqual(true);
-  });
 
   it('dispatches new colors', async () => {
-    const colors = {} as any;
+    const colors = { bgColor: 'foo', fgColor: 'bar' } as any;
     sandbox.stub(viewModel, 'genColors' as any).returns(colors);
-    const setState = sandbox.stub(viewModel, 'setState');
 
-    await viewModel.getRandomPhrase();
+    viewModel.getRandomPhrase();
+    const result = await viewModel.stateObservable.pipe(first()).toPromise();
 
-    expect(setState.calledWith(colors)).toEqual(true);
+    expect(result).toMatchObject(colors);
   });
 });
 

@@ -57,6 +57,9 @@ jest.mock('react-native-iap', () => ({
   getProducts: async () => Promise.resolve([]),
   initConnection: Promise.resolve,
 }));
+jest.mock('react-native-text-size', () => ({
+  measure: jest.fn,
+}));
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};
