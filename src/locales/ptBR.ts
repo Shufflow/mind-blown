@@ -34,6 +34,7 @@ const strings: Strings = {
   [Settings.removeAds]: 'Remover Anúncios',
   [Settings.removeAdsDiscount]: 'Remover Anúncios - 50% Desconto',
   [Settings.about]: 'Sobre',
+  [Settings.isAdFreeButton]: 'Remover Anúncios (Comprado)',
 
   [Reddit.discard]: 'Descartar',
   [Reddit.emptyList]: 'Sem frases para revisar 🎉',

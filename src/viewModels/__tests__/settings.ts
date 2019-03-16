@@ -9,7 +9,7 @@ import RewardedAd from 'src/models/rewardedAd';
 import SettingsViewModel, { State } from '../settings';
 
 const sandbox = createSandbox();
-const state: State = { canBuyDiscount: false, showBuyAds: false };
+const state: State = { canBuyDiscount: false, isAdFree: false };
 const viewModel = new SettingsViewModel(
   () => ({ showAds: false } as any),
   () => state,
@@ -78,7 +78,7 @@ describe('handle buy ad free', () => {
       await viewModel.handleBuyAdFree();
 
       expect(checkIsAdFree.called).toEqual(true);
-      expect(setState.calledWith({ showBuyAds: false }));
+      expect(setState.calledWith({ isAdFree: true }));
     });
   });
 

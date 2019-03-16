@@ -11,6 +11,7 @@ export enum Settings {
   sendSuggestion = 'sendSuggestion',
   removeAds = 'removeAds',
   removeAdsDiscount = 'removeAdsDiscount',
+  isAdFreeButton = 'isAdFreeButton',
 }
 
 export enum Reddit {

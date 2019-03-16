@@ -13,6 +13,7 @@ import styles from './styles';
 
 interface Props {
   children?: React.ReactNode;
+  disabled?: boolean;
   label: string;
   onPress?: () => void;
   style?: StyleProp<ViewStyle>;
@@ -35,13 +36,14 @@ const renderChildren = (children: React.ReactNode) => {
 
 const Item = ({
   children,
+  disabled = false,
   label,
   onPress,
   style,
 }: Props): React.ReactElement<Props> => (
-  <TouchableOpacity onPress={onPress} disabled={!onPress}>
+  <TouchableOpacity onPress={onPress} disabled={!onPress || disabled}>
     <View style={[styles.container, style]}>
-      <Text style={styles.label}>{label}</Text>
+      <Text style={[styles.label, disabled && styles.disabled]}>{label}</Text>
       {renderChildren(children)}
     </View>
   </TouchableOpacity>

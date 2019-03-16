@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.horizontal.size_20,
     paddingVertical: Spacing.vertical.size_20,
   },
+  disabled: {
+    color: Colors.lightGray,
+  },
   label: {
     color: Colors.black,
     fontSize: Typescale.size_15,

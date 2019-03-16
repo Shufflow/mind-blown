@@ -19,13 +19,13 @@ export interface Props
 
 export interface State {
   canBuyDiscount: boolean;
-  showBuyAds: boolean;
+  isAdFree: boolean;
 }
 
 class SettingsViewModel extends ViewModel<Props, State> {
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
-    showBuyAds: props.showAds,
+    isAdFree: !props.showAds,
   });
 
   handleNavigate = (routeName: string) => () => {
@@ -40,7 +40,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
 
     if (result) {
       const isAdFree = await this.getProps().checkIsAdFree();
-      this.setState({ showBuyAds: !isAdFree });
+      this.setState({ isAdFree });
     }
   };
 

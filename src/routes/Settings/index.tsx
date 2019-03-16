@@ -54,7 +54,12 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
       },
       locale,
     } = this.props;
-    const { canBuyDiscount, showBuyAds } = this.state;
+    const { canBuyDiscount, isAdFree } = this.state;
+    const addFreeButtonText = isAdFree
+      ? strings.isAdFreeButton
+      : canBuyDiscount
+      ? strings.removeAdsDiscount
+      : strings.removeAds;
     return (
       <View style={styles.container(light)}>
         <StatusBar barStyle='light-content' />
@@ -73,15 +78,12 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
             label={t(strings.about)}
             onPress={this.viewModel.handleNavigate(RouteName.About)}
           />
-          {showBuyAds && (
-            <ListItem
-              label={t(
-                canBuyDiscount ? strings.removeAdsDiscount : strings.removeAds,
-              )}
-              onPress={this.onBuyAdFree}
-              style={styles.itemMarginTop}
-            />
-          )}
+          <ListItem
+            disabled={isAdFree}
+            label={t(addFreeButtonText)}
+            onPress={this.onBuyAdFree}
+            style={styles.itemMarginTop}
+          />
           <Dev condition={Config.SHOW_DEV_MENU}>
             <ListItem
               label={t(strings.devMenu)}
