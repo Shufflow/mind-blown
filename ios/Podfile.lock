@@ -79,8 +79,6 @@ PODS:
   - RNGoogleSignin (1.0.2):
     - GoogleSignIn
     - React
-  - RNIap (2.4.0-beta6):
-    - React
   - RNLanguages (3.0.2):
     - React
   - RNScreens (1.0.0-alpha.22):
@@ -109,7 +107,6 @@ DEPENDENCIES:
   - RNAdMob (from `../node_modules/react-native-admob`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
-  - RNIap (from `../node_modules/react-native-iap`)
   - RNLanguages (from `../node_modules/react-native-languages`)
   - RNScreens (from `../node_modules/react-native-screens`)
   - RNSVG (from `../node_modules/react-native-svg`)
@@ -144,8 +141,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/react-native-google-signin"
-  RNIap:
-    :path: "../node_modules/react-native-iap"
   RNLanguages:
     :path: "../node_modules/react-native-languages"
   RNScreens:
@@ -174,7 +169,6 @@ SPEC CHECKSUMS:
   RNAdMob: 23b7801a217af31ff9e575815264a41d8c4838a0
   RNGestureHandler: 282af6ea58ed8483612365159c58a3ca5f55e7da
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
-  RNIap: ef7dbcbb0ad7bb2400c14797ef3fad4e02ff0681
   RNLanguages: e3ae05ef105937645218272429dac0c3f7633451
   RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
   RNSVG: 6252323c0312735f0af5f58b5adf2965b6a9ffbf
@@ -182,6 +176,6 @@ SPEC CHECKSUMS:
   SSZipArchive: 41455d4b8d2b6ab93990820b50dc697c2554a322
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: d782fc987d29667081698e1e1ca814aee7cef74e
+PODFILE CHECKSUM: 5e75529ca6df4afd555134943b18223f32513f14
 
 COCOAPODS: 1.5.3
