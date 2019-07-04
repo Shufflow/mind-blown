@@ -5,6 +5,7 @@ lane :tests do
   sh 'yarn lint'
   sh 'yarn tsc'
   sh 'yarn test'
+  sh 'rm ../build/package.json'  # Remove generated package.json to avoid build conflict with original one.
 end
 
 before_all do
