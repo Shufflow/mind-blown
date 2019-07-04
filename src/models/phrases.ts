@@ -22,9 +22,6 @@ class PhrasesDataSource {
 
   constructor() {
     this.firestore = firestore();
-    this.firestore.settings({
-      timestampsInSnapshots: true,
-    });
 
     this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
