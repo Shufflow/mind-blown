@@ -3,5 +3,5 @@ import fonts from 'src/assets/fonts';
 
 import getAsset from '@utils/assetGetter';
 
-export const getColor: ((idx?: number) => Color) = getAsset(colors);
-export const getFont: ((idx?: number) => string) = getAsset(fonts);
+export const getColor: (idx?: number) => Color = getAsset(colors);
+export const getFont: (idx?: number) => string = getAsset(fonts);

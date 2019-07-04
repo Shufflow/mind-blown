@@ -48,7 +48,7 @@ class PhrasesDataSource {
     const phrases = await this.phrases;
 
     const isAdFree = await IAP.isAdFree;
-    if (this.usedPhrasesIds.length % 3 === 2 && !isAdFree && !__DEV__) {
+    if (this.usedPhrasesIds.length % 3 === 2 && !isAdFree) {
       InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
     }
 
