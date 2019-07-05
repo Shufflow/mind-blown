@@ -2,14 +2,42 @@ language: node_js
 node_js:
   - '12'
 
-cache:
-  cocoapods: true
+addons:
+  ssh_known_hosts:
+    - github.com
 
 install:
-  - bundle
+  - bundle install
 
 jobs:
   include:
+    ###################
+    ###  Run Tests  ###
+    ###################
     - stage: test
       script:
         - bundle exec fastlane tests
+
+    ###################
+    ###  Build iOS  ###
+    ###################
+    - stage: Build iOS
+      os: osx
+      osx_image: xcode10.2
+
+      cache:
+        cocoapods: true
+        directories:
+          - $HOME/Library/Caches/Homebrew
+
+      before_install:
+        - openssl aes-256-cbc -K $encrypted_ebd332dd4c89_key -iv $encrypted_ebd332dd4c89_iv -in travis-ci.org.key.enc -out travis-ci.org.key -d
+        - gpg --import travis-ci.org.key
+
+      before_script:
+        - git clone https://github.com/sobolevn/git-secret.git git-secret
+        - pushd git-secret; make build && PREFIX="/usr/local" make install; popd
+        - git secret reveal
+
+      script:
+        - bundle exec fastlane ios build_dev
