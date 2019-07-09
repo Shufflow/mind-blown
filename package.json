@@ -26,7 +26,7 @@
     "react-native-iap": "^2.5.5",
     "react-native-languages": "^3.0.2",
     "react-native-screens": "^1.0.0-alpha.22",
-    "react-native-splash-screen": "^3.1.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^9.5.1",
     "react-native-svg-uri": "https://github.com/vault-development/react-native-svg-uri#c6841a6e7d1a6ee5cf5b515d4faea6002e166f3c",
     "react-native-text-size": "https://github.com/fjcaetano/react-native-text-size.git",
