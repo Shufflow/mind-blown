@@ -7,6 +7,7 @@
 
 @import GoogleMobileAds;
 
+#import <React/RCTBridge.h>
 #import "AppDelegate.h"
 #import <CodePush/CodePush.h>
 
@@ -20,19 +21,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  NSURL *jsCodeLocation;
   [GADMobileAds configureWithApplicationID:[ReactNativeConfig envFor:@"ADMOB_IOS_ID"]];
-
-  #ifdef DEBUG
-      jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
-  #else
-      jsCodeLocation = [CodePush bundleURL];
-  #endif
-
-  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
-                                                      moduleName:@"Mind Blown"
-                                               initialProperties:nil
-                                                   launchOptions:launchOptions];
+  
+  RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
+                                                   moduleName:@"Mind Blown"
+                                            initialProperties:nil];
   rootView.backgroundColor = UIColor.blackColor;
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
@@ -50,6 +44,15 @@
                              openURL:url
                    sourceApplication:options[UIApplicationOpenURLOptionsSourceApplicationKey]
                           annotation:options[UIApplicationOpenURLOptionsAnnotationKey]];
+}
+
+- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
+{  
+#if DEBUG
+  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index" fallbackResource:nil];
+#else
+  return [CodePush bundleURL];
+#endif
 }
 
 @end
