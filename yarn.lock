@@ -2820,7 +2820,7 @@ domexception@^1.0.1:
   dependencies:
     webidl-conversions "^4.0.2"
 
-dooboolab-welcome@^1.0.5:
+dooboolab-welcome@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/dooboolab-welcome/-/dooboolab-welcome-1.1.0.tgz#4a0aa9d2cbc4e2b1008bf7683bc056b41caa3d0d"
   integrity sha512-K9TKEeefzDXZiUyLZG+bIr8cy9UoYIfFMseowp/o3czVl7TfkVm3gQpeB85w+TO8xeqzWHiIcEelZbBgt5WUwQ==
@@ -6747,11 +6747,12 @@ react-native-google-signin@^1.0.2:
   resolved "https://registry.yarnpkg.com/react-native-google-signin/-/react-native-google-signin-1.0.2.tgz#027b2bba3c03504170fdf6e44cd44bf65ecdbc7f"
   integrity sha512-4HPPSecI29gX0Pu7h2E7ZYXnKO4r+6eh5f+Unm67liE1RfvCQfOqoDliPbK96Mb/91VgHwqyxi0sUEC4j54/AQ==
 
-"react-native-iap@https://github.com/fjcaetano/react-native-iap.git":
-  version "2.4.0-beta6"
-  resolved "https://github.com/fjcaetano/react-native-iap.git#969759d1fe1e57bc1f24a2107d083565e48c4747"
+react-native-iap@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.yarnpkg.com/react-native-iap/-/react-native-iap-2.5.5.tgz#dc470c154dabd265f00e40164643a23fb01cd3eb"
+  integrity sha512-mAZNi49JjIrutUmousqLoR0slEaq8Ey7B7rfnZS1q2PGLVI+7nlz3ugu19tF7bGtAA7OVBCRWANsntZAIiMAww==
   dependencies:
-    dooboolab-welcome "^1.0.5"
+    dooboolab-welcome "^1.1.0"
 
 react-native-languages@^3.0.2:
   version "3.0.2"
