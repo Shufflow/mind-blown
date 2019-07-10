@@ -4,6 +4,13 @@ lane :tests do
   sh 'yarn tsc'
   sh 'yarn test'
   sh 'rm ../build/package.json'  # Remove generated package.json to avoid build conflict with original one.
+
+  if Helper.is_ci?
+    codecov(
+      project_name: 'MindBlown',
+      use_xcodeplist: true,
+    )
+  end
 end
 
 before_all do
