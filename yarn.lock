@@ -6796,7 +6796,7 @@ react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
 
 "react-native-text-size@https://github.com/fjcaetano/react-native-text-size.git":
   version "3.0.0"
-  resolved "https://github.com/fjcaetano/react-native-text-size.git#efd65ff259b09c5be488ca285470ab58eacb1e4f"
+  resolved "https://github.com/fjcaetano/react-native-text-size.git#67844ecf60255241d872db56c33c39e29ac147a2"
 
 react-native-typescript-transformer@^1.2.10:
   version "1.2.11"

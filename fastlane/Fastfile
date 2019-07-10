@@ -22,7 +22,11 @@ platform :ios do
   end
 
   before_each do
-    sh 'yarn install-ios'
+    cocoapods(
+      podfile: './ios/Podfile',
+      use_bundle_exec: true,
+      try_repo_update_on_error: true,
+    )
   end
 
   desc 'Build iOS Dev app'
