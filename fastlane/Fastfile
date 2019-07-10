@@ -8,7 +8,9 @@ end
 
 before_all do
   skip_docs
-  sh 'yarn install'
+  Dir.chdir(ENV['TRAVIS_BUILD_DIR'] || '.') do
+    sh 'yarn install'
+  end
 end
 
 ######################
@@ -161,9 +163,11 @@ end
 ###  PRIVATE METHODS  ###
 #########################
 def cp_to_deploy()
-  apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-  out_dir = ENV['BITRISE_DEPLOY_DIR'] || '../build/'
+  unless Helper.is_ci?
+    apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
+    out_dir = ENV['BITRISE_DEPLOY_DIR'] || '../build/' # TODO: fix path
 
-  UI.message "Moving bundle to \"#{out_dir}\""
-  sh "cp #{apk_location} #{out_dir}"
+    UI.message "Moving bundle to \"#{out_dir}\""
+    sh "cp #{apk_location} #{out_dir}"
+  end
 end

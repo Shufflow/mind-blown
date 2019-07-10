@@ -6,8 +6,18 @@ addons:
   ssh_known_hosts:
     - github.com
 
+cache:
+  bundler: true
+  yarn: true
+
 install:
   - bundle install
+  - openssl aes-256-cbc -K $encrypted_ebd332dd4c89_key -iv $encrypted_ebd332dd4c89_iv -in secrets.tar.enc -out secrets.tar -d
+  - tar xvf secrets.tar
+  - gpg2 --import travis-ci.org.key
+  - git clone https://github.com/sobolevn/git-secret.git git-secret
+  - pushd git-secret; make build && sudo PREFIX="/usr/local" make install; popd
+  - git secret reveal
 
 jobs:
   include:
@@ -18,6 +28,39 @@ jobs:
       script:
         - bundle exec fastlane tests
 
+    #######################
+    ###  Build Android  ###
+    #######################
+    - stage: build android
+      language: android
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-28.0.3
+          - android-28
+          - extra-google-m2repository
+          - extra-google-google_play_services
+
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+      cache:
+        bundler: true
+        yarn: true
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+
+      before_install:
+        - nvm install 8.5.0
+
+      script:
+        - bundle exec fastlane android build_dev
+
     ###################
     ###  Build iOS  ###
     ###################
@@ -26,18 +69,9 @@ jobs:
       osx_image: xcode10.2
 
       cache:
+        bundler: true
+        yarn: true
         cocoapods: true
-        directories:
-          - $HOME/Library/Caches/Homebrew
-
-      before_install:
-        - openssl aes-256-cbc -K $encrypted_ebd332dd4c89_key -iv $encrypted_ebd332dd4c89_iv -in travis-ci.org.key.enc -out travis-ci.org.key -d
-        - gpg --import travis-ci.org.key
-
-      before_script:
-        - git clone https://github.com/sobolevn/git-secret.git git-secret
-        - pushd git-secret; make build && PREFIX="/usr/local" make install; popd
-        - git secret reveal
 
       script:
         - bundle exec fastlane ios build_dev
