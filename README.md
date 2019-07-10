@@ -1,4 +1,4 @@
-Mind Blown [![Build Status][travis-badge]](https://travis-ci.org/Shufflow/mind-blown)
+Mind Blown [![Build Status][travis-badge]](https://travis-ci.org/Shufflow/mind-blown) [![codecov][codecov-badge]](https://codecov.io/gh/Shufflow/mind-blown)
 ===
 
 ## Requirements
@@ -64,3 +64,4 @@ The following scripts are embedded with the package:
 See the LICENSE file for more info.
 
 [travis-badge]: https://travis-ci.org/Shufflow/mind-blown.svg?branch=develop
+[codecov-badge]: https://codecov.io/gh/Shufflow/mind-blown/branch/develop/graph/badge.svg
