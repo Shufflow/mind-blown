@@ -1,10 +1,11 @@
-import { createSandbox } from 'sinon';
+import { createSandbox, assert } from 'sinon';
 import { first } from 'rxjs/operators';
 
 import RouteName from '@routes';
 import sleep from '@utils/sleep';
 
 import HomeViewModel, { SelectedThumb } from '../home';
+import { Share } from 'react-native';
 
 const sandbox = createSandbox();
 let viewModel: HomeViewModel;
@@ -183,5 +184,71 @@ describe('handle press review', () => {
     await viewModel.handlePressReview(true)();
 
     expect(setState.calledWith({ selectedThumb: null } as any)).toEqual(true);
+  });
+});
+
+describe('handle view shot ref', () => {
+  it('sets valid values', () => {
+    const ref: any = 'foobar';
+
+    viewModel.handleViewShotRef(ref);
+
+    expect(viewModel.viewShot).toEqual(ref);
+  });
+
+  it('does not reset with invalid value', () => {
+    const ref: any = 'foobar';
+
+    viewModel.handleViewShotRef(ref);
+    viewModel.handleViewShotRef(null);
+
+    expect(viewModel.viewShot).toEqual(ref);
+  });
+});
+
+describe('handle press share', () => {
+  let capture: sinon.SinonStub;
+  let share: sinon.SinonStub;
+
+  beforeEach(() => {
+    capture = sandbox.stub();
+    share = sandbox.stub(Share, 'share').resolves();
+  });
+
+  it('does nothing if viewShot is undefined', async () => {
+    await viewModel.handlePressShare();
+
+    assert.notCalled(share);
+  });
+
+  it('does nothing if capture is invalid', async () => {
+    viewModel.handleViewShotRef({ capture: undefined } as any);
+
+    await viewModel.handlePressShare();
+
+    assert.notCalled(share);
+  });
+
+  it('shares the returned url', async () => {
+    viewModel.handleViewShotRef({ capture } as any);
+
+    const url = 'foobar';
+    capture.returns(url);
+
+    await viewModel.handlePressShare();
+
+    assert.calledWith(share, { url: `file://${url}` });
+  });
+
+  it('suppresses errors', async () => {
+    capture.rejects('error');
+
+    try {
+      await viewModel.handlePressShare();
+
+      assert.notCalled(share);
+    } catch (e) {
+      fail(e);
+    }
   });
 });

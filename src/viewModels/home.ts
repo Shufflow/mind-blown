@@ -3,6 +3,8 @@ import lodash from 'lodash';
 import RNTextSize from 'react-native-text-size';
 import { Subject, combineLatest, Subscription, Observable } from 'rxjs';
 import { throttleTime, flatMap, share } from 'rxjs/operators';
+import ViewShot from 'react-native-view-shot';
+import { Share } from 'react-native';
 
 import RouteName from '@routes';
 import { ViewModel, SetState } from '@components/SmartComponent';
@@ -55,6 +57,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   phraseSubject = new Subject<Phrase | null>();
   subscription: Subscription;
   stateObservable: Observable<Partial<State>>;
+  viewShot?: ViewShot;
 
   constructor(
     getProps: () => Props,
@@ -137,6 +140,29 @@ class HomeViewModel extends ViewModel<Props, State> {
 
   handlePressSettings = () => {
     this.getProps().navigation.navigate(RouteName.Settings);
+  };
+
+  handleViewShotRef = (ref: ViewShot | null) => {
+    if (ref) {
+      this.viewShot = ref;
+    }
+  };
+
+  handlePressShare = async () => {
+    if (!this.viewShot || !this.viewShot.capture) {
+      return;
+    }
+
+    try {
+      const url = await this.viewShot.capture();
+
+      await Share.share({
+        url: `file://${url}`,
+      });
+    } catch (e) {
+      // tslint:disable-next-line: no-console
+      console.error(e);
+    }
   };
 
   private getFont = async (text: string, size: Size): Promise<FontSpec> => {

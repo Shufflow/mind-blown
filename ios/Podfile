@@ -7,6 +7,7 @@ target 'MindBlown' do
     'Core',
     'CxxBridge',
     'DevSupport',
+    'RCTActionSheet',
     'RCTAnimation',
     'RCTImage',
     'RCTLinkingIOS',
