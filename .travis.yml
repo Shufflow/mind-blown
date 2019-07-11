@@ -32,6 +32,7 @@ jobs:
     ###  Build Android  ###
     #######################
     - stage: build android
+      if: branch in (master, develop) OR type = pull_request
       language: android
       jdk: oraclejdk8
       android:
@@ -65,6 +66,7 @@ jobs:
     ###  Build iOS  ###
     ###################
     - stage: Build iOS
+      if: branch in (master, develop) OR type = pull_request
       os: osx
       osx_image: xcode10.2
 
