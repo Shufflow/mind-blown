@@ -170,6 +170,7 @@ configurations.all {
 
 
 dependencies {
+    implementation project(':react-native-view-shot')
     implementation project(':react-native-text-size')
     implementation project(':react-native-iap')
     implementation project(':react-native-languages')
