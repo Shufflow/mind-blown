@@ -10,6 +10,7 @@ import {
   Text,
   LayoutChangeEvent,
 } from 'react-native';
+import ViewShot from 'react-native-view-shot';
 
 import icons from '@icons';
 import t, { Home as strings } from '@locales';
@@ -69,23 +70,34 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
   };
 
   renderPhrase = () => {
-    const { fgColor: color, font, phrase } = this.state;
+    const {
+      fgColor: color,
+      bgColor: backgroundColor,
+      font,
+      phrase,
+    } = this.state;
     const phraseContent = this.viewModel.getPhraseContent();
     const textStyle = {
       ...font,
+      backgroundColor,
       color,
     };
     const isLoading = !phrase || !font.fontSize;
     return (
       <React.Fragment>
         {!isLoading ? (
-          <Text
-            style={[styles.phraseText, textStyle]}
-            allowFontScaling
-            adjustsFontSizeToFit
+          <ViewShot
+            ref={this.viewModel.handleViewShotRef}
+            options={{ format: 'png' }}
           >
-            {phraseContent}
-          </Text>
+            <Text
+              style={[styles.phraseText, textStyle]}
+              allowFontScaling
+              adjustsFontSizeToFit
+            >
+              {phraseContent}
+            </Text>
+          </ViewShot>
         ) : (
           <ActivityIndicator
             color={color}
@@ -108,13 +120,22 @@ class Home extends SmartComponent<Props, State, HomeViewModel> {
           <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
           <AdBanner adUnitID={AdIds.homeTopBanner} />
           <SafeAreaView style={styles.content}>
-            <SVGButton
-              color={fgColor}
-              fillAll
-              icon={icons.cog}
-              onPress={this.viewModel.handlePressSettings}
-              style={styles.settingsButton}
-            />
+            <View style={styles.header}>
+              <SVGButton
+                fillAll
+                color={fgColor}
+                icon={icons.share}
+                onPress={this.viewModel.handlePressShare}
+                style={styles.iconButton}
+              />
+              <SVGButton
+                fillAll
+                color={fgColor}
+                icon={icons.cog}
+                onPress={this.viewModel.handlePressSettings}
+                style={styles.iconButton}
+              />
+            </View>
             <View
               style={styles.phraseContainer}
               onLayout={this.handlePhraseLayout}

@@ -11,6 +11,11 @@ const styles = StyleSheet.create({
   container: {
     ...Layouts.container,
   },
+  header: {
+    ...Layouts.horizontal,
+    justifyContent: 'space-between',
+    paddingHorizontal: Spacing.horizontal.size_05,
+  },
 
   errorContainer: {
     paddingHorizontal: Spacing.horizontal.size_40,
@@ -43,8 +48,7 @@ const styles = StyleSheet.create({
     ...Layouts.fullWidth,
     justifyContent: 'space-between',
   },
-  settingsButton: {
-    alignSelf: 'flex-end',
+  iconButton: {
     height: Constants.settingsButtonSize,
     width: Constants.settingsButtonSize,
   },
