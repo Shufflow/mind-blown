@@ -30,6 +30,7 @@
     "react-native-svg": "^9.5.1",
     "react-native-svg-uri": "https://github.com/vault-development/react-native-svg-uri#c6841a6e7d1a6ee5cf5b515d4faea6002e166f3c",
     "react-native-text-size": "https://github.com/fjcaetano/react-native-text-size.git",
+    "react-native-view-shot": "^2.6.0",
     "react-navigation": "^3.0.9",
     "rxjs": "^6.4.0"
   },

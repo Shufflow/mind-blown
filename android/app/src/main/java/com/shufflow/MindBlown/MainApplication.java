@@ -3,6 +3,7 @@ package com.shufflow.MindBlown;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import fr.greweb.reactnativeviewshot.RNViewShotPackage;
 import com.github.amarcruz.rntextsize.RNTextSizePackage;
 import com.dooboolab.RNIap.RNIapPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
@@ -43,6 +44,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new RNViewShotPackage(),
             new RNTextSizePackage(),
             new RNIapPackage(),
             new RNLanguagesPackage(),
