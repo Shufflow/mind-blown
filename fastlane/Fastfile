@@ -70,7 +70,7 @@ platform :ios do
       workspace: 'ios/MindBlown.xcworkspace',
       scheme: 'MindBlown',
       configuration: 'AdHoc',
-      output_directory: 'build/',
+      output_directory: Helper.is_ci? ? '.' : 'build/',
     )
   end
 
@@ -89,7 +89,7 @@ platform :ios do
       workspace: 'ios/MindBlown.xcworkspace',
       scheme: 'MindBlown',
       configuration: 'Release',
-      output_directory: 'build/',
+      output_directory: Helper.is_ci? ? '.' : 'build/',
     )
   end
 
@@ -98,7 +98,7 @@ platform :ios do
     build_qa
 
     upload_to_testflight(
-      ipa: 'build/MindBlown.ipa',
+      ipa: lane_context[SharedValues::IPA_OUTPUT_PATH],
       skip_waiting_for_build_processing: true,
     )
   end
@@ -107,7 +107,7 @@ platform :ios do
   lane :release_dist do
     build_dist
 
-    deliver(ipa: 'build/MindBlown.ipa')
+    deliver(ipa: lane_context[SharedValues::IPA_OUTPUT_PATH])
   end
 end
 
