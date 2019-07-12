@@ -31,8 +31,8 @@ jobs:
     #######################
     ###  Build Android  ###
     #######################
-    - stage: build android
-      if: branch in (master, develop) OR type = pull_request
+    - stage: Build android
+      if: type = pull_request
       language: android
       jdk: oraclejdk8
       android:
@@ -62,11 +62,45 @@ jobs:
       script:
         - bundle exec fastlane android build_dev
 
+    ############################
+    ###  Release Android QA  ###
+    ############################
+    - stage: Release Android QA
+      if: branch = develop AND NOT type = pull_request
+      language: android
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-28.0.3
+          - android-28
+          - extra-google-m2repository
+          - extra-google-google_play_services
+
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+      cache:
+        bundler: true
+        yarn: true
+        directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+
+      before_install:
+        - nvm install 8.5.0
+
+      script:
+        - bundle exec fastlane android release_qa
+
     ###################
     ###  Build iOS  ###
     ###################
     - stage: Build iOS
-      if: branch in (master, develop) OR type = pull_request
+      if: type = pull_request
       os: osx
       osx_image: xcode10.2
 
@@ -77,3 +111,19 @@ jobs:
 
       script:
         - bundle exec fastlane ios build_dev
+
+    ########################
+    ###  Release iOS QA  ###
+    ########################
+    - stage: Release iOS QA
+      if: branch = develop AND NOT type = pull_request
+      os: osx
+      osx_image: xcode10.2
+
+      cache:
+        bundler: true
+        yarn: true
+        cocoapods: true
+
+      script:
+        - bundle exec fastlane ios release_qa
