@@ -1,11 +1,11 @@
 import { createSandbox, assert } from 'sinon';
 import { first } from 'rxjs/operators';
+import Share from 'react-native-share';
 
 import RouteName from '@routes';
 import sleep from '@utils/sleep';
 
 import HomeViewModel, { SelectedThumb } from '../home';
-import { Share } from 'react-native';
 
 const sandbox = createSandbox();
 let viewModel: HomeViewModel;
@@ -212,7 +212,7 @@ describe('handle press share', () => {
 
   beforeEach(() => {
     capture = sandbox.stub();
-    share = sandbox.stub(Share, 'share').resolves();
+    share = sandbox.stub(Share, 'open').resolves();
   });
 
   it('does nothing if viewShot is undefined', async () => {
@@ -237,7 +237,10 @@ describe('handle press share', () => {
 
     await viewModel.handlePressShare();
 
-    assert.calledWith(share, { url: `file://${url}` });
+    assert.calledWith(share, {
+      type: 'image/png',
+      url: `file://${url}`,
+    });
   });
 
   it('suppresses errors', async () => {

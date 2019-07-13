@@ -30,6 +30,7 @@ target 'MindBlown' do
   # pod 'RNIap', :path => '../node_modules/react-native-iap'
   pod 'RNTextSize', :path => '../node_modules/react-native-text-size'
   pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
+  pod 'RNShare', :path => '../node_modules/react-native-share'
 
   target 'MindBlownTests' do
     inherit! :search_paths

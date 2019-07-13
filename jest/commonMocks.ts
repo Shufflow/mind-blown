@@ -60,6 +60,9 @@ jest.mock('react-native-iap', () => ({
 jest.mock('react-native-text-size', () => ({
   measure: jest.fn,
 }));
+jest.mock('react-native-share', () => ({
+  open: jest.fn(),
+}));
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};

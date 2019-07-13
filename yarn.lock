@@ -1433,6 +1433,11 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.5.8.tgz#8ae4e0ea205fe95c3901a5a1df7f66495e3a56ce"
   integrity sha512-3AQoUxQcQtLHsK25wtTWIoIpgYjH3vSDroZOUr7PpCHw/jLY1RB9z9E8dBT/OSmwStVgkRNvdh+ZHNiomRieaw==
 
+"@types/react-native-share@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@types/react-native-share/-/react-native-share-1.1.2.tgz#8ba7b9a17da2c4ecba0cd38d7c752ca503726908"
+  integrity sha512-yBOGzKlMNlmb/o4TLzNzG61MynTKlTAQyE0LNxC7QpQh/E8imgl0mntoFCsz8vmn0ehb69TcRfGnM/9qBR7D1w==
+
 "@types/react-native@*", "@types/react-native@^0.57.17":
   version "0.57.28"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.28.tgz#aa25738bc4e88efda04537e1321b0c5e6490209a"
@@ -6760,6 +6765,11 @@ react-native-safe-area-view@^0.11.0:
   version "1.0.0-alpha.22"
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
+
+react-native-share@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-1.2.1.tgz#3756a3cf383c1489a6a0edf2b529ec025ee8f8f7"
+  integrity sha512-V9q1FM+LuYJ65qN3k6BLWs17mIbJCzGyMOhF3rb4MIQXdJfCUbtkDX9aaV86PzcsL1EudCA53HVTJBmWPDed0Q==
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
