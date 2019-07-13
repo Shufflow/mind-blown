@@ -4,7 +4,7 @@ import RNTextSize from 'react-native-text-size';
 import { Subject, combineLatest, Subscription, Observable } from 'rxjs';
 import { throttleTime, flatMap, share } from 'rxjs/operators';
 import ViewShot from 'react-native-view-shot';
-import { Share } from 'react-native';
+import Share from 'react-native-share';
 
 import RouteName from '@routes';
 import { ViewModel, SetState } from '@components/SmartComponent';
@@ -156,7 +156,8 @@ class HomeViewModel extends ViewModel<Props, State> {
     try {
       const url = await this.viewShot.capture();
 
-      await Share.share({
+      await Share.open({
+        type: 'image/png',
         url: `file://${url}`,
       });
     } catch (e) {
