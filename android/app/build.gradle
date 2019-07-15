@@ -113,8 +113,8 @@ android {
         applicationId "com.shufflow.MindBlown"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 14
-        versionName "1.0.4"
+        versionCode project.hasProperty('versionCode') ? project.property('versionCode') as int : 1
+        versionName project.hasProperty('versionName') ? project.property('versionName') : "unknown version"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
@@ -165,7 +165,7 @@ configurations.all {
         force "com.google.android.gms:play-services-base:16.1.0"
         force "com.google.android.gms:play-services-gcm:16.1.0"
         force "com.google.android.gms:play-services-ads:17.2.0"
-    } 
+    }
 }
 
 
