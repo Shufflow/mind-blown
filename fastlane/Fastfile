@@ -1,4 +1,5 @@
 BUILD_NUMBER = ENV['TRAVIS_BUILD_NUMBER'] || 1
+BUILD_VERSION = last_git_tag()
 
 desc 'Execute js tests'
 lane :tests do
@@ -21,7 +22,7 @@ before_all do
     sh 'yarn install'
 
     if Helper.is_ci?
-      sh "yarn update-version #{last_git_tag()}"
+      sh "yarn update-version #{BUILD_VERSION}"
     end
   end
 end
