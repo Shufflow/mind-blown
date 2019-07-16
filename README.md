@@ -1,6 +1,13 @@
 Mind Blown [![Build Status][travis-badge]](https://travis-ci.org/Shufflow/mind-blown) [![codecov][codecov-badge]](https://codecov.io/gh/Shufflow/mind-blown)
 ===
 
+<a href="http://bit.ly/MindBlown-PlayStore">
+  <img
+    alt="Google Play"
+    src="https://play.google.com/intl/en/badges/images/generic/en_badge_web_generic.png"
+    width="200px" />
+</a>
+
 ## Requirements
 
 The recommended IDE for this project is VS Code with the following extensions
@@ -36,7 +43,7 @@ There are embedded build tasks for both, iOS and Android.
 By running in the Terminal:
 
 ```
-react-native run-{ios|android}
+ENVFILE=[path_to_env] react-native run-{ios|android}
 ```
 
 ##### Xcode
@@ -51,14 +58,23 @@ You should run tests by calling `yarn test`, but if you want to debug unit tests
 
 The following scripts are embedded with the package:
 
-| Name              | Description                                                   |
-| ----------------- | ------------------------------------------------------------- |
-| `install-ios`     | Installs iOS dependencies                                     |
-| `lint`            | Runs TSLint                                                   |
-| `test`            | Runs tests in the application                                 |
-| `update-icons`    | Reads SVG files in assets/icons and stores in assets/icons.ts |
-| `gen-licenses`    | Compiles the dependencies' licenses into a single file        |
-| `update-version`  | Updates app with the given version                            |
+| Name             | Description                                                   |
+| ---------------- | ------------------------------------------------------------- |
+| `install-ios`    | Installs iOS dependencies                                     |
+| `lint`           | Runs TSLint                                                   |
+| `test`           | Runs tests in the application                                 |
+| `update-icons`   | Reads SVG files in assets/icons and stores in assets/icons.ts |
+| `gen-licenses`   | Compiles the dependencies' licenses into a single file        |
+| `update-version` | Updates app with the given version                            |
+
+#### Bash Scripts
+
+The following bash scripts are available in the `scripts/` directory:
+
+| Name                | Description                                                                                |
+| ------------------- | ------------------------------------------------------------------------------------------ |
+| `reset-metro`       | Starts the react-native package with a clean cache                                         |
+| `reset-metro--hard` | Clears watchman, deletes the `node_modules` dir and starts the packager with a clean cache |
 
 ## License
 
