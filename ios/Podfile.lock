@@ -121,6 +121,8 @@ PODS:
     - React
   - RNScreens (1.0.0-alpha.22):
     - React
+  - RNShare (1.2.1):
+    - React
   - RNSVG (9.5.1):
     - React
   - RNTextSize (3.0.0):
@@ -150,6 +152,7 @@ DEPENDENCIES:
   - RNGoogleSignin (from `../node_modules/react-native-google-signin`)
   - RNLanguages (from `../node_modules/react-native-languages`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - RNShare (from `../node_modules/react-native-share`)
   - RNSVG (from `../node_modules/react-native-svg`)
   - RNTextSize (from `../node_modules/react-native-text-size`)
   - RNViewShot (from `../node_modules/react-native-view-shot`)
@@ -190,6 +193,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-languages"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNShare:
+    :path: "../node_modules/react-native-share"
   RNSVG:
     :path: "../node_modules/react-native-svg"
   RNTextSize:
@@ -221,12 +226,13 @@ SPEC CHECKSUMS:
   RNGoogleSignin: 8b08beabff7f3b1373b2821b0944b38de36ba95e
   RNLanguages: e3ae05ef105937645218272429dac0c3f7633451
   RNScreens: 354046589421edc3d83d5c6212475bf1fb9a731d
+  RNShare: d875e8e37f3e5e8eb7a103ae01e06490af1796f6
   RNSVG: 4834be1d644eb77f0e3f6de851881b83758a3124
   RNTextSize: 9c8277afa0d378200ed00f57eaadd302a7cf8309
   RNViewShot: fdf9a64f0621ebc4e7c3392a10d2ffb70a7faee4
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   yoga: 128daf064cacaede0c3bb27424b6b4c71052e6cd
 
-PODFILE CHECKSUM: 15cfcd43c86a7eb98c72f87d0ccf9f7baf93be2e
+PODFILE CHECKSUM: b3d1e1f5f0eecc9e732251c3f10b0118e51bfb5d
 
 COCOAPODS: 1.5.3
