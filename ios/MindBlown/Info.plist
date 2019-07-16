@@ -83,5 +83,7 @@
 	<false/>
 	<key>GADApplicationIdentifier</key>
 	<string>__RN_CONFIG_ADMOB_IOS_ID</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) wants to save photos</string>
 </dict>
 </plist>
