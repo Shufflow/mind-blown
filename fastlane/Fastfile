@@ -19,10 +19,10 @@ before_all do
   skip_docs
   Dir.chdir(ENV['TRAVIS_BUILD_DIR'] || '.') do
     sh 'yarn install'
-  end
 
-  if Helper.is_ci?
-    sh "yarn update-version #{last_git_tag()}"
+    if Helper.is_ci?
+      sh "yarn update-version #{last_git_tag()}"
+    end
   end
 end
 
