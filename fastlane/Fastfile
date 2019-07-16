@@ -1,5 +1,4 @@
 BUILD_NUMBER = ENV['TRAVIS_BUILD_NUMBER'] || 1
-BUILD_VERSION = last_git_tag()
 
 desc 'Execute js tests'
 lane :tests do
@@ -20,6 +19,10 @@ before_all do
   skip_docs
   Dir.chdir(ENV['TRAVIS_BUILD_DIR'] || '.') do
     sh 'yarn install'
+  end
+
+  if Helper.is_ci?
+    sh "yarn update-version #{last_git_tag()}"
   end
 end
 
@@ -72,11 +75,6 @@ platform :ios do
         build_number: BUILD_NUMBER,
         xcodeproj: 'ios/MindBlown.xcodeproj',
       )
-
-      increment_version_number(
-        version_number: BUILD_VERSION,
-        xcodeproj: 'ios/MindBlown.xcodeproj',
-      )
     end
 
     ENV["ENVFILE"] = ".env.adhoc"
@@ -101,11 +99,6 @@ platform :ios do
     if Helper.is_ci?
       increment_build_number(
         build_number: BUILD_NUMBER,
-        xcodeproj: 'ios/MindBlown.xcodeproj',
-      )
-
-      increment_version_number(
-        version_number: BUILD_VERSION,
         xcodeproj: 'ios/MindBlown.xcodeproj',
       )
     end
