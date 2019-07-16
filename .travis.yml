@@ -96,6 +96,40 @@ jobs:
       script:
         - bundle exec fastlane android release_qa
 
+    ######################################
+    ###  Release Android Distribution  ###
+    ######################################
+    - stage: Release Android Distribution
+      if: branch = master AND NOT type = pull_request
+      language: android
+      jdk: oraclejdk8
+      android:
+        components:
+          - tools
+          - platform-tools
+          - build-tools-28.0.3
+          - android-28
+          - extra-google-m2repository
+          - extra-google-google_play_services
+
+      before_cache:
+        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+      cache:
+        - bundler
+        - yarn
+        - directories:
+          - $HOME/.gradle/caches/
+          - $HOME/.gradle/wrapper/
+          - $HOME/.android/build-cache
+
+      before_install:
+        - nvm install 8.5.0
+
+      script:
+        - bundle exec fastlane android release_dist
+
     ###################
     ###  Build iOS  ###
     ###################
@@ -127,3 +161,20 @@ jobs:
 
       script:
         - bundle exec fastlane ios release_qa
+        - bundle exec fastlane ios build_dev
+
+    ##################################
+    ###  Release iOS Distribution  ###
+    ##################################
+    - stage: Release iOS Distribution
+      if: branch = master AND NOT type = pull_request
+      os: osx
+      osx_image: xcode10.2
+
+      cache:
+        - bundler
+        - yarn
+        - cocoapods
+
+      script:
+        - bundle exec fastlane ios release_dist
