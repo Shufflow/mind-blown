@@ -1,11 +1,19 @@
 Mind Blown [![Build Status][travis-badge]](https://travis-ci.org/Shufflow/mind-blown) [![codecov][codecov-badge]](https://codecov.io/gh/Shufflow/mind-blown)
 ===
 
-<a href="http://bit.ly/MindBlown-PlayStore">
+<a href="http://bit.ly/MindBlown-PlayStore" target="_blank">
   <img
     alt="Google Play"
-    src="https://play.google.com/intl/en/badges/images/generic/en_badge_web_generic.png"
-    width="200px" />
+    src="https://user-images.githubusercontent.com/1066295/61412424-343acf00-a8bf-11e9-88a1-3f4fe559cf73.png"
+    width="200px"
+  />
+</a>
+<a href="http://bit.ly/MindBlown-AppStore" target="_blank">
+  <img
+    alt="Apple App Store"
+    src="https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png"
+    width="180px"
+  />
 </a>
 
 ## Requirements
