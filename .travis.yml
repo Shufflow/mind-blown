@@ -161,7 +161,6 @@ jobs:
 
       script:
         - bundle exec fastlane ios release_qa
-        - bundle exec fastlane ios build_dev
 
     ##################################
     ###  Release iOS Distribution  ###
