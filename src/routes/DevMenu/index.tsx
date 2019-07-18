@@ -49,10 +49,10 @@ class DevMenu extends React.Component<Props, State> {
     this.setState({ isLoading: false, isSignedIn });
   };
 
-  onPressRedditPhrases = () => {
+  onPressModeratePhrases = () => {
     const { dark, light } = this.props.navigation.color;
     const { navigation } = this.props;
-    navigation.navigate(RouteName.RedditPhrases, { dark, light });
+    navigation.navigate(RouteName.ModeratePhrases, { dark, light });
   };
 
   onPressLogout = async () => {
@@ -69,8 +69,8 @@ class DevMenu extends React.Component<Props, State> {
   renderSignedIn = () => (
     <React.Fragment>
       <ListItem
-        label={t(strings.reviewRedditPhrases)}
-        onPress={this.onPressRedditPhrases}
+        label={t(strings.reviewPhrases)}
+        onPress={this.onPressModeratePhrases}
       />
       <ListItem label={t(strings.showAds)} style={styles.switchContainer}>
         <Switch

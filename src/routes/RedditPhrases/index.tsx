@@ -11,7 +11,7 @@ import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-import RedditDataSource, { RedditPhrase } from 'src/models/reddit';
+import RedditDataSource, { Phrase } from 'src/models/reddit';
 
 import Translation from './components/Translation';
 import styles from './styles';
@@ -20,7 +20,7 @@ const emptyTranslation = { language: 'pt-BR', content: '' };
 
 interface State {
   isLoading: boolean;
-  phrase: RedditPhrase | null;
+  phrase: Phrase | null;
   translations: Array<{ language: string; content: string }>;
 }
 

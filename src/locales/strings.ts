@@ -22,7 +22,7 @@ export enum Reddit {
 }
 
 export enum DevMenu {
-  reviewRedditPhrases = 'reviewRedditPhrases',
+  reviewPhrases = 'reviewPhrases',
   showAds = 'showAds',
   logout = 'logout',
 }

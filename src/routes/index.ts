@@ -3,7 +3,7 @@ enum RouteName {
   DevMenu = 'DevMenu',
   Home = 'Home',
   Licenses = 'Licenses',
-  RedditPhrases = 'RedditPhrases',
+  ModeratePhrases = 'ModeratePhrases',
   SendSuggestion = 'SendSuggestion',
   Settings = 'Settings',
 }

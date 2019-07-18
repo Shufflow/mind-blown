@@ -1,7 +1,7 @@
 import { firestore } from 'firebase';
 import 'firebase/firestore';
 
-export interface RedditPhrase {
+export interface Phrase {
   id: string;
   content: string;
   score: number;
@@ -17,7 +17,7 @@ class RedditDataSource {
     this.phrases = fs.collection('phrases');
   }
 
-  async loadPhrase(): Promise<RedditPhrase | null> {
+  async loadPhrase(): Promise<Phrase | null> {
     const {
       docs: [ref],
     } = await this.reddit

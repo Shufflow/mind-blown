@@ -18,7 +18,7 @@ import styles from './styles';
 
 const routes = {
   [RouteName.Settings]: Settings,
-  [RouteName.RedditPhrases]: RedditPhrases,
+  [RouteName.ModeratePhrases]: RedditPhrases,
   [RouteName.SendSuggestion]: SendSuggestion,
   [RouteName.DevMenu]: DevMenu,
   [RouteName.Licenses]: Licenses,

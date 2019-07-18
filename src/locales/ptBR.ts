@@ -16,7 +16,7 @@ const strings: Strings = {
   name: 'Português',
   [RouteName.Home]: 'Home',
   [RouteName.Settings]: 'Configurações',
-  [RouteName.RedditPhrases]: 'Frases do Reddit',
+  [RouteName.ModeratePhrases]: 'Moderar Frases',
   [RouteName.SendSuggestion]: 'Enviar Sugestão',
   [RouteName.DevMenu]: 'Dev Menu',
   [RouteName.Licenses]: 'Licenças',
@@ -41,7 +41,7 @@ const strings: Strings = {
   [Reddit.save]: 'Salvar',
   [Reddit.score]: 'Pontos - {{score}}',
 
-  [DevMenu.reviewRedditPhrases]: 'Revisar Frases do Reddit',
+  [DevMenu.reviewPhrases]: 'Revisar Frases',
   [DevMenu.showAds]: 'Mostrar Ads',
   [DevMenu.logout]: 'Logout',
 
