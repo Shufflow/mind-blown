@@ -100,7 +100,7 @@ jobs:
     ###  Release Android Distribution  ###
     ######################################
     - stage: Release Android Distribution
-      if: branch = master AND NOT type = pull_request
+      if: tag IS present
       language: android
       jdk: oraclejdk8
       android:
@@ -166,7 +166,7 @@ jobs:
     ###  Release iOS Distribution  ###
     ##################################
     - stage: Release iOS Distribution
-      if: branch = master AND NOT type = pull_request
+      if: tag IS present
       os: osx
       osx_image: xcode10.2
 

@@ -76,6 +76,11 @@ platform :ios do
         build_number: BUILD_NUMBER,
         xcodeproj: 'ios/MindBlown.xcodeproj',
       )
+
+      increment_version_number(
+        bump_type: 'minor',
+        xcodeproj: 'ios/MindBlown.xcodeproj',
+      )
     end
 
     ENV["ENVFILE"] = ".env.adhoc"
