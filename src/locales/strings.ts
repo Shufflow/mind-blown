@@ -14,7 +14,7 @@ export enum Settings {
   isAdFreeButton = 'isAdFreeButton',
 }
 
-export enum Reddit {
+export enum ModeratePhrases {
   discard = 'discard',
   emptyList = 'emptyList',
   score = 'score',
@@ -55,7 +55,7 @@ export enum About {
 type Key =
   | Global
   | Settings
-  | Reddit
+  | ModeratePhrases
   | DevMenu
   | AdDiscountAlert
   | Home

@@ -4,7 +4,7 @@ import { isEqual, omit } from 'lodash';
 
 import { Colors } from '@styles';
 import icons from '@icons';
-import t, { Reddit as strings } from '@locales';
+import t, { ModeratePhrases as strings } from '@locales';
 import withDoneButton from '@hocs/withDoneButton';
 
 import SVGButton from '@components/SVGButton';
@@ -24,7 +24,7 @@ interface State {
   translations: Array<{ language: string; content: string }>;
 }
 
-class RedditPhrases extends React.Component<ColoredScreenProps, State> {
+class ModeratePhrases extends React.Component<ColoredScreenProps, State> {
   dataSource = new RawPhrasesDataSource();
   translations: Array<{ language: string; content: string }> = [];
 
@@ -187,4 +187,4 @@ class RedditPhrases extends React.Component<ColoredScreenProps, State> {
   }
 }
 
-export default withDoneButton(RedditPhrases);
+export default withDoneButton(ModeratePhrases);

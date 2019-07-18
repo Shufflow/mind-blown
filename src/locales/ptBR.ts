@@ -3,7 +3,7 @@ import RouteName from '@routes';
 import {
   Global,
   Settings,
-  Reddit,
+  ModeratePhrases,
   DevMenu,
   AdDiscountAlert,
   Home,
@@ -36,10 +36,10 @@ const strings: Strings = {
   [Settings.about]: 'Sobre',
   [Settings.isAdFreeButton]: 'Remover Anúncios (Comprado)',
 
-  [Reddit.discard]: 'Descartar',
-  [Reddit.emptyList]: 'Sem frases para revisar 🎉',
-  [Reddit.save]: 'Salvar',
-  [Reddit.score]: 'Pontos - {{score}}',
+  [ModeratePhrases.discard]: 'Descartar',
+  [ModeratePhrases.emptyList]: 'Sem frases para revisar 🎉',
+  [ModeratePhrases.save]: 'Salvar',
+  [ModeratePhrases.score]: 'Pontos - {{score}}',
 
   [DevMenu.reviewPhrases]: 'Revisar Frases',
   [DevMenu.showAds]: 'Mostrar Ads',

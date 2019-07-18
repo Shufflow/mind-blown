@@ -6,7 +6,7 @@ import t from '@locales';
 import RouteName from '@routes';
 
 import Settings from '@routes/Settings';
-import RedditPhrases from '@routes/RedditPhrases';
+import ModeratePhrases from '@routes/ModeratePhrases';
 import SendSuggestion from '@routes/SendSuggestion';
 import DevMenu from '@routes/DevMenu';
 import Licenses from '@routes/Licenses';
@@ -18,7 +18,7 @@ import styles from './styles';
 
 const routes = {
   [RouteName.Settings]: Settings,
-  [RouteName.ModeratePhrases]: RedditPhrases,
+  [RouteName.ModeratePhrases]: ModeratePhrases,
   [RouteName.SendSuggestion]: SendSuggestion,
   [RouteName.DevMenu]: DevMenu,
   [RouteName.Licenses]: Licenses,
