@@ -11,7 +11,7 @@ import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
-import RedditDataSource, { Phrase } from 'src/models/reddit';
+import RawPhrasesDataSource, { Phrase } from 'src/models/rawPhrases';
 
 import Translation from './components/Translation';
 import styles from './styles';
@@ -25,7 +25,7 @@ interface State {
 }
 
 class RedditPhrases extends React.Component<ColoredScreenProps, State> {
-  dataSource = new RedditDataSource();
+  dataSource = new RawPhrasesDataSource();
   translations: Array<{ language: string; content: string }> = [];
 
   constructor(props: ColoredScreenProps) {

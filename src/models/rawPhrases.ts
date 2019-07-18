@@ -1,4 +1,5 @@
 import { firestore } from 'firebase';
+import { decode } from 'base-64';
 import 'firebase/firestore';
 
 export interface Phrase {
@@ -7,20 +8,20 @@ export interface Phrase {
   score: number;
 }
 
-class RedditDataSource {
-  reddit: firestore.CollectionReference;
+class RawPhrasesDataSource {
+  rawPhrases: firestore.CollectionReference;
   phrases: firestore.CollectionReference;
 
   constructor() {
     const fs = firestore();
-    this.reddit = fs.collection('reddit');
+    this.rawPhrases = fs.collection(decode('cmVkZGl0'));
     this.phrases = fs.collection('phrases');
   }
 
   async loadPhrase(): Promise<Phrase | null> {
     const {
       docs: [ref],
-    } = await this.reddit
+    } = await this.rawPhrases
       .where('discarded', '==', false)
       .orderBy('score', 'desc')
       .limit(1)
@@ -43,23 +44,23 @@ class RedditDataSource {
     id: string,
     translations: { [locale: string]: string },
   ): Promise<void> {
-    const doc = this.reddit.doc(id);
+    const doc = this.rawPhrases.doc(id);
     const { content } = (await doc.get()).data() as any;
 
     await this.phrases.doc(id).set({
+      ...translations,
       date: new Date(),
       en: content,
-      ...translations,
     });
 
     await doc.delete();
   }
 
   async discardPhrase(id: string): Promise<void> {
-    await this.reddit.doc(id).update({
+    await this.rawPhrases.doc(id).update({
       discarded: true,
     });
   }
 }
 
-export default RedditDataSource;
+export default RawPhrasesDataSource;
