@@ -6,35 +6,32 @@
   "configurations": [
     {
       "name": "Debug Android",
-      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "cwd": "${workspaceFolder}",
       "type": "reactnative",
       "request": "launch",
       "platform": "android",
       "sourceMaps": true,
-      "outDir": "${workspaceRoot}/.vscode/.react",
       "env": {
         "ENVFILE": ".env.dev",
       },
     },
     {
       "name": "Debug iOS",
-      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "cwd": "${workspaceFolder}",
       "type": "reactnative",
       "request": "launch",
       "platform": "ios",
       "sourceMaps": true,
-      "outDir": "${workspaceRoot}/.vscode/.react",
       "env": {
         "ENVFILE": ".env.dev",
       },
     },
     {
       "name": "Attach to packager",
-      "program": "${workspaceRoot}/.vscode/launchReactNative.js",
+      "cwd": "${workspaceFolder}",
       "type": "reactnative",
       "request": "attach",
       "sourceMaps": true,
-      "outDir": "${workspaceRoot}/.vscode/.react"
     },
     {
       "type": "node",
