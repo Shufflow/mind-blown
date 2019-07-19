@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { TextInput, View } from 'react-native';
 
 import { Colors } from '@styles';
 import icons from '@icons';
 import { Locales } from '@locales';
 import { HeaderProps } from '@hocs/withHeader';
+import pure from '@hocs/pure';
 
 import LanguagePicker from '@components/LanguagePicker';
 import SVGButton from '@components/SVGButton';
@@ -19,84 +20,59 @@ interface Props extends HeaderProps {
   onRemove: (() => void) | null;
 }
 
-interface State {
-  content: string;
-  language: string;
-}
+const Translation = ({
+  dark,
+  light,
+  onTranslation,
+  onRemove,
+  content: contentProp,
+  language: langProp,
+}: Props) => {
+  const [content, setContent] = useState<string>(contentProp);
+  const [language, setLanguage] = useState<string>(langProp);
+  const languagePicker = useRef<LanguagePicker | null>(null);
 
-class Translation extends React.Component<Props, State> {
-  languagePicker: LanguagePicker | null = null;
-
-  constructor(props: Props) {
-    super(props);
-    this.state = {
-      content: props.content,
-      language: props.language,
-    };
-  }
-
-  handleLanguagePickerRef = (ref: LanguagePicker) => {
-    this.languagePicker = ref;
-  };
-
-  onPressLanguage = () => {
-    if (this.languagePicker) {
-      this.languagePicker.show();
+  const handlePressLanguage = useCallback(() => {
+    if (languagePicker.current) {
+      languagePicker.current.show();
     }
-  };
+  }, [languagePicker.current]);
 
-  onChangeText = (content: string) => {
-    this.setState({ content });
+  const handleBlur = useCallback(() => {
+    onTranslation(language, content);
+  }, [onTranslation, language, content]);
 
-    const { language } = this.state;
-    if (content && language) {
-      this.props.onTranslation(language, content);
-    }
-  };
-
-  onSelectLanguage = (language: string) => {
-    this.setState({ language });
-
-    const { content } = this.state;
-    if (language && content) {
-      this.props.onTranslation(language, content);
-    }
-  };
-
-  render() {
-    const { onRemove, dark, light } = this.props;
-    const { content, language } = this.state;
-    return (
-      <View style={styles.container}>
-        <View style={styles.buttonsContainer}>
-          <Button onPress={this.onPressLanguage}>{Locales[language]}</Button>
-          {!!onRemove && (
-            <SVGButton
-              color={Colors.darkGray}
-              icon={icons.minus}
-              onPress={onRemove}
-              style={styles.removeButton}
-              fillAll
-            />
-          )}
-        </View>
-        <TextInput
-          onChangeText={this.onChangeText}
-          value={content}
-          style={styles.textInput}
-          editable
-          multiline
-        />
-        <LanguagePicker
-          dark={dark}
-          light={light}
-          locale={language}
-          onSelectValue={this.onSelectLanguage}
-          ref={this.handleLanguagePickerRef}
-        />
+  return (
+    <View style={styles.container}>
+      <View style={styles.buttonsContainer}>
+        <Button onPress={handlePressLanguage}>{Locales[language]}</Button>
+        {!!onRemove && (
+          <SVGButton
+            color={Colors.darkGray}
+            icon={icons.minus}
+            onPress={onRemove}
+            style={styles.removeButton}
+            fillAll
+          />
+        )}
       </View>
-    );
-  }
-}
+      <TextInput
+        onChangeText={setContent}
+        onBlur={handleBlur}
+        value={content}
+        style={styles.textInput}
+        editable
+        multiline
+      />
+      <LanguagePicker
+        dark={dark}
+        light={light}
+        locale={language}
+        onSelectValue={setLanguage}
+        ref={languagePicker}
+      />
+    </View>
+  );
+};
 
-export default Translation;
+export default pure(Translation);
