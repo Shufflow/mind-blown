@@ -76,6 +76,7 @@ class HomeViewModel extends ViewModel<Props, State> {
           ...this.genColors(),
           font,
           phrase,
+          selectedThumb: null,
         };
       }),
       share(),

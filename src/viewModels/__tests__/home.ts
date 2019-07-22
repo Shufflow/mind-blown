@@ -79,6 +79,16 @@ describe('get random phrase', () => {
 
     expect(result).toMatchObject(colors);
   });
+
+  it('resets previously selected thumbs', async () => {
+    random.resolves(phrase);
+    viewModel.setState({ selectedThumb: SelectedThumb.Up });
+
+    await viewModel.getRandomPhrase();
+    const result = await viewModel.stateObservable.pipe(first()).toPromise();
+
+    expect(result.selectedThumb).toBeNull();
+  });
 });
 
 describe('get phrase content', () => {
