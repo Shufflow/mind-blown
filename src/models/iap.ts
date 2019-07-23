@@ -18,48 +18,44 @@ export const IAPErrorCodes = {
 };
 
 class IAPManager {
-  isAvailable: Promise<boolean>;
+  isAvailable = false;
   isAdFree = Promise.resolve(false);
 
   forceAdFree = false;
 
-  setup = memoize(
-    async (): Promise<boolean> => {
-      // const conn = await RNIap.initConnection();
-      // this.isAvailable = conn === 'true';
-      return false;
-    },
-  );
+  setup = memoize(async () => {
+    const conn = await RNIap.initConnection();
+    this.isAvailable = !!conn && conn !== 'false';
+  });
 
   constructor() {
-    this.isAvailable = this.setup();
+    this.setup();
     this.refreshAdFree();
   }
 
   refreshAdFree = async () => {
-    return this.forceAdFree;
-    // this.isAdFree = this.checkIsAdFree();
-    // return this.isAdFree;
+    this.isAdFree = this.checkIsAdFree();
+    return this.isAdFree;
   };
 
   buyAdFree = async () => this.buyProduct(SKU.adFree);
 
   buyAdFreeDiscount = async () => this.buyProduct(SKU.adFreeDiscount);
 
-  // private checkIsAdFree = async () => {
-  //   await this.setup();
-  //   let purchases: RNIap.Purchase[];
-  //   try {
-  //     purchases = await RNIap.getAvailablePurchases();
-  //   } catch (e) {
-  //     purchases = [];
-  //   }
-  //   return (
-  //     !!purchases.find(purchase =>
-  //       Object.values(SKU).includes(purchase.productId),
-  //     ) || this.forceAdFree
-  //   );
-  // };
+  private checkIsAdFree = async () => {
+    await this.setup();
+    let purchases: RNIap.Purchase[];
+    try {
+      purchases = await RNIap.getAvailablePurchases();
+    } catch (e) {
+      purchases = [];
+    }
+    return (
+      !!purchases.find(purchase =>
+        Object.values(SKU).includes(purchase.productId),
+      ) || this.forceAdFree
+    );
+  };
 
   private buyProduct = async (sku: string) => {
     try {

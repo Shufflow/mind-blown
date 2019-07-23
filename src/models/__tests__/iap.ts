@@ -12,24 +12,24 @@ beforeEach(wipeMemoizeCache);
 afterEach(sandbox.restore);
 
 describe('setup', () => {
-  it('TMP - has IAP available', async () => {
+  it('has IAP available', async () => {
     const init = sandbox.stub(RNIap, 'initConnection').resolves('true');
     sandbox.stub(RNIap, 'getProducts').resolves([]);
 
     await IAP.setup();
 
-    expect(init.called).toEqual(false);
-    expect(IAP.isAvailable).resolves.toEqual(false);
+    expect(init.called).toEqual(true);
+    expect(IAP.isAvailable).toEqual(true);
   });
 
-  it('TMP - has IAP unavailable', async () => {
+  it('has IAP unavailable', async () => {
     const init = sandbox.stub(RNIap, 'initConnection').resolves('false');
     sandbox.stub(RNIap, 'getProducts').resolves([]);
 
     await IAP.setup();
 
-    expect(init.called).toEqual(false);
-    expect(IAP.isAvailable).resolves.toEqual(false);
+    expect(init.called).toEqual(true);
+    expect(IAP.isAvailable).toEqual(false);
   });
 });
 
@@ -39,14 +39,14 @@ describe('refresh ad free', () => {
     sandbox.stub(RNIap, 'getProducts').resolves([]);
   });
 
-  it('TMP - has purchased AdFree', async () => {
+  it('has purchased AdFree', async () => {
     sandbox
       .stub(RNIap, 'getAvailablePurchases')
       .resolves([{ productId: SKU.adFree }] as any);
 
     const result = await IAP.refreshAdFree();
 
-    expect(result).toEqual(false);
+    expect(result).toEqual(true);
   });
 
   it('has purchased AdFreeDiscount', async () => {
@@ -56,7 +56,7 @@ describe('refresh ad free', () => {
 
     const result = await IAP.refreshAdFree();
 
-    expect(result).toEqual(false);
+    expect(result).toEqual(true);
   });
 
   it('has not purchased anything', async () => {

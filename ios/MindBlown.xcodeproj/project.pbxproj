@@ -14,6 +14,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1B4B4D9DA3726F1544047D4B /* libPods-MindBlownTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 569F087443CC147D91850510 /* libPods-MindBlownTests.a */; };
 		315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5561B9244953F7B94F14F517 /* libPods-MindBlown.a */; };
+		F2C0CB3221FFBE5200A2F8F6 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */; };
 		F484CFA058D84DCA98CB88BE /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0528C0C2A25A412FBBA6199D /* libReactNativeConfig.a */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +65,7 @@
 		E46AF053D6EC583CCF153140 /* Pods-MindBlown.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlown.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlown/Pods-MindBlown.debug.xcconfig"; sourceTree = "<group>"; };
 		E8B3809BF37B3F95319A3BB2 /* Pods-MindBlownTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MindBlownTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MindBlownTests/Pods-MindBlownTests.release.xcconfig"; sourceTree = "<group>"; };
 		F2330B6E21F10249005BFA90 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2C0CB3221FFBE5200A2F8F6 /* StoreKit.framework in Frameworks */,
 				315265034320246E61A1C23D /* libPods-MindBlown.a in Frameworks */,
 				F484CFA058D84DCA98CB88BE /* libReactNativeConfig.a in Frameworks */,
 			);
@@ -121,6 +124,7 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F2C0CB3121FFBE5200A2F8F6 /* StoreKit.framework */,
 				5561B9244953F7B94F14F517 /* libPods-MindBlown.a */,
 				569F087443CC147D91850510 /* libPods-MindBlownTests.a */,
 			);
@@ -251,7 +255,7 @@
 						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.InAppPurchase = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};

@@ -20,21 +20,15 @@ export interface Props
 export interface State {
   canBuyDiscount: boolean;
   isAdFree: boolean;
-  iapAvailable: boolean;
 }
 
 class SettingsViewModel extends ViewModel<Props, State> {
+  isIAPAvailable = IAP.isAvailable;
+
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
-    iapAvailable: false,
     isAdFree: !props.showAds,
   });
-
-  init = async () => {
-    this.setState({
-      iapAvailable: await IAP.isAvailable,
-    });
-  };
 
   handleNavigate = (routeName: string) => () => {
     const { dark, light } = this.getProps().navigation.color;

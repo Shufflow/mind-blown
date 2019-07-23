@@ -9,11 +9,7 @@ import RewardedAd from 'src/models/rewardedAd';
 import SettingsViewModel, { State } from '../settings';
 
 const sandbox = createSandbox();
-const state: State = {
-  canBuyDiscount: false,
-  iapAvailable: false,
-  isAdFree: false,
-};
+const state: State = { canBuyDiscount: false, isAdFree: false };
 const viewModel = new SettingsViewModel(
   () => ({ showAds: false } as any),
   () => state,

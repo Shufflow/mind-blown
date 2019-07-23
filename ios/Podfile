@@ -27,7 +27,7 @@ target 'MindBlown' do
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
   pod 'CodePush', :path => '../node_modules/react-native-code-push'
   pod 'RNLanguages', :path => '../node_modules/react-native-languages'
-  # pod 'RNIap', :path => '../node_modules/react-native-iap'
+  pod 'RNIap', :path => '../node_modules/react-native-iap'
   pod 'RNTextSize', :path => '../node_modules/react-native-text-size'
   pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
   pod 'RNShare', :path => '../node_modules/react-native-share'
