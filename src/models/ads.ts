@@ -49,27 +49,27 @@ export class AdManager {
     new Promise<boolean>(res => AdMobInterstitial.isReady(res));
 
   requestAdIfNeeded = async () => {
-    this.adRequest = Promise.resolve();
-    // const isReady = await this.isReady();
-    // if (!isReady && !this.isLoadingAd) {
-    //   this.isLoadingAd = true;
-    //   this.adRequest = AdMobInterstitial.requestAd();
-    //   this.adRequest!.then(() => {
-    //     this.isLoadingAd = false;
-    //   }).catch();
-    // }
+    const isReady = await this.isReady();
+    if (!isReady && !this.isLoadingAd) {
+      this.isLoadingAd = true;
+      this.adRequest = AdMobInterstitial.requestAd();
+      this.adRequest!.then(() => {
+        this.isLoadingAd = false;
+      }).catch();
+    }
 
     await this.adRequest;
   };
 
   showAd = async () => {
-    // if (this.isLoadingAd) {
-    //   await this.adRequest;
-    // }
-    // const isReady = await this.isReady();
-    // if (isReady) {
-    //   await AdMobInterstitial.showAd();
-    // }
+    if (this.isLoadingAd) {
+      await this.adRequest;
+    }
+
+    const isReady = await this.isReady();
+    if (isReady) {
+      await AdMobInterstitial.showAd();
+    }
   };
 }
 
