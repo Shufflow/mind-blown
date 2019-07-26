@@ -41,8 +41,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
       : await this.buyAdFree();
 
     if (result) {
-      const isAdFree = await this.getProps().checkIsAdFree();
-      this.setState({ isAdFree });
+      await this.processPurchase();
     }
   };
 
@@ -88,7 +87,15 @@ class SettingsViewModel extends ViewModel<Props, State> {
   private showRewardedAd = async () => {
     await RewardedAd.showAd();
     this.setState({ canBuyDiscount: true });
-    await IAP.buyAdFreeDiscount();
+    const result = await IAP.buyAdFreeDiscount();
+    if (result) {
+      await this.processPurchase();
+    }
+  };
+
+  private processPurchase = async () => {
+    const isAdFree = await this.getProps().checkIsAdFree();
+    this.setState({ isAdFree });
   };
 }
 

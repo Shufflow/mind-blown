@@ -159,6 +159,10 @@ describe('buy ad free', () => {
 });
 
 describe('show rewarded ad', () => {
+  beforeEach(() => {
+    const checkIsAdFree = sandbox.stub();
+    sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
+  });
   it('shows the ad', async () => {
     const ad = sandbox.stub(RewardedAd, 'showAd');
     sandbox.stub(RNIap, 'buyProduct');
