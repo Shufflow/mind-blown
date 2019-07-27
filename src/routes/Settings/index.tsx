@@ -30,6 +30,10 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
     super(props, SettingsViewModel);
   }
 
+  componentDidMount = async () => {
+    await this.viewModel.init();
+  };
+
   onBuyAdFree = async () => {
     Loader.show();
 
@@ -54,7 +58,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
       },
       locale,
     } = this.props;
-    const { canBuyDiscount, isAdFree } = this.state;
+    const { canBuyDiscount, isAdFree, isIAPAvailable } = this.state;
     const addFreeButtonText = isAdFree
       ? strings.isAdFreeButton
       : canBuyDiscount
@@ -79,7 +83,7 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
             label={t(strings.about)}
             onPress={this.viewModel.handleNavigate(RouteName.About)}
           />
-          {this.viewModel.isIAPAvailable && (
+          {isIAPAvailable && (
             <ListItem
               disabled={isAdFree}
               label={t(addFreeButtonText)}

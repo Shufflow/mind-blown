@@ -12,14 +12,21 @@ beforeEach(wipeMemoizeCache);
 afterEach(sandbox.restore);
 
 describe('setup', () => {
+  beforeEach(() => {
+    IAP.isAvailable = new Promise(resolve => {
+      (IAP as any).resolveIsAvailable = resolve;
+    });
+  });
+
   it('has IAP available', async () => {
     const init = sandbox.stub(RNIap, 'initConnection').resolves('true');
-    sandbox.stub(RNIap, 'getProducts').resolves([]);
+    sandbox.stub(RNIap, 'getProducts').resolves(Object.values(SKU) as any);
 
     await IAP.setup();
+    const result = await IAP.isAvailable;
 
     expect(init.called).toEqual(true);
-    expect(IAP.isAvailable).toEqual(true);
+    expect(result).toEqual(true);
   });
 
   it('has IAP unavailable', async () => {
@@ -27,9 +34,10 @@ describe('setup', () => {
     sandbox.stub(RNIap, 'getProducts').resolves([]);
 
     await IAP.setup();
+    const result = await IAP.isAvailable;
 
     expect(init.called).toEqual(true);
-    expect(IAP.isAvailable).toEqual(false);
+    expect(result).toEqual(false);
   });
 });
 

@@ -20,15 +20,22 @@ export interface Props
 export interface State {
   canBuyDiscount: boolean;
   isAdFree: boolean;
+  isIAPAvailable: boolean;
 }
 
 class SettingsViewModel extends ViewModel<Props, State> {
-  isIAPAvailable = IAP.isAvailable;
-
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
     isAdFree: !props.showAds,
+    isIAPAvailable: false,
   });
+
+  init = async () => {
+    const isIAPAvailable = await IAP.isAvailable;
+    this.setState({
+      isIAPAvailable,
+    });
+  };
 
   handleNavigate = (routeName: string) => () => {
     const { dark, light } = this.getProps().navigation.color;
@@ -72,6 +79,9 @@ class SettingsViewModel extends ViewModel<Props, State> {
               text: t(strings.confirm),
             },
           ]);
+        } else {
+          // tslint:disable-next-line: no-console
+          console.warn(e);
         }
       } catch (e2) {
         if (__DEV__) {

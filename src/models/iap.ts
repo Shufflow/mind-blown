@@ -21,17 +21,26 @@ export const IAPErrorCodes = {
 };
 
 class IAPManager {
-  isAvailable = false;
+  isAvailable: Promise<boolean>;
   isAdFree = Promise.resolve(false);
 
   forceAdFree = false;
 
   setup = memoize(async () => {
     const conn = await RNIap.initConnection();
-    this.isAvailable = !!conn && conn !== 'false';
+    if (!!conn && conn !== 'false') {
+      const skuList = Object.values(SKU);
+      const prods = await RNIap.getProducts(skuList);
+      this.resolveIsAvailable(prods.length === skuList.length);
+    } else {
+      this.resolveIsAvailable(false);
+    }
   });
 
   constructor() {
+    this.isAvailable = new Promise(resolve => {
+      this.resolveIsAvailable = resolve;
+    });
     this.setup();
     this.refreshAdFree();
   }
@@ -44,6 +53,8 @@ class IAPManager {
   buyAdFree = async () => this.buyProduct(SKU.adFree);
 
   buyAdFreeDiscount = async () => this.buyProduct(SKU.adFreeDiscount);
+
+  private resolveIsAvailable = (v: boolean) => {};
 
   private checkIsAdFree = async () => {
     await this.setup();

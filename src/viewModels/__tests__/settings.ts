@@ -1,4 +1,4 @@
-import { createSandbox } from 'sinon';
+import { createSandbox, assert } from 'sinon';
 import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
 import { AdMobRewarded } from 'react-native-admob';
@@ -9,13 +9,56 @@ import RewardedAd from 'src/models/rewardedAd';
 import SettingsViewModel, { State } from '../settings';
 
 const sandbox = createSandbox();
-const state: State = { canBuyDiscount: false, isAdFree: false };
+const state: State = {
+  canBuyDiscount: false,
+  isAdFree: false,
+  isIAPAvailable: false,
+};
 const viewModel = new SettingsViewModel(
   () => ({ showAds: false } as any),
   () => state,
   () => {},
 );
 afterEach(sandbox.restore);
+
+describe('initial state', () => {
+  it('is not ad free', () => {
+    const result = viewModel.getInitialState({ showAds: true } as any);
+
+    expect(result).toEqual({
+      ...state,
+      isAdFree: false,
+    });
+  });
+
+  it('is ad free', () => {
+    const result = viewModel.getInitialState({ showAds: false } as any);
+
+    expect(result).toEqual({
+      ...state,
+      isAdFree: true,
+    });
+  });
+});
+
+describe('init', () => {
+  let iap: sinon.SinonStub;
+  let setState: sinon.SinonStub;
+
+  beforeEach(() => {
+    iap = sandbox.stub(IAP, 'isAvailable');
+    setState = sandbox.stub(viewModel, 'setState');
+  });
+
+  it('sets iap availability', async () => {
+    const isIAPAvailable = true;
+    iap.value(Promise.resolve(isIAPAvailable));
+
+    await viewModel.init();
+
+    assert.calledWith(setState, { isIAPAvailable });
+  });
+});
 
 describe('handle navigate', () => {
   it('calls navigate with the given routeName', () => {
