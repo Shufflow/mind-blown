@@ -86,29 +86,35 @@ describe('refresh ad free', () => {
 });
 
 describe('buy ad free', () => {
-  it('completes a purchase', async () => {
-    const buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+  let finishTrans: sinon.SinonStub;
+  let buy: sinon.SinonStub;
 
+  beforeEach(() => {
+    finishTrans = sandbox.stub(RNIap, 'finishTransaction');
+    buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+  });
+
+  it('completes a purchase', async () => {
     const result = await IAP.buyAdFree();
 
     expect(result).toEqual(true);
     expect(buy.calledWith(SKU.adFree)).toEqual(true);
+    expect(finishTrans.called).toEqual(true);
   });
 
   it('does not throw payment declined', async () => {
-    const buy = sandbox
-      .stub(RNIap, 'buyProduct')
-      .rejects({ code: IAPErrorCodes.unknown });
+    buy.rejects({ code: IAPErrorCodes.unknown });
 
     const result = await IAP.buyAdFree();
 
     expect(result).toEqual(false);
     expect(buy.calledWith(SKU.adFree)).toEqual(true);
+    expect(finishTrans.called).toEqual(false);
   });
 
   it('rethrows exception', async () => {
     const error = { code: IAPErrorCodes.developerError };
-    const buy = sandbox.stub(RNIap, 'buyProduct').rejects(error);
+    buy.rejects(error);
 
     try {
       await IAP.buyAdFree();
@@ -118,33 +124,42 @@ describe('buy ad free', () => {
     }
 
     expect(buy.calledWith(SKU.adFree)).toEqual(true);
+    expect(finishTrans.called).toEqual(false);
   });
 });
 
 describe('buy ad free discount', () => {
+  let finishTrans: sinon.SinonStub;
+  let buy: sinon.SinonStub;
+
+  beforeEach(() => {
+    finishTrans = sandbox.stub(RNIap, 'finishTransaction');
+    buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+  });
+
   it('completes a purchase', async () => {
-    const buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+    buy.resolves();
 
     const result = await IAP.buyAdFreeDiscount();
 
     expect(result).toEqual(true);
     expect(buy.calledWith(SKU.adFreeDiscount)).toEqual(true);
+    expect(finishTrans.called).toEqual(true);
   });
 
   it('does not throw payment declined', async () => {
-    const buy = sandbox
-      .stub(RNIap, 'buyProduct')
-      .rejects({ code: IAPErrorCodes.unknown });
+    buy.rejects({ code: IAPErrorCodes.unknown });
 
     const result = await IAP.buyAdFreeDiscount();
 
     expect(result).toEqual(false);
     expect(buy.calledWith(SKU.adFreeDiscount)).toEqual(true);
+    expect(finishTrans.called).toEqual(false);
   });
 
   it('rethrows exception', async () => {
     const error = { code: IAPErrorCodes.developerError };
-    const buy = sandbox.stub(RNIap, 'buyProduct').rejects(error);
+    buy.rejects(error);
 
     try {
       await IAP.buyAdFreeDiscount();
@@ -154,5 +169,6 @@ describe('buy ad free discount', () => {
     }
 
     expect(buy.calledWith(SKU.adFreeDiscount)).toEqual(true);
+    expect(finishTrans.called).toEqual(false);
   });
 });

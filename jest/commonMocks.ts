@@ -53,6 +53,7 @@ jest.mock('react-native-languages', () => ({
 }));
 jest.mock('react-native-iap', () => ({
   buyProduct: Promise.resolve,
+  finishTransaction: jest.fn(),
   getAvailablePurchases: async () => Promise.resolve([]),
   getProducts: async () => Promise.resolve([]),
   initConnection: Promise.resolve,
