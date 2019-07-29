@@ -15,6 +15,7 @@ export enum Settings {
 }
 
 export enum ModeratePhrases {
+  dateAdded = 'dateAdded',
   discard = 'discard',
   emptyList = 'emptyList',
   score = 'score',

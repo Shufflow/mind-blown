@@ -5,6 +5,7 @@ import { Colors } from '@styles';
 import icons from '@icons';
 import t, { ModeratePhrases as strings } from '@locales';
 import withDoneButton from '@hocs/withDoneButton';
+import { getDate } from '@utils/dateFormatter';
 
 import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
@@ -83,6 +84,11 @@ const ModeratePhrases = ({
           <View style={styles.content}>
             <Text style={styles.text}>{phrase.content}</Text>
             <Text style={styles.text}>{t(strings.score, phrase)}</Text>
+            {!!phrase.dateAdded && (
+              <Text style={styles.text}>
+                {t(strings.dateAdded, { date: getDate(phrase.dateAdded) })}
+              </Text>
+            )}
             {translationList}
             <SVGButton
               icon={icons.plus}

@@ -6,6 +6,7 @@ export interface Phrase {
   id: string;
   content: string;
   score: number;
+  dateAdded?: Date;
 }
 
 class RawPhrasesDataSource {
@@ -31,11 +32,12 @@ class RawPhrasesDataSource {
       return null;
     }
 
-    const { content, score } = ref.data();
+    const { content, score, dateAdded } = ref.data();
 
     return {
       content,
       score,
+      dateAdded: dateAdded && dateAdded.toDate(),
       id: ref.id,
     };
   }

@@ -1,49 +1,59 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { assert, createSandbox } from 'sinon';
 import { decode } from 'base-64';
+import firebase from 'firebase';
 
 import { stubFirebase } from '@utils/tests';
 
 import RawPhrasesDataSource from '../rawPhrases';
-
-const mockPhrases: { [key: string]: any } = {
-  bar: { score: 1, content: 'bar', id: 'bar', discarded: false },
-  foo: { score: 0, content: 'foo', id: 'foo', discarded: false },
-  xpto: { score: 2, content: 'xpto', id: 'xpto', discarded: false },
-  yolo: { score: 3, content: 'yolo', id: 'yolo', discarded: true },
-};
-jest.mock(
-  'firebase',
-  () =>
-    new MockFirebase(
-      stubFirebase({
-        [decode('cmVkZGl0')]: [
-          { score: 0, content: 'foo', id: 'foo', discarded: false },
-          { score: 1, content: 'bar', id: 'bar', discarded: false },
-          { score: 2, content: 'xpto', id: 'xpto', discarded: false },
-          { score: 3, content: 'yolo', id: 'yolo', discarded: true },
-        ],
-      }),
-    ),
-);
+import { mockPhrases, mockPhraseWithDate } from '../__mocks__/rawPhrases';
 
 const sandbox = createSandbox();
+let model: RawPhrasesDataSource;
+let firestore: sinon.SinonStub;
+
+const mockFirebase = (data?: any) => {
+  const fb = new MockFirebase(
+    stubFirebase({
+      [decode('cmVkZGl0')]: Object.values(data || mockPhrases),
+    }),
+  );
+
+  firestore.returns(fb.firestore());
+  model = new RawPhrasesDataSource();
+};
+
+beforeEach(() => {
+  firestore = sandbox.stub(firebase, 'firestore');
+  mockFirebase();
+});
 afterEach(sandbox.restore);
 
-// TODO: where doesn't seem to be working on tests
-// describe('load phrase', () => {
-//   const dataSource = new RawPhrasesDataSource();
+describe('load phrase', () => {
+  it('loads the phrase with highest score', async () => {
+    const { discarded, ...expectedResult } = mockPhrases.xpto;
+    const result = await model.loadPhrase();
 
-//   it.only('loads the phrase with highest score', async () => {
-//     const result = dataSource.loadPhrase();
+    expect(result).toEqual(expectedResult);
+    expect(result!.id).not.toEqual(mockPhrases.yolo.id);
+  });
 
-//     expect(result).toEqual(mockPhrases.xpto);
-//     expect(result).not.toEqual(mockPhrases.yolo);
-//   });
-// });
+  it('loads a phrase with no date', async () => {
+    const result = await model.loadPhrase();
+
+    expect(result!.dateAdded).toBeUndefined();
+  });
+
+  it('loads a phrase with date', async () => {
+    mockFirebase(mockPhraseWithDate);
+
+    const result = await model.loadPhrase();
+
+    expect(result!.dateAdded).toEqual(new Date(2019, 6, 28));
+  });
+});
 
 describe('save phrase', () => {
-  const dataSource = new RawPhrasesDataSource();
   const transl = { 'pt-BR': 'xpto' };
   const id = 'bar';
 
@@ -51,11 +61,11 @@ describe('save phrase', () => {
     const date = new Date();
     sandbox.useFakeTimers(date);
     const phrase = sandbox.stub().resolves();
-    const doc = sandbox.stub(dataSource.phrases, 'doc').returns({
+    const doc = sandbox.stub(model.phrases, 'doc').returns({
       set: phrase,
     } as any);
 
-    await dataSource.savePhrase(id, transl);
+    await model.savePhrase(id, transl);
 
     assert.calledWith(doc, id);
     assert.calledWith(phrase, {
@@ -67,12 +77,12 @@ describe('save phrase', () => {
 
   it('deletes a phrase from the collection after saving', async () => {
     const del = sandbox.stub().resolves();
-    const doc = sandbox.stub(dataSource.rawPhrases, 'doc').returns({
+    const doc = sandbox.stub(model.rawPhrases, 'doc').returns({
       delete: del,
       get: () => ({ data: () => ({ content: 'foobar' }) }),
     } as any);
 
-    await dataSource.savePhrase(id, transl);
+    await model.savePhrase(id, transl);
 
     assert.called(doc);
     expect(del.called).toEqual(true);
@@ -80,17 +90,15 @@ describe('save phrase', () => {
 });
 
 describe('discard phrase', () => {
-  const dataSource = new RawPhrasesDataSource();
-
   it('marks the phrase as discarded', async () => {
     const id = 'bar';
     const update = sandbox.stub().resolves();
-    const doc = sandbox.stub(dataSource.rawPhrases, 'doc').returns({
+    const doc = sandbox.stub(model.rawPhrases, 'doc').returns({
       update,
       get: () => ({ data: () => ({ content: 'foobar' }) }),
     } as any);
 
-    await dataSource.discardPhrase(id);
+    await model.discardPhrase(id);
 
     assert.called(doc);
     expect(update.calledWith({ discarded: true })).toEqual(true);

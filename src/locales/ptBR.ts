@@ -36,6 +36,7 @@ const strings: Strings = {
   [Settings.about]: 'Sobre',
   [Settings.isAdFreeButton]: 'Remover Anúncios (Comprado)',
 
+  [ModeratePhrases.dateAdded]: 'Data - {{date}}',
   [ModeratePhrases.discard]: 'Descartar',
   [ModeratePhrases.emptyList]: 'Sem frases para revisar 🎉',
   [ModeratePhrases.save]: 'Salvar',
