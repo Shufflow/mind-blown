@@ -1,5 +1,5 @@
 import MockFirebase from 'mock-cloud-firestore';
-import { createSandbox, SinonStub } from 'sinon';
+import { createSandbox, SinonStub, assert } from 'sinon';
 
 import { stubFirebase } from '@utils/tests';
 
@@ -100,16 +100,41 @@ describe('get random phrase', () => {
 });
 
 describe('review phrases', () => {
+  let add: sinon.SinonStub;
+  const doc = { id: 'foobar' };
   const dataSource = new PhrasesDataSource();
+  const date = new Date();
+
+  beforeEach(() => {
+    const col = dataSource.firestore.collection('reviews');
+    sandbox.useFakeTimers(date.getTime());
+    add = sandbox.stub().callsFake(col.add.bind(col));
+    sandbox.stub(dataSource.firestore, 'collection').returns({
+      add,
+      doc: () => doc,
+    } as any);
+  });
 
   it('adds a positive review', async () => {
-    const result = await dataSource.reviewPhrase('foobar', true);
+    const result = await dataSource.reviewPhrase(doc.id, true);
+
     expect(result).not.toBeNull();
+    assert.calledWith(add, {
+      date,
+      phrase: doc,
+      positive: true,
+    });
   });
 
   it('adds a negative review', async () => {
-    const result = await dataSource.reviewPhrase('foobar', false);
+    const result = await dataSource.reviewPhrase(doc.id, false);
+
     expect(result).not.toBeNull();
+    assert.calledWith(add, {
+      date,
+      phrase: doc,
+      positive: false,
+    });
   });
 });
 

@@ -77,6 +77,7 @@ class PhrasesDataSource {
   ): Promise<firebase.firestore.DocumentReference> {
     return this.firestore.collection('reviews').add({
       positive,
+      date: new Date(),
       phrase: this.firestore.collection('phrases').doc(id),
     });
   }
