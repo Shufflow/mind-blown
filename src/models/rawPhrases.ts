@@ -60,6 +60,7 @@ class RawPhrasesDataSource {
 
   async discardPhrase(id: string): Promise<void> {
     await this.rawPhrases.doc(id).update({
+      date: new Date(),
       discarded: true,
     });
   }
