@@ -19,6 +19,7 @@
     "i18n-js": "^3.1.0",
     "lodash": "^4.17.13",
     "mocha": "^5.2.0",
+    "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "0.59.10",
     "react-native-admob": "https://github.com/fjcaetano/react-native-admob.git",

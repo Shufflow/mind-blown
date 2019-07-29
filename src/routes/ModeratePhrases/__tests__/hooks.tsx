@@ -74,11 +74,9 @@ describe('initial behavior', () => {
 
 describe('handle press add translation', () => {
   it('adds an empty translation', async () => {
-    const { result, waitForNextUpdate } = renderHook(useModeratePhrases);
+    const { result } = renderHook(useModeratePhrases);
 
     act(result.current.handlePressAddTranslation);
-
-    await waitForNextUpdate();
 
     expect(result.current.translations).toEqual([
       emptyTranslation,
@@ -88,25 +86,20 @@ describe('handle press add translation', () => {
 });
 
 describe('handle press remove translation', () => {
-  const prepareMock = async (
-    length: number,
-    { result, waitForNextUpdate }: any,
-  ) =>
-    Promise.all(
-      Array.from({ length: length - 1 }).map(async (_, i) => {
-        result.current.handlePressAddTranslation();
-        result.current.handleTranslate(i, i.toString(), i.toString());
-        return waitForNextUpdate();
-      }),
-    );
+  const prepareMock = (length: number, { result, waitForNextUpdate }: any) => {
+    Array.from({ length: length - 1 }).forEach((_, i) => {
+      result.current.handlePressAddTranslation();
+      result.current.handleTranslate(i, i.toString(), i.toString());
+    });
+  };
 
-  it('removes the translation at the given index', async () => {
+  it('removes the translation at the given index', () => {
     const length = 5;
     const idx = 2;
     const hook = renderHook(useModeratePhrases);
     const { result } = hook;
 
-    await prepareMock(length, hook);
+    prepareMock(length, hook);
     result.current.handleRemoveTranslation(idx);
 
     expect(result.current.translations.length).toEqual(length - 1);

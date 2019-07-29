@@ -5700,9 +5700,14 @@ mocha@^5.2.0:
     supports-color "5.4.0"
 
 mock-cloud-firestore@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/mock-cloud-firestore/-/mock-cloud-firestore-0.9.0.tgz#07422c7ffa28afb8f19021e85d221e0deb95d248"
-  integrity sha512-R7h4298DNaHQTeWOvRZvwfvvgYmcTeXM838uIPozzv7vnaX6e5kV7f4Po7X4d2aJZuSceaafeItvSE2kz0LhZg==
+  version "0.9.3"
+  resolved "https://registry.yarnpkg.com/mock-cloud-firestore/-/mock-cloud-firestore-0.9.3.tgz#806d945260e53ba13dbef220591398b1b5447499"
+  integrity sha512-AHix5HCvwC/FJ78jvUBONC18Klyh5WvG31BpnXr9ogCSPx4qOdgVG1sEFJtdQctDAGXWbBh3Jk6ibI80eVMR+g==
+
+moment@^2.24.0:
+  version "2.24.0"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.24.0.tgz#0d055d53f5052aa653c9f6eb68bb5d12bf5c2b5b"
+  integrity sha512-bV7f+6l2QigeBBZSM/6yTNq4P2fNpSWj/0e7jQcy87A8e7o2nAfP/34/2ky5Vw4B9S446EtIhodAzkFCcR4dQg==
 
 morgan@^1.9.0:
   version "1.9.1"
