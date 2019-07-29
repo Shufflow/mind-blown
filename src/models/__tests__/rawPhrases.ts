@@ -90,17 +90,22 @@ describe('save phrase', () => {
 });
 
 describe('discard phrase', () => {
+  const date = new Date();
+
   it('marks the phrase as discarded', async () => {
     const id = 'bar';
+    sandbox.useFakeTimers(date.getTime());
     const update = sandbox.stub().resolves();
     const doc = sandbox.stub(model.rawPhrases, 'doc').returns({
       update,
-      get: () => ({ data: () => ({ content: 'foobar' }) }),
     } as any);
 
     await model.discardPhrase(id);
 
     assert.called(doc);
-    expect(update.calledWith({ discarded: true })).toEqual(true);
+    assert.calledWithExactly(update, {
+      date,
+      discarded: true,
+    });
   });
 });
