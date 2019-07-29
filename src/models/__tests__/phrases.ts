@@ -168,14 +168,29 @@ describe('phrase repetition', () => {
 });
 
 describe('suggestions', () => {
-  const dataSource = new PhrasesDataSource();
+  let add: sinon.SinonStub;
+  const model = new PhrasesDataSource();
+  const date = new Date();
+
+  beforeEach(() => {
+    const col = model.firestore.collection('suggestion');
+    sandbox.useFakeTimers(date.getTime());
+    add = sandbox.stub().callsFake(col.add.bind(col));
+    sandbox.stub(model.firestore, 'collection').returns({
+      add,
+    } as any);
+  });
 
   it('sends a suggestion', async () => {
     const content = 'foobar';
 
     expect(async () => {
-      await dataSource.sendSuggestion(content);
+      await model.sendSuggestion(content);
     }).not.toThrow();
+    assert.calledWithExactly(add, {
+      content,
+      date,
+    });
   });
 });
 

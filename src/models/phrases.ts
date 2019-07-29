@@ -85,6 +85,7 @@ class PhrasesDataSource {
   async sendSuggestion(content: string): Promise<void> {
     this.firestore.collection('suggestion').add({
       content,
+      date: new Date(),
     });
   }
 
