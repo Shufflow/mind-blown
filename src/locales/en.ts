@@ -60,7 +60,7 @@ const strings: Strings = {
   [About.madeBy]: 'Made with ❤️ by Flavio Caetano',
   [About.artBy]: 'Art by Agnes Pinhanelli',
   [About.version]: 'Version',
-  [About.storeReview]: 'Rate us',
+  [About.storeReview]: 'Rate the app',
 };
 
 export default strings;

@@ -7,7 +7,8 @@ export const Constants = {
   repoURL: 'https://github.com/Shufflow/mind-blown',
   storeReview: Platform.select({
     android: 'market://details?id=com.shufflow.MindBlown',
-    ios: 'itms-apps://itunes.apple.com/app/1450868764',
+    ios:
+      'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1450868764&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software',
   }),
 };
 
