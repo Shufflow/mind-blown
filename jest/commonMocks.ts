@@ -64,6 +64,15 @@ jest.mock('react-native-text-size', () => ({
 jest.mock('react-native-share', () => ({
   open: jest.fn(),
 }));
+jest.mock('@react-native-community/async-storage', () => {
+  const storage: Record<string, any> = {};
+  return {
+    getItem: jest.fn(key => storage[key]),
+    setItem: jest.fn((key, value) => {
+      storage[key] = value;
+    }),
+  };
+});
 
 RNNativeModules.UIManager = RNNativeModules.UIManager || {};
 RNNativeModules.UIManager.RCTView = RNNativeModules.UIManager.RCTView || {};

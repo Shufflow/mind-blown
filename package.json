@@ -13,6 +13,7 @@
     "update-version": "npm version --skip-tags --no-commit-hooks --no-git-tag-version"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.6.1",
     "@typed/compose": "^1.0.0",
     "base-64": "^0.1.0",
     "firebase": "^6.2.4",

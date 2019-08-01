@@ -31,6 +31,7 @@ target 'MindBlown' do
   pod 'RNTextSize', :path => '../node_modules/react-native-text-size'
   pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
   pod 'RNShare', :path => '../node_modules/react-native-share'
+  pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
 
   target 'MindBlownTests' do
     inherit! :search_paths
