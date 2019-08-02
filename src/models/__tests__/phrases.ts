@@ -1,5 +1,6 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { createSandbox, SinonStub, assert } from 'sinon';
+import Persisted from '@react-native-community/async-storage';
 
 import { stubFirebase } from '@utils/tests';
 
@@ -28,6 +29,43 @@ jest.mock(
 
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
+
+describe('init', () => {
+  let getItems: sinon.SinonStub;
+
+  beforeEach(() => {
+    getItems = sandbox.stub(Persisted, 'getItem');
+  });
+
+  it('loads the persisted used phrases ids', async () => {
+    const usedPhrases = ['1', '2', '3', '4'];
+    const persistedCall = new Promise<void>(resolve => {
+      getItems.callsFake(async () => {
+        resolve();
+        return Promise.resolve(JSON.stringify(usedPhrases));
+      });
+    });
+
+    const model = new PhrasesDataSource();
+    await persistedCall;
+
+    expect(model.usedPhrasesIds).toEqual(usedPhrases);
+  });
+
+  it('does not set usedPhrasesIds if persisted value is null', async () => {
+    const persistedCall = new Promise<void>(resolve => {
+      getItems.callsFake(async () => {
+        resolve();
+        return Promise.resolve(null);
+      });
+    });
+
+    const model = new PhrasesDataSource();
+    await persistedCall;
+
+    expect(model.usedPhrasesIds).toEqual([]);
+  });
+});
 
 describe('load all phrases', () => {
   const dataSource = new PhrasesDataSource();
@@ -96,6 +134,19 @@ describe('get random phrase', () => {
     await dataSource.getRandomPhrase();
 
     expect(process.called).toEqual(true);
+  });
+
+  it('persists used phrases', async () => {
+    const setItem = sandbox.stub(Persisted, 'setItem');
+    sandbox.stub(Math, 'random').returns(0);
+
+    await dataSource.getRandomPhrase();
+
+    assert.calledWith(
+      setItem,
+      'com.shufflow.MindBlown.usedPhrasesIds',
+      JSON.stringify(dataSource.usedPhrasesIds),
+    );
   });
 });
 
