@@ -1,4 +1,5 @@
 import { firestore } from 'firebase';
+import Persisted from '@react-native-community/async-storage';
 import 'firebase/firestore';
 
 import { Locales } from '@locales';
@@ -15,6 +16,10 @@ interface PhraseMap {
   [id: string]: Phrase;
 }
 
+const Constants = {
+  usedPhrasesIdsKey: 'com.shufflow.MindBlown.usedPhrasesIds',
+};
+
 class PhrasesDataSource {
   firestore: firebase.firestore.Firestore;
   phrases: Promise<PhraseMap>;
@@ -28,6 +33,7 @@ class PhrasesDataSource {
 
     InterstitialAd.setAdUnitId(AdIds.phrasesInterstitial);
     InterstitialAd.requestAdIfNeeded();
+    this.loadPersistedPhrases();
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -68,6 +74,10 @@ class PhrasesDataSource {
     const randIdx = Math.floor(Math.random() * (availablePhraseIds.length - 1));
     const content = phrases[availablePhraseIds[randIdx]];
     this.usedPhrasesIds.push(content.id);
+    Persisted.setItem(
+      Constants.usedPhrasesIdsKey,
+      JSON.stringify(this.usedPhrasesIds),
+    );
     return content;
   }
 
@@ -96,6 +106,13 @@ class PhrasesDataSource {
 
     return data;
   }
+
+  private loadPersistedPhrases = async () => {
+    const usedPhrases = await Persisted.getItem(Constants.usedPhrasesIdsKey);
+    if (usedPhrases) {
+      this.usedPhrasesIds = JSON.parse(usedPhrases);
+    }
+  };
 }
 
 export default PhrasesDataSource;
