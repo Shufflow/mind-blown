@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - stable
+  - 10 # Firebase fails with node 11: https://github.com/grpc/grpc-node/issues/594
 
 addons:
   ssh_known_hosts:
@@ -57,7 +57,7 @@ jobs:
           - $HOME/.android/build-cache
 
       before_install:
-        - nvm install stable
+        - nvm install 10
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       script:
@@ -92,7 +92,7 @@ jobs:
           - $HOME/.android/build-cache
 
       before_install:
-        - nvm install stable
+        - nvm install 10
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       script:
@@ -127,7 +127,7 @@ jobs:
           - $HOME/.android/build-cache
 
       before_install:
-        - nvm install stable
+        - nvm install 10
         - echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       script:
