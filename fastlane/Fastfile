@@ -151,8 +151,6 @@ platform :android do
 
     gradle(task: 'clean', project_dir: 'android/')
     gradle(task: 'assemble', build_type: 'Debug', project_dir: 'android/')
-
-    cp_to_deploy()
   end
 
   desc 'Build Android QA app'
@@ -161,7 +159,7 @@ platform :android do
 
     gradle(task: 'clean', project_dir: 'android/')
     gradle(
-      task: 'assemble',
+      task: 'bundle',
       build_type: 'Release',
       project_dir: 'android/',
       properties: {
@@ -169,8 +167,6 @@ platform :android do
         'versionName' => BUILD_VERSION,
       },
     )
-
-    cp_to_deploy()
   end
 
   desc 'Build Android Release app'
@@ -179,7 +175,7 @@ platform :android do
 
     gradle(task: 'clean', project_dir: 'android/')
     gradle(
-      task: 'assemble',
+      task: 'bundle',
       build_type: 'Release',
       project_dir: 'android/',
       properties: {
@@ -187,8 +183,6 @@ platform :android do
         'versionName' => BUILD_VERSION,
       },
     )
-
-    cp_to_deploy()
   end
 
   desc 'Release Android QA app'
@@ -199,7 +193,7 @@ platform :android do
       package_name: 'com.shufflow.MindBlown',
       track: 'alpha',
       json_key: 'google_api_key.json',
-      apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
     )
   end
 
@@ -211,20 +205,7 @@ platform :android do
       package_name: 'com.shufflow.MindBlown',
       track: 'alpha',
       json_key: 'google_api_key.json',
-      apk: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+      aab: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
     )
-  end
-end
-
-#########################
-###  PRIVATE METHODS  ###
-#########################
-def cp_to_deploy()
-  unless Helper.is_ci?
-    apk_location = "#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}"
-    out_dir = ENV['BITRISE_DEPLOY_DIR'] || '../build/' # TODO: fix path
-
-    UI.message "Moving bundle to \"#{out_dir}\""
-    sh "cp #{apk_location} #{out_dir}"
   end
 end
