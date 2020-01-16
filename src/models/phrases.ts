@@ -1,11 +1,12 @@
 import { firestore } from 'firebase';
-import Persisted from '@react-native-community/async-storage';
+import { knuthShuffle } from 'knuth-shuffle';
 import 'firebase/firestore';
 
 import { Locales } from '@locales';
 
 import AdIds, { InterstitialAd } from './ads';
 import IAP from './iap';
+import Persist from './persist';
 
 export interface Phrase {
   id: string;
@@ -16,24 +17,21 @@ interface PhraseMap {
   [id: string]: Phrase;
 }
 
-const Constants = {
-  usedPhrasesIdsKey: 'com.shufflow.MindBlown.usedPhrasesIds',
-};
-
 class PhrasesDataSource {
   firestore: firebase.firestore.Firestore;
   phrases: Promise<PhraseMap>;
-  usedPhrasesIds: string[];
+  shuffledPhraseIds: Promise<string[]>;
+
+  persist = new Persist();
 
   constructor() {
     this.firestore = firestore();
 
-    this.usedPhrasesIds = [];
     this.phrases = this.loadAllPhrases();
+    this.shuffledPhraseIds = this.shufflePhraseIds();
 
     InterstitialAd.setAdUnitId(AdIds.phrasesInterstitial);
     InterstitialAd.requestAdIfNeeded();
-    this.loadPersistedPhrases();
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -50,35 +48,51 @@ class PhrasesDataSource {
     );
   }
 
-  async getRandomPhrase(): Promise<Phrase | null> {
-    const phrases = await this.phrases;
-
-    const isAdFree = await IAP.isAdFree;
-    if (this.usedPhrasesIds.length % 3 === 2 && !isAdFree && !__DEV__) {
-      InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
-    }
-
+  shufflePhraseIds = async (): Promise<string[]> => {
+    const [phrases, usedPhrasesIds] = await Promise.all([
+      this.phrases,
+      this.persist.getUsedPhrases(),
+    ]);
     const len = Object.keys(phrases).length;
     if (len === 0) {
-      return null;
+      return [];
     }
 
-    if (len === this.usedPhrasesIds.length) {
-      this.usedPhrasesIds = [];
+    if (len === usedPhrasesIds.size) {
+      usedPhrasesIds.clear();
     }
 
     const availablePhraseIds = Object.keys(phrases).filter(
-      id => !this.usedPhrasesIds.includes(id),
+      id => !usedPhrasesIds.has(id),
     );
 
-    const randIdx = Math.floor(Math.random() * (availablePhraseIds.length - 1));
-    const content = phrases[availablePhraseIds[randIdx]];
-    this.usedPhrasesIds.push(content.id);
-    Persisted.setItem(
-      Constants.usedPhrasesIdsKey,
-      JSON.stringify(this.usedPhrasesIds),
+    const visitedPhrasesIds = await this.persist.getVisitedPhrases();
+    const unseenPhrasesIds = knuthShuffle(
+      availablePhraseIds.filter(id => !visitedPhrasesIds.has(id)),
     );
-    return content;
+    const seenPhrasesIds = knuthShuffle(
+      availablePhraseIds.filter(id => visitedPhrasesIds.has(id)),
+    );
+
+    return unseenPhrasesIds.concat(seenPhrasesIds);
+  };
+
+  async getRandomPhrase(): Promise<Phrase | null> {
+    const [nextPhrase, usedPhrasesIds] = await Promise.all<
+      Phrase | null,
+      Set<string>
+    >([this.getNextPhrase(), this.persist.getUsedPhrases()]);
+
+    if (nextPhrase) {
+      const isAdFree = await IAP.isAdFree;
+      if (usedPhrasesIds.size % 3 === 2 && !isAdFree && !__DEV__) {
+        InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
+      }
+
+      await this.persist.usePhrase(nextPhrase.id);
+    }
+
+    return nextPhrase;
   }
 
   async reviewPhrase(
@@ -107,11 +121,23 @@ class PhrasesDataSource {
     return data;
   }
 
-  private loadPersistedPhrases = async () => {
-    const usedPhrases = await Persisted.getItem(Constants.usedPhrasesIdsKey);
-    if (usedPhrases) {
-      this.usedPhrasesIds = JSON.parse(usedPhrases);
+  private getNextPhrase = async (): Promise<Phrase | null> => {
+    // tslint:disable-next-line prefer-const
+    let [phrases, phraseIds] = await Promise.all([
+      this.phrases,
+      this.shuffledPhraseIds,
+    ]);
+
+    if (!phraseIds.length) {
+      phraseIds = await this.shufflePhraseIds();
     }
+
+    const len = Object.keys(phrases).length;
+    if (len === 0 || phraseIds.length === 0) {
+      return null;
+    }
+
+    return phrases[phraseIds.shift()!];
   };
 }
 

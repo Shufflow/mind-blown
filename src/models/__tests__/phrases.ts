@@ -1,6 +1,6 @@
 import MockFirebase from 'mock-cloud-firestore';
 import { createSandbox, SinonStub, assert } from 'sinon';
-import Persisted from '@react-native-community/async-storage';
+import knuthShuffle from 'knuth-shuffle';
 
 import { stubFirebase } from '@utils/tests';
 
@@ -30,41 +30,8 @@ jest.mock(
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
 
-describe('init', () => {
-  let getItems: sinon.SinonStub;
-
-  beforeEach(() => {
-    getItems = sandbox.stub(Persisted, 'getItem');
-  });
-
-  it('loads the persisted used phrases ids', async () => {
-    const usedPhrases = ['1', '2', '3', '4'];
-    const persistedCall = new Promise<void>(resolve => {
-      getItems.callsFake(async () => {
-        resolve();
-        return Promise.resolve(JSON.stringify(usedPhrases));
-      });
-    });
-
-    const model = new PhrasesDataSource();
-    await persistedCall;
-
-    expect(model.usedPhrasesIds).toEqual(usedPhrases);
-  });
-
-  it('does not set usedPhrasesIds if persisted value is null', async () => {
-    const persistedCall = new Promise<void>(resolve => {
-      getItems.callsFake(async () => {
-        resolve();
-        return Promise.resolve(null);
-      });
-    });
-
-    const model = new PhrasesDataSource();
-    await persistedCall;
-
-    expect(model.usedPhrasesIds).toEqual([]);
-  });
+beforeEach(() => {
+  sandbox.stub(knuthShuffle, 'knuthShuffle').callsFake(a => a.reverse());
 });
 
 describe('load all phrases', () => {
@@ -80,23 +47,29 @@ describe('load all phrases', () => {
 describe('get random phrase', () => {
   let dataSource: PhrasesDataSource;
   let ad: SinonStub;
+  let usedPhrases: sinon.SinonStub;
 
   beforeEach(() => {
     dataSource = new PhrasesDataSource();
     ad = sandbox.stub(InterstitialAd, 'showAd').resolves();
+    usedPhrases = sandbox
+      .stub(dataSource.persist, 'getUsedPhrases')
+      .resolves(new Set(['0']));
   });
 
   it('returns a phrase', async () => {
-    sandbox.stub(Math, 'random').returns(0);
-
     const result = await dataSource.getRandomPhrase();
 
-    expect(result).toEqual(mockPhrases[0]);
+    expect(result).toEqual(mockPhrases[2]);
     expect(ad.called).toEqual(false);
   });
 
   it('does not use index greater than array lenght', async () => {
-    sandbox.stub(Math, 'random').returns(1);
+    usedPhrases.resolves(new Set());
+    sandbox
+      .stub(dataSource.persist, 'getVisitedPhrases')
+      .resolves(new Set(Object.keys(mockPhrases)));
+    sandbox.stub(dataSource, 'shuffledPhraseIds').value(Promise.resolve([]));
 
     const result = await dataSource.getRandomPhrase();
 
@@ -137,16 +110,11 @@ describe('get random phrase', () => {
   });
 
   it('persists used phrases', async () => {
-    const setItem = sandbox.stub(Persisted, 'setItem');
-    sandbox.stub(Math, 'random').returns(0);
+    const usePhrase = sandbox.stub(dataSource.persist, 'usePhrase');
 
-    await dataSource.getRandomPhrase();
+    const phrase = await dataSource.getRandomPhrase();
 
-    assert.calledWith(
-      setItem,
-      'com.shufflow.MindBlown.usedPhrasesIds',
-      JSON.stringify(dataSource.usedPhrasesIds),
-    );
+    assert.calledWith(usePhrase, phrase!.id);
   });
 });
 
@@ -304,5 +272,73 @@ describe('process phrases', () => {
     const result = dataSource.processPhrase(data);
 
     expect(result).toEqual(data);
+  });
+});
+
+describe('shuffle phrases', () => {
+  let dataSource: PhrasesDataSource;
+  let visitedPhrases: sinon.SinonStub;
+  let usedPhrases: sinon.SinonStub;
+
+  beforeEach(() => {
+    dataSource = new PhrasesDataSource();
+    visitedPhrases = sandbox
+      .stub(dataSource.persist, 'getVisitedPhrases')
+      .resolves(new Set());
+    usedPhrases = sandbox
+      .stub(dataSource.persist, 'getUsedPhrases')
+      .resolves(new Set());
+  });
+
+  it('returns null if phrases is empty', async () => {
+    sandbox.stub(dataSource, 'phrases').value(Promise.resolve([]));
+
+    const result = await dataSource.shufflePhraseIds();
+
+    expect(result).toEqual([]);
+  });
+
+  it('shuffles unseen phrases at the top of the array', async () => {
+    visitedPhrases.resolves(new Set(['0']));
+
+    const result = await dataSource.shufflePhraseIds();
+
+    expect(result!.slice(0, 2)).toEqual(
+      Object.keys(mockPhrases)
+        .reverse()
+        .slice(0, 2),
+    );
+  });
+
+  it('shuffles visited phrases at the bottom of the array', async () => {
+    visitedPhrases.resolves(new Set(['0', '1']));
+
+    const result = await dataSource.shufflePhraseIds();
+
+    expect(result.slice(1, 3)).toEqual(
+      Object.keys(mockPhrases)
+        .reverse()
+        .slice(1, 3),
+    );
+  });
+
+  it('removes used phrases from the end result', async () => {
+    usedPhrases.resolves(new Set(['0']));
+
+    const result = await dataSource.shufflePhraseIds();
+
+    expect(result).toEqual(
+      Object.keys(mockPhrases)
+        .filter(id => id !== '0')
+        .reverse(),
+    );
+  });
+
+  it('allows all phrases if used is full', async () => {
+    usedPhrases.resolves(new Set(Object.keys(mockPhrases)));
+
+    const result = await dataSource.shufflePhraseIds();
+
+    expect(result).toEqual(Object.keys(mockPhrases).reverse());
   });
 });
