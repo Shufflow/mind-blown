@@ -1,11 +1,9 @@
 import React from 'react';
-import { AdMobBanner } from 'react-native-admob';
+import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
 import { compose } from '@typed/compose';
 
 import { AdsConsumerProps, withAds } from '@hocs/withAds';
 import pure from '@hocs/pure';
-
-import { BannerTestIds } from 'src/models/ads';
 
 interface Props {
   adUnitID: string;
@@ -24,10 +22,9 @@ const AdBanner = ({ adUnitID, showAds }: Props & AdsConsumerProps) => {
   }
 
   return (
-    <AdMobBanner
-      adSize='fullBanner'
-      adUnitID={adUnitID}
-      testDevices={BannerTestIds}
+    <BannerAd
+      unitId={__DEV__ ? TestIds.BANNER : adUnitID}
+      size={BannerAdSize.FULL_BANNER}
       onAdFailedToLoad={onFailToLoadAd}
     />
   );
