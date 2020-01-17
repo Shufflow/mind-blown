@@ -1,10 +1,8 @@
 import { createSandbox, assert } from 'sinon';
 import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
-import { AdMobRewarded } from 'react-native-admob';
 
 import IAP, { IAPErrorCodes } from 'src/models/iap';
-import RewardedAd from 'src/models/rewardedAd';
 
 import SettingsViewModel, { State } from '../settings';
 
@@ -176,7 +174,7 @@ describe('buy ad free', () => {
 
   it('shows discount alert on cancel if can buy discount', async () => {
     sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
-    sandbox.stub(RewardedAd, 'requestAdIfNeeded').resolves();
+    sandbox.stub(viewModel.rewardedAd, 'requestAdIfNeeded').resolves();
     const alert = sandbox.stub(Alert, 'alert');
 
     const result = await (viewModel as any).buyAdFree();
@@ -188,7 +186,7 @@ describe('buy ad free', () => {
   it('does not show alert if ad fails to load', async () => {
     const error = new Error('fail');
     sandbox.stub(IAP, 'buyAdFree').rejects({ code: IAPErrorCodes.cancelled });
-    sandbox.stub(RewardedAd, 'requestAdIfNeeded').rejects(error);
+    sandbox.stub(viewModel.rewardedAd, 'requestAdIfNeeded').rejects(error);
     const alert = sandbox.stub(Alert, 'alert');
 
     try {
@@ -207,7 +205,7 @@ describe('show rewarded ad', () => {
     sandbox.stub(viewModel, 'getProps').returns({ checkIsAdFree } as any);
   });
   it('shows the ad', async () => {
-    const ad = sandbox.stub(RewardedAd, 'showAd');
+    const ad = sandbox.stub(viewModel.rewardedAd, 'showAd');
     sandbox.stub(RNIap, 'buyProduct');
 
     await (viewModel as any).showRewardedAd();
@@ -216,7 +214,7 @@ describe('show rewarded ad', () => {
   });
 
   it('calls buy discounted when reward is given', async () => {
-    sandbox.stub(RewardedAd, 'showAd');
+    sandbox.stub(viewModel.rewardedAd, 'showAd');
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
 
     await (viewModel as any).showRewardedAd();
@@ -225,7 +223,6 @@ describe('show rewarded ad', () => {
   });
 
   it('does not buy discounted ad when reward is not given', async () => {
-    sandbox.stub(AdMobRewarded, 'addEventListener');
     const discount = sandbox.stub(IAP, 'buyAdFreeDiscount');
     let resolved = false;
 
@@ -238,7 +235,7 @@ describe('show rewarded ad', () => {
   });
 
   it('updates view when discount is available', async () => {
-    sandbox.stub(RewardedAd, 'showAd').resolves();
+    sandbox.stub(viewModel.rewardedAd, 'showAd').resolves();
     const setState = sandbox.stub();
     sandbox.stub(viewModel, 'setState').value(setState);
 

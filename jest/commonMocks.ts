@@ -21,12 +21,12 @@ jest.mock('@react-native-firebase/admob', () => {
 
   return {
     AdMobBanner,
-    AdsConsent: {
-      addTestDevices: jest.fn(),
-    },
     AdEventType: {
       ERROR: 'ERROR',
       LOADED: 'LOADED',
+    },
+    AdsConsent: {
+      addTestDevices: jest.fn(),
     },
     InterstitialAd: {
       createForAdRequest: jest.fn(() => ({
@@ -35,17 +35,21 @@ jest.mock('@react-native-firebase/admob', () => {
         show: Promise.resolve,
       })),
     },
-    AdMobRewarded: {
-      addEventListener: jest.fn,
-      removeEventListener: jest.fn,
-      requestAd: Promise.resolve,
-      setAdUnitID: jest.fn,
-      setTestDevices: jest.fn,
-      showAd: Promise.resolve,
+    RewardedAd: {
+      createForAdRequest: jest.fn(() => ({
+        load: jest.fn(),
+        onAdEvent: jest.fn(),
+        show: Promise.resolve,
+      })),
+    },
+    RewardedAdEventType: {
+      EARNED_REWARD: 'EARNED_REWARD',
+      LOADED: 'LOADED',
     },
     TestIds: {
       BANNER: 'BANNER',
       INTERSTITIAL: 'INTERSTITIAL',
+      REWARDED: 'REWARDED',
     },
   };
 });

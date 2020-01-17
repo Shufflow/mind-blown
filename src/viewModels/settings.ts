@@ -24,6 +24,8 @@ export interface State {
 }
 
 class SettingsViewModel extends ViewModel<Props, State> {
+  rewardedAd = new RewardedAd(AdIds.rewarded);
+
   getInitialState = (props: Props): State => ({
     canBuyDiscount: false,
     isAdFree: !props.showAds,
@@ -60,10 +62,11 @@ class SettingsViewModel extends ViewModel<Props, State> {
   // Private Methods
 
   private buyAdFree = async () => {
-    RewardedAd.setAdUnitId(AdIds.rewarded);
     let loadRewardedAd: Promise<void> = Promise.reject();
     try {
-      loadRewardedAd = RewardedAd.requestAdIfNeeded();
+      loadRewardedAd = this.rewardedAd.requestAdIfNeeded().then(() => {
+        this.rewardedAd = new RewardedAd(AdIds.rewarded);
+      });
       return await IAP.buyAdFree();
     } catch (e) {
       try {
@@ -95,7 +98,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
   };
 
   private showRewardedAd = async () => {
-    await RewardedAd.showAd();
+    await this.rewardedAd.showAd();
     this.setState({ canBuyDiscount: true });
     const result = await IAP.buyAdFreeDiscount();
     if (result) {
