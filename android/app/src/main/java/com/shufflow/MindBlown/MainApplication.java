@@ -11,7 +11,6 @@ import com.dooboolab.RNIap.RNIapPackage;
 import com.reactcommunity.rnlanguages.RNLanguagesPackage;
 import com.microsoft.codepush.react.CodePush;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.sbugert.rnadmob.RNAdMobPackage;
 import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.swmansion.rnscreens.RNScreensPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -54,7 +53,6 @@ public class MainApplication extends Application implements ReactApplication {
             new RNLanguagesPackage(),
             new CodePush(getResources().getString(R.string.reactNativeCodePush_androidDeploymentKey), getApplicationContext(), BuildConfig.DEBUG),
             new SplashScreenReactPackage(),
-            new RNAdMobPackage(),
             new ReactNativeConfigPackage(),
             new RNScreensPackage(),
             new RNGestureHandlerPackage(),
