@@ -105,3 +105,6 @@ RNNativeModules.RNGestureHandlerModule = RNNativeModules.RNGestureHandlerModule 
 RNNativeModules.PlatformConstants = RNNativeModules.PlatformConstants || {
   forceTouchAvailable: false,
 };
+RNNativeModules.Fonts = {
+  getAvailableFonts: jest.fn().mockResolvedValue(['a']),
+};

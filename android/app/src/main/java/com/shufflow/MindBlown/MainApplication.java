@@ -28,6 +28,8 @@ import com.facebook.react.ReactRootView;
 import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
 
 import java.lang.reflect.InvocationTargetException;
+import com.shufflow.MindBlown.CustomFontsPackage;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,8 +51,7 @@ public class MainApplication extends MultiDexApplication implements ReactApplica
     protected List<ReactPackage> getPackages() {
           @SuppressWarnings("UnnecessaryLocalVariable")
           List<ReactPackage> packages = new PackageList(this).getPackages();
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
+          packages.add(new CustomFontsPackage());
           return packages;
     }
 

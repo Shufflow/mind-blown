@@ -11,7 +11,8 @@ import { ViewModel, SetState } from '@components/SmartComponent';
 import { LocaleConsumerProps } from '@hocs/withLocale';
 import { asyncBinarySearch } from '@utils/search';
 
-import { getColor, getFont } from 'src/models/assets';
+import Fonts from 'src/models/fonts';
+import { getColor } from 'src/models/assets';
 import PhrasesDataSource, {
   Phrase as PhraseType,
   Phrase,
@@ -59,6 +60,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   subscription: Subscription;
   stateObservable: Observable<Partial<State>>;
   viewShot?: ViewShot;
+  fonts = new Fonts();
 
   constructor(
     getProps: () => Props,
@@ -176,7 +178,7 @@ class HomeViewModel extends ViewModel<Props, State> {
   };
 
   private getFont = async (text: string, size: Size): Promise<FontSpec> => {
-    this.fontFamily = getFont();
+    this.fontFamily = await this.fonts.getRandomFont();
 
     const range = lodash.range(Constants.desiredFontSize);
     const fontSize = await asyncBinarySearch(
