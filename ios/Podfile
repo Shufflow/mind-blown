@@ -31,6 +31,8 @@ target 'MindBlown' do
   pod 'RNViewShot', :path => '../node_modules/react-native-view-shot'
   pod 'RNShare', :path => '../node_modules/react-native-share'
   pod 'RNCAsyncStorage', :path => '../node_modules/@react-native-community/async-storage'
+  pod 'RNFBApp', :path => '../node_modules/@react-native-firebase/app'
+  pod 'RNFBAdMob', :path => '../node_modules/@react-native-firebase/admob'
 
   target 'MindBlownTests' do
     inherit! :search_paths
