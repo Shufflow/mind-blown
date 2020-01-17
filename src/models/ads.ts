@@ -1,5 +1,12 @@
 import { Platform } from 'react-native';
-import { AdMobBanner, AdMobInterstitial } from 'react-native-admob';
+import {
+  InterstitialAd as AdMobInterstitial,
+  TestIds,
+  FirebaseAdMobTypes,
+  AdEventType,
+  AdsConsent,
+} from '@react-native-firebase/admob';
+AdsConsent.addTestDevices(['7390EF66B0FC00613A785C98A5DBBDDB']);
 
 const AdIds = Platform.select({
   android: {
@@ -24,55 +31,52 @@ const AdIds = Platform.select({
   },
 });
 
-export const BannerTestIds = __DEV__
-  ? [AdMobBanner.simulatorId, '7390EF66B0FC00613A785C98A5DBBDDB']
-  : [];
+export class InterstitialAd {
+  private requestAd?: Promise<void>;
+  private interstitialAd: FirebaseAdMobTypes.InterstitialAd;
 
-export class AdManager {
-  isLoadingAd = false;
-  adRequest: Promise<void> | undefined;
+  constructor(id: string) {
+    this.interstitialAd = AdMobInterstitial.createForAdRequest(
+      __DEV__ ? TestIds.INTERSTITIAL : id,
+    );
 
-  constructor() {
-    if (__DEV__) {
-      AdMobInterstitial.setTestDevices([
-        AdMobInterstitial.simulatorId,
-        '7390EF66B0FC00613A785C98A5DBBDDB',
-      ]);
-    }
+    this.requestAdIfNeeded();
   }
 
-  setAdUnitId = (unitId: string) => {
-    AdMobInterstitial.setAdUnitID(unitId);
-  };
+  isReady = () => this.interstitialAd.loaded;
 
-  isReady = async () =>
-    new Promise<boolean>(res => AdMobInterstitial.isReady(res));
-
-  requestAdIfNeeded = async () => {
-    const isReady = await this.isReady();
-    if (!isReady && !this.isLoadingAd) {
-      this.isLoadingAd = true;
-      this.adRequest = AdMobInterstitial.requestAd();
-      this.adRequest!.then(() => {
-        this.isLoadingAd = false;
-      }).catch();
+  requestAdIfNeeded = async (): Promise<void> => {
+    if (this.isReady() || this.requestAd) {
+      return this.requestAd;
     }
 
-    await this.adRequest;
+    this.requestAd = new Promise<void>((resolve, reject) => {
+      this.interstitialAd.onAdEvent((type, error) => {
+        switch (type) {
+          case AdEventType.LOADED:
+            resolve();
+            break;
+
+          case AdEventType.ERROR:
+            reject(error);
+            break;
+        }
+      });
+    });
+
+    this.interstitialAd.load();
+    return this.requestAd;
   };
 
   showAd = async () => {
-    if (this.isLoadingAd) {
-      await this.adRequest;
+    if (!this.isReady() && this.requestAd) {
+      await this.requestAd;
     }
 
-    const isReady = await this.isReady();
-    if (isReady) {
-      await AdMobInterstitial.showAd();
+    if (this.isReady()) {
+      await this.interstitialAd.show();
     }
   };
 }
-
-export const InterstitialAd = new AdManager();
 
 export default AdIds;

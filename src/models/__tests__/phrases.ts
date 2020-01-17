@@ -5,7 +5,6 @@ import knuthShuffle from 'knuth-shuffle';
 import { stubFirebase } from '@utils/tests';
 
 import PhrasesDataSource from '../phrases';
-import { InterstitialAd } from '../ads';
 import IAP from '../iap';
 
 const mockPhrases = {
@@ -51,7 +50,7 @@ describe('get random phrase', () => {
 
   beforeEach(() => {
     dataSource = new PhrasesDataSource();
-    ad = sandbox.stub(InterstitialAd, 'showAd').resolves();
+    ad = sandbox.stub(dataSource.adManager, 'showAd').resolves();
     usedPhrases = sandbox
       .stub(dataSource.persist, 'getUsedPhrases')
       .resolves(new Set(['0']));
@@ -219,7 +218,7 @@ describe('ads', () => {
 
   beforeEach(() => {
     dataSource = new PhrasesDataSource();
-    ad = sandbox.stub(InterstitialAd, 'showAd').resolves();
+    ad = sandbox.stub(dataSource.adManager, 'showAd').resolves();
   });
 
   it('shows ad after 3 phrases', async () => {
