@@ -10,23 +10,30 @@ jest.mock('react-native-google-signin', () => {
   return {
     GoogleSigninButton,
     GoogleSignin: {
-      configure: jest.fn,
-      signInSilently: Promise.resolve,
+      configure: jest.fn(),
+      signInSilently: jest.fn().mockResolvedValue(undefined),
     },
   };
 });
-jest.mock('react-native-admob', () => {
+jest.mock('@react-native-firebase/admob', () => {
   const AdMobBanner = () => React.createElement<any>(View);
   AdMobBanner.simulatorId = '';
 
   return {
     AdMobBanner,
-    AdMobInterstitial: {
-      isReady: jest.fn,
-      requestAd: Promise.resolve,
-      setAdUnitID: jest.fn,
-      setTestDevices: jest.fn,
-      showAd: Promise.resolve,
+    AdsConsent: {
+      addTestDevices: jest.fn(),
+    },
+    AdEventType: {
+      ERROR: 'ERROR',
+      LOADED: 'LOADED',
+    },
+    InterstitialAd: {
+      createForAdRequest: jest.fn(() => ({
+        load: jest.fn(),
+        onAdEvent: jest.fn(),
+        show: Promise.resolve,
+      })),
     },
     AdMobRewarded: {
       addEventListener: jest.fn,
@@ -36,11 +43,15 @@ jest.mock('react-native-admob', () => {
       setTestDevices: jest.fn,
       showAd: Promise.resolve,
     },
+    TestIds: {
+      BANNER: 'BANNER',
+      INTERSTITIAL: 'INTERSTITIAL',
+    },
   };
 });
 jest.mock('react-native-splash-screen', () => ({
-  hide: jest.fn,
-  show: jest.fn,
+  hide: jest.fn(),
+  show: jest.fn(),
 }));
 jest.mock('react-native-code-push', () => {
   const fn: any = () => (a: any) => a;
@@ -59,7 +70,7 @@ jest.mock('react-native-iap', () => ({
   initConnection: Promise.resolve,
 }));
 jest.mock('react-native-text-size', () => ({
-  measure: jest.fn,
+  measure: jest.fn(),
 }));
 jest.mock('react-native-share', () => ({
   open: jest.fn(),

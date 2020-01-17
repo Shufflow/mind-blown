@@ -23,15 +23,13 @@ class PhrasesDataSource {
   shuffledPhraseIds: Promise<string[]>;
 
   persist = new Persist();
+  adManager = new InterstitialAd(AdIds.phrasesInterstitial);
 
   constructor() {
     this.firestore = firestore();
 
     this.phrases = this.loadAllPhrases();
     this.shuffledPhraseIds = this.shufflePhraseIds();
-
-    InterstitialAd.setAdUnitId(AdIds.phrasesInterstitial);
-    InterstitialAd.requestAdIfNeeded();
   }
 
   async loadAllPhrases(): Promise<PhraseMap> {
@@ -86,7 +84,12 @@ class PhrasesDataSource {
     if (nextPhrase) {
       const isAdFree = await IAP.isAdFree;
       if (usedPhrasesIds.size % 3 === 2 && !isAdFree && !__DEV__) {
-        InterstitialAd.showAd().then(InterstitialAd.requestAdIfNeeded);
+        this.adManager
+          .showAd()
+          .then(
+            () =>
+              (this.adManager = new InterstitialAd(AdIds.phrasesInterstitial)),
+          );
       }
 
       await this.persist.usePhrase(nextPhrase.id);
