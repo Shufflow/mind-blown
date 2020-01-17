@@ -178,7 +178,6 @@ dependencies {
     implementation project(':react-native-languages')
     implementation project(':react-native-code-push')
     implementation project(':react-native-splash-screen')
-    implementation project(':react-native-admob')
     implementation project(':react-native-config')
     implementation project(':react-native-screens')
     implementation project(':react-native-gesture-handler')

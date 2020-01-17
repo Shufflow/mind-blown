@@ -24,7 +24,6 @@
     "moment": "^2.24.0",
     "react": "16.8.3",
     "react-native": "0.59.10",
-    "react-native-admob": "https://github.com/fjcaetano/react-native-admob.git",
     "react-native-code-push": "^5.5.1",
     "react-native-config": "^0.11.7",
     "react-native-google-signin": "^1.0.2",
