@@ -1,71 +1,76 @@
-import { AdMobRewarded } from 'react-native-admob';
+import {
+  RewardedAd as AdMobRewarded,
+  TestIds,
+  FirebaseAdMobTypes,
+  AdEventType,
+  RewardedAdEventType,
+} from '@react-native-firebase/admob';
 
-enum RewardedAdEvents {
-  adClosed = 'adClosed',
-  rewarded = 'rewarded',
-}
+class RewardedAd {
+  private adRequest?: Promise<void>;
+  private eventsSubscription: { [key: string]: Function } = {};
+  private ad: FirebaseAdMobTypes.RewardedAd;
 
-export class RewardedAdManager {
-  private isLoadingAd = false;
-  private adRequest: Promise<void> | undefined;
-  private eventsSubscription: { [key: string]: any } = {};
-  private isReady = false;
-
-  constructor() {
-    if (__DEV__) {
-      AdMobRewarded.setTestDevices([
-        AdMobRewarded.simulatorId,
-        '7390EF66B0FC00613A785C98A5DBBDDB',
-      ]);
-    }
-
-    AdMobRewarded.addEventListener(
-      RewardedAdEvents.adClosed,
-      this.requestAdIfNeeded,
-    );
+  constructor(id: string) {
+    this.ad = AdMobRewarded.createForAdRequest(__DEV__ ? TestIds.REWARDED : id);
+    this.eventsSubscription[AdEventType.CLOSED] = this.ad.onAdEvent(type => {
+      if (type === AdEventType.CLOSED) {
+        this.requestAdIfNeeded();
+      }
+    });
   }
 
-  setAdUnitId = (unitId: string) => {
-    AdMobRewarded.setAdUnitID(unitId);
-  };
+  isReady = () => this.ad.loaded;
 
   requestAdIfNeeded = async () => {
-    if (!this.isLoadingAd && !this.isReady) {
-      this.isLoadingAd = true;
-      this.adRequest = AdMobRewarded.requestAd();
-      this.adRequest!.then(() => {
-        this.isLoadingAd = false;
-        this.isReady = true;
-      }).catch();
+    if (this.isReady() || this.adRequest) {
+      return this.adRequest;
     }
 
-    await this.adRequest;
+    this.adRequest = this.eventToPromise(RewardedAdEventType.LOADED);
+    this.ad.load();
+    return this.adRequest;
   };
 
   showAd = async () => {
-    if (this.isLoadingAd) {
+    if (!this.isReady() && this.adRequest) {
       await this.adRequest;
     }
 
-    if (this.isReady) {
-      return new Promise<void>(resolve => {
-        this.onEvent(RewardedAdEvents.rewarded, resolve);
-        this.isReady = false;
-        AdMobRewarded.showAd();
-      });
+    if (this.isReady()) {
+      const reward = this.eventToPromise(RewardedAdEventType.EARNED_REWARD);
+      await this.ad.show();
+      return reward;
     }
   };
 
-  private onEvent = (event: RewardedAdEvents, callback: () => void) => {
-    const subscription = AdMobRewarded.addEventListener(event, () => {
-      callback();
-      subscription.remove();
+  private eventToPromise = async (event: any): Promise<void> => {
+    if (this.eventsSubscription[event]) {
+      this.eventsSubscription[event]();
+    }
 
-      delete this.eventsSubscription[event];
+    return new Promise<void>((resolve, reject) => {
+      const unsubscribe = this.ad.onAdEvent((type, error) => {
+        switch (type) {
+          case event:
+            resolve();
+            break;
+
+          case AdEventType.ERROR:
+            reject(error);
+            break;
+
+          default:
+            return;
+        }
+
+        unsubscribe();
+        delete this.eventsSubscription[event];
+      });
+
+      this.eventsSubscription[event] = unsubscribe;
     });
-
-    this.eventsSubscription[event] = subscription;
   };
 }
 
-export default new RewardedAdManager();
+export default RewardedAd;

@@ -1,37 +1,64 @@
-import { createSandbox } from 'sinon';
-import { AdMobRewarded } from 'react-native-admob';
+import { createSandbox, assert } from 'sinon';
+import {
+  RewardedAd,
+  AdEventType,
+  RewardedAdEventType,
+} from '@react-native-firebase/admob';
 
-import { RewardedAdManager } from '../rewardedAd';
+import RewardedAdManager from '../rewardedAd';
 
 const sandbox = createSandbox();
+let show: sinon.SinonStub;
+let sendEvent: sinon.SinonStub;
+let load: sinon.SinonStub;
+let unsubscribe: sinon.SinonStub;
+let create: sinon.SinonStub;
 let manager: RewardedAdManager;
 beforeEach(() => {
-  manager = new RewardedAdManager();
+  unsubscribe = sandbox.stub();
+  sendEvent = sandbox.stub().returns(unsubscribe);
+  load = sandbox.stub();
+  show = sandbox.stub().resolves();
+  create = sandbox.stub(RewardedAd, 'createForAdRequest').returns({
+    load,
+    show,
+    onAdEvent: sendEvent,
+  } as any);
+  manager = new RewardedAdManager('');
 });
 afterEach(sandbox.restore);
 
 describe('constructor', () => {
+  it('sends the given id', () => {
+    const id = 'id';
+
+    (__DEV__ as any) = false;
+    new RewardedAdManager(id);
+
+    assert.calledWithExactly(create, id);
+  });
+
   it('registers adClosed listener', () => {
-    const event = sandbox.stub(AdMobRewarded, 'addEventListener');
+    const request = sandbox.stub(manager, 'requestAdIfNeeded');
 
-    const obj = new RewardedAdManager();
+    sendEvent.yield(AdEventType.CLOSED);
 
-    expect(event.calledWith('adClosed', obj.requestAdIfNeeded)).toEqual(true);
+    assert.calledOnce(request);
   });
 });
 
 describe('request ad', () => {
   it('request a rewarded ad', async () => {
-    const request = sandbox.stub(AdMobRewarded, 'requestAd').resolves();
+    sendEvent.yields(RewardedAdEventType.LOADED);
 
     await manager.requestAdIfNeeded();
 
-    expect(request.called).toEqual(true);
+    assert.calledOnce(load);
   });
 
   it('throws if request fails', async () => {
     const error = new Error('fail');
-    const request = sandbox.stub(AdMobRewarded, 'requestAd').rejects(error);
+    sendEvent.yields(AdEventType.ERROR, error);
 
     try {
       await manager.requestAdIfNeeded();
@@ -40,97 +67,93 @@ describe('request ad', () => {
       expect(e).toEqual(error);
     }
 
-    expect(request.called).toEqual(true);
+    assert.calledOnce(load);
   });
 
   it('does not request if is ready', async () => {
-    const request = sandbox.stub(AdMobRewarded, 'requestAd').resolves();
+    sendEvent.yields(RewardedAdEventType.LOADED);
+    sandbox
+      .stub(manager, 'isReady')
+      .returns(true)
+      .onFirstCall()
+      .returns(false);
 
     await manager.requestAdIfNeeded();
     await manager.requestAdIfNeeded();
 
-    expect(request.callCount).toEqual(1);
+    assert.calledOnce(load);
   });
 
   it('does not request if is loading', async () => {
-    const request = sandbox
-      .stub(AdMobRewarded, 'requestAd')
+    sendEvent.yields(RewardedAdEventType.LOADED);
+    sandbox
+      .stub(manager, 'isReady')
+      .returns(true)
       .onFirstCall()
-      .returns(
-        new Promise<void>(res => {
-          setImmediate(res);
-        }),
-      )
-      .resolves();
+      .returns(false);
 
-    manager.requestAdIfNeeded();
     await manager.requestAdIfNeeded();
 
-    expect(request.calledOnce).toEqual(true);
+    load.reset();
+    await manager.requestAdIfNeeded();
+
+    assert.notCalled(load);
+    assert.notCalled(unsubscribe);
+  });
+
+  it('unsubscribes from event when request finishes', async () => {
+    const request = manager.requestAdIfNeeded();
+    sendEvent.yield(RewardedAdEventType.LOADED);
+    await request;
+
+    assert.calledOnce(unsubscribe);
   });
 });
 
 describe('show ad', () => {
   it('is ready', async () => {
-    sandbox.stub(manager, 'isReady' as any).value(true);
-    const showAd = sandbox.stub(AdMobRewarded, 'showAd').resolves();
-    const remove = sandbox.stub();
-    const event = sandbox
-      .stub(AdMobRewarded, 'addEventListener')
-      .returns({ remove });
+    sandbox.stub(manager, 'isReady').returns(true);
 
     setImmediate(() => {
-      event.callArg(1);
+      sendEvent.yield(RewardedAdEventType.EARNED_REWARD);
     });
     await manager.showAd();
 
-    expect(showAd.called).toEqual(true);
-    expect(remove.called).toEqual(true);
+    assert.calledOnce(show);
+    assert.calledOnce(unsubscribe);
   });
 
   it('is not ready', async () => {
-    // const isReady = sandbox.stub(manager, 'isReady').resolves(false as any);
-    const showAd = sandbox.stub(AdMobRewarded, 'showAd').resolves();
-
     await manager.showAd();
 
-    // expect(isReady.called).toEqual(true);
-    expect(showAd.called).toEqual(false);
+    assert.notCalled(show);
   });
 
-  // TODO
-  // it.only('waits for the ad to load', async () => {
-  //   const ready = sandbox
-  //     .stub(manager, 'isReady')
-  //     .onFirstCall()
-  //     .resolves(false)
-  //     .onSecondCall()
-  //     .resolves(true);
-  //   const request = sandbox.stub(AdMobRewarded, 'requestAd');
+  it('waits for the ad to load', async () => {
+    manager.requestAdIfNeeded();
 
-  //   const req = manager.requestAdIfNeeded();
-  //   setImmediate(manager.showAd);
+    const showPromise = manager.showAd();
+    assert.notCalled(show);
 
-  //   console.log('aqui');
-  //   expect(ready.callCount).toEqual(1);
-  //   request.resolves();
-  //   await req;
-  //   expect(ready.callCount).toEqual(2);
-  // });
+    sandbox.stub(manager, 'isReady').returns(true);
+    sendEvent.yields(RewardedAdEventType.EARNED_REWARD);
+    sendEvent.yield(RewardedAdEventType.LOADED);
+
+    await showPromise;
+
+    assert.calledOnce(show);
+    assert.calledOnce(load);
+  });
 
   it('resolves when reward is given', async () => {
-    sandbox.stub(manager, 'isReady' as any).value(true);
-    sandbox.stub(AdMobRewarded, 'showAd');
-    const event = sandbox
-      .stub(AdMobRewarded, 'addEventListener')
-      .returns({ remove: sandbox.stub() });
+    sandbox.stub(manager, 'isReady').returns(true);
     let resolved = false;
 
     const promise = manager.showAd();
 
     expect(resolved).toEqual(false);
     setImmediate(() => {
-      event.callArg(1);
+      sendEvent.yield(RewardedAdEventType.EARNED_REWARD);
     });
 
     promise.then(() => {
@@ -140,6 +163,31 @@ describe('show ad', () => {
     await promise;
 
     expect(resolved).toEqual(true);
-    expect(event.called).toEqual(true);
+  });
+
+  it('unsubscribes from listener if new request is made', () => {
+    sandbox.stub(manager, 'isReady').returns(true);
+
+    manager.showAd();
+    manager.showAd();
+
+    assert.calledOnce(unsubscribe);
+  });
+
+  it('ignores unexpected events', async () => {
+    const error = new Error('error');
+    sandbox.stub(manager, 'isReady').returns(true);
+
+    setImmediate(() => {
+      sendEvent.yield(RewardedAdEventType.LOADED);
+      sendEvent.yield(AdEventType.ERROR, error);
+    });
+
+    try {
+      await manager.showAd();
+      fail('should have thrown error');
+    } catch (e) {
+      expect(e).toBe(error);
+    }
   });
 });
