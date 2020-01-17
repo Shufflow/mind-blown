@@ -3,6 +3,8 @@ package com.shufflow.MindBlown;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import io.invertase.firebase.admob.ReactNativeFirebaseAdmobPackage;
+import io.invertase.firebase.ReactNativeFirebaseAppPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import cl.json.RNSharePackage;
 import fr.greweb.reactnativeviewshot.RNViewShotPackage;
@@ -45,6 +47,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
             new MainReactPackage(),
+            new ReactNativeFirebaseAdmobPackage(),
+            new ReactNativeFirebaseAppPackage(),
             new AsyncStoragePackage(),
             new RNSharePackage(),
             new RNViewShotPackage(),

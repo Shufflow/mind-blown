@@ -34,6 +34,7 @@
     ],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "sourceMap": true
-  }
+    "sourceMap": true,
+    "skipLibCheck": true // TODO: remove this after https://github.com/invertase/react-native-firebase/issues/2614 has been fixed and released
+  },
 }
