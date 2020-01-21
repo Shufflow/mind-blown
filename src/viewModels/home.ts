@@ -1,4 +1,4 @@
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationInjectedProps } from 'react-navigation';
 import lodash from 'lodash';
 import RNTextSize from 'react-native-text-size';
 import { Subject, combineLatest, Subscription, Observable } from 'rxjs';
@@ -22,7 +22,7 @@ export enum SelectedThumb {
   Down = 'down',
 }
 
-export interface Props extends LocaleConsumerProps, NavigationScreenProps {}
+export interface Props extends LocaleConsumerProps, NavigationInjectedProps {}
 
 interface FontSpec {
   fontFamily: string;

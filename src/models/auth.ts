@@ -1,4 +1,7 @@
-import { GoogleSignin, statusCodes } from 'react-native-google-signin';
+import {
+  GoogleSignin,
+  statusCodes,
+} from '@react-native-community/google-signin';
 import firebase from 'firebase';
 
 const googleLogin = async () => {
@@ -7,7 +10,6 @@ const googleLogin = async () => {
 
     const credential = firebase.auth.GoogleAuthProvider.credential(
       data.idToken,
-      data.accessToken!,
     );
 
     await firebase.auth().signInAndRetrieveDataWithCredential(credential);

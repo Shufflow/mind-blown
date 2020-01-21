@@ -3,7 +3,7 @@ import React from 'react';
 import { View, NativeModules as RNNativeModules } from 'react-native';
 
 jest.mock('firebase', () => new MockFirebase());
-jest.mock('react-native-google-signin', () => {
+jest.mock('@react-native-community/google-signin', () => {
   const GoogleSigninButton = () => React.createElement<any>(View);
   GoogleSigninButton.Size = { Wide: 0 };
 

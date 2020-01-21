@@ -1,7 +1,7 @@
 // tslint:disable:file-name-casing
 
 import React from 'react';
-import { useScreens } from 'react-native-screens';
+import { enableScreens } from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
 import { compose } from '@typed/compose';
@@ -23,7 +23,7 @@ const Constants = {
 
 class App extends React.PureComponent<LocaleProviderProps> {
   async componentDidMount() {
-    useScreens();
+    enableScreens();
     SplashScreen.hide();
 
     this.props.setLocale(await setupLocale());

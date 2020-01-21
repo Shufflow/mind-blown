@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar, Text, View, SafeAreaView } from 'react-native';
-import { NavigationScreenProps } from 'react-navigation';
+import { NavigationInjectedProps } from 'react-navigation';
 
 import Button, { ButtonTheme } from '@components/Button';
 
@@ -30,9 +30,9 @@ const withHeader = <T extends Object>({
   rightButton,
 }: HOCProps<T>) => (
   WrappedComponent: React.ComponentType<T>,
-): React.ComponentType<T & NavigationScreenProps> => {
+): React.ComponentType<T & NavigationInjectedProps> => {
   class ComponentWithHeader extends React.PureComponent<
-    T & NavigationScreenProps
+    T & NavigationInjectedProps
   > {
     wrappedRef?: any;
 

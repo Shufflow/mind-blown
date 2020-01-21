@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, ActivityIndicator, Switch, Text } from 'react-native';
-import { GoogleSignin, GoogleSigninButton } from 'react-native-google-signin';
+import {
+  GoogleSignin,
+  GoogleSigninButton,
+} from '@react-native-community/google-signin';
 import { compose } from '@typed/compose';
 import Config from 'react-native-config';
 
