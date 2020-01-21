@@ -90,3 +90,4 @@ google_api_key.json
 # Secret
 .gitsecret/keys/random_seed
 !*.secret
+tmp.xcconfig

@@ -1,7 +1,7 @@
 import { Platform } from 'react-native';
 import firebase from 'firebase';
 import firebaseRN from '@react-native-firebase/app';
-import { GoogleSignin } from 'react-native-google-signin';
+import { GoogleSignin } from '@react-native-community/google-signin';
 import Config from 'react-native-config';
 
 const firebaseInit = () => {

@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import RNLanguages from 'react-native-languages';
 import i18n from 'i18n-js';
 

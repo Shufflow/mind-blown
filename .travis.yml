@@ -139,7 +139,7 @@ jobs:
     - stage: Build iOS
       if: type = pull_request
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
 
       cache:
         - bundler
@@ -155,7 +155,7 @@ jobs:
     - stage: Release iOS QA
       if: branch = develop AND NOT type = pull_request
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
 
       cache:
         - bundler
@@ -171,7 +171,7 @@ jobs:
     - stage: Release iOS Distribution
       if: tag IS present
       os: osx
-      osx_image: xcode10.2
+      osx_image: xcode11.3
 
       cache:
         - bundler

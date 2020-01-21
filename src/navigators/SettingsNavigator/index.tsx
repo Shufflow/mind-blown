@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text } from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
 import t from '@locales';
 import RouteName from '@routes';
@@ -19,7 +20,7 @@ import styles from './styles';
 const routes = {
   [RouteName.Settings]: Settings,
   [RouteName.ModeratePhrases]: ModeratePhrases,
-  [RouteName.SendSuggestion]: SendSuggestion,
+  [RouteName.SendSuggestion]: SendSuggestion as any,
   [RouteName.DevMenu]: DevMenu,
   [RouteName.Licenses]: Licenses,
   [RouteName.About]: About,
@@ -32,17 +33,17 @@ const SettingsNavigator = createStackNavigator(routes, {
     }
 
     return {
-      headerLeft: null,
+      headerLeft: undefined,
       headerStyle: styles.header(navigation.color.dark),
       headerTintColor: navigation.color.light,
-      headerTitle: (
+      headerTitle: () => (
         <Text style={styles.text(navigation.color.light)}>
           {t(navigation.state.routeName)}
         </Text>
       ),
+      headerTitleAlign: 'center',
     };
   },
-  headerLayoutPreset: 'center',
   mode: 'modal',
 });
 
