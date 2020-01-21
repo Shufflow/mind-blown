@@ -1,6 +1,7 @@
 import { createSandbox, assert } from 'sinon';
 import { first } from 'rxjs/operators';
 import Share from 'react-native-share';
+import RNTextSize from 'react-native-text-size';
 
 import RouteName from '@routes';
 import sleep from '@utils/sleep';
@@ -11,6 +12,7 @@ const sandbox = createSandbox();
 let viewModel: HomeViewModel;
 
 beforeEach(() => {
+  sandbox.stub(RNTextSize, 'measure').resolves({ height: 0, width: 0 } as any);
   viewModel = new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
   viewModel.handlePhraseContainerSize({ height: 100, width: 100 });
 });
