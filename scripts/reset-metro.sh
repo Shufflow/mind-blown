@@ -1,1 +1,3 @@
-yarn start --reset-cache
+#! /bin/sh
+
+watchman watch-del-all && yarn start --reset-cache
