@@ -6,6 +6,8 @@ import RNTextSize from 'react-native-text-size';
 import RouteName from '@routes';
 import sleep from '@utils/sleep';
 
+import Analytics from 'src/models/analytics';
+
 import HomeViewModel, { SelectedThumb } from '../home';
 
 const sandbox = createSandbox();
@@ -17,6 +19,14 @@ beforeEach(() => {
   viewModel.handlePhraseContainerSize({ height: 100, width: 100 });
 });
 afterEach(sandbox.restore);
+
+it('sets the screen name on init', () => {
+  const setScreen = sandbox.stub(Analytics, 'currentScreen');
+
+  new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
+
+  assert.calledWithExactly(setScreen, RouteName.Home);
+});
 
 describe('get random phrase', () => {
   const phrase = { id: 'foo', en: 'xpto' };
@@ -91,6 +101,24 @@ describe('get random phrase', () => {
 
     expect(result.selectedThumb).toBeNull();
   });
+
+  it('logs the analytics event', async () => {
+    const logEvent = sandbox.stub(Analytics, 'viewPhrase');
+    random.resolves(phrase);
+
+    await viewModel.getRandomPhrase();
+
+    assert.calledWithExactly(logEvent, phrase.id);
+  });
+
+  it('does not log the analytics event if phrase is empty', async () => {
+    const logEvent = sandbox.stub(Analytics, 'viewPhrase');
+    random.resolves(undefined);
+
+    await viewModel.getRandomPhrase();
+
+    assert.notCalled(logEvent);
+  });
 });
 
 describe('get phrase content', () => {
@@ -141,9 +169,18 @@ describe('handle press settings', () => {
 });
 
 describe('handle press review', () => {
+  const phrase = { id: 'foo' };
+  let review: sinon.SinonStub;
+  let getState: sinon.SinonStub;
+  let setState: sinon.SinonStub;
+
+  beforeEach(() => {
+    review = sandbox.stub(viewModel.dataSource, 'reviewPhrase').resolves();
+    getState = sandbox.stub(viewModel, 'getState').returns({ phrase } as any);
+    setState = sandbox.stub(viewModel, 'setState');
+  });
   it('aborts when phrase is null', async () => {
-    const review = sandbox.stub(viewModel.dataSource, 'reviewPhrase');
-    sandbox.stub(viewModel, 'getState').returns({ phrase: null } as any);
+    getState.returns({ phrase: null } as any);
 
     await viewModel.handlePressReview(true)();
 
@@ -151,10 +188,6 @@ describe('handle press review', () => {
   });
 
   it('dispatches thumb up when positive', async () => {
-    sandbox.stub(viewModel.dataSource, 'reviewPhrase').resolves();
-    sandbox.stub(viewModel, 'getState').returns({ phrase: {} } as any);
-    const setState = sandbox.stub(viewModel, 'setState');
-
     await viewModel.handlePressReview(true)();
 
     expect(
@@ -165,10 +198,6 @@ describe('handle press review', () => {
   });
 
   it('dispatches thumb down when positive', async () => {
-    sandbox.stub(viewModel.dataSource, 'reviewPhrase').resolves();
-    sandbox.stub(viewModel, 'getState').returns({ phrase: {} } as any);
-    const setState = sandbox.stub(viewModel, 'setState');
-
     await viewModel.handlePressReview(false)();
 
     expect(
@@ -179,23 +208,25 @@ describe('handle press review', () => {
   });
 
   it('reviews a phrase', async () => {
-    const phrase = { id: 'foo' };
-    const review = sandbox.stub(viewModel.dataSource, 'reviewPhrase');
-    sandbox.stub(viewModel, 'getState').returns({ phrase } as any);
-
     await viewModel.handlePressReview(true)();
 
     expect(review.calledWith(phrase.id, true)).toEqual(true);
   });
 
   it('suppress error as state dispatch', async () => {
-    sandbox.stub(viewModel.dataSource, 'reviewPhrase').rejects();
-    sandbox.stub(viewModel, 'getState').returns({ phrase: {} } as any);
-    const setState = sandbox.stub(viewModel, 'setState');
+    review.rejects();
 
     await viewModel.handlePressReview(true)();
 
     expect(setState.calledWith({ selectedThumb: null } as any)).toEqual(true);
+  });
+
+  it('logs the analytic event', async () => {
+    const logEvent = sandbox.stub(Analytics, 'reviewPhrase');
+
+    await viewModel.handlePressReview(true)();
+
+    assert.calledWithExactly(logEvent, phrase.id, true);
   });
 });
 
@@ -219,12 +250,15 @@ describe('handle view shot ref', () => {
 });
 
 describe('handle press share', () => {
+  const phrase = { id: 'id' };
+  const app = 'app';
   let capture: sinon.SinonStub;
   let share: sinon.SinonStub;
 
   beforeEach(() => {
     capture = sandbox.stub();
-    share = sandbox.stub(Share, 'open').resolves();
+    share = sandbox.stub(Share, 'open').resolves({ app });
+    sandbox.stub(viewModel, 'getState').returns({ phrase } as any);
   });
 
   it('does nothing if viewShot is undefined', async () => {
@@ -265,5 +299,15 @@ describe('handle press share', () => {
     } catch (e) {
       fail(e);
     }
+  });
+
+  it('logs the analytic event', async () => {
+    const logEvent = sandbox.stub(Analytics, 'sharePhrase');
+
+    viewModel.handleViewShotRef({ capture } as any);
+
+    await viewModel.handlePressShare();
+
+    assert.calledWithExactly(logEvent, phrase.id, app);
   });
 });

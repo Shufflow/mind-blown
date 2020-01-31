@@ -115,11 +115,12 @@ class PhrasesDataSource {
     });
   }
 
-  async sendSuggestion(content: string): Promise<void> {
-    this.firestore.collection('suggestion').add({
+  async sendSuggestion(content: string): Promise<string> {
+    const { id } = await this.firestore.collection('suggestion').add({
       content,
       date: new Date(),
     });
+    return id;
   }
 
   processPhrase(data: firestore.DocumentData): firestore.DocumentData {

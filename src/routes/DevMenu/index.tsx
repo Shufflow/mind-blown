@@ -15,6 +15,7 @@ import withDoneButton from '@hocs/withDoneButton';
 import ListItem from '@components/ListItem';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
+import Analytics from 'src/models/analytics';
 
 import googleLogin from 'src/models/auth';
 import IAP from 'src/models/iap';
@@ -38,6 +39,7 @@ class DevMenu extends React.Component<Props, State> {
   }
 
   componentDidMount() {
+    Analytics.currentScreen(RouteName.DevMenu);
     this.checkSignIn();
   }
 

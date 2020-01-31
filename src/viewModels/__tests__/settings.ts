@@ -2,7 +2,10 @@ import { createSandbox, assert } from 'sinon';
 import { Alert } from 'react-native';
 import * as RNIap from 'react-native-iap';
 
+import RouteName from '@routes';
+
 import IAP, { IAPErrorCodes } from 'src/models/iap';
+import Analytics from 'src/models/analytics';
 
 import SettingsViewModel, { State } from '../settings';
 
@@ -59,6 +62,14 @@ describe('init', () => {
     await viewModel.init();
 
     assert.calledWith(setState, { isIAPAvailable });
+  });
+
+  it('sets the current screen', async () => {
+    const setScreen = sandbox.stub(Analytics, 'currentScreen');
+
+    await viewModel.init();
+
+    assert.calledWithExactly(setScreen, RouteName.Settings);
   });
 });
 
@@ -250,31 +261,38 @@ describe('show rewarded ad', () => {
 });
 
 describe('handle set locale', () => {
-  it("sets the context's provider locale", () => {
-    const setLocale = sandbox.stub();
+  let setLocale: sinon.SinonStub;
+  let setParams: sinon.SinonStub;
+
+  beforeEach(() => {
+    setParams = sandbox.stub();
+    setLocale = sandbox.stub();
     sandbox.stub(viewModel, 'getProps').returns({
       setLocale,
       navigation: {
-        setParams: sandbox.stub(),
+        setParams,
       },
     } as any);
+  });
 
+  it("sets the context's provider locale", () => {
     viewModel.handleSetLocale('foobar');
 
     expect(setLocale.calledWith('foobar')).toEqual(true);
   });
 
   it('updates navigation params', () => {
-    const setParams = sandbox.stub();
-    sandbox.stub(viewModel, 'getProps').returns({
-      navigation: {
-        setParams,
-      },
-      setLocale: sandbox.stub(),
-    } as any);
-
     viewModel.handleSetLocale('foobar');
 
     expect(setParams.called).toEqual(true);
+  });
+
+  it('logs the analytics event', async () => {
+    const locale = 'foobar';
+    const logEvent = sandbox.stub(Analytics, 'selectLanguage');
+
+    viewModel.handleSetLocale(locale);
+
+    assert.calledWithExactly(logEvent, locale);
   });
 });

@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 
+import RouteName from '@routes';
 import t, { AdDiscountAlert as strings } from '@locales';
 import { LocaleConsumerProps } from '@hocs/withLocale';
 import { AdsConsumerProps } from '@hocs/withAds';
@@ -11,6 +12,7 @@ import IAP, { IAPErrorCodes } from 'src/models/iap';
 import AdIds from 'src/models/ads';
 
 import RewardedAd from 'src/models/rewardedAd';
+import Analytics from 'src/models/analytics';
 
 export interface Props
   extends LocaleConsumerProps,
@@ -33,6 +35,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
   });
 
   init = async () => {
+    Analytics.currentScreen(RouteName.Settings);
     /**
      * TODO
      * Interstitial ads have been temporarily removed while IAP is not working
@@ -61,6 +64,7 @@ class SettingsViewModel extends ViewModel<Props, State> {
   handleSetLocale = (locale: string) => {
     this.getProps().setLocale(locale);
     this.getProps().navigation.setParams({ updateLocale: '' });
+    Analytics.selectLanguage(locale);
   };
 
   // Private Methods

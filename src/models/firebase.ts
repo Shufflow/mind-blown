@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import firebase from 'firebase';
 import { GoogleSignin } from '@react-native-community/google-signin';
 import Config from 'react-native-config';
+import analytics from '@react-native-firebase/analytics';
 
 const fbConfig = {
   apiKey: Config.FIREBASE_API_KEY as string,
@@ -20,3 +21,4 @@ GoogleSignin.configure({
   iosClientId: Config.FIREBASE_IOS_CLIENT_ID,
 });
 GoogleSignin.signInSilently().catch(() => {});
+analytics().setUserProperty('os', Platform.OS);
