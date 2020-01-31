@@ -1,4 +1,4 @@
-import { createSandbox } from 'sinon';
+import { createSandbox, assert } from 'sinon';
 import * as RNIap from 'react-native-iap';
 
 import { wipeMemoizeCache } from '@utils/memoize';
@@ -12,16 +12,22 @@ beforeEach(wipeMemoizeCache);
 afterEach(sandbox.restore);
 
 describe('setup', () => {
-  beforeEach(() => {
+  let init: sinon.SinonStub;
+  let getProducts: sinon.SinonStub;
+
+  beforeEach(async () => {
+    init = sandbox.stub(RNIap, 'initConnection').resolves('true');
+    getProducts = sandbox
+      .stub(RNIap, 'getProducts')
+      .resolves(Object.values(SKU) as any);
+
+    await IAP.isAvailable;
     IAP.isAvailable = new Promise(resolve => {
       (IAP as any).resolveIsAvailable = resolve;
     });
   });
 
   it('has IAP available', async () => {
-    const init = sandbox.stub(RNIap, 'initConnection').resolves('true');
-    sandbox.stub(RNIap, 'getProducts').resolves(Object.values(SKU) as any);
-
     await IAP.setup();
     const result = await IAP.isAvailable;
 
@@ -30,8 +36,8 @@ describe('setup', () => {
   });
 
   it('has IAP unavailable', async () => {
-    const init = sandbox.stub(RNIap, 'initConnection').resolves('false');
-    sandbox.stub(RNIap, 'getProducts').resolves([]);
+    init.resolves('false');
+    getProducts.resolves([]);
 
     await IAP.setup();
     const result = await IAP.isAvailable;
@@ -88,10 +94,11 @@ describe('refresh ad free', () => {
 describe('buy ad free', () => {
   let finishTrans: sinon.SinonStub;
   let buy: sinon.SinonStub;
+  const purchase: any = 'obj';
 
   beforeEach(() => {
     finishTrans = sandbox.stub(RNIap, 'finishTransaction');
-    buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+    buy = sandbox.stub(RNIap, 'requestPurchase').resolves(purchase);
   });
 
   it('completes a purchase', async () => {
@@ -99,7 +106,7 @@ describe('buy ad free', () => {
 
     expect(result).toEqual(true);
     expect(buy.calledWith(SKU.adFree)).toEqual(true);
-    expect(finishTrans.called).toEqual(true);
+    expect(finishTrans.calledWithExactly(purchase)).toBe(true);
   });
 
   it('does not throw payment declined', async () => {
@@ -131,20 +138,19 @@ describe('buy ad free', () => {
 describe('buy ad free discount', () => {
   let finishTrans: sinon.SinonStub;
   let buy: sinon.SinonStub;
+  const purchase: any = 'obj';
 
   beforeEach(() => {
     finishTrans = sandbox.stub(RNIap, 'finishTransaction');
-    buy = sandbox.stub(RNIap, 'buyProduct').resolves();
+    buy = sandbox.stub(RNIap, 'requestPurchase').resolves(purchase);
   });
 
   it('completes a purchase', async () => {
-    buy.resolves();
-
     const result = await IAP.buyAdFreeDiscount();
 
     expect(result).toEqual(true);
     expect(buy.calledWith(SKU.adFreeDiscount)).toEqual(true);
-    expect(finishTrans.called).toEqual(true);
+    assert.calledWithExactly(finishTrans, purchase);
   });
 
   it('does not throw payment declined', async () => {
