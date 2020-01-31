@@ -854,7 +854,7 @@ SOFTWARE.
 
 -----
 
-The following software may be included in this product: @react-native-firebase/admob, @react-native-firebase/crashlytics. A copy of the source code may be downloaded from https://github.com/invertase/react-native-firebase/tree/master/packages/admob (@react-native-firebase/admob), https://github.com/invertase/react-native-firebase/tree/master/packages/crashlytics (@react-native-firebase/crashlytics). This software contains the following license and notice below:
+The following software may be included in this product: @react-native-firebase/admob, @react-native-firebase/analytics, @react-native-firebase/crashlytics. A copy of the source code may be downloaded from https://github.com/invertase/react-native-firebase/tree/master/packages/admob (@react-native-firebase/admob), https://github.com/invertase/react-native-firebase/tree/master/packages/analytics (@react-native-firebase/analytics), https://github.com/invertase/react-native-firebase/tree/master/packages/crashlytics (@react-native-firebase/crashlytics). This software contains the following license and notice below:
 
 Apache-2.0 License
 ------------------

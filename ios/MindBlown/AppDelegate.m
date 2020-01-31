@@ -27,6 +27,7 @@
     initWithGoogleAppID:[ReactNativeConfig envFor:@"FIREBASE_IOS_APP_ID"]
     GCMSenderID:[ReactNativeConfig envFor:@"FIREBASE_MSG_SENDER_ID"]
   ]];
+  [FIRAnalytics setAnalyticsCollectionEnabled:true];
 
   [GADMobileAds configureWithApplicationID:[ReactNativeConfig envFor:@"ADMOB_IOS_ID"]];
 
