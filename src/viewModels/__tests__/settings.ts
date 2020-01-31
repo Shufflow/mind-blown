@@ -48,7 +48,11 @@ describe('init', () => {
     setState = sandbox.stub(viewModel, 'setState');
   });
 
-  it('sets iap availability', async () => {
+  /**
+   * TODO
+   * Interstitial ads have been temporarily removed while IAP is not working
+   */
+  it.skip('sets iap availability', async () => {
     const isIAPAvailable = true;
     iap.value(Promise.resolve(isIAPAvailable));
 

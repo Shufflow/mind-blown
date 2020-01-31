@@ -221,7 +221,11 @@ describe('ads', () => {
     ad = sandbox.stub(dataSource.adManager, 'showAd').resolves();
   });
 
-  it('shows ad after 3 phrases', async () => {
+  /**
+   * TODO
+   * Interstitial ads have been temporarily removed while IAP is not working
+   */
+  it.skip('shows ad after 3 phrases', async () => {
     sandbox.stub(Math, 'random').returns(0);
     (__DEV__ as any) = false;
 
