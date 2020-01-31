@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, TextInput, ActivityIndicator } from 'react-native';
 
+import RouteName from '@routes';
 import t, { Global as strings } from '@locales';
 import { goBack } from '@utils/navigation';
 
@@ -8,6 +9,7 @@ import HeaderButton from '@components/HeaderButton';
 import AdBanner from '@components/AdBanner';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
+import Analytics from 'src/models/analytics';
 
 import AdIds from 'src/models/ads';
 import PhrasesDataSource from 'src/models/phrases';
@@ -46,6 +48,10 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
     });
   }
 
+  componentDidMount() {
+    Analytics.currentScreen(RouteName.SendSuggestion);
+  }
+
   onChangeText = (text: string) => {
     this.text = text;
   };
@@ -57,9 +63,10 @@ class SuggestionForm extends React.PureComponent<ColoredScreenProps> {
 
     const { navigation } = this.props;
     navigation.setParams({ isLoading: true });
-    await this.dataSource.sendSuggestion(this.text);
+    const id = await this.dataSource.sendSuggestion(this.text);
     navigation.setParams({ isLoading: false });
     navigation.goBack();
+    Analytics.sentSuggestion(id);
   };
 
   render() {

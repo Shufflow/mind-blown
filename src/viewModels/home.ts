@@ -16,6 +16,7 @@ import PhrasesDataSource, {
   Phrase as PhraseType,
   Phrase,
 } from 'src/models/phrases';
+import Analytics from 'src/models/analytics';
 
 export enum SelectedThumb {
   Up = 'up',
@@ -65,6 +66,7 @@ class HomeViewModel extends ViewModel<Props, State> {
     setState: SetState<Props, State>,
   ) {
     super(getProps, getState, setState);
+    Analytics.currentScreen(RouteName.Home);
 
     this.stateObservable = combineLatest(
       this.sizeSubject.pipe(throttleTime(Constants.sizeThrottleTimeout)),
@@ -103,6 +105,7 @@ class HomeViewModel extends ViewModel<Props, State> {
 
     try {
       const phrase = await this.dataSource.getRandomPhrase();
+      phrase && Analytics.viewPhrase(phrase.id);
       this.phraseSubject.next(phrase);
       clearTimeout(timeout);
     } catch (e) {
@@ -131,7 +134,10 @@ class HomeViewModel extends ViewModel<Props, State> {
     });
 
     try {
-      await this.dataSource.reviewPhrase(phrase.id, review);
+      await Promise.all([
+        this.dataSource.reviewPhrase(phrase.id, review),
+        Analytics.reviewPhrase(phrase.id, review),
+      ]);
     } catch (e) {
       this.setState({
         selectedThumb: null,
@@ -157,10 +163,12 @@ class HomeViewModel extends ViewModel<Props, State> {
     try {
       const url = await this.viewShot.capture();
 
-      await Share.open({
+      const { app } = await Share.open({
         type: 'image/png',
         url: `file://${url}`,
       });
+
+      Analytics.sharePhrase(this.getState().phrase!.id, app);
     } catch (e) {
       // tslint:disable-next-line: no-console
       console.error(e);
