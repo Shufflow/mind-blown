@@ -13,9 +13,8 @@ import { withAdsProvider } from '@hocs/withAds';
 import { LoaderComponent } from '@components/Loader';
 
 import AppNavigator from 'src/navigators/AppNavigator';
-import firebaseInit from 'src/models/firebase';
-
-firebaseInit();
+import 'src/models/firebase';
+import '@utils/errors';
 
 const Constants = {
   minimumBkgDurationForInstall: 10,

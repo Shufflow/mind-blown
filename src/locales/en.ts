@@ -45,6 +45,7 @@ const strings: Strings = {
   [DevMenu.reviewPhrases]: 'Review Phrases',
   [DevMenu.showAds]: 'Show Ads',
   [DevMenu.logout]: 'Logout',
+  [DevMenu.forceCrash]: 'Force Crash',
 
   [AdDiscountAlert.title]: 'Get 50% OFF',
   [AdDiscountAlert.message]:

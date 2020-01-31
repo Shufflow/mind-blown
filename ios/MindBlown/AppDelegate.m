@@ -5,6 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+@import Firebase;
 @import GoogleMobileAds;
 
 #import <React/RCTBridge.h>
@@ -21,6 +22,12 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  [FIRApp configureWithOptions:
+   [[FIROptions alloc]
+    initWithGoogleAppID:[ReactNativeConfig envFor:@"FIREBASE_IOS_APP_ID"]
+    GCMSenderID:[ReactNativeConfig envFor:@"FIREBASE_MSG_SENDER_ID"]
+  ]];
+
   [GADMobileAds configureWithApplicationID:[ReactNativeConfig envFor:@"ADMOB_IOS_ID"]];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];

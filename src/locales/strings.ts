@@ -26,6 +26,7 @@ export enum DevMenu {
   reviewPhrases = 'reviewPhrases',
   showAds = 'showAds',
   logout = 'logout',
+  forceCrash = 'forceCrash',
 }
 
 export enum AdDiscountAlert {

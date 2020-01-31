@@ -69,6 +69,10 @@ class DevMenu extends React.Component<Props, State> {
     this.props.checkIsAdFree();
   };
 
+  onPressCrash = () => {
+    throw new Error('forced crash');
+  };
+
   renderSignedIn = () => (
     <React.Fragment>
       <ListItem
@@ -82,6 +86,7 @@ class DevMenu extends React.Component<Props, State> {
           onValueChange={this.onToggleAdFree}
         />
       </ListItem>
+      <ListItem label={t(strings.forceCrash)} onPress={this.onPressCrash} />
       <ListItem
         label={t(strings.logout)}
         onPress={this.onPressLogout}

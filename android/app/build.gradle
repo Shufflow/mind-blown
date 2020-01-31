@@ -1,5 +1,7 @@
 apply plugin: "com.android.application"
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
 
@@ -167,6 +169,9 @@ android {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.release
         }
+        debug {
+            signingConfig signingConfigs.release
+        }
     }
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
@@ -231,6 +236,8 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
-
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+
+crashlytics {
+  enableNdk true
+}
