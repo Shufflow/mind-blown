@@ -206,7 +206,7 @@ describe('show rewarded ad', () => {
   });
   it('shows the ad', async () => {
     const ad = sandbox.stub(viewModel.rewardedAd, 'showAd');
-    sandbox.stub(RNIap, 'buyProduct');
+    sandbox.stub(RNIap, 'requestPurchase');
 
     await (viewModel as any).showRewardedAd();
 

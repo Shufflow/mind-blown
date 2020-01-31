@@ -338,7 +338,7 @@ PODS:
   - RNGoogleSignin (3.0.4):
     - GoogleSignIn (~> 5.0.0)
     - React
-  - RNIap (2.5.5):
+  - RNIap (4.4.0):
     - React
   - RNLanguages (3.0.2):
     - React
@@ -572,7 +572,7 @@ SPEC CHECKSUMS:
   RNFBApp: 5b215aacc09105a1761de31b9a0eb2abcce06253
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
   RNGoogleSignin: a00f87261ea13df9a5cea8deafa6927d6f2c3562
-  RNIap: e25e549ee35ca873c5456383f334933fd1ec1a1e
+  RNIap: 87f0bc97fb427d3f1773d5160966a8808f961c94
   RNLanguages: 962e562af0d34ab1958d89bcfdb64fafc37c513e
   RNReanimated: 031fe8d9ea93c2bd689a40f05320ef9d96f74d7f
   RNScreens: b20bdb598fe95ac37aada88a5e92f36622549e49

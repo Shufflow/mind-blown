@@ -67,11 +67,11 @@ jest.mock('react-native-languages', () => ({
   locale: 'en',
 }));
 jest.mock('react-native-iap', () => ({
-  buyProduct: Promise.resolve,
   finishTransaction: jest.fn(),
-  getAvailablePurchases: async () => Promise.resolve([]),
-  getProducts: async () => Promise.resolve([]),
-  initConnection: Promise.resolve,
+  getAvailablePurchases: jest.fn().mockResolvedValue([]),
+  getProducts: jest.fn().mockResolvedValue([]),
+  initConnection: jest.fn().mockResolvedValue('true'),
+  requestPurchase: jest.fn().mockResolvedValue(undefined),
 }));
 jest.mock('react-native-text-size', () => ({
   measure: jest.fn(),

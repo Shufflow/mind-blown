@@ -73,8 +73,8 @@ class IAPManager {
 
   private buyProduct = async (sku: string) => {
     try {
-      await RNIap.buyProduct(sku);
-      RNIap.finishTransaction();
+      const purchase = await RNIap.requestPurchase(sku, false);
+      await RNIap.finishTransaction(purchase);
       return true;
     } catch (e) {
       if (e.code !== IAPErrorCodes.unknown) {

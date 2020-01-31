@@ -6,8 +6,8 @@ buildscript {
         minSdkVersion = 16
         compileSdkVersion = 28
         targetSdkVersion = 28
-        // googlePlayServicesVersion = "16+"
-        // firebaseVersion = "17.6.0"
+        androidXAnnotation = "1.1.0"
+        androidXBrowser = "1.0.0"
     }
     repositories {
         google()
