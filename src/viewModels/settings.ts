@@ -33,9 +33,13 @@ class SettingsViewModel extends ViewModel<Props, State> {
   });
 
   init = async () => {
-    const isIAPAvailable = await IAP.isAvailable;
+    /**
+     * TODO
+     * Interstitial ads have been temporarily removed while IAP is not working
+     */
+    // const isIAPAvailable = await IAP.isAvailable;
     this.setState({
-      isIAPAvailable,
+      isIAPAvailable: false,
     });
   };
 

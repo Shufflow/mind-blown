@@ -5,7 +5,6 @@ import 'firebase/firestore';
 import { Locales } from '@locales';
 
 import AdIds, { InterstitialAd } from './ads';
-import IAP from './iap';
 import Persist from './persist';
 
 export interface Phrase {
@@ -76,21 +75,28 @@ class PhrasesDataSource {
   };
 
   async getRandomPhrase(): Promise<Phrase | null> {
-    const [nextPhrase, usedPhrasesIds] = await Promise.all<
-      Phrase | null,
-      Set<string>
-    >([this.getNextPhrase(), this.persist.getUsedPhrases()]);
+    const nextPhrase = await this.getNextPhrase();
+
+    /**
+     * TODO
+     * Interstitial ads have been temporarily removed while IAP is not working
+     */
+    // const [nextPhrase, usedPhrasesIds] = await Promise.all<
+    //   Phrase | null,
+    //   Set<string>
+    // >([this.getNextPhrase(), this.persist.getUsedPhrases()]);
 
     if (nextPhrase) {
-      const isAdFree = await IAP.isAdFree;
-      if (usedPhrasesIds.size % 3 === 2 && !isAdFree && !__DEV__) {
-        this.adManager
-          .showAd()
-          .then(
-            () =>
-              (this.adManager = new InterstitialAd(AdIds.phrasesInterstitial)),
-          );
-      }
+      // const isAdFree = await IAP.isAdFree;
+      //
+      // if (usedPhrasesIds.size % 3 === 2 && !isAdFree && !__DEV__) {
+      //   this.adManager
+      //     .showAd()
+      //     .then(
+      //       () =>
+      //         (this.adManager = new InterstitialAd(AdIds.phrasesInterstitial)),
+      //     );
+      // }
 
       await this.persist.usePhrase(nextPhrase.id);
     }
