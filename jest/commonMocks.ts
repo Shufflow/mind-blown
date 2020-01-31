@@ -53,6 +53,10 @@ jest.mock('@react-native-firebase/admob', () => {
     },
   };
 });
+jest.mock('@react-native-firebase/analytics', () => ({
+  __esModule: true,
+  default: () => ({ logEvent: jest.fn() }),
+}));
 jest.mock('react-native-splash-screen', () => ({
   hide: jest.fn(),
   show: jest.fn(),

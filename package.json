@@ -19,6 +19,7 @@
     "@react-native-community/google-signin": "^3.0.4",
     "@react-native-community/masked-view": "^0.1.6",
     "@react-native-firebase/admob": "^6.2.0",
+    "@react-native-firebase/analytics": "^6.2.0",
     "@react-native-firebase/app": "^6.2.0",
     "@react-native-firebase/crashlytics": "^6.2.0",
     "@typed/compose": "^1.0.0",
