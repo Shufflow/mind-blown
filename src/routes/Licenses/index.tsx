@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { WebView } from 'react-native';
+import { WebView } from 'react-native-webview';
 
 import RouteName from '@routes';
 import pure from '@hocs/pure';
