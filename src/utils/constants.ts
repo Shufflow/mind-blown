@@ -9,7 +9,7 @@ export const Constants = {
     android: 'market://details?id=com.shufflow.MindBlown',
     ios:
       'itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1450868764&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software',
-  }),
+  })!,
 };
 
 export default Constants;

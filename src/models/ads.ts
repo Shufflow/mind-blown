@@ -29,7 +29,7 @@ const AdIds = Platform.select({
     sendSuggestionBottomBanner: 'ca-app-pub-3166606200488630/5095617078',
     settingsBottomBanner: 'ca-app-pub-3166606200488630/3695013296',
   },
-});
+})!;
 
 export class InterstitialAd {
   private requestAd?: Promise<void>;
