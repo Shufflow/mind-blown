@@ -4,13 +4,13 @@ import {
   GoogleSignin,
   GoogleSigninButton,
 } from '@react-native-community/google-signin';
-import { compose } from '@typed/compose';
 import Config from 'react-native-config';
 
 import t, { DevMenu as strings } from '@locales';
 import RouteName from '@routes';
 import { withAds, AdsConsumerProps } from '@hocs/withAds';
 import withDoneButton from '@hocs/withDoneButton';
+import { compose } from '@utils/compose';
 
 import ListItem from '@components/ListItem';
 
@@ -131,5 +131,8 @@ class DevMenu extends React.Component<Props, State> {
   }
 }
 
-const Enhanced = compose(withAds)(DevMenu);
-export default withDoneButton(Enhanced);
+const enhance = compose(
+  withDoneButton,
+  withAds,
+);
+export default enhance(DevMenu);

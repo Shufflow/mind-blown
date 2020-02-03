@@ -22,7 +22,6 @@
     "@react-native-firebase/analytics": "^6.2.0",
     "@react-native-firebase/app": "^6.2.0",
     "@react-native-firebase/crashlytics": "^6.2.0",
-    "@typed/compose": "^1.0.0",
     "base-64": "^0.1.0",
     "firebase": "^6.2.4",
     "i18n-js": "^3.1.0",

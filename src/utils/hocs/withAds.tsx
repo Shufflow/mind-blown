@@ -52,8 +52,10 @@ export const withAdsProvider = <Props extends Object>(
 
 export const withAds = <Props extends Object>(
   WrappedComponent: React.ComponentType<Props>,
-): React.ComponentType<Props & AdsConsumerProps> => (
-  props: Props,
-): React.ReactElement<Props> => (
-  <Consumer>{args => <WrappedComponent {...args} {...props} />}</Consumer>
+): React.ComponentType<Minus<Props, AdsConsumerProps>> => (
+  props: Minus<Props, AdsConsumerProps>,
+) => (
+  <Consumer>
+    {args => <WrappedComponent {...args} {...(props as Props)} />}
+  </Consumer>
 );

@@ -1,7 +1,6 @@
 import React from 'react';
 import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import Config from 'react-native-config';
-import { compose } from '@typed/compose';
 
 import t, {
   Settings as strings,
@@ -11,6 +10,7 @@ import RouteName from '@routes';
 import { withLocale } from '@hocs/withLocale';
 import { withAds } from '@hocs/withAds';
 import withDoneButton from '@hocs/withDoneButton';
+import { compose } from '@utils/compose';
 
 import Dev from '@components/Dev';
 import ListItem from '@components/ListItem';
@@ -109,5 +109,4 @@ const Enhanced = compose(
   withAds,
   withLocale,
 )(Settings);
-
 export default withDoneButton(Enhanced, ({ navigation }) => navigation.dismiss);
