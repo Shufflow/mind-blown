@@ -4,8 +4,8 @@ import React from 'react';
 import { enableScreens } from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
-import { compose } from '@typed/compose';
 
+import { compose } from '@utils/compose';
 import { setupLocale } from '@locales';
 import { withLocaleProvider, LocaleProviderProps } from '@hocs/withLocale';
 import { withAdsProvider } from '@hocs/withAds';

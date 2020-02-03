@@ -1,4 +1,3 @@
-import { compose } from '@typed/compose';
 import { isEqual } from 'lodash';
 import React from 'react';
 import {
@@ -15,6 +14,7 @@ import ViewShot from 'react-native-view-shot';
 import icons from '@icons';
 import t, { Home as strings } from '@locales';
 import { withLocale } from '@hocs/withLocale';
+import { compose } from '@utils/compose';
 
 import SVGButton from '@components/SVGButton';
 import AdBanner from '@components/AdBanner';

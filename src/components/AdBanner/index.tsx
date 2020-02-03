@@ -1,7 +1,7 @@
 import React from 'react';
 import { BannerAd, BannerAdSize, TestIds } from '@react-native-firebase/admob';
-import { compose } from '@typed/compose';
 
+import { compose } from '@utils/compose';
 import { AdsConsumerProps, withAds } from '@hocs/withAds';
 import pure from '@hocs/pure';
 
@@ -34,4 +34,4 @@ const enhance = compose(
   pure,
   withAds,
 );
-export default enhance(AdBanner) as React.ComponentType<Props>;
+export default enhance(AdBanner);
