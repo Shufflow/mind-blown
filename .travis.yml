@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - 10 # Firebase fails with node 11: https://github.com/grpc/grpc-node/issues/594
+  - 12
 
 addons:
   ssh_known_hosts:
