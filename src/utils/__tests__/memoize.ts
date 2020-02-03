@@ -135,10 +135,9 @@ describe('return value', () => {
     const arg2 = 1293847;
     const stub = sandbox.stub().resolves(42);
 
-    const func = memoize(stub as (
-      arg1: number,
-      arg2: number,
-    ) => Promise<number>);
+    const func = memoize(
+      stub as (arg1: number, arg2: number) => Promise<number>,
+    );
     const result = await func(arg1, arg2);
 
     assert.calledOnce(stub);

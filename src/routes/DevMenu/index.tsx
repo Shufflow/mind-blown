@@ -131,8 +131,5 @@ class DevMenu extends React.Component<Props, State> {
   }
 }
 
-const enhance = compose(
-  withDoneButton,
-  withAds,
-);
+const enhance = compose(withDoneButton, withAds);
 export default enhance(DevMenu);

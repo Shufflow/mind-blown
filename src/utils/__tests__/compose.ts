@@ -32,9 +32,10 @@ import { compose } from '../compose';
   },
 ].forEach(({ out }, i, arr) => {
   it(`composes ${i + 1} function${i === 0 ? '' : 's'}`, () => {
-    const compost = compose.apply(null, arr
-      .map(({ f }) => f)
-      .slice(0, i + 1) as any);
+    const compost = compose.apply(
+      null,
+      arr.map(({ f }) => f).slice(0, i + 1) as any,
+    );
 
     const result = compost('foobar');
 
