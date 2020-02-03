@@ -7,11 +7,11 @@ export const SKU = {
   adFree: Platform.select({
     android: 'ad_free',
     ios: 'ad_free_full_2',
-  }),
+  })!,
   adFreeDiscount: Platform.select({
     android: 'ad_free_2',
     ios: 'ad_free_half_2',
-  }),
+  })!,
 };
 
 export const IAPErrorCodes = {
