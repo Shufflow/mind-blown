@@ -6874,6 +6874,20 @@ react-devtools-core@^3.6.3:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
+react-hook-hooked@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-hook-hooked/-/react-hook-hooked-1.0.2.tgz#9c0f3a5b77689ef5d3c1e97f882bc6521e50e7e0"
+  integrity sha512-kLIFn3duoQkLZsq0pAsd/8+7HlgfxH1kCqpiFyKg1M0lPyaGjp++C73lEFnUm5VVRiuCx1Zolwabs6S3i/W6QQ==
+  dependencies:
+    react "^16.8.6"
+
+react-hook-utilities@^1.0.0-alpha1:
+  version "1.0.0-alpha1"
+  resolved "https://registry.yarnpkg.com/react-hook-utilities/-/react-hook-utilities-1.0.0-alpha1.tgz#a84387b0e905368ccbb3afef0838565351984c51"
+  integrity sha512-dYE4jn9/k1F8o30C814qosjTDpSdGDQIVnUrHiu2P4hnXisqFH/4vMf91fG1ULVnkdbA2v0DX5KQJ7QmSG8rHg==
+  dependencies:
+    react "^16"
+
 react-hooks-testing-library@^0.5.0:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/react-hooks-testing-library/-/react-hooks-testing-library-0.5.1.tgz#bb5e725fe8d35f3d682212039824dd2f6c7ff4c3"
@@ -7109,6 +7123,15 @@ react@16.9.0:
   version "16.9.0"
   resolved "https://registry.yarnpkg.com/react/-/react-16.9.0.tgz#40ba2f9af13bc1a38d75dbf2f4359a5185c4f7aa"
   integrity sha512-+7LQnFBwkiw+BobzOF6N//BdoNw0ouwmSJTEm9cglOOmsg/TMiFHZLe2sEoN5M7LgJTj9oHH0gxklfnQe66S1w==
+  dependencies:
+    loose-envify "^1.1.0"
+    object-assign "^4.1.1"
+    prop-types "^15.6.2"
+
+react@^16, react@^16.8.6:
+  version "16.12.0"
+  resolved "https://registry.yarnpkg.com/react/-/react-16.12.0.tgz#0c0a9c6a142429e3614834d5a778e18aa78a0b83"
+  integrity sha512-fglqy3k5E+81pA8s+7K0/T3DBCF0ZDOher1elBFzF7O6arXJgzyu/FW+COxFvAWXJoJN9KIZbT2LXlukwphYTA==
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
