@@ -208,6 +208,7 @@ describe('suggestions', () => {
     assert.calledWithExactly(add, {
       content,
       date,
+      discarded: false,
     });
   });
 });

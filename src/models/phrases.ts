@@ -119,6 +119,7 @@ class PhrasesDataSource {
     const { id } = await this.firestore.collection('suggestion').add({
       content,
       date: new Date(),
+      discarded: false,
     });
     return id;
   }
