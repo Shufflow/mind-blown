@@ -8,6 +8,7 @@ service cloud.firestore {
       allow write;
     }
     match /suggestion/{document=**} {
+      allow read: if request.auth.uid in get(/databases/$(database)/documents/admin/phrases).data.create;
       allow write;
     }
     match /reddit/{document=**} {
