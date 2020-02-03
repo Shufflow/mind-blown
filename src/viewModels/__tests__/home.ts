@@ -15,7 +15,11 @@ let viewModel: HomeViewModel;
 
 beforeEach(() => {
   sandbox.stub(RNTextSize, 'measure').resolves({ height: 0, width: 0 } as any);
-  viewModel = new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
+  viewModel = new HomeViewModel(
+    () => ({} as any),
+    () => ({} as any),
+    () => {},
+  );
   viewModel.handlePhraseContainerSize({ height: 100, width: 100 });
 });
 afterEach(sandbox.restore);
@@ -23,7 +27,11 @@ afterEach(sandbox.restore);
 it('sets the screen name on init', () => {
   const setScreen = sandbox.stub(Analytics, 'currentScreen');
 
-  new HomeViewModel(() => ({} as any), () => ({} as any), () => {});
+  new HomeViewModel(
+    () => ({} as any),
+    () => ({} as any),
+    () => {},
+  );
 
   assert.calledWithExactly(setScreen, RouteName.Home);
 });

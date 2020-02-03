@@ -106,15 +106,17 @@ describe('context', () => {
       const des3 = min - 5;
       const exp3 = min;
 
-      [[des1, exp1], [des2, exp2], [des3, exp3]].forEach(
-        async ([desired, expectedResult]) => {
-          const comp = compare(desired);
+      [
+        [des1, exp1],
+        [des2, exp2],
+        [des3, exp3],
+      ].forEach(async ([desired, expectedResult]) => {
+        const comp = compare(desired);
 
-          const result = await asyncBinarySearch(data, comp, undefined);
+        const result = await asyncBinarySearch(data, comp, undefined);
 
-          expect(result).toEqual(expectedResult);
-        },
-      );
+        expect(result).toEqual(expectedResult);
+      });
     });
   });
 });

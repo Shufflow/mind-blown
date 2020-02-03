@@ -105,8 +105,5 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
   }
 }
 
-const Enhanced = compose(
-  withAds,
-  withLocale,
-)(Settings);
+const Enhanced = compose(withAds, withLocale)(Settings);
 export default withDoneButton(Enhanced, ({ navigation }) => navigation.dismiss);

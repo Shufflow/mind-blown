@@ -30,8 +30,5 @@ const AdBanner = ({ adUnitID, showAds }: Props & AdsConsumerProps) => {
   );
 };
 
-const enhance = compose(
-  pure,
-  withAds,
-);
+const enhance = compose(pure, withAds);
 export default enhance(AdBanner);
