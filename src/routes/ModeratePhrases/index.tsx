@@ -10,10 +10,11 @@ import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
 
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
+import { Translation as TranslationType } from 'src/models/types';
 
 import Translation from './components/Translation';
 import styles from './styles';
-import useModeratePhrases, { Translation as TranslationType } from './hooks';
+import useModeratePhrases from './hooks';
 
 const ModeratePhrases = ({
   navigation: {
