@@ -4,6 +4,7 @@ enum RouteName {
   Home = 'Home',
   Licenses = 'Licenses',
   ModeratePhrases = 'ModeratePhrases',
+  ModerateSuggestions = 'ModerateSuggestions',
   SendSuggestion = 'SendSuggestion',
   Settings = 'Settings',
 }

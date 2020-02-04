@@ -75,11 +75,20 @@ class DevMenu extends React.Component<Props, State> {
     throw new Error('forced crash');
   };
 
+  onPressModerateSuggestions = () => {
+    const { navigation } = this.props;
+    navigation.navigate(RouteName.ModerateSuggestions);
+  };
+
   renderSignedIn = () => (
     <React.Fragment>
       <ListItem
         label={t(strings.reviewPhrases)}
         onPress={this.onPressModeratePhrases}
+      />
+      <ListItem
+        label={t(strings.moderateSuggestions)}
+        onPress={this.onPressModerateSuggestions}
       />
       <ListItem label={t(strings.showAds)} style={styles.switchContainer}>
         <Switch

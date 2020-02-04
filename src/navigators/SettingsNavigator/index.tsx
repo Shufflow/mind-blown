@@ -12,6 +12,7 @@ import SendSuggestion from '@routes/SendSuggestion';
 import DevMenu from '@routes/DevMenu';
 import Licenses from '@routes/Licenses';
 import About from '@routes/About';
+import ModerateSuggestions from '@routes/ModerateSuggestions';
 
 import { getColor } from 'src/models/assets';
 
@@ -24,6 +25,7 @@ const routes = {
   [RouteName.DevMenu]: DevMenu,
   [RouteName.Licenses]: Licenses,
   [RouteName.About]: About,
+  [RouteName.ModerateSuggestions]: ModerateSuggestions,
 };
 
 const SettingsNavigator = createStackNavigator(routes, {
@@ -33,7 +35,7 @@ const SettingsNavigator = createStackNavigator(routes, {
     }
 
     return {
-      headerLeft: undefined,
+      headerBackTitle: null as any, // TODO: remove when react-navigation fix `headerBackTitle?: string` type
       headerStyle: styles.header(navigation.color.dark),
       headerTintColor: navigation.color.light,
       headerTitle: () => (
