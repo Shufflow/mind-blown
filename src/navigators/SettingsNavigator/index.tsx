@@ -44,7 +44,6 @@ const SettingsNavigator = createStackNavigator(routes, {
       headerTitleAlign: 'center',
     };
   },
-  mode: 'modal',
 });
 
 export default createAppContainer(SettingsNavigator);
