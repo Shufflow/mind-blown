@@ -3,7 +3,6 @@ import { View, StatusBar, ScrollView, Linking } from 'react-native';
 
 import RouteName from '@routes';
 import t, { About as strings } from '@locales';
-import withDoneButton from '@hocs/withDoneButton';
 import Constants from '@utils/constants';
 
 import ListItem from '@components/ListItem';
@@ -93,4 +92,4 @@ class About extends React.PureComponent<ColoredScreenProps> {
   }
 }
 
-export default withDoneButton(About);
+export default About;
