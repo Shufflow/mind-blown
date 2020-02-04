@@ -88,6 +88,7 @@
   "resolutions": {
     "@types/react": "^16.7.13",
     "js-yaml": "^3.13.1",
-    "mem": "^4.0.0"
+    "mem": "^4.0.0",
+    "set-value": "^2.0.1"
   }
 }
