@@ -27,6 +27,7 @@ const strings: Strings = {
 
   [Global.cancel]: 'Cancelar',
   [Global.done]: 'OK',
+  [Global.send]: 'Enviar',
 
   [Settings.language]: 'Idioma',
   [Settings.devMenu]: 'Dev Menu',
