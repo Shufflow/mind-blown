@@ -24,6 +24,7 @@ export enum ModeratePhrases {
 }
 
 export enum DevMenu {
+  moderateSuggestions = 'moderateSuggestions',
   reviewPhrases = 'reviewPhrases',
   showAds = 'showAds',
   logout = 'logout',

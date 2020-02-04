@@ -21,6 +21,7 @@ const strings: Strings = {
   [RouteName.DevMenu]: 'Dev Menu',
   [RouteName.Licenses]: 'Licenses',
   [RouteName.About]: 'About',
+  [RouteName.ModerateSuggestions]: 'Moderate Suggestions',
 
   [Home.errorMessage]: 'An error occurred',
   [Home.tryAgainButton]: 'Try Again',
@@ -47,6 +48,7 @@ const strings: Strings = {
   [DevMenu.showAds]: 'Show Ads',
   [DevMenu.logout]: 'Logout',
   [DevMenu.forceCrash]: 'Force Crash',
+  [DevMenu.moderateSuggestions]: 'Moderate Suggestions',
 
   [AdDiscountAlert.title]: 'Get 50% OFF',
   [AdDiscountAlert.message]:
