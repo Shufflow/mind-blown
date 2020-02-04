@@ -4,7 +4,6 @@ import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
 import { Colors } from '@styles';
 import icons from '@icons';
 import t, { ModeratePhrases as strings } from '@locales';
-import withDoneButton from '@hocs/withDoneButton';
 import { getDate } from '@utils/dateFormatter';
 
 import SVGButton from '@components/SVGButton';
@@ -113,4 +112,4 @@ const ModeratePhrases = ({
   );
 };
 
-export default withDoneButton(ModeratePhrases);
+export default ModeratePhrases;
