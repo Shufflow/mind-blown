@@ -3,7 +3,6 @@ import { WebView } from 'react-native-webview';
 
 import RouteName from '@routes';
 import pure from '@hocs/pure';
-import withDoneButton from '@hocs/withDoneButton';
 import Constants from '@utils/constants';
 
 import AdBanner from '@components/AdBanner';
@@ -27,5 +26,4 @@ const Licenses = () => {
   );
 };
 
-const Enhanced: any = pure(Licenses);
-export default withDoneButton(Enhanced);
+export default pure(Licenses);
