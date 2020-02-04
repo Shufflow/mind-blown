@@ -3,6 +3,7 @@ import RouteName from '@routes';
 export enum Global {
   cancel = 'cancel',
   done = 'done',
+  send = 'send',
 }
 export enum Settings {
   about = 'about',
