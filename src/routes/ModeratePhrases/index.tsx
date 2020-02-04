@@ -1,5 +1,6 @@
 import React, { useCallback, useMemo } from 'react';
 import { ActivityIndicator, View, Text, ScrollView } from 'react-native';
+import hooked from 'react-hook-hooked';
 
 import { Colors } from '@styles';
 import icons from '@icons';
@@ -9,29 +10,25 @@ import { getDate } from '@utils/dateFormatter';
 import SVGButton from '@components/SVGButton';
 import Button from '@components/Button';
 
-import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import { Translation as TranslationType } from 'src/models/types';
 
-import Translation from './components/Translation';
+import Translation from '../../components/Translation';
 import styles from './styles';
-import useModeratePhrases from './hooks';
+import useModeratePhrases, { Props } from './hooks';
 
 const ModeratePhrases = ({
+  handlePressAddTranslation,
+  handlePressDiscard,
+  handlePressSave,
+  handleRemoveTranslation,
+  handleTranslate,
+  isLoading,
   navigation: {
     color: { dark, light },
   },
-}: ColoredScreenProps) => {
-  const {
-    handlePressAddTranslation,
-    handlePressDiscard,
-    handlePressSave,
-    handleRemoveTranslation,
-    handleTranslate,
-    isLoading,
-    phrase,
-    translations,
-  } = useModeratePhrases();
-
+  phrase,
+  translations,
+}: Props) => {
   const removeTranslation = useCallback(
     (idx: number) => () => {
       handleRemoveTranslation(idx);
@@ -113,4 +110,7 @@ const ModeratePhrases = ({
   );
 };
 
-export default ModeratePhrases;
+const enhance = hooked<Props, ReturnType<typeof useModeratePhrases>, void>(
+  useModeratePhrases,
+);
+export default enhance(ModeratePhrases);
