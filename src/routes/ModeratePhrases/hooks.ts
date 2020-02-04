@@ -2,6 +2,7 @@ import { useRef, useCallback, useState, useEffect } from 'react';
 
 import RawPhrasesDataSource, { Phrase } from 'src/models/rawPhrases';
 import { Translation } from 'src/models/types';
+import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 const emptyTranslation = { language: 'pt-BR', content: '' };
 
@@ -97,4 +98,5 @@ const useModeratePhrases = () => {
   };
 };
 
+export type Props = ReturnType<typeof useModeratePhrases> & ColoredScreenProps;
 export default useModeratePhrases;
