@@ -74,8 +74,10 @@ class PhrasesDataSource {
     return unseenPhrasesIds.concat(seenPhrasesIds);
   };
 
-  async getRandomPhrase(): Promise<Phrase | null> {
-    const nextPhrase = await this.getNextPhrase();
+  async getRandomPhrase(
+    locale: string,
+  ): Promise<{ id: string; content: string } | undefined> {
+    const phrase = await this.getNextPhrase();
 
     /**
      * TODO
@@ -86,7 +88,7 @@ class PhrasesDataSource {
     //   Set<string>
     // >([this.getNextPhrase(), this.persist.getUsedPhrases()]);
 
-    if (nextPhrase) {
+    if (phrase) {
       // const isAdFree = await IAP.isAdFree;
       //
       // if (usedPhrasesIds.size % 3 === 2 && !isAdFree && !__DEV__) {
@@ -98,10 +100,15 @@ class PhrasesDataSource {
       //     );
       // }
 
-      await this.persist.usePhrase(nextPhrase.id);
+      await this.persist.usePhrase(phrase.id);
     }
 
-    return nextPhrase;
+    return (
+      phrase && {
+        content: phrase[locale] || phrase.en,
+        id: phrase.id,
+      }
+    );
   }
 
   async reviewPhrase(
@@ -132,7 +139,7 @@ class PhrasesDataSource {
     return data;
   }
 
-  private getNextPhrase = async (): Promise<Phrase | null> => {
+  private getNextPhrase = async (): Promise<Phrase | undefined> => {
     // tslint:disable-next-line prefer-const
     let [phrases, phraseIds] = await Promise.all([
       this.phrases,
@@ -145,7 +152,7 @@ class PhrasesDataSource {
 
     const len = Object.keys(phrases).length;
     if (len === 0 || phraseIds.length === 0) {
-      return null;
+      return undefined;
     }
 
     return phrases[phraseIds.shift()!];

@@ -8,9 +8,9 @@ import PhrasesDataSource from '../phrases';
 import IAP from '../iap';
 
 const mockPhrases = {
-  0: { id: '0', en: 'foo' },
-  1: { id: '1', en: 'bar' },
-  2: { id: '2', en: 'xpto' },
+  0: { id: '0', en: 'foo', cz: 'oof' },
+  1: { id: '1', en: 'bar', cz: 'rab' },
+  2: { id: '2', en: 'xpto', cz: 'otpx' },
 };
 jest.mock(
   'firebase',
@@ -18,9 +18,9 @@ jest.mock(
     new MockFirebase(
       stubFirebase({
         phrases: [
-          { id: '0', en: 'foo' },
-          { id: '1', en: 'bar' },
-          { id: '2', en: 'xpto' },
+          { id: '0', en: 'foo', cz: 'oof' },
+          { id: '1', en: 'bar', cz: 'rab' },
+          { id: '2', en: 'xpto', cz: 'otpx' },
         ],
       }),
     ),
@@ -57,9 +57,12 @@ describe('get random phrase', () => {
   });
 
   it('returns a phrase', async () => {
-    const result = await dataSource.getRandomPhrase();
+    const result = await dataSource.getRandomPhrase('en');
 
-    expect(result).toEqual(mockPhrases[2]);
+    expect(result).toEqual({
+      content: mockPhrases[2].en,
+      id: mockPhrases[2].id,
+    });
     expect(ad.called).toEqual(false);
   });
 
@@ -70,18 +73,21 @@ describe('get random phrase', () => {
       .resolves(new Set(Object.keys(mockPhrases)));
     sandbox.stub(dataSource, 'shuffledPhraseIds').value(Promise.resolve([]));
 
-    const result = await dataSource.getRandomPhrase();
+    const result = await dataSource.getRandomPhrase('en');
 
-    expect(result).toEqual(mockPhrases[2]);
+    expect(result).toEqual({
+      content: mockPhrases[2].en,
+      id: mockPhrases[2].id,
+    });
     expect(ad.called).toEqual(false);
   });
 
-  it('returns null when array is empty', async () => {
+  it('returns undefined when array is empty', async () => {
     sandbox.stub(dataSource, 'phrases').value([]);
 
-    const result = await dataSource.getRandomPhrase();
+    const result = await dataSource.getRandomPhrase('en');
 
-    expect(result).toBeNull();
+    expect(result).toBeUndefined();
     expect(ad.called).toEqual(false);
   });
 
@@ -90,7 +96,7 @@ describe('get random phrase', () => {
     sandbox.stub(dataSource, 'phrases').value(Promise.reject(reason));
 
     try {
-      await dataSource.getRandomPhrase();
+      await dataSource.getRandomPhrase('en');
 
       fail();
     } catch (e) {
@@ -103,7 +109,7 @@ describe('get random phrase', () => {
     sandbox.stub(Math, 'random').returns(0);
     const process = sandbox.stub(dataSource, 'processPhrase').callsFake(f => f);
 
-    await dataSource.getRandomPhrase();
+    await dataSource.getRandomPhrase('en');
 
     expect(process.called).toEqual(true);
   });
@@ -111,9 +117,29 @@ describe('get random phrase', () => {
   it('persists used phrases', async () => {
     const usePhrase = sandbox.stub(dataSource.persist, 'usePhrase');
 
-    const phrase = await dataSource.getRandomPhrase();
+    const phrase = await dataSource.getRandomPhrase('en');
 
     assert.calledWith(usePhrase, phrase!.id);
+  });
+
+  it('returns a phrase with the expected locale', async () => {
+    const phrase = mockPhrases[0];
+    sandbox.stub(dataSource as any, 'getNextPhrase').resolves(phrase as any);
+    const result = await dataSource.getRandomPhrase('cz');
+
+    expect(result).toEqual({
+      content: phrase.cz,
+      id: phrase.id,
+    });
+  });
+
+  it('fallsback to english if locale is not found', async () => {
+    const result = await dataSource.getRandomPhrase('foobar');
+
+    expect(result).toEqual({
+      content: mockPhrases[2].en,
+      id: mockPhrases[2].id,
+    });
   });
 });
 
@@ -164,7 +190,7 @@ describe('phrase repetition', () => {
     const yieldedPhrasesIds: string[] = [];
 
     for (const _ of Object.keys(mockPhrases)) {
-      const phrase = await dataSource.getRandomPhrase();
+      const phrase = await dataSource.getRandomPhrase('en');
 
       expect(yieldedPhrasesIds).not.toContain(phrase!.id);
       yieldedPhrasesIds.push(phrase!.id);
@@ -176,11 +202,11 @@ describe('phrase repetition', () => {
     const yieldedPhrasesIds: string[] = [];
 
     for (const _ of Object.keys(mockPhrases)) {
-      const p = await dataSource.getRandomPhrase();
+      const p = await dataSource.getRandomPhrase('en');
       yieldedPhrasesIds.push(p!.id);
     }
 
-    const phrase = await dataSource.getRandomPhrase();
+    const phrase = await dataSource.getRandomPhrase('en');
     expect(yieldedPhrasesIds).toContain(phrase!.id);
   });
 });
@@ -231,7 +257,7 @@ describe('ads', () => {
     (__DEV__ as any) = false;
 
     for (let i = 0; i < 3; i++) {
-      await dataSource.getRandomPhrase();
+      await dataSource.getRandomPhrase('en');
     }
 
     expect(ad.called).toEqual(true);
@@ -242,7 +268,7 @@ describe('ads', () => {
     (__DEV__ as any) = false;
 
     for (let i = 0; i < 3; i++) {
-      await dataSource.getRandomPhrase();
+      await dataSource.getRandomPhrase('en');
     }
 
     expect(ad.called).toEqual(false);
