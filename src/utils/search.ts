@@ -2,8 +2,8 @@ import memoize from '@utils/memoize';
 
 export const asyncBinarySearch = async <T>(
   arr: number[],
-  compare: (elem: number, context: T) => Promise<number>,
-  context: T,
+  compare: (elem: number, context?: T) => Promise<number>,
+  context?: T,
   start: number = 0,
   end: number = arr.length - 1,
 ): Promise<number> => {
