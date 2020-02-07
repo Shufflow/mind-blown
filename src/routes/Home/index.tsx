@@ -1,5 +1,4 @@
-import { isEqual } from 'lodash';
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   ActivityIndicator,
   SafeAreaView,
@@ -7,9 +6,9 @@ import {
   TouchableWithoutFeedback,
   View,
   Text,
-  LayoutChangeEvent,
 } from 'react-native';
 import ViewShot from 'react-native-view-shot';
+import hooked from 'react-hook-hooked';
 
 import icons from '@icons';
 import t, { Home as strings } from '@locales';
@@ -18,151 +17,126 @@ import { compose } from '@utils/compose';
 
 import SVGButton from '@components/SVGButton';
 import AdBanner from '@components/AdBanner';
-import SmartComponent from '@components/SmartComponent';
 import Button from '@components/Button';
 
 import AdIds from 'src/models/ads';
 
-import HomeViewModel, {
-  Props,
-  State,
-  SelectedThumb,
-} from 'src/viewModels/home';
-
 import ThumbDownButton from './components/ThumbDownButton';
 import ThumbUpButton from './components/ThumbUpButton';
 import styles from './styles';
+import usePhrases, { HookedProps, SelectedThumb } from './hooks';
 
-class Home extends SmartComponent<Props, State, HomeViewModel> {
-  constructor(props: Props) {
-    super(props, HomeViewModel);
-  }
-
-  componentDidMount() {
-    this.viewModel.getRandomPhrase();
-  }
-
-  shouldComponentUpdate(nextProps: Props, nextState: State): boolean {
-    return !isEqual(nextProps, this.props) || !isEqual(nextState, this.state);
-  }
-
-  handlePhraseLayout = ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
-    this.viewModel.handlePhraseContainerSize(layout);
-  };
-
-  renderError = () => {
-    const { fgColor, isDark } = this.state;
+const Home = ({
+  colors,
+  error,
+  getRandomPhrase,
+  handlePressReview,
+  handlePressSettings,
+  handlePressShare,
+  handlePhraseContainerSize,
+  isLoading,
+  font,
+  phrase,
+  selectedThumb,
+  viewShotRef,
+}: HookedProps) => {
+  const renderError = useCallback(() => {
     const dummySpacingView = <View />;
     return (
       <React.Fragment>
         <View style={styles.errorContainer}>
-          <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-          <Text style={[styles.errorTitle, { color: fgColor }]}>
+          <StatusBar
+            barStyle={colors.isDark ? 'light-content' : 'dark-content'}
+          />
+          <Text style={[styles.errorTitle, { color: colors.fgColor }]}>
             {t(strings.errorMessage)}
           </Text>
-          <Button onPress={this.viewModel.getRandomPhrase}>
-            {t(strings.tryAgainButton)}
-          </Button>
+          <Button onPress={getRandomPhrase}>{t(strings.tryAgainButton)}</Button>
         </View>
         {dummySpacingView}
       </React.Fragment>
     );
-  };
+  }, [colors]);
 
-  renderPhrase = () => {
-    const {
-      fgColor: color,
-      bgColor: backgroundColor,
-      font,
-      phrase,
-    } = this.state;
-    const phraseContent = this.viewModel.getPhraseContent();
+  const renderPhrase = useCallback(() => {
     const textStyle = {
       ...font,
-      backgroundColor,
-      color,
+      backgroundColor: colors.bgColor,
+      color: colors.fgColor,
     };
-    const isLoading = !phrase || !font.fontSize;
     return (
       <React.Fragment>
         {!isLoading ? (
-          <ViewShot
-            ref={this.viewModel.handleViewShotRef}
-            options={{ format: 'png' }}
-          >
+          <ViewShot ref={viewShotRef} options={{ format: 'png' }}>
             <Text
               style={[styles.phraseText, textStyle]}
               allowFontScaling
               adjustsFontSizeToFit
             >
-              {phraseContent}
+              {phrase?.content}
             </Text>
           </ViewShot>
         ) : (
           <ActivityIndicator
-            color={color}
+            color={colors.fgColor}
             size='large'
             style={styles.activityIndicator}
           />
         )}
       </React.Fragment>
     );
-  };
+  }, [font, colors]);
 
-  render() {
-    const { bgColor, fgColor, hasError, isDark, selectedThumb } = this.state;
-    return (
-      <TouchableWithoutFeedback
-        onPress={this.viewModel.getRandomPhrase}
-        disabled={hasError}
-      >
-        <View style={[styles.container, { backgroundColor: bgColor }]}>
-          <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-          <AdBanner adUnitID={AdIds.homeTopBanner} />
-          <SafeAreaView style={styles.content}>
-            <View style={styles.header}>
-              <SVGButton
-                fillAll
-                color={fgColor}
-                icon={icons.share}
-                onPress={this.viewModel.handlePressShare}
-                style={styles.iconButton}
+  return (
+    <TouchableWithoutFeedback onPress={getRandomPhrase} disabled={!!error}>
+      <View style={[styles.container, { backgroundColor: colors.bgColor }]}>
+        <StatusBar
+          barStyle={colors.isDark ? 'light-content' : 'dark-content'}
+        />
+        <AdBanner adUnitID={AdIds.homeTopBanner} />
+        <SafeAreaView style={styles.content}>
+          <View style={styles.header}>
+            <SVGButton
+              fillAll
+              color={colors.fgColor}
+              icon={icons.share}
+              onPress={handlePressShare}
+              style={styles.iconButton}
+            />
+            <SVGButton
+              fillAll
+              color={colors.fgColor}
+              icon={icons.cog}
+              onPress={handlePressSettings}
+              style={styles.iconButton}
+            />
+          </View>
+          <View
+            style={styles.phraseContainer}
+            onLayout={handlePhraseContainerSize}
+          >
+            {!!error ? renderError() : renderPhrase()}
+          </View>
+          {!error && (
+            <View style={styles.footer}>
+              <ThumbDownButton
+                color={colors.fgColor}
+                isSelected={selectedThumb === SelectedThumb.Down}
+                onPress={handlePressReview.bind(null, false)}
               />
-              <SVGButton
-                fillAll
-                color={fgColor}
-                icon={icons.cog}
-                onPress={this.viewModel.handlePressSettings}
-                style={styles.iconButton}
+              <ThumbUpButton
+                color={colors.fgColor}
+                isSelected={selectedThumb === SelectedThumb.Up}
+                onPress={handlePressReview.bind(null, true)}
               />
             </View>
-            <View
-              style={styles.phraseContainer}
-              onLayout={this.handlePhraseLayout}
-            >
-              {hasError ? this.renderError() : this.renderPhrase()}
-            </View>
-            {!hasError && (
-              <View style={styles.footer}>
-                <ThumbDownButton
-                  color={fgColor}
-                  isSelected={selectedThumb === SelectedThumb.Down}
-                  onPress={this.viewModel.handlePressReview(false)}
-                />
-                <ThumbUpButton
-                  color={fgColor}
-                  isSelected={selectedThumb === SelectedThumb.Up}
-                  onPress={this.viewModel.handlePressReview(true)}
-                />
-              </View>
-            )}
-          </SafeAreaView>
-          <AdBanner adUnitID={AdIds.homeBottomBanner} />
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  }
-}
+          )}
+        </SafeAreaView>
+        <AdBanner adUnitID={AdIds.homeBottomBanner} />
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
 
-const enhance = compose(withLocale);
+const enhance = compose(withLocale, hooked(usePhrases));
 export default enhance(Home);
