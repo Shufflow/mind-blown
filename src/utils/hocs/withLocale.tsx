@@ -44,10 +44,12 @@ export const withLocaleProvider = <T extends Object>(
   return LocaleProvider;
 };
 
-export const withLocale = <T extends Object>(
-  WrappedComponent: React.ComponentType<T>,
-): React.ComponentType<T & LocaleConsumerProps> => (
-  props: T,
-): React.ReactElement<T> => (
-  <Consumer>{args => <WrappedComponent {...args} {...props} />}</Consumer>
+export const withLocale = <Props extends Object = {}>(
+  WrappedComponent: React.ComponentType<Props>,
+): React.ComponentType<Minus<Props, LocaleConsumerProps>> => (
+  props: Minus<Props, LocaleConsumerProps>,
+) => (
+  <Consumer>
+    {args => <WrappedComponent {...args} {...(props as Props)} />}
+  </Consumer>
 );
