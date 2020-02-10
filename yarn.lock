@@ -6737,15 +6737,7 @@ prompts@^2.0.1:
     kleur "^3.0.2"
     sisteransi "^1.0.0"
 
-prop-types@^15.6.2:
-  version "15.6.2"
-  resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
-  integrity sha512-3pboPvLiWD7dkI3qf3KbUe6hKFKa52w+AE0VCqECtf+QHAKgOL37tTaNCnuX1nAAQ4ZhyP+kYVKf8rLmJ/feDQ==
-  dependencies:
-    loose-envify "^1.3.1"
-    object-assign "^4.1.1"
-
-prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6897,17 +6889,17 @@ react-devtools-core@^3.6.3:
     shell-quote "^1.6.1"
     ws "^3.3.1"
 
-react-hook-hooked@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/react-hook-hooked/-/react-hook-hooked-1.0.2.tgz#9c0f3a5b77689ef5d3c1e97f882bc6521e50e7e0"
-  integrity sha512-kLIFn3duoQkLZsq0pAsd/8+7HlgfxH1kCqpiFyKg1M0lPyaGjp++C73lEFnUm5VVRiuCx1Zolwabs6S3i/W6QQ==
+react-hook-hooked@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/react-hook-hooked/-/react-hook-hooked-1.0.3.tgz#c5a8c0d8a30009c48d0ef68db8143c14273b6062"
+  integrity sha512-F21EwgRxCzp92XzPJ27uv4Iuj1D0V1h9Gl5Pt96XZDGnM+BriAh1ymYWMzjofiXedijQkyywcVCfpTU3rQPTyQ==
   dependencies:
     react "^16.8.6"
 
-react-hook-utilities@^1.0.0-alpha1:
-  version "1.0.0-alpha1"
-  resolved "https://registry.yarnpkg.com/react-hook-utilities/-/react-hook-utilities-1.0.0-alpha1.tgz#a84387b0e905368ccbb3afef0838565351984c51"
-  integrity sha512-dYE4jn9/k1F8o30C814qosjTDpSdGDQIVnUrHiu2P4hnXisqFH/4vMf91fG1ULVnkdbA2v0DX5KQJ7QmSG8rHg==
+react-hook-utilities@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-hook-utilities/-/react-hook-utilities-0.4.0.tgz#b1e4daa25bdcc478929b9fdf067831c9787152fa"
+  integrity sha512-ELjxcK48WvyEBanV6iadlxA8/YzpYOVZpKdZ052Leq13/vIopcDS45GWIueuCEbr37GFeWCTZcmS00SIGtnpNA==
   dependencies:
     react "^16"
 
