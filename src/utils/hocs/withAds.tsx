@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useCallback, useMemo, useContext } from 'react';
+import { useDidMount } from 'react-hook-utilities';
 
 import IAP from 'src/models/iap';
 
@@ -10,44 +11,37 @@ export interface AdsConsumerProps extends ProviderState {
   checkIsAdFree: () => Promise<boolean>;
 }
 
-const { Provider, Consumer } = React.createContext<AdsConsumerProps>({
+const AdsContext = React.createContext<AdsConsumerProps>({
   checkIsAdFree: async () => Promise.resolve(true),
   showAds: !__DEV__,
 });
 
 export const withAdsProvider = <Props extends Object>(
   WrappedComponent: React.ComponentType<Props>,
-): React.ComponentClass<Props> => {
-  class ShowAdsProvider extends React.Component<Props, ProviderState> {
-    state = { showAds: !__DEV__ };
+): React.FunctionComponent<Props> => (props: Props) => {
+  const [showAds, setShowAds] = useState(!__DEV__);
 
-    componentDidMount() {
-      this.checkIsAdFree();
-    }
+  const checkIsAdFree = useCallback(async () => {
+    const isAdFree = await IAP.refreshAdFree();
+    setShowAds(!isAdFree);
 
-    checkIsAdFree = async () => {
-      const isAdFree = await IAP.refreshAdFree();
-      this.setState({ showAds: !isAdFree });
+    return isAdFree;
+  }, []);
 
-      return isAdFree;
-    };
+  useDidMount(() => {
+    checkIsAdFree();
+  });
 
-    render() {
-      const { showAds } = this.state;
-      return (
-        <Provider
-          value={{
-            showAds,
-            checkIsAdFree: this.checkIsAdFree,
-          }}
-        >
-          <WrappedComponent {...this.props} />
-        </Provider>
-      );
-    }
-  }
+  const value = useMemo(() => ({ checkIsAdFree, showAds }), [
+    checkIsAdFree,
+    showAds,
+  ]);
 
-  return ShowAdsProvider;
+  return (
+    <AdsContext.Provider value={value}>
+      <WrappedComponent {...props} />
+    </AdsContext.Provider>
+  );
 };
 
 export const withAds = <Props extends Object>(
@@ -55,7 +49,9 @@ export const withAds = <Props extends Object>(
 ): React.ComponentType<Minus<Props, AdsConsumerProps>> => (
   props: Minus<Props, AdsConsumerProps>,
 ) => (
-  <Consumer>
+  <AdsContext.Consumer>
     {args => <WrappedComponent {...args} {...(props as Props)} />}
-  </Consumer>
+  </AdsContext.Consumer>
 );
+
+export const useAds = () => useContext(AdsContext);
