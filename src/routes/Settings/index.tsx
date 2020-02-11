@@ -8,7 +8,6 @@ import t, {
   AdFreeErrorAlert as errorAlert,
 } from '@locales';
 import RouteName from '@routes';
-import { withLocale } from '@hocs/withLocale';
 import { withAds } from '@hocs/withAds';
 import withDoneButton from '@hocs/withDoneButton';
 import { compose } from '@utils/compose';
@@ -98,6 +97,6 @@ const Settings = ({
   );
 };
 
-const enhance = compose(withAds, withLocale, hooked(hooks));
+const enhance = compose(withAds, hooked(hooks));
 const Enhanced = enhance(Settings);
 export default withDoneButton(Enhanced, ({ navigation }) => navigation.dismiss);

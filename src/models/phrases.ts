@@ -74,9 +74,7 @@ class PhrasesDataSource {
     return unseenPhrasesIds.concat(seenPhrasesIds);
   };
 
-  async getRandomPhrase(
-    locale: string,
-  ): Promise<{ id: string; content: string } | undefined> {
+  async getRandomPhrase(): Promise<Phrase | undefined> {
     const phrase = await this.getNextPhrase();
 
     /**
@@ -105,7 +103,7 @@ class PhrasesDataSource {
 
     return (
       phrase && {
-        content: phrase[locale] || phrase.en,
+        ...phrase,
         id: phrase.id,
       }
     );

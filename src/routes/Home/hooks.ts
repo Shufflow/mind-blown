@@ -1,11 +1,11 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
 import { useLazyRef, useWorkerState } from 'react-hook-utilities';
 import { NavigationInjectedProps } from 'react-navigation';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 
 import RouteName from '@routes';
-import { LocaleConsumerProps } from '@hocs/withLocale';
+import { useLocale, LocaleConsumerProps } from '@hocs/withLocale';
 
 import PhrasesDataSource from 'src/models/phrases';
 import Analytics from 'src/models/analytics';
@@ -19,7 +19,8 @@ export enum SelectedThumb {
 
 type Props = LocaleConsumerProps & NavigationInjectedProps;
 
-const usePhrases = ({ locale, navigation }: Props) => {
+const usePhrases = ({ navigation }: Props) => {
+  const { locale } = useLocale();
   const { getNewColors, ...colors } = useColors();
   const { getNextFont, ...fonts } = useFonts();
   const viewShotRef = useRef<ViewShot>(null);
@@ -28,18 +29,29 @@ const usePhrases = ({ locale, navigation }: Props) => {
   const {
     isLoading,
     callback: getRandomPhrase,
-    data: phrase,
+    data,
     error,
   } = useWorkerState(async () => {
-    const result = await model.getRandomPhrase(locale);
-
-    getNewColors();
-    getNextFont(result?.content ?? '');
-    setThumb(null);
+    const result = await model.getRandomPhrase();
     result && Analytics.viewPhrase(result.id);
+    setThumb(null);
 
     return result;
-  }, [locale, getNextFont]);
+  }, []);
+
+  const phrase = useMemo(
+    () =>
+      data && {
+        content: data[locale] ?? data.en,
+        id: data.id,
+      },
+    [data, locale],
+  );
+
+  useEffect(() => {
+    getNewColors();
+    getNextFont(phrase?.content ?? '');
+  }, [phrase]);
 
   const handlePressReview = useCallback(
     async (review: boolean) => {
@@ -92,6 +104,7 @@ const usePhrases = ({ locale, navigation }: Props) => {
     handlePressSettings,
     handlePressShare,
     isLoading,
+    locale,
     phrase,
     selectedThumb,
     viewShotRef,
