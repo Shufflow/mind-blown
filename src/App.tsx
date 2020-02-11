@@ -1,10 +1,15 @@
 // tslint:disable:file-name-casing
 
-import React from 'react';
+import React, { useCallback } from 'react';
+import { Linking } from 'react-native';
 import { enableScreens } from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
 import { useDidMount } from 'react-hook-utilities';
+import messaging from '@react-native-firebase/messaging';
+import PushNotificationIOS, {
+  PushNotification,
+} from '@react-native-community/push-notification-ios';
 
 import { compose } from '@utils/compose';
 import { setupLocale } from '@locales';
@@ -28,6 +33,30 @@ const App = ({ setLocale }: LocaleProviderProps) => {
     SplashScreen.hide();
 
     setLocale(await setupLocale());
+
+    messaging()
+      .registerForRemoteNotifications()
+      .catch();
+  });
+
+  const handlePushNotification = useCallback((msg: PushNotification) => {
+    const { url } = msg.getData();
+    if (!!url) {
+      Linking.canOpenURL(url).then(() => Linking.openURL(url));
+    }
+  }, []);
+
+  useDidMount(() => {
+    PushNotificationIOS.addEventListener(
+      'notification',
+      handlePushNotification,
+    );
+    return () => {
+      PushNotificationIOS.removeEventListener(
+        'notification',
+        handlePushNotification,
+      );
+    };
   });
 
   return (

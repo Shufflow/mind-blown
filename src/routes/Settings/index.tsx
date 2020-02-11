@@ -1,5 +1,12 @@
 import React, { useCallback } from 'react';
-import { View, StatusBar, ScrollView, Alert } from 'react-native';
+import {
+  View,
+  StatusBar,
+  ScrollView,
+  Alert,
+  Switch,
+  ActivityIndicator,
+} from 'react-native';
 import Config from 'react-native-config';
 import hooked from 'react-hook-hooked';
 
@@ -8,7 +15,6 @@ import t, {
   AdFreeErrorAlert as errorAlert,
 } from '@locales';
 import RouteName from '@routes';
-import { withAds } from '@hocs/withAds';
 import withDoneButton from '@hocs/withDoneButton';
 import { compose } from '@utils/compose';
 
@@ -21,7 +27,9 @@ import AdIds from 'src/models/ads';
 
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
-import hooks, { Props } from './hooks';
+import hooks, { HookedProps, usePushNotifications } from './hooks';
+
+type Props = HookedProps & ReturnType<typeof usePushNotifications>;
 
 const Settings = ({
   handleBuyAdFree,
@@ -32,8 +40,11 @@ const Settings = ({
   canBuyDiscount,
   handleNavigate,
   handleSetLocale,
+  handleTogglePushNotification,
   isAdFree,
   isIAPAvailable,
+  isLoading: isLoadingPush,
+  isPushEnabled,
 }: Props) => {
   const onBuyAdFree = useCallback(async () => {
     Loader.show();
@@ -72,6 +83,17 @@ const Settings = ({
           label={t(strings.sendSuggestion)}
           onPress={handleNavigate(RouteName.SendSuggestion)}
         />
+        <ListItem label='Receive Push Notifications'>
+          {isLoadingPush ? (
+            <ActivityIndicator color={dark} />
+          ) : (
+            <Switch
+              value={isPushEnabled}
+              trackColor={{ true: dark, false: light }}
+              onValueChange={handleTogglePushNotification}
+            />
+          )}
+        </ListItem>
         <ListItem
           label={t(strings.about)}
           onPress={handleNavigate(RouteName.About)}
@@ -97,6 +119,9 @@ const Settings = ({
   );
 };
 
-const enhance = compose(withAds, hooked(hooks));
+const enhance = compose(
+  hooked<Props, ReturnType<typeof hooks>>(hooks),
+  hooked(usePushNotifications),
+);
 const Enhanced = enhance(Settings);
 export default withDoneButton(Enhanced, ({ navigation }) => navigation.dismiss);
