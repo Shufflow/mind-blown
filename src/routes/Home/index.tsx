@@ -12,8 +12,6 @@ import hooked from 'react-hook-hooked';
 
 import icons from '@icons';
 import t, { Home as strings } from '@locales';
-import { withLocale } from '@hocs/withLocale';
-import { compose } from '@utils/compose';
 
 import SVGButton from '@components/SVGButton';
 import AdBanner from '@components/AdBanner';
@@ -138,5 +136,5 @@ const Home = ({
   );
 };
 
-const enhance = compose(withLocale, hooked(usePhrases));
+const enhance = hooked<HookedProps, ReturnType<typeof usePhrases>>(usePhrases);
 export default enhance(Home);

@@ -3,6 +3,7 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import Share from 'react-native-share';
 
 import RouteName from '@routes';
+import * as withLocale from '@hocs/withLocale';
 
 import Model from 'src/models/phrases';
 import * as useColors from 'src/models/assets';
@@ -17,10 +18,9 @@ afterEach(sandbox.restore);
 let getRandomPhrase: sinon.SinonStub;
 let getNewColors: sinon.SinonStub;
 let getNextFont: sinon.SinonStub;
-const initialProps: any = {
-  locale: 'en',
-};
-const phrase = { id: 'foo', content: 'foobar' };
+let useLocale: sinon.SinonStub;
+const initialProps: any = {};
+const phrase = { id: 'foo', en: 'foobar', 'pt-BR': 'yolo' };
 
 beforeEach(() => {
   getNewColors = sandbox.stub();
@@ -37,6 +37,9 @@ beforeEach(() => {
   sandbox.stub(useFonts, 'useFonts').returns({
     getNextFont,
   } as any);
+  useLocale = sandbox
+    .stub(withLocale, 'useLocale')
+    .returns({ locale: 'en' } as any);
 });
 
 describe('init', () => {
@@ -66,7 +69,10 @@ describe('init', () => {
 
     await waitForNextUpdate();
 
-    expect(result.current.phrase).toBe(phrase);
+    expect(result.current.phrase).toEqual({
+      content: phrase.en,
+      id: phrase.id,
+    });
   });
 
   it('does not return error if the request succeeds', async () => {
@@ -86,16 +92,6 @@ describe('init', () => {
 
     expect(result.current.error).toBe(error);
     expect(result.current.phrase).toBeUndefined();
-  });
-
-  it('asks the expected locale to the model', async () => {
-    const { waitForNextUpdate } = renderHook(hook, {
-      initialProps: { locale: 'cz' },
-    } as any);
-
-    await waitForNextUpdate();
-
-    assert.calledWithExactly(getRandomPhrase, 'cz');
   });
 
   it('might not return an empty phrase', async () => {
@@ -126,6 +122,24 @@ describe('init', () => {
 
     assert.notCalled(logEvent);
   });
+
+  it('changes the phrase content when locale changes', async () => {
+    const { result, waitForNextUpdate, rerender } = renderHook(hook, {
+      initialProps,
+    });
+
+    await waitForNextUpdate();
+
+    // act
+    useLocale.returns({ locale: 'pt-BR' });
+    rerender();
+
+    expect(result.current.phrase).toEqual({
+      content: phrase['pt-BR'],
+      id: phrase.id,
+    });
+    assert.calledOnce(getRandomPhrase);
+  });
 });
 
 describe('get random phrase', () => {
@@ -135,55 +149,33 @@ describe('get random phrase', () => {
     logEvent = sandbox.stub(Analytics, 'viewPhrase');
   });
 
-  it('asks for a new phrase with the current locale', async () => {
+  it('returns a phrase with the expected locale', async () => {
+    const content = 'xpto';
+    useLocale.returns({ locale: 'cz' });
+    getRandomPhrase.resolves({
+      ...phrase,
+      cz: content,
+    });
     const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
 
     await waitForNextUpdate();
-    sandbox.resetHistory();
 
-    assert.notCalled(getRandomPhrase);
-
-    act(() => {
-      result.current.getRandomPhrase();
+    expect(result.current.phrase).toEqual({
+      content,
+      id: phrase.id,
     });
-
-    await waitForNextUpdate();
-
-    assert.calledWith(getRandomPhrase, initialProps.locale);
   });
 
-  it('gets new colors', async () => {
+  it('fallsback to english if locale is not found', async () => {
+    useLocale.returns({ locale: 'cz' });
     const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
 
     await waitForNextUpdate();
-    sandbox.resetHistory();
 
-    assert.notCalled(getNewColors);
-
-    act(() => {
-      result.current.getRandomPhrase();
+    expect(result.current.phrase).toEqual({
+      content: phrase.en,
+      id: phrase.id,
     });
-
-    await waitForNextUpdate();
-
-    assert.calledOnce(getNewColors);
-  });
-
-  it('gets a new font', async () => {
-    const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
-
-    await waitForNextUpdate();
-    sandbox.resetHistory();
-
-    assert.notCalled(getNextFont);
-
-    act(() => {
-      result.current.getRandomPhrase();
-    });
-
-    await waitForNextUpdate();
-
-    assert.calledOnce(getNextFont);
   });
 
   it('removes previous review', async () => {
@@ -262,6 +254,43 @@ describe('get random phrase', () => {
     await waitForNextUpdate();
 
     assert.notCalled(logEvent);
+  });
+
+  describe('gets new colors', () => {
+    it('when phrase changes', async () => {
+      const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+
+      await waitForNextUpdate();
+      sandbox.resetHistory();
+      getRandomPhrase.resolves({ id: '2' });
+
+      assert.notCalled(getNewColors);
+
+      act(() => {
+        result.current.getRandomPhrase();
+      });
+
+      await waitForNextUpdate();
+
+      assert.calledOnce(getNewColors);
+    });
+
+    it('when locale changes', async () => {
+      const { waitForNextUpdate, rerender } = renderHook(hook, {
+        initialProps,
+      });
+
+      await waitForNextUpdate();
+      sandbox.resetHistory();
+
+      assert.notCalled(getNewColors);
+
+      // act
+      useLocale.returns({ locale: 'foo' });
+      rerender();
+
+      assert.calledOnce(getNewColors);
+    });
   });
 });
 
