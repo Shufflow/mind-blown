@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import i18n from 'i18n-js';
 
 import { setLocale as asyncSetLocale } from '@locales';
@@ -15,7 +15,7 @@ export interface LocaleConsumerProps
   extends ProviderState,
     LocaleProviderProps {}
 
-const { Provider, Consumer } = React.createContext<LocaleConsumerProps>({
+const LocaleContext = React.createContext<LocaleConsumerProps>({
   locale: '',
   setLocale: () => {},
 });
@@ -34,9 +34,9 @@ export const withLocaleProvider = <T extends Object>(
     render() {
       const { locale } = this.state;
       return (
-        <Provider value={{ locale, setLocale: this.setLocale }}>
+        <LocaleContext.Provider value={{ locale, setLocale: this.setLocale }}>
           <WrappedComponent setLocale={this.setLocale} {...this.props} />
-        </Provider>
+        </LocaleContext.Provider>
       );
     }
   }
@@ -49,7 +49,9 @@ export const withLocale = <Props extends Object = {}>(
 ): React.ComponentType<Minus<Props, LocaleConsumerProps>> => (
   props: Minus<Props, LocaleConsumerProps>,
 ) => (
-  <Consumer>
+  <LocaleContext.Consumer>
     {args => <WrappedComponent {...args} {...(props as Props)} />}
-  </Consumer>
+  </LocaleContext.Consumer>
 );
+
+export const useLocale = () => useContext(LocaleContext);
