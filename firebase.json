@@ -2,5 +2,8 @@
   "firestore": {
     "rules": "firestore.rules",
     "indexes": "firestore.indexes.json"
+  },
+  "react-native": {
+    "messaging_auto_init_enabled": false
   }
 }
