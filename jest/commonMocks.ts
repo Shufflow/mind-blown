@@ -57,6 +57,16 @@ jest.mock('@react-native-firebase/analytics', () => ({
   __esModule: true,
   default: () => ({ logEvent: jest.fn() }),
 }));
+jest.mock('@react-native-firebase/messaging', () => ({
+  __esModule: true,
+  default: () => ({
+    hasPermission: jest.fn(),
+    isRegisteredForRemoteNotifications: jest.fn(),
+    registerForRemoteNotifications: jest.fn(),
+    requestPermission: jest.fn(),
+    unregisterForRemoteNotifications: jest.fn(),
+  }),
+}));
 jest.mock('react-native-splash-screen', () => ({
   hide: jest.fn(),
   show: jest.fn(),
