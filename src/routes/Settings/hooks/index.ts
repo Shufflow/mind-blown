@@ -8,6 +8,7 @@ import Analytics from 'src/models/analytics';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 import { useAdsSettings } from './ads';
+export * from './usePushNotifications';
 
 const useSettings = ({ navigation }: ColoredScreenProps) => {
   const {
@@ -49,7 +50,7 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
   };
 };
 
-export type Props = ReturnType<typeof useSettings> &
+export type HookedProps = ReturnType<typeof useSettings> &
   LocaleConsumerProps &
   ColoredScreenProps;
 export default useSettings;
