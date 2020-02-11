@@ -2,7 +2,7 @@ import { useCallback } from 'react';
 import { useDidMount } from 'react-hook-utilities';
 
 import RouteName from '@routes';
-import { useLocale } from '@hocs/withLocale';
+import { useLocale, LocaleConsumerProps } from '@hocs/withLocale';
 
 import Analytics from 'src/models/analytics';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
@@ -16,7 +16,7 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
     isIAPAvailable,
     canBuyDiscount,
   } = useAdsSettings();
-  const { setLocale } = useLocale();
+  const { setLocale, ...locales } = useLocale();
 
   useDidMount(() => {
     Analytics.currentScreen(RouteName.Settings);
@@ -39,6 +39,7 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
   );
 
   return {
+    ...locales,
     canBuyDiscount,
     handleBuyAdFree,
     handleNavigate,
@@ -48,4 +49,7 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
   };
 };
 
+export type Props = ReturnType<typeof useSettings> &
+  LocaleConsumerProps &
+  ColoredScreenProps;
 export default useSettings;

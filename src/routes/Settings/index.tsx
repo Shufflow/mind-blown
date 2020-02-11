@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, StatusBar, ScrollView, Alert } from 'react-native';
 import Config from 'react-native-config';
+import hooked from 'react-hook-hooked';
 
 import t, {
   Settings as strings,
@@ -15,30 +16,31 @@ import { compose } from '@utils/compose';
 import Dev from '@components/Dev';
 import ListItem from '@components/ListItem';
 import AdBanner from '@components/AdBanner';
-import SmartComponent from '@components/SmartComponent';
 import Loader from '@components/Loader';
 
 import AdIds from 'src/models/ads';
 
-import SettingsViewModel, { State, Props } from 'src/viewModels/settings';
-
 import LanguagePicker from './components/LanguagePicker';
 import styles from './styles';
+import hooks, { Props } from './hooks';
 
-class Settings extends SmartComponent<Props, State, SettingsViewModel> {
-  constructor(props: Props) {
-    super(props, SettingsViewModel);
-  }
-
-  componentDidMount = async () => {
-    await this.viewModel.init();
-  };
-
-  onBuyAdFree = async () => {
+const Settings = ({
+  handleBuyAdFree,
+  navigation: {
+    color: { light, dark },
+  },
+  locale,
+  canBuyDiscount,
+  handleNavigate,
+  handleSetLocale,
+  isAdFree,
+  isIAPAvailable,
+}: Props) => {
+  const onBuyAdFree = useCallback(async () => {
     Loader.show();
 
     try {
-      await this.viewModel.handleBuyAdFree();
+      await handleBuyAdFree();
     } catch (e) {
       if (__DEV__) {
         // tslint:disable-next-line: no-console
@@ -49,61 +51,53 @@ class Settings extends SmartComponent<Props, State, SettingsViewModel> {
     }
 
     Loader.hide();
-  };
+  }, []);
 
-  render() {
-    const {
-      navigation: {
-        color: { dark, light },
-      },
-      locale,
-    } = this.props;
-    const { canBuyDiscount, isAdFree, isIAPAvailable } = this.state;
-    const addFreeButtonText = isAdFree
-      ? strings.isAdFreeButton
-      : canBuyDiscount
-      ? strings.removeAdsDiscount
-      : strings.removeAds;
+  const addFreeButtonText = isAdFree
+    ? strings.isAdFreeButton
+    : canBuyDiscount
+    ? strings.removeAdsDiscount
+    : strings.removeAds;
 
-    return (
-      <View style={styles.container(light)}>
-        <StatusBar barStyle='light-content' />
-        <ScrollView contentContainerStyle={styles.scrollViewContent}>
-          <LanguagePicker
-            dark={dark}
-            light={light}
-            locale={locale}
-            onSelectValue={this.viewModel.handleSetLocale}
-          />
+  return (
+    <View style={styles.container(light)}>
+      <StatusBar barStyle='light-content' />
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <LanguagePicker
+          dark={dark}
+          light={light}
+          locale={locale}
+          onSelectValue={handleSetLocale}
+        />
+        <ListItem
+          label={t(strings.sendSuggestion)}
+          onPress={handleNavigate(RouteName.SendSuggestion)}
+        />
+        <ListItem
+          label={t(strings.about)}
+          onPress={handleNavigate(RouteName.About)}
+        />
+        {isIAPAvailable && (
           <ListItem
-            label={t(strings.sendSuggestion)}
-            onPress={this.viewModel.handleNavigate(RouteName.SendSuggestion)}
+            disabled={isAdFree}
+            label={t(addFreeButtonText)}
+            onPress={onBuyAdFree}
+            style={styles.itemMarginTop}
           />
+        )}
+        <Dev condition={Config.SHOW_DEV_MENU}>
           <ListItem
-            label={t(strings.about)}
-            onPress={this.viewModel.handleNavigate(RouteName.About)}
+            label={t(strings.devMenu)}
+            onPress={handleNavigate(RouteName.DevMenu)}
+            style={styles.itemMarginTop}
           />
-          {isIAPAvailable && (
-            <ListItem
-              disabled={isAdFree}
-              label={t(addFreeButtonText)}
-              onPress={this.onBuyAdFree}
-              style={styles.itemMarginTop}
-            />
-          )}
-          <Dev condition={Config.SHOW_DEV_MENU}>
-            <ListItem
-              label={t(strings.devMenu)}
-              onPress={this.viewModel.handleNavigate(RouteName.DevMenu)}
-              style={styles.itemMarginTop}
-            />
-          </Dev>
-        </ScrollView>
-        <AdBanner adUnitID={AdIds.settingsBottomBanner} />
-      </View>
-    );
-  }
-}
+        </Dev>
+      </ScrollView>
+      <AdBanner adUnitID={AdIds.settingsBottomBanner} />
+    </View>
+  );
+};
 
-const Enhanced = compose(withAds, withLocale)(Settings);
+const enhance = compose(withAds, withLocale, hooked(hooks));
+const Enhanced = enhance(Settings);
 export default withDoneButton(Enhanced, ({ navigation }) => navigation.dismiss);
