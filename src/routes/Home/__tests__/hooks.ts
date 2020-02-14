@@ -19,7 +19,7 @@ let getRandomPhrase: sinon.SinonStub;
 let getNewColors: sinon.SinonStub;
 let getNextFont: sinon.SinonStub;
 let useLocale: sinon.SinonStub;
-const initialProps: any = {};
+let initialProps: any;
 const phrase = { id: 'foo', en: 'foobar', 'pt-BR': 'yolo' };
 
 beforeEach(() => {
@@ -40,6 +40,13 @@ beforeEach(() => {
   useLocale = sandbox
     .stub(withLocale, 'useLocale')
     .returns({ locale: 'en' } as any);
+
+  initialProps = {
+    navigation: {
+      getParam: sandbox.stub(),
+      setParams: sandbox.stub(),
+    },
+  };
 });
 
 describe('init', () => {
@@ -490,7 +497,10 @@ it('handles press settings', async () => {
   } = renderHook(hook, {
     initialProps: {
       ...initialProps,
-      navigation: { navigate },
+      navigation: {
+        ...initialProps.navigation,
+        navigate,
+      },
     },
   });
 

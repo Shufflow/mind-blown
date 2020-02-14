@@ -1,13 +1,22 @@
 import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
-import { useLazyRef, useWorkerState } from 'react-hook-utilities';
+import {
+  useLazyRef,
+  useWorkerState,
+  useEffectUpdate,
+} from 'react-hook-utilities';
 import { NavigationInjectedProps } from 'react-navigation';
 import ViewShot from 'react-native-view-shot';
 import Share from 'react-native-share';
 
 import RouteName from '@routes';
 import { useLocale, LocaleConsumerProps } from '@hocs/withLocale';
+import {
+  promiseAborter,
+  usePromiseAborterRef,
+  PromiseAbortedError,
+} from '@utils/hooks';
 
-import PhrasesDataSource from 'src/models/phrases';
+import PhrasesDataSource, { Phrase } from 'src/models/phrases';
 import Analytics from 'src/models/analytics';
 import { useColors } from 'src/models/assets';
 import { useFonts } from 'src/models/fonts';
@@ -17,27 +26,53 @@ export enum SelectedThumb {
   Down = 'down',
 }
 
-type Props = LocaleConsumerProps & NavigationInjectedProps;
+type Props = LocaleConsumerProps &
+  NavigationInjectedProps<{ phraseId?: string }>;
 
 const usePhrases = ({ navigation }: Props) => {
+  const phraseId = navigation.getParam('phraseId');
   const { locale } = useLocale();
   const { getNewColors, ...colors } = useColors();
   const { getNextFont, ...fonts } = useFonts();
   const viewShotRef = useRef<ViewShot>(null);
   const [selectedThumb, setThumb] = useState<SelectedThumb | null>(null);
   const model = useLazyRef(() => new PhrasesDataSource()).current;
+  const abortable = usePromiseAborterRef<Phrase>();
   const {
     isLoading,
     callback: getRandomPhrase,
     data,
     error,
   } = useWorkerState(async () => {
-    const result = await model.getRandomPhrase();
+    const result = await promiseAborter(
+      phraseId ? model.getPhrase(phraseId) : model.getRandomPhrase(),
+      abortable,
+    ).catch(e => {
+      if (e !== PromiseAbortedError) {
+        throw e;
+      }
+
+      return undefined;
+    });
+
     result && Analytics.viewPhrase(result.id);
     setThumb(null);
 
     return result;
-  }, []);
+  }, [phraseId]);
+
+  useEffectUpdate(
+    ([oldPhraseId]) => {
+      if (!!phraseId && !oldPhraseId) {
+        getRandomPhrase();
+      }
+
+      if (data?.id === phraseId) {
+        navigation.setParams({ phraseId: undefined });
+      }
+    },
+    [phraseId, data?.id, getRandomPhrase],
+  );
 
   const phrase = useMemo(
     () =>
