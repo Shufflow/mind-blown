@@ -342,6 +342,8 @@ PODS:
     - React
   - RNCMaskedView (0.1.6):
     - React
+  - RNCPushNotificationIOS (1.0.6):
+    - React
   - RNFBAdMob (6.2.0):
     - Firebase/AdMob (~> 6.13.0)
     - Firebase/Analytics (~> 6.13.0)
@@ -425,6 +427,7 @@ DEPENDENCIES:
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-community/async-storage`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
+  - "RNCPushNotificationIOS (from `../node_modules/@react-native-community/push-notification-ios`)"
   - "RNFBAdMob (from `../node_modules/@react-native-firebase/admob`)"
   - "RNFBAnalytics (from `../node_modules/@react-native-firebase/analytics`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
@@ -535,6 +538,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/async-storage"
   RNCMaskedView:
     :path: "../node_modules/@react-native-community/masked-view"
+  RNCPushNotificationIOS:
+    :path: "../node_modules/@react-native-community/push-notification-ios"
   RNFBAdMob:
     :path: "../node_modules/@react-native-firebase/admob"
   RNFBAnalytics:
@@ -625,6 +630,7 @@ SPEC CHECKSUMS:
   ReactCommon: 198c7c8d3591f975e5431bec1b0b3b581aa1c5dd
   RNCAsyncStorage: 2e2e3feb9bdadc752a026703d8c4065ca912e75a
   RNCMaskedView: a88953beefbd347a29072d9eba90e42945fe291e
+  RNCPushNotificationIOS: 05262c52fcfb861a2b79aa8e51cad66263c9ea52
   RNFBAdMob: 6bd7b601928d23a0b454252172fedbe746b0f7cc
   RNFBAnalytics: 57dc0bfad4e40f68779757653676699072651218
   RNFBApp: 5b215aacc09105a1761de31b9a0eb2abcce06253
@@ -643,6 +649,6 @@ SPEC CHECKSUMS:
   SSZipArchive: fa16b8cc4cdeceb698e5e5d9f67e9558532fbf23
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 70b80ca86a54fd278f441031210bffebea14a3dc
+PODFILE CHECKSUM: 5f25fd047970e509d509c4b225ed3306fe58ae82
 
 COCOAPODS: 1.8.4

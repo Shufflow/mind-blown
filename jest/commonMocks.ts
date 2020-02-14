@@ -15,6 +15,11 @@ jest.mock('@react-native-community/google-signin', () => {
     },
   };
 });
+jest.mock('react-native-push-notification', () => ({
+  checkPermissions: jest.fn(),
+  configure: jest.fn(),
+  requestPermissions: jest.fn(),
+}));
 jest.mock('@react-native-firebase/admob', () => {
   const AdMobBanner = () => React.createElement<any>(View);
   AdMobBanner.simulatorId = '';
