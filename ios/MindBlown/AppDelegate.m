@@ -11,6 +11,7 @@
 #import <React/RCTBridge.h>
 #import "AppDelegate.h"
 #import <CodePush/CodePush.h>
+#import <React/RCTLinkingManager.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -48,7 +49,7 @@
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
- return [RNGoogleSignin application:app openURL:url options:options];
+  return [RNGoogleSignin application:app openURL:url options:options] || [RCTLinkingManager application:app openURL:url options:options];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
