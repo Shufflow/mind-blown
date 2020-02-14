@@ -346,3 +346,27 @@ describe('shuffle phrases', () => {
     expect(result).toEqual(Object.keys(mockPhrases).reverse());
   });
 });
+
+describe('get phrase id', () => {
+  const dataSource = new PhrasesDataSource();
+
+  beforeEach(() => {
+    sandbox.stub(dataSource, 'phrases').value(mockPhrases);
+  });
+
+  it('gets an existing phrase', async () => {
+    const id = '1';
+
+    const result = await dataSource.getPhrase(id);
+
+    expect(result).toBe(mockPhrases[id]);
+  });
+
+  it('returns undefined for an unknown phrase id', async () => {
+    const id = 'foobar';
+
+    const result = await dataSource.getPhrase(id);
+
+    expect(result).toBeUndefined();
+  });
+});

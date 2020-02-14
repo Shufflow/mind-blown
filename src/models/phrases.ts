@@ -109,6 +109,11 @@ class PhrasesDataSource {
     );
   }
 
+  async getPhrase(id: string): Promise<Phrase | undefined> {
+    const phrases = await this.phrases;
+    return phrases[id];
+  }
+
   async reviewPhrase(
     id: string,
     positive: boolean,
