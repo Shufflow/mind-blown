@@ -4,6 +4,7 @@ import React from 'react';
 import { enableScreens } from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
+import { useDidMount } from 'react-hook-utilities';
 
 import { compose } from '@utils/compose';
 import { setupLocale } from '@locales';
@@ -17,26 +18,25 @@ import 'src/models/firebase';
 import '@utils/errors';
 
 const Constants = {
+  appScheme: 'mibl://',
   minimumBkgDurationForInstall: 10,
 };
 
-class App extends React.PureComponent<LocaleProviderProps> {
-  async componentDidMount() {
+const App = ({ setLocale }: LocaleProviderProps) => {
+  useDidMount(async () => {
     enableScreens();
     SplashScreen.hide();
 
-    this.props.setLocale(await setupLocale());
-  }
+    setLocale(await setupLocale());
+  });
 
-  render() {
-    return (
-      <React.Fragment>
-        <AppNavigator />
-        <LoaderComponent />
-      </React.Fragment>
-    );
-  }
-}
+  return (
+    <React.Fragment>
+      <AppNavigator uriPrefix={Constants.appScheme} />
+      <LoaderComponent />
+    </React.Fragment>
+  );
+};
 
 const enhance = compose(
   withLocaleProvider,

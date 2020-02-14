@@ -7,7 +7,10 @@ import Home from '@routes/Home';
 import SettingsNavigator from 'src/navigators/SettingsNavigator';
 
 const routes = {
-  [RouteName.Home]: Home,
+  [RouteName.Home]: {
+    path: 'phrases/:phraseId',
+    screen: Home,
+  },
   [RouteName.Settings]: SettingsNavigator,
 };
 
