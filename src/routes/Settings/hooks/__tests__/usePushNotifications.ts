@@ -1,42 +1,33 @@
 import { createSandbox, assert } from 'sinon';
 import { renderHook, act } from '@testing-library/react-hooks';
 import * as messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
+import PushNotificationPermisions from 'src/models/pushNotificationsPermissions';
 
 import { usePushNotifications } from '../usePushNotifications';
 
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
 
-let hasPermission: sinon.SinonStub;
+let isEnabled: sinon.SinonStub;
 let requestPermission: sinon.SinonStub;
 let register: sinon.SinonStub;
 let unregister: sinon.SinonStub;
-let defaultStub: sinon.SinonStub;
 
 beforeEach(() => {
-  hasPermission = sandbox
-    .stub(PushNotificationIOS, 'checkPermissions')
-    .yields();
-  requestPermission = sandbox.stub(PushNotificationIOS, 'requestPermissions');
+  isEnabled = sandbox.stub(PushNotificationPermisions, 'isEnabled');
+  requestPermission = sandbox.stub(
+    PushNotificationPermisions,
+    'requestPermissions',
+  );
   register = sandbox.stub();
   unregister = sandbox.stub();
 
-  defaultStub = sandbox.stub(messaging, 'default').returns({
-    isRegisteredForRemoteNotifications: false,
+  sandbox.stub(messaging, 'default').returns({
     registerForRemoteNotifications: register,
     unregisterForRemoteNotifications: unregister,
   } as any);
 });
-
-const stubRegistered = (isRegisteredForRemoteNotifications: boolean) =>
-  defaultStub.returns({
-    hasPermission,
-    isRegisteredForRemoteNotifications,
-    requestPermission,
-    registerForRemoteNotifications: register,
-    unregisterForRemoteNotifications: unregister,
-  });
 
 describe('check the permissions on mount', () => {
   it('starts disabled with loading', async () => {
@@ -49,8 +40,7 @@ describe('check the permissions on mount', () => {
   });
 
   it('resolves enabled', async () => {
-    stubRegistered(true);
-    hasPermission.yieldsRight({ badge: true });
+    isEnabled.resolves(true);
     const { result, waitForNextUpdate } = renderHook(usePushNotifications);
 
     await waitForNextUpdate();
@@ -59,20 +49,8 @@ describe('check the permissions on mount', () => {
     expect(result.current.isPushEnabled).toBe(true);
   });
 
-  it('is not registered', async () => {
-    stubRegistered(false);
-    hasPermission.resolves(true);
-    const { result, waitForNextUpdate } = renderHook(usePushNotifications);
-
-    await waitForNextUpdate();
-
-    expect(result.current.isLoading).toBe(false);
-    expect(result.current.isPushEnabled).toBe(false);
-  });
-
   it('does not have permission', async () => {
-    stubRegistered(true);
-    hasPermission.resolves(false);
+    isEnabled.resolves(false);
     const { result, waitForNextUpdate } = renderHook(usePushNotifications);
 
     await waitForNextUpdate();
@@ -84,10 +62,9 @@ describe('check the permissions on mount', () => {
 
 describe('handle toggle push notification', () => {
   beforeEach(() => {
-    requestPermission.resolves({ alert: true });
+    requestPermission.resolves(true);
 
-    stubRegistered(false);
-    hasPermission.yieldsRight({ sound: true });
+    isEnabled.resolves(false);
   });
 
   it('sets loading', async () => {
@@ -105,7 +82,7 @@ describe('handle toggle push notification', () => {
   });
 
   it('requests permissions which are not granted', async () => {
-    requestPermission.resolves({});
+    requestPermission.resolves(false);
     const { result, waitForNextUpdate } = renderHook(usePushNotifications);
 
     await waitForNextUpdate();
@@ -124,7 +101,7 @@ describe('handle toggle push notification', () => {
 
     await waitForNextUpdate();
     expect(result.current.isPushEnabled).toBe(false);
-    stubRegistered(true);
+    isEnabled.resolves(true);
 
     await act(result.current.handleTogglePushNotification.bind(null, true));
 

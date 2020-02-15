@@ -11,6 +11,8 @@ import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 import { useAdsSettings } from './ads';
 export * from './usePushNotifications';
 
+const sanitizeLocale = (locale: string) => locale.split('-')[0];
+
 const useSettings = ({ navigation }: ColoredScreenProps) => {
   const {
     isAdFree,
@@ -44,10 +46,10 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
     ([oldLocale]) => {
       if (messaging().isRegisteredForRemoteNotifications) {
         Promise.all([
-          messaging().subscribeToTopic(locale),
-          messaging()
-            .unsubscribeFromTopic(oldLocale ?? '')
-            .catch(),
+          messaging().subscribeToTopic(sanitizeLocale(locale)),
+          oldLocale
+            ? messaging().unsubscribeFromTopic(sanitizeLocale(oldLocale ?? ''))
+            : Promise.resolve(),
         ]);
       }
     },

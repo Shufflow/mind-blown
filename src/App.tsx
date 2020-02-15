@@ -1,15 +1,12 @@
 // tslint:disable:file-name-casing
 
-import React, { useCallback } from 'react';
-import { Linking } from 'react-native';
+import React from 'react';
 import { enableScreens } from 'react-native-screens';
 import SplashScreen from 'react-native-splash-screen';
 import codePush from 'react-native-code-push';
 import { useDidMount } from 'react-hook-utilities';
+import hooked from 'react-hook-hooked';
 import messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS, {
-  PushNotification,
-} from '@react-native-community/push-notification-ios';
 
 import { compose } from '@utils/compose';
 import { setupLocale } from '@locales';
@@ -21,6 +18,8 @@ import { LoaderComponent } from '@components/Loader';
 import AppNavigator from 'src/navigators/AppNavigator';
 import 'src/models/firebase';
 import '@utils/errors';
+
+import usePushNotifications from './hooks';
 
 const Constants = {
   appScheme: 'mibl://',
@@ -39,26 +38,6 @@ const App = ({ setLocale }: LocaleProviderProps) => {
       .catch();
   });
 
-  const handlePushNotification = useCallback((msg: PushNotification) => {
-    const { url } = msg.getData();
-    if (!!url) {
-      Linking.canOpenURL(url).then(() => Linking.openURL(url));
-    }
-  }, []);
-
-  useDidMount(() => {
-    PushNotificationIOS.addEventListener(
-      'notification',
-      handlePushNotification,
-    );
-    return () => {
-      PushNotificationIOS.removeEventListener(
-        'notification',
-        handlePushNotification,
-      );
-    };
-  });
-
   return (
     <React.Fragment>
       <AppNavigator uriPrefix={Constants.appScheme} />
@@ -75,6 +54,7 @@ const enhance = compose(
     installMode: codePush.InstallMode.ON_NEXT_SUSPEND,
     minimumBackgroundDuration: Constants.minimumBkgDurationForInstall,
   }),
+  hooked(usePushNotifications),
 );
 export default enhance(App);
 // tslint:enable:file-name-casing

@@ -1,6 +1,7 @@
 import { useWorkerState, useWorker } from 'react-hook-utilities';
 import messaging from '@react-native-firebase/messaging';
-import PushNotificationIOS from '@react-native-community/push-notification-ios';
+
+import PushNotificationPermisions from 'src/models/pushNotificationsPermissions';
 
 export const usePushNotifications = () => {
   const {
@@ -8,13 +9,7 @@ export const usePushNotifications = () => {
     isLoading: isLoadingStatus,
     callback: checkStatus,
   } = useWorkerState(
-    async () =>
-      messaging().isRegisteredForRemoteNotifications &&
-      new Promise<boolean>(resolve => {
-        PushNotificationIOS.checkPermissions(({ alert, badge, sound }) => {
-          resolve(!!alert || !!badge || !!sound);
-        });
-      }),
+    async () => PushNotificationPermisions.isEnabled(),
     [],
     false,
   );
@@ -25,12 +20,8 @@ export const usePushNotifications = () => {
   } = useWorker(
     async (enabled: boolean) => {
       if (enabled) {
-        const {
-          alert,
-          badge,
-          sound,
-        } = await PushNotificationIOS.requestPermissions();
-        if (!!alert || !!badge || !!sound) {
+        const granted = await PushNotificationPermisions.requestPermissions();
+        if (granted) {
           await messaging().registerForRemoteNotifications();
         }
       } else {
