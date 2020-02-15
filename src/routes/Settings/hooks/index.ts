@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { useDidMount } from 'react-hook-utilities';
+import { useDidMount, useEffectUpdate } from 'react-hook-utilities';
+import messaging from '@react-native-firebase/messaging';
 
 import RouteName from '@routes';
 import { useLocale, LocaleConsumerProps } from '@hocs/withLocale';
@@ -17,7 +18,7 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
     isIAPAvailable,
     canBuyDiscount,
   } = useAdsSettings();
-  const { setLocale, ...locales } = useLocale();
+  const { setLocale, locale } = useLocale();
 
   useDidMount(() => {
     Analytics.currentScreen(RouteName.Settings);
@@ -31,22 +32,36 @@ const useSettings = ({ navigation }: ColoredScreenProps) => {
   );
 
   const handleSetLocale = useCallback(
-    (locale: string) => {
-      setLocale(locale);
+    (newLocale: string) => {
+      setLocale(newLocale);
       navigation.setParams({ updateLocale: '' });
-      Analytics.selectLanguage(locale);
+      Analytics.selectLanguage(newLocale);
     },
     [setLocale, navigation],
   );
 
+  useEffectUpdate(
+    ([oldLocale]) => {
+      if (messaging().isRegisteredForRemoteNotifications) {
+        Promise.all([
+          messaging().subscribeToTopic(locale),
+          messaging()
+            .unsubscribeFromTopic(oldLocale ?? '')
+            .catch(),
+        ]);
+      }
+    },
+    [locale],
+  );
+
   return {
-    ...locales,
     canBuyDiscount,
     handleBuyAdFree,
     handleNavigate,
     handleSetLocale,
     isAdFree,
     isIAPAvailable,
+    locale,
   };
 };
 

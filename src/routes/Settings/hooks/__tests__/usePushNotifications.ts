@@ -1,6 +1,7 @@
 import { createSandbox, assert } from 'sinon';
 import { renderHook, act } from '@testing-library/react-hooks';
 import * as messaging from '@react-native-firebase/messaging';
+import PushNotificationIOS from '@react-native-community/push-notification-ios';
 
 import { usePushNotifications } from '../usePushNotifications';
 
@@ -14,14 +15,14 @@ let unregister: sinon.SinonStub;
 let defaultStub: sinon.SinonStub;
 
 beforeEach(() => {
-  hasPermission = sandbox.stub();
-  requestPermission = sandbox.stub();
+  hasPermission = sandbox
+    .stub(PushNotificationIOS, 'checkPermissions')
+    .yields();
+  requestPermission = sandbox.stub(PushNotificationIOS, 'requestPermissions');
   register = sandbox.stub();
   unregister = sandbox.stub();
 
   defaultStub = sandbox.stub(messaging, 'default').returns({
-    hasPermission,
-    requestPermission,
     isRegisteredForRemoteNotifications: false,
     registerForRemoteNotifications: register,
     unregisterForRemoteNotifications: unregister,
@@ -49,7 +50,7 @@ describe('check the permissions on mount', () => {
 
   it('resolves enabled', async () => {
     stubRegistered(true);
-    hasPermission.resolves(true);
+    hasPermission.yieldsRight({ badge: true });
     const { result, waitForNextUpdate } = renderHook(usePushNotifications);
 
     await waitForNextUpdate();
@@ -83,10 +84,10 @@ describe('check the permissions on mount', () => {
 
 describe('handle toggle push notification', () => {
   beforeEach(() => {
-    requestPermission = sandbox.stub().resolves(true);
+    requestPermission.resolves({ alert: true });
 
     stubRegistered(false);
-    hasPermission.resolves(true);
+    hasPermission.yieldsRight({ sound: true });
   });
 
   it('sets loading', async () => {
@@ -104,7 +105,7 @@ describe('handle toggle push notification', () => {
   });
 
   it('requests permissions which are not granted', async () => {
-    requestPermission.resolves(false);
+    requestPermission.resolves({});
     const { result, waitForNextUpdate } = renderHook(usePushNotifications);
 
     await waitForNextUpdate();
