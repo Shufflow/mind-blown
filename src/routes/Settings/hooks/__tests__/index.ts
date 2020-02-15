@@ -23,7 +23,7 @@ let initialProps: any;
 beforeEach(() => {
   navigate = sandbox.stub();
   subscribeToTopic = sandbox.stub();
-  unsubscribeFromTopic = sandbox.stub().resolves();
+  unsubscribeFromTopic = sandbox.stub();
 
   initialProps = { navigation: { navigate } };
   messagingStub = sandbox.stub(messaging, 'default').returns({
@@ -59,12 +59,12 @@ describe('on mount', () => {
     const locale = 'foobar';
     sandbox
       .stub(useLocale, 'useLocale')
-      .returns({ locale, setLocale: sandbox.stub() } as any);
+      .returns({ locale: `${locale}-BR`, setLocale: sandbox.stub() } as any);
 
     renderHook(hook, { initialProps });
 
     assert.calledWithExactly(subscribeToTopic, locale);
-    assert.calledWithExactly(unsubscribeFromTopic, '');
+    assert.notCalled(unsubscribeFromTopic);
   });
 });
 
