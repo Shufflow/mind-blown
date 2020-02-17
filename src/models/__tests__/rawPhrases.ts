@@ -72,6 +72,7 @@ describe('save phrase', () => {
       ...transl,
       date,
       en: mockPhrases[id].content,
+      usedAsPOtD: false,
     });
   });
 

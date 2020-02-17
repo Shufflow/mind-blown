@@ -53,6 +53,7 @@ class RawPhrasesDataSource {
       ...translations,
       date: new Date(),
       en: content,
+      usedAsPOtD: false,
     });
 
     await doc.delete();

@@ -49,6 +49,7 @@ export const saveSuggestion = async (
         translations.map(({ language, content }) => [language, content]),
       ),
       date: new Date(),
+      usedAsPOtD: false,
     });
 
   await doc.delete();

@@ -136,7 +136,12 @@ describe('save suggestion', () => {
   it('saves a phrase with the given translations', async () => {
     await saveSuggestion(id, translations);
 
-    assert.calledWithExactly(set, { 'pt-BR': 'foo', en: 'bar', date });
+    assert.calledWithExactly(set, {
+      date,
+      en: 'bar',
+      'pt-BR': 'foo',
+      usedAsPOtD: false,
+    });
     assert.calledWithExactly(doc, id);
     assert.calledWithExactly(doc2, id);
   });
