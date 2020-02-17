@@ -18,8 +18,11 @@ export const getSuggestion = async (): Promise<Suggestion | null> => {
     .limit(1)
     .get();
 
+  const data = ref.data();
+
   return {
-    ...ref.data(),
+    ...data,
+    date: data.date.toDate(),
     id: ref.id,
   } as Suggestion | null;
 };

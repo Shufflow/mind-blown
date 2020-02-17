@@ -12,51 +12,54 @@ import {
 const mockPhrases = {
   a: {
     content: 'foo',
-    date: '2020-02-03',
+    date: new Date('2020-02-03'),
     discarded: false,
     id: 'a',
   },
   b: {
     content: 'bar',
-    date: '2020-02-02',
+    date: new Date('2020-02-02'),
     discarded: false,
     id: 'b',
   },
   c: {
     content: 'xpto',
-    date: '2020-02-01',
+    date: new Date('2020-02-01'),
     discarded: true,
     id: 'c',
   },
 };
-jest.mock(
-  'firebase',
-  () =>
-    new MockFirebase(
-      stubFirebase({
-        suggestion: [
-          {
-            content: 'foo',
-            date: '2020-02-03',
-            discarded: false,
-            id: 'a',
-          },
-          {
-            content: 'bar',
-            date: '2020-02-02',
-            discarded: false,
-            id: 'b',
-          },
-          {
-            content: 'xpto',
-            date: '2020-02-01',
-            discarded: true,
-            id: 'c',
-          },
-        ],
-      }),
-    ),
-);
+jest.mock('firebase', () => {
+  (String.prototype as any).toDate = function() {
+    // tslint:disable-next-line: no-invalid-this
+    return new Date(this);
+  };
+
+  return new MockFirebase(
+    stubFirebase({
+      suggestion: [
+        {
+          content: 'foo',
+          date: '2020-02-03',
+          discarded: false,
+          id: 'a',
+        },
+        {
+          content: 'bar',
+          date: '2020-02-02',
+          discarded: false,
+          id: 'b',
+        },
+        {
+          content: 'xpto',
+          date: '2020-02-01',
+          discarded: true,
+          id: 'c',
+        },
+      ],
+    }),
+  );
+});
 
 const sandbox = createSandbox();
 let col: sinon.SinonStub;
