@@ -1,6 +1,8 @@
 import { createSandbox, assert } from 'sinon';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook, act } from '@testing-library/react-hooks';
 import * as utils from 'react-hook-utilities';
+
+import * as asyncBinarySearch from '@utils/search';
 
 import Model from 'src/models/phrases';
 
@@ -16,10 +18,13 @@ let initialProps: any;
 const phrase = { id: 'foo', en: 'foobar', 'pt-BR': 'yolo' };
 
 beforeEach(() => {
+  sandbox.stub(console, 'error');
+
   getParam = sandbox.stub();
   setParams = sandbox.stub();
 
   sandbox.stub(Model.prototype, 'getRandomPhrase').resolves(phrase);
+  sandbox.stub(asyncBinarySearch, 'asyncBinarySearch').resolves(1);
 
   initialProps = { navigation: { getParam, setParams } };
   getPhrase = sandbox.stub(Model.prototype, 'getPhrase').callsFake(id =>
@@ -40,6 +45,12 @@ describe('starting with phrase id', () => {
   it('gets the phrase with the given id', async () => {
     const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
 
+    act(() => {
+      result.current.handlePhraseContainerSize({
+        nativeEvent: { layout: { width: 100, height: 200 } } as any,
+      });
+    });
+
     await waitForNextUpdate();
 
     assert.calledWithExactly(getPhrase, phraseId);
@@ -50,8 +61,14 @@ describe('starting with phrase id', () => {
   });
 
   it('unsets the phrase id', async () => {
-    const { waitForNextUpdate } = renderHook(hook, {
+    const { result, waitForNextUpdate } = renderHook(hook, {
       initialProps,
+    });
+
+    act(() => {
+      result.current.handlePhraseContainerSize({
+        nativeEvent: { layout: { width: 100, height: 200 } } as any,
+      });
     });
 
     await waitForNextUpdate();
@@ -62,21 +79,30 @@ describe('starting with phrase id', () => {
   it('aborts previous fetch', async () => {
     const worker = sandbox
       .stub(utils, 'useWorkerState')
-      .returns({ callback: () => {} } as any);
+      .returns({ callback: () => {}, data: {} } as any);
     const newId = 'newId';
     getParam.onSecondCall().returns(newId);
 
-    const { rerender } = renderHook(hook, { initialProps });
+    const { result } = renderHook(hook, { initialProps });
 
     const r1 = worker.args[0][0]();
 
-    rerender();
+    act(() => {
+      result.current.handlePhraseContainerSize({
+        nativeEvent: { layout: { width: 100, height: 200 } } as any,
+      });
+    });
     const r2 = worker.args[1][0]();
 
-    await expect(r1).resolves.toBe(undefined);
-    await expect(r2).resolves.toEqual({
-      ...phrase,
-      id: newId,
+    await expect(r1).resolves.toMatchObject({
+      font: undefined,
+      phraseData: undefined,
+    });
+    await expect(r2).resolves.toMatchObject({
+      phraseData: {
+        ...phrase,
+        id: newId,
+      },
     });
   });
 });
@@ -87,6 +113,12 @@ describe('get random phrase', () => {
   it('gets the phrase with the given id', async () => {
     const { result, waitForNextUpdate, rerender } = renderHook(hook, {
       initialProps,
+    });
+
+    act(() => {
+      result.current.handlePhraseContainerSize({
+        nativeEvent: { layout: { width: 100, height: 200 } } as any,
+      });
     });
 
     await waitForNextUpdate();
@@ -112,6 +144,12 @@ describe('get random phrase', () => {
   it('unsets the phrase id', async () => {
     const { result, waitForNextUpdate, rerender } = renderHook(hook, {
       initialProps,
+    });
+
+    act(() => {
+      result.current.handlePhraseContainerSize({
+        nativeEvent: { layout: { width: 100, height: 200 } } as any,
+      });
     });
 
     await waitForNextUpdate();

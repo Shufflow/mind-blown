@@ -26,18 +26,6 @@ beforeEach(() => {
   sandbox.stub(lodash, 'shuffle').callsFake(a => a.reverse());
 });
 
-describe('init', () => {
-  it('has no font', () => {
-    const {
-      result: {
-        current: { font },
-      },
-    } = renderHook(useFonts);
-
-    expect(font).toBeNull();
-  });
-});
-
 describe('get next font', () => {
   const renderHookWithSize = () => {
     const renderedHook = renderHook(useFonts);
@@ -58,22 +46,18 @@ describe('get next font', () => {
     });
 
     expect(resolved).toBe(false);
-    expect(result.current.font).toBeNull();
     assert.notCalled(measure);
   });
 
   it('cycles through fonts', async () => {
     const fontCount = Object.fromEntries(mockFonts.map(f => [f, 0]));
-    const { result, waitForNextUpdate } = renderHookWithSize();
+    const { result } = renderHookWithSize();
 
     for (let i = 0; i < mockFonts.length * 2; i += 1) {
-      act(() => {
-        result.current.getNextFont('foobar');
-      });
-      await waitForNextUpdate();
-      fontCount[result.current.font!.fontFamily] += 1;
+      const font = await result.current.getNextFont('foobar');
+      fontCount[font.fontFamily] += 1;
 
-      expect(result.current.font!.fontFamily).toEqual(
+      expect(font.fontFamily).toEqual(
         mockFonts[mockFonts.length - 1 - (i % mockFonts.length)],
       );
     }
@@ -83,18 +67,14 @@ describe('get next font', () => {
   });
 
   it('finds the font size that gets closer to the screen size', async () => {
-    const { result, waitForNextUpdate } = renderHookWithSize();
+    const { result } = renderHookWithSize();
 
-    act(() => {
-      result.current.getNextFont('foobar');
-    });
-
-    await waitForNextUpdate();
+    const font = await result.current.getNextFont('foobar');
 
     /**
      * The view's height is 100pt (defined in `renderHookWithSize`); The `measure`'s stub returns `fontSize * 20`
      * ergo, the fontSize for a 100pt screen is 5pt, in this test
      */
-    expect(result.current.font?.fontSize).toEqual(5);
+    expect(font.fontSize).toEqual(5);
   });
 });

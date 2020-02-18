@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, useMemo, useEffect } from 'react';
+import { useState, useCallback, useRef, useMemo } from 'react';
 import {
   useLazyRef,
   useWorkerState,
@@ -18,8 +18,8 @@ import {
 
 import PhrasesDataSource, { Phrase } from 'src/models/phrases';
 import Analytics from 'src/models/analytics';
-import { useColors } from 'src/models/assets';
-import { useFonts } from 'src/models/fonts';
+import { getNewColors, ColorWithBrightness } from 'src/models/assets';
+import { useFonts, Font } from 'src/models/fonts';
 
 export enum SelectedThumb {
   Up = 'up',
@@ -29,11 +29,16 @@ export enum SelectedThumb {
 type Props = LocaleConsumerProps &
   NavigationInjectedProps<{ phraseId?: string }>;
 
+interface WorkedType {
+  colors: ColorWithBrightness;
+  phraseData?: Phrase;
+  font?: Font;
+}
+
 const usePhrases = ({ navigation }: Props) => {
   const phraseId = navigation.getParam('phraseId');
   const { locale } = useLocale();
-  const { getNewColors, ...colors } = useColors();
-  const { getNextFont, ...fonts } = useFonts();
+  const { getNextFont, handlePhraseContainerSize } = useFonts();
   const viewShotRef = useRef<ViewShot>(null);
   const [selectedThumb, setThumb] = useState<SelectedThumb | null>(null);
   const model = useLazyRef(() => new PhrasesDataSource()).current;
@@ -41,25 +46,33 @@ const usePhrases = ({ navigation }: Props) => {
   const {
     isLoading,
     callback: getRandomPhrase,
-    data,
+    data: { phraseData, colors, font },
     error,
-  } = useWorkerState(async () => {
-    const result = await promiseAborter(
-      phraseId ? model.getPhrase(phraseId) : model.getRandomPhrase(),
-      abortable,
-    ).catch(e => {
-      if (e !== PromiseAbortedError) {
-        throw e;
-      }
+  } = useWorkerState<WorkedType>(
+    async (...args) => {
+      const result = await promiseAborter(
+        phraseId ? model.getPhrase(phraseId) : model.getRandomPhrase(),
+        abortable,
+      ).catch(e => {
+        if (e !== PromiseAbortedError) {
+          throw e;
+        }
 
-      return undefined;
-    });
+        return undefined;
+      });
 
-    result && Analytics.viewPhrase(result.id);
-    setThumb(null);
+      result && Analytics.viewPhrase(result.id);
+      setThumb(null);
 
-    return result;
-  }, [phraseId]);
+      return {
+        colors: getNewColors(),
+        font: result && (await getNextFont(result[locale] ?? result.en)),
+        phraseData: result,
+      };
+    },
+    [phraseId, locale],
+    { colors: getNewColors() },
+  );
 
   useEffectUpdate(
     ([oldPhraseId]) => {
@@ -67,26 +80,21 @@ const usePhrases = ({ navigation }: Props) => {
         getRandomPhrase();
       }
 
-      if (data?.id === phraseId) {
+      if (phraseData?.id === phraseId) {
         navigation.setParams({ phraseId: undefined });
       }
     },
-    [phraseId, data?.id, getRandomPhrase],
+    [phraseId, phraseData?.id, getRandomPhrase],
   );
 
   const phrase = useMemo(
     () =>
-      data && {
-        content: data[locale] ?? data.en,
-        id: data.id,
+      phraseData && {
+        content: phraseData[locale] ?? phraseData.en,
+        id: phraseData.id,
       },
-    [data, locale],
+    [phraseData, locale],
   );
-
-  useEffect(() => {
-    getNewColors();
-    getNextFont(phrase?.content ?? '');
-  }, [phrase]);
 
   const handlePressReview = useCallback(
     async (review: boolean) => {
@@ -131,10 +139,11 @@ const usePhrases = ({ navigation }: Props) => {
   }, [phrase]);
 
   return {
-    ...colors,
-    ...fonts,
+    colors,
     error,
+    font,
     getRandomPhrase,
+    handlePhraseContainerSize,
     handlePressReview,
     handlePressSettings,
     handlePressShare,
