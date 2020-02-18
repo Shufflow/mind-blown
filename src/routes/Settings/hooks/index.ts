@@ -4,14 +4,13 @@ import messaging from '@react-native-firebase/messaging';
 
 import RouteName from '@routes';
 import { useLocale, LocaleConsumerProps } from '@hocs/withLocale';
+import { sanitizeLocale } from '@utils/locales';
 
 import Analytics from 'src/models/analytics';
 import { ColoredScreenProps } from 'src/navigators/SettingsNavigator/types';
 
 import { useAdsSettings } from './ads';
 export * from './usePushNotifications';
-
-const sanitizeLocale = (locale: string) => locale.split('-')[0];
 
 const useSettings = ({ navigation }: ColoredScreenProps) => {
   const {
