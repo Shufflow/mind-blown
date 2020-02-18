@@ -83,7 +83,7 @@ const Home = ({
         )}
       </React.Fragment>
     );
-  }, [font, colors]);
+  }, [font, colors, isLoading, phrase]);
 
   return (
     <TouchableWithoutFeedback onPress={getRandomPhrase} disabled={!!error}>

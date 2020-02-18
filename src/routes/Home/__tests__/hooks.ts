@@ -23,16 +23,17 @@ let initialProps: any;
 const phrase = { id: 'foo', en: 'foobar', 'pt-BR': 'yolo' };
 
 beforeEach(() => {
-  getNewColors = sandbox.stub();
   getNextFont = sandbox.stub();
+
+  getNewColors = sandbox.stub(useColors, 'getNewColors').returns({
+    bgColor: 'bgColor',
+    fgColor: 'fgColor',
+    isDark: false,
+  });
 
   getRandomPhrase = sandbox
     .stub(Model.prototype, 'getRandomPhrase')
     .resolves(phrase);
-
-  sandbox.stub(useColors, 'useColors').returns({
-    getNewColors,
-  } as any);
 
   sandbox.stub(useFonts, 'useFonts').returns({
     getNextFont,
@@ -208,6 +209,7 @@ describe('get random phrase', () => {
   it("returns error and doesn't call side-effects on error", async () => {
     const error = new Error('error');
     const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+    const { colors } = result.current;
 
     await waitForNextUpdate();
     sandbox.resetHistory();
@@ -221,11 +223,10 @@ describe('get random phrase', () => {
 
     await waitForNextUpdate();
 
-    assert.notCalled(getNewColors);
-    assert.notCalled(getNewColors);
     assert.notCalled(logEvent);
 
     expect(result.current.error).toBe(error);
+    expect(result.current.colors).toBe(colors);
   });
 
   it('logs the event', async () => {
@@ -265,13 +266,21 @@ describe('get random phrase', () => {
 
   describe('gets new colors', () => {
     it('when phrase changes', async () => {
+      const color = {
+        bgColor: 'foo',
+        fgColor: 'bar',
+        isDark: true,
+      };
+
       const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+      const { colors } = result.current;
 
       await waitForNextUpdate();
       sandbox.resetHistory();
       getRandomPhrase.resolves({ id: '2' });
 
       assert.notCalled(getNewColors);
+      getNewColors.returns(color);
 
       act(() => {
         result.current.getRandomPhrase();
@@ -279,7 +288,8 @@ describe('get random phrase', () => {
 
       await waitForNextUpdate();
 
-      assert.calledOnce(getNewColors);
+      expect(result.current.colors).not.toEqual(colors);
+      expect(result.current.colors).toBe(color);
     });
 
     it('when locale changes', async () => {

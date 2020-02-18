@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useCallback } from 'react';
 import { useLazyRef, usePromisedState } from 'react-hook-utilities';
 import { NativeModules, LayoutChangeEvent } from 'react-native';
 import { knuthShuffle } from 'knuth-shuffle';
@@ -12,7 +12,7 @@ interface Size {
   width: number;
 }
 
-interface Font {
+export interface Font {
   fontFamily: string;
   fontSize: number;
 }
@@ -41,7 +41,6 @@ export const useFonts = () => {
   const model = useLazyRef<Promise<string[]>>(() =>
     NativeModules.Fonts.getAvailableFonts().then(lodash.shuffle),
   ).current;
-  const [font, setFont] = useState<Font | null>(null);
 
   const handlePhraseContainerSize = useCallback(
     ({ nativeEvent: { layout } }: LayoutChangeEvent) => {
@@ -51,7 +50,7 @@ export const useFonts = () => {
   );
 
   const getNextFont = useCallback(
-    async (text: string) => {
+    async (text: string): Promise<Font> => {
       const fonts = await model;
       const resSize = await size;
       const fontFamily = fonts.shift()!;
@@ -71,12 +70,12 @@ export const useFonts = () => {
         { fontFamily, height: resSize.height },
       );
 
-      setFont({ fontFamily, fontSize });
+      return { fontFamily, fontSize };
     },
     [size.value, size, model],
   );
 
-  return { font, handlePhraseContainerSize, getNextFont };
+  return { handlePhraseContainerSize, getNextFont };
 };
 
 export default Fonts;
