@@ -1,9 +1,11 @@
 import { useWorkerState, useWorker } from 'react-hook-utilities';
-import messaging from '@react-native-firebase/messaging';
+
+import { useLocale } from '@utils/hocs/withLocale';
 
 import PushNotificationPermisions from 'src/models/pushNotificationsPermissions';
 
 export const usePushNotifications = () => {
+  const { locale } = useLocale();
   const {
     data: isPushEnabled,
     isLoading: isLoadingStatus,
@@ -20,17 +22,14 @@ export const usePushNotifications = () => {
   } = useWorker(
     async (enabled: boolean) => {
       if (enabled) {
-        const granted = await PushNotificationPermisions.requestPermissions();
-        if (granted) {
-          await messaging().registerForRemoteNotifications();
-        }
+        await PushNotificationPermisions.requestPermissions(locale);
       } else {
-        await messaging().unregisterForRemoteNotifications();
+        await PushNotificationPermisions.disablePushNotification(locale);
       }
 
       await checkStatus();
     },
-    [checkStatus],
+    [checkStatus, locale],
   );
 
   return {

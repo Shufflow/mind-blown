@@ -1,15 +1,25 @@
-import { createSandbox } from 'sinon';
+import { createSandbox, assert } from 'sinon';
 import { Platform } from 'react-native';
 import * as messaging from '@react-native-firebase/messaging';
 import PushNotification from 'react-native-push-notification';
+
+import User from 'src/models/user';
 
 import model from '../pushNotificationsPermissions';
 
 const sandbox = createSandbox();
 beforeEach(sandbox.restore);
 
+const locale = 'xpto';
 let messagingStub: sinon.SinonStub;
 let checkPermissions: sinon.SinonStub;
+let isPushEnabled: sinon.SinonStub;
+let userSetEnabled: sinon.SinonStub;
+
+beforeEach(() => {
+  isPushEnabled = sandbox.stub(User, 'isPushEnabled').resolves(false);
+  userSetEnabled = sandbox.stub(User, 'setPushEnabled').resolves(true);
+});
 
 describe('ios', () => {
   beforeEach(() => {
@@ -34,7 +44,15 @@ describe('ios', () => {
     });
 
     it('does not have permissions', async () => {
-      checkPermissions.yieldsRight({});
+      checkPermissions.yields({});
+
+      const result = await model.isEnabled();
+
+      expect(result).toBe(false);
+    });
+
+    it('user has not enabled', async () => {
+      checkPermissions.yields({ alert: true });
 
       const result = await model.isEnabled();
 
@@ -43,6 +61,7 @@ describe('ios', () => {
 
     it('is enabled', async () => {
       checkPermissions.yields({ alert: true });
+      isPushEnabled.resolves(true);
 
       const result = await model.isEnabled();
 
@@ -60,17 +79,21 @@ describe('ios', () => {
     it('grants', async () => {
       request.resolves({ badge: true });
 
-      const result = await model.requestPermissions();
+      const result = await model.requestPermissions(locale);
 
       expect(result).toBe(true);
+      assert.calledWithExactly(userSetEnabled, true, locale);
+      assert.callOrder(request, userSetEnabled);
     });
 
     it('denies', async () => {
       request.resolves({});
 
-      const result = await model.requestPermissions();
+      const result = await model.requestPermissions(locale);
 
       expect(result).toBe(false);
+      assert.calledWithExactly(userSetEnabled, false, locale);
+      assert.callOrder(request, userSetEnabled);
     });
   });
 });
@@ -106,8 +129,17 @@ describe('android', () => {
       expect(result).toBe(false);
     });
 
+    it('user has not enabled', async () => {
+      checkPermissions.resolves(true);
+
+      const result = await model.isEnabled();
+
+      expect(result).toBe(false);
+    });
+
     it('is enabled', async () => {
       checkPermissions.resolves(true);
+      isPushEnabled.resolves(true);
 
       const result = await model.isEnabled();
 
@@ -131,17 +163,41 @@ describe('android', () => {
     it('grants', async () => {
       request.resolves(true);
 
-      const result = await model.requestPermissions();
+      const result = await model.requestPermissions(locale);
 
       expect(result).toBe(true);
+      assert.calledWithExactly(userSetEnabled, true, locale);
+      assert.callOrder(request, userSetEnabled);
     });
 
     it('denies', async () => {
       request.resolves(false);
+      userSetEnabled.resolves(false);
 
-      const result = await model.requestPermissions();
+      const result = await model.requestPermissions(locale);
 
       expect(result).toBe(false);
+      assert.calledWithExactly(userSetEnabled, false, locale);
+      assert.callOrder(request, userSetEnabled);
     });
+  });
+});
+
+describe('disable push notification', () => {
+  let unregister: sinon.SinonStub;
+
+  beforeEach(() => {
+    unregister = sandbox.stub();
+    messagingStub = sandbox.stub(messaging, 'default').returns({
+      unregisterForRemoteNotifications: unregister,
+    } as any);
+  });
+
+  it('disables and unregisters', async () => {
+    const result = await model.disablePushNotification(locale);
+
+    expect(result).toBe(true);
+    assert.calledWithExactly(userSetEnabled, false, locale);
+    assert.calledOnce(unregister);
   });
 });

@@ -1,6 +1,6 @@
 import { createSandbox, assert } from 'sinon';
 import { renderHook, act } from '@testing-library/react-hooks';
-import * as messaging from '@react-native-firebase/messaging';
+import * as localeModule from '@utils/hocs/withLocale';
 
 import PushNotificationPermisions from 'src/models/pushNotificationsPermissions';
 
@@ -9,24 +9,19 @@ import { usePushNotifications } from '../usePushNotifications';
 const sandbox = createSandbox();
 afterEach(sandbox.restore);
 
+const locale = 'xpto';
 let isEnabled: sinon.SinonStub;
 let requestPermission: sinon.SinonStub;
-let register: sinon.SinonStub;
-let unregister: sinon.SinonStub;
+let disable: sinon.SinonStub;
 
 beforeEach(() => {
   isEnabled = sandbox.stub(PushNotificationPermisions, 'isEnabled');
+  disable = sandbox.stub(PushNotificationPermisions, 'disablePushNotification');
   requestPermission = sandbox.stub(
     PushNotificationPermisions,
     'requestPermissions',
   );
-  register = sandbox.stub();
-  unregister = sandbox.stub();
-
-  sandbox.stub(messaging, 'default').returns({
-    registerForRemoteNotifications: register,
-    unregisterForRemoteNotifications: unregister,
-  } as any);
+  sandbox.stub(localeModule, 'useLocale').returns({ locale } as any);
 });
 
 describe('check the permissions on mount', () => {
@@ -90,8 +85,7 @@ describe('handle toggle push notification', () => {
 
     await act(result.current.handleTogglePushNotification.bind(null, true));
 
-    assert.notCalled(register);
-    assert.notCalled(unregister);
+    assert.notCalled(disable);
     expect(result.current.isPushEnabled).toBe(false);
     expect(result.current.isLoading).toBe(false);
   });
@@ -105,8 +99,8 @@ describe('handle toggle push notification', () => {
 
     await act(result.current.handleTogglePushNotification.bind(null, true));
 
-    assert.callOrder(requestPermission, register);
-    assert.notCalled(unregister);
+    assert.calledWithExactly(requestPermission, locale);
+    assert.notCalled(disable);
     expect(result.current.isPushEnabled).toBe(true);
     expect(result.current.isLoading).toBe(false);
   });
@@ -120,8 +114,7 @@ describe('handle toggle push notification', () => {
     await act(result.current.handleTogglePushNotification.bind(null, false));
 
     assert.notCalled(requestPermission);
-    assert.notCalled(register);
-    assert.called(unregister);
+    assert.called(disable);
     expect(result.current.isPushEnabled).toBe(false);
     expect(result.current.isLoading).toBe(false);
   });
