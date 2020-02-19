@@ -56,6 +56,14 @@ export enum About {
   storeReview = 'storeReview',
 }
 
+export enum EnablePushAlert {
+  title = 'title',
+  message = 'message',
+  later = 'later',
+  cancel = 'cancel',
+  ok = 'ok',
+}
+
 type Key =
   | Global
   | Settings
@@ -66,6 +74,7 @@ type Key =
   | RouteName
   | AdFreeErrorAlert
   | About
+  | EnablePushAlert
   | 'name';
 
 export type Strings = { [key in Key]: string };

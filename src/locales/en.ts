@@ -10,6 +10,7 @@ import {
   Strings,
   AdFreeErrorAlert,
   About,
+  EnablePushAlert,
 } from './strings';
 
 const strings: Strings = {
@@ -65,6 +66,13 @@ const strings: Strings = {
   [About.artBy]: 'Art by Agnes Pinhanelli',
   [About.version]: 'Version',
   [About.storeReview]: 'Rate the app',
+
+  [EnablePushAlert.title]: 'Are you enjoying the app?',
+  [EnablePushAlert.message]:
+    'Enable push notifications to receive the phrase of the day!',
+  [EnablePushAlert.cancel]: 'No, thanks',
+  [EnablePushAlert.later]: 'Maybe later?',
+  [EnablePushAlert.ok]: 'YASS!',
 };
 
 export default strings;

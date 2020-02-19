@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Persist from '../persist';
 
 const Constants = {
+  askEnablePush: 'com.shufflow.MindBlown.askEnablePush',
   usedPhrasesIdsKey: 'com.shufflow.MindBlown.usedPhrasesIds',
   visitedPhrasesIdsKey: 'com.shufflow.MindBlown.visitedPhrasesIds',
 };
@@ -90,5 +91,41 @@ describe('used phrases', () => {
     await model.clearUsedPhrases();
 
     assert.calledWithExactly(setItem, Constants.usedPhrasesIdsKey, '[]');
+  });
+});
+
+describe('ask to enable push notifications', () => {
+  let model: Persist;
+
+  beforeEach(() => {
+    model = new Persist();
+  });
+
+  it('returns true', async () => {
+    getItem.withArgs(Constants.askEnablePush).resolves('true');
+
+    const result = await model.didAskToEnablePushNotifications();
+
+    expect(result).toBe(true);
+  });
+
+  it('returns false when unset', async () => {
+    getItem.withArgs(Constants.askEnablePush).resolves(null);
+
+    const result = await model.didAskToEnablePushNotifications();
+
+    expect(result).toBe(false);
+  });
+
+  it('sets true', async () => {
+    await model.setAskToEnablePushNotifications(true);
+
+    assert.calledWithExactly(setItem, Constants.askEnablePush, 'true');
+  });
+
+  it('sets false', async () => {
+    await model.setAskToEnablePushNotifications(false);
+
+    assert.calledWithExactly(setItem, Constants.askEnablePush, 'false');
   });
 });

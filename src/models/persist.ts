@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 const Constants = {
+  askEnablePush: 'com.shufflow.MindBlown.askEnablePush',
   usedPhrasesIdsKey: 'com.shufflow.MindBlown.usedPhrasesIds',
   visitedPhrasesIdsKey: 'com.shufflow.MindBlown.visitedPhrasesIds',
 };
@@ -43,6 +44,15 @@ class Persist {
       JSON.stringify(Array.from(list)),
     );
   };
+
+  async didAskToEnablePushNotifications(): Promise<boolean> {
+    const result = await AsyncStorage.getItem(Constants.askEnablePush);
+    return result === 'true';
+  }
+
+  async setAskToEnablePushNotifications(value: boolean): Promise<void> {
+    await AsyncStorage.setItem(Constants.askEnablePush, value.toString());
+  }
 
   private loadPhraseCollection = async (key: string): Promise<Set<string>> => {
     const visitedPhrases = await AsyncStorage.getItem(key);

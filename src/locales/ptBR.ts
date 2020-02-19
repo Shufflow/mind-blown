@@ -10,6 +10,7 @@ import {
   Strings,
   AdFreeErrorAlert,
   About,
+  EnablePushAlert,
 } from './strings';
 
 const strings: Strings = {
@@ -65,6 +66,13 @@ const strings: Strings = {
   [About.artBy]: 'Arte de Agnes Pinhanelli',
   [About.version]: 'Versão',
   [About.storeReview]: 'Avaliar o app',
+
+  [EnablePushAlert.title]: 'Tá curtindo o app?',
+  [EnablePushAlert.message]:
+    'Habilite as notificações para receber a frase do dia!',
+  [EnablePushAlert.cancel]: 'Não quero',
+  [EnablePushAlert.later]: 'Depois?',
+  [EnablePushAlert.ok]: 'SIIM!',
 };
 
 export default strings;
