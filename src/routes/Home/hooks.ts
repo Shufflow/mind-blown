@@ -15,6 +15,7 @@ import {
   usePromiseAborterRef,
   PromiseAbortedError,
 } from '@utils/hooks';
+import { requestEnablePushNotifications } from '@utils/alerts';
 
 import PhrasesDataSource, { Phrase } from 'src/models/phrases';
 import Analytics from 'src/models/analytics';
@@ -102,6 +103,10 @@ const usePhrases = ({ navigation }: Props) => {
         return;
       }
 
+      if (review) {
+        requestEnablePushNotifications(locale);
+      }
+
       setThumb(review ? SelectedThumb.Up : SelectedThumb.Down);
       try {
         await Promise.all([
@@ -112,7 +117,7 @@ const usePhrases = ({ navigation }: Props) => {
         setThumb(null);
       }
     },
-    [phrase],
+    [phrase, locale],
   );
 
   const handlePressSettings = useCallback(() => {
@@ -132,11 +137,12 @@ const usePhrases = ({ navigation }: Props) => {
       });
 
       Analytics.sharePhrase(phrase!.id, app);
+      requestEnablePushNotifications(locale);
     } catch (e) {
       // tslint:disable-next-line: no-console
       console.error(e);
     }
-  }, [phrase]);
+  }, [phrase, locale]);
 
   return {
     colors,

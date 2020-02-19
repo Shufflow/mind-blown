@@ -4,6 +4,7 @@ import Share from 'react-native-share';
 
 import RouteName from '@routes';
 import * as withLocale from '@hocs/withLocale';
+import * as alerts from '@utils/alerts';
 
 import Model from 'src/models/phrases';
 import * as useColors from 'src/models/assets';
@@ -400,6 +401,32 @@ describe('handle press review', () => {
 
     assert.calledWithExactly(logEvent, phrase.id, true);
   });
+
+  it('asks to enable push if the review is positive', async () => {
+    const alert = sandbox.stub(alerts, 'requestEnablePushNotifications');
+    const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+
+    await waitForNextUpdate();
+
+    act(() => {
+      result.current.handlePressReview(true);
+    });
+
+    assert.calledOnce(alert);
+  });
+
+  it('do not ask to enable push if the review is negative', async () => {
+    const alert = sandbox.stub(alerts, 'requestEnablePushNotifications');
+    const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+
+    await waitForNextUpdate();
+
+    act(() => {
+      result.current.handlePressReview(false);
+    });
+
+    assert.notCalled(alert);
+  });
 });
 
 describe('handle press share', () => {
@@ -494,6 +521,20 @@ describe('handle press share', () => {
     await act(result.current.handlePressShare);
 
     assert.calledWithExactly(logEvent, phrase.id, app);
+  });
+
+  it('asks to enable push', async () => {
+    const alert = sandbox.stub(alerts, 'requestEnablePushNotifications');
+    const { result, waitForNextUpdate } = renderHook(hook, { initialProps });
+
+    await waitForNextUpdate();
+
+    capture.resolves('foobar');
+    sandbox.stub(result.current.viewShotRef, 'current').value({ capture });
+
+    await act(result.current.handlePressShare);
+
+    assert.calledOnce(alert);
   });
 });
 
