@@ -5,6 +5,7 @@ import Share from 'react-native-share';
 import RouteName from '@routes';
 import * as withLocale from '@hocs/withLocale';
 import * as alerts from '@utils/alerts';
+import sleep from '@utils/sleep';
 
 import Model from 'src/models/phrases';
 import * as useColors from 'src/models/assets';
@@ -52,7 +53,7 @@ beforeEach(() => {
 });
 
 describe('init', () => {
-  it('starts loading immediately', async () => {
+  it('does not start loading immediately', async () => {
     const {
       result: {
         current: { isLoading },
@@ -60,9 +61,21 @@ describe('init', () => {
       waitForNextUpdate,
     } = renderHook(hook, { initialProps });
 
-    expect(isLoading).toBe(true);
+    expect(isLoading).toBe(false);
 
     await waitForNextUpdate();
+  });
+
+  it('starts loading if it takes a while to get a phrase', async () => {
+    getRandomPhrase.callsFake(() => sleep(300).then(() => phrase));
+    const timer = sandbox.useFakeTimers();
+    const { result } = renderHook(hook, { initialProps });
+
+    act(() => {
+      timer.tick(200);
+    });
+
+    expect(result.current.isLoading).toBe(true);
   });
 
   it('stops loading after the request finishes', async () => {

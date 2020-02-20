@@ -1,10 +1,15 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { createSandbox } from 'sinon';
+import { renderHook, act } from '@testing-library/react-hooks';
 
 import {
   promiseAborter,
   usePromiseAborterRef,
   PromiseAbortedError,
+  useThrottledState,
 } from '../hooks';
+
+const sandbox = createSandbox();
+afterEach(sandbox.restore);
 
 const hook = (promise: Promise<any>) => {
   const ref = usePromiseAborterRef();
@@ -88,4 +93,117 @@ it('does not cancel same promise', async () => {
 
   await expect(result.current).resolves.toBe(value);
   await expect(prev).resolves.toBe(value);
+});
+
+describe('use throttle', () => {
+  const value = 'foobar';
+  const newValue = 'xpto';
+  let timer: sinon.SinonFakeTimers;
+
+  beforeEach(() => {
+    timer = sandbox.useFakeTimers();
+  });
+
+  it('immediately returns the initial value', () => {
+    const {
+      result: { current },
+    } = renderHook(() => useThrottledState(value));
+
+    expect(current).toBe(value);
+  });
+
+  it('returns the previous value before the timeout expires', () => {
+    const { result, rerender } = renderHook(useThrottledState, {
+      initialProps: value,
+    });
+
+    rerender(newValue);
+
+    expect(result.current).toBe(value);
+  });
+
+  it('returns the new value after the timeout expires', async () => {
+    const { result, rerender } = renderHook(useThrottledState, {
+      initialProps: value,
+    });
+
+    rerender(newValue);
+    act(() => {
+      timer.tick(200);
+    });
+
+    expect(result.current).toBe(newValue);
+  });
+
+  it('resets timer if value changes during wait time', async () => {
+    const midValue = 'yolo';
+    const { result, rerender } = renderHook(useThrottledState, {
+      initialProps: value,
+    });
+
+    rerender(midValue);
+    act(() => {
+      timer.tick(100);
+    });
+
+    expect(result.current).toBe(value);
+
+    rerender(newValue);
+    act(() => {
+      timer.tick(100);
+    });
+
+    expect(result.current).toBe(value);
+  });
+
+  it('ignores values updated before the timeout expires', async () => {
+    const midValue = 'yolo';
+    const { result, rerender } = renderHook(useThrottledState, {
+      initialProps: value,
+    });
+
+    rerender(midValue);
+    act(() => {
+      timer.tick(100);
+    });
+
+    expect(result.current).toBe(value);
+
+    rerender(newValue);
+    act(() => {
+      timer.tick(200);
+    });
+
+    expect(result.current).toBe(newValue);
+  });
+
+  describe('arbitrary wait time', () => {
+    const wait = 1000;
+
+    it('returns the previous value before the timeout expires', () => {
+      const { result, rerender } = renderHook(v => useThrottledState(v, wait), {
+        initialProps: value,
+      });
+
+      rerender(newValue);
+      act(() => {
+        timer.tick(wait - 1);
+      });
+
+      expect(result.current).toBe(value);
+    });
+
+    it('returns the new value after the timeout expires', async () => {
+      const { result, rerender } = renderHook(v => useThrottledState(v, wait), {
+        initialProps: value,
+      });
+
+      rerender(newValue);
+      act(() => {
+        timer.tick(wait);
+      });
+
+      expect(result.current).toBe(newValue);
+    });
+  });
 });

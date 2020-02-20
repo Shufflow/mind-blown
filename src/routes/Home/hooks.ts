@@ -14,6 +14,7 @@ import {
   promiseAborter,
   usePromiseAborterRef,
   PromiseAbortedError,
+  useThrottledState,
 } from '@utils/hooks';
 import { requestEnablePushNotifications } from '@utils/alerts';
 
@@ -153,11 +154,11 @@ const usePhrases = ({ navigation }: Props) => {
     handlePressReview,
     handlePressSettings,
     handlePressShare,
-    isLoading,
     locale,
     phrase,
     selectedThumb,
     viewShotRef,
+    isLoading: useThrottledState(isLoading),
   };
 };
 
