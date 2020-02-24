@@ -22,7 +22,7 @@ export const getSuggestion = async (): Promise<Suggestion | null> => {
 
   return {
     ...data,
-    date: data.date.toDate(),
+    date: data.date?.toDate() || null,
     id: ref.id,
   } as Suggestion | null;
 };

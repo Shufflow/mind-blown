@@ -1,5 +1,6 @@
 import { createSandbox, assert } from 'sinon';
 import MockFirebase from 'mock-cloud-firestore';
+import firebase from 'firebase';
 
 import { stubFirebase } from '@utils/tests';
 
@@ -29,65 +30,61 @@ const mockPhrases = {
     id: 'c',
   },
 };
-jest.mock('firebase', () => {
-  (String.prototype as any).toDate = function() {
-    // tslint:disable-next-line: no-invalid-this
-    return new Date(this);
-  };
-
-  return new MockFirebase(
-    stubFirebase({
-      suggestion: [
-        {
-          content: 'foo',
-          date: '2020-02-03',
-          discarded: false,
-          id: 'a',
-        },
-        {
-          content: 'bar',
-          date: '2020-02-02',
-          discarded: false,
-          id: 'b',
-        },
-        {
-          content: 'xpto',
-          date: '2020-02-01',
-          discarded: true,
-          id: 'c',
-        },
-      ],
-    }),
-  );
-});
 
 const sandbox = createSandbox();
 let col: sinon.SinonStub;
 let doc: sinon.SinonStub;
 let update: sinon.SinonStub;
-let firebase: sinon.SinonStub;
+let firestore: sinon.SinonStub;
 afterEach(sandbox.restore);
 
 beforeEach(() => {
   update = sandbox.stub().resolves();
   doc = sandbox.stub().returns({ update });
   col = sandbox.stub().returns({ doc });
+  (String.prototype as any).toDate = function() {
+    // tslint:disable-next-line: no-invalid-this
+    return new Date(this);
+  };
 
-  firebase = sandbox
-    // tslint:disable-next-line: no-require-imports
-    .stub(require('firebase'), 'firestore')
+  firestore = sandbox
+    .stub(firebase, 'firestore')
     .returns({ collection: col } as any);
 });
 
 describe('get suggestion', () => {
-  beforeEach(() => {
-    firebase.restore();
-  });
+  const mockFirebase = (data: Object = mockPhrases) => {
+    const fb = new MockFirebase(
+      stubFirebase({
+        suggestion: Object.values(data),
+      }),
+    );
+
+    firestore.returns(fb.firestore());
+  };
 
   it('returns the oldest unprocessed phrase', async () => {
+    mockFirebase();
+
     const suggestion = await getSuggestion();
 
     expect(suggestion).toEqual(mockPhrases.b);
+  });
+
+  it('accetps null dates', async () => {
+    const obj = {
+      content: '_d',
+      date: null,
+      discarded: false,
+      id: 'd',
+    };
+    mockFirebase({
+      d: obj,
+    });
+
+    const result = await getSuggestion();
+
+    expect(result).toEqual(obj);
   });
 });
 
