@@ -60,7 +60,7 @@ const ModeratePhrases = ({
           );
         },
       ),
-    [translations, dark, light, translate, handleRemoveTranslation],
+    [translations, dark, light, translate, removeTranslation],
   );
 
   const isEmpty = !isLoading && !phrase;

@@ -20,7 +20,7 @@ const useModerateSuggestions = () => {
     const suggestion = await getSuggestion();
     setPhrase(suggestion);
     setTranslations([{ language: 'en', content: suggestion?.content ?? '' }]);
-  }, [phrase]);
+  }, []);
 
   useDidMount(fetchNextSuggestion);
 
@@ -36,7 +36,7 @@ const useModerateSuggestions = () => {
       translations[idx] = { language, content };
       setTranslations(translations);
     },
-    [],
+    [translations],
   );
 
   const handleRemoveTranslation = useCallback(
@@ -52,7 +52,7 @@ const useModerateSuggestions = () => {
   } = useWorker(async () => {
     await discardSuggestion(phrase!.id);
     fetchNextSuggestion();
-  }, [phrase]);
+  }, [phrase, fetchNextSuggestion]);
 
   const {
     isLoading: isLoadingSave,
@@ -60,7 +60,7 @@ const useModerateSuggestions = () => {
   } = useWorker(async () => {
     await saveSuggestion(phrase!.id, translations);
     fetchNextSuggestion();
-  }, [phrase, translations]);
+  }, [phrase, translations, fetchNextSuggestion]);
 
   return {
     handlePressAddTranslation,
