@@ -20,6 +20,7 @@ const ModeratePhrases = ({
   handlePressAddTranslation,
   handlePressDiscard,
   handlePressSave,
+  handlePressVisitOriginal,
   handleRemoveTranslation,
   handleTranslate,
   isLoading,
@@ -80,12 +81,19 @@ const ModeratePhrases = ({
         <React.Fragment>
           <View style={styles.content}>
             <Text style={styles.text}>{phrase.content}</Text>
-            <Text style={styles.text}>{t(strings.score, phrase)}</Text>
-            {!!phrase.dateAdded && (
-              <Text style={styles.text}>
-                {t(strings.dateAdded, { date: getDate(phrase.dateAdded) })}
-              </Text>
-            )}
+            <View style={styles.columnContainer}>
+              <View>
+                <Text style={styles.text}>{t(strings.score, phrase)}</Text>
+                {!!phrase.dateAdded && (
+                  <Text style={styles.text}>
+                    {t(strings.dateAdded, { date: getDate(phrase.dateAdded) })}
+                  </Text>
+                )}
+              </View>
+              <Button onPress={handlePressVisitOriginal}>
+                {t(strings.visitOriginal)}
+              </Button>
+            </View>
             {translationList}
             <SVGButton
               icon={icons.plus}

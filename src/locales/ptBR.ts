@@ -44,6 +44,7 @@ const strings: Strings = {
   [ModeratePhrases.emptyList]: 'Sem frases para revisar 🎉',
   [ModeratePhrases.save]: 'Salvar',
   [ModeratePhrases.score]: 'Pontos - {{score}}',
+  [ModeratePhrases.visitOriginal]: 'Ver Original',
 
   [DevMenu.reviewPhrases]: 'Revisar Frases',
   [DevMenu.showAds]: 'Mostrar Ads',

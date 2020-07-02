@@ -15,6 +15,11 @@ const styles = {
     backgroundColor,
     ...Layouts.container,
   }),
+
+  columnContainer: {
+    ...Layouts.horizontal,
+    justifyContent: 'space-between',
+  },
   scrollViewContent: {
     ...Layouts.container,
     justifyContent: 'space-between',

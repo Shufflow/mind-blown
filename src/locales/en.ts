@@ -44,6 +44,7 @@ const strings: Strings = {
   [ModeratePhrases.emptyList]: 'No more phrases to review 🎉',
   [ModeratePhrases.save]: 'Save',
   [ModeratePhrases.score]: 'Score - {{score}}',
+  [ModeratePhrases.visitOriginal]: 'View Original',
 
   [DevMenu.reviewPhrases]: 'Review Phrases',
   [DevMenu.showAds]: 'Show Ads',

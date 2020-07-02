@@ -1,4 +1,7 @@
 import { useRef, useCallback, useState, useEffect } from 'react';
+import { Linking } from 'react-native';
+
+import Constants from '@utils/constants';
 
 import RawPhrasesDataSource, { Phrase } from 'src/models/rawPhrases';
 import { Translation } from 'src/models/types';
@@ -86,10 +89,15 @@ const useModeratePhrases = () => {
     [translations],
   );
 
+  const handlePressVisitOriginal = useCallback(() => {
+    Linking.openURL(Constants.moderatedPhraseURL(phrase?.id ?? ''));
+  }, [phrase]);
+
   return {
     handlePressAddTranslation,
     handlePressDiscard,
     handlePressSave,
+    handlePressVisitOriginal,
     handleRemoveTranslation,
     handleTranslate,
     isLoading,

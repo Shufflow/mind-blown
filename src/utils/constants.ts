@@ -4,6 +4,8 @@ export const Constants = {
   agnesURL: 'https://www.linkedin.com/in/agnespinhanelli/',
   licensesURL:
     'https://raw.githubusercontent.com/Shufflow/mind-blown/master/compiled_licenses.txt',
+  moderatedPhraseURL: (id: string) =>
+    `https://www.reddit.com/r/Showerthoughts/comments/${id}`,
   repoURL: 'https://github.com/Shufflow/mind-blown',
   storeReview: Platform.select({
     android: 'market://details?id=com.shufflow.MindBlown',

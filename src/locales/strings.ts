@@ -21,6 +21,7 @@ export enum ModeratePhrases {
   emptyList = 'emptyList',
   score = 'score',
   save = 'save',
+  visitOriginal = 'visitOriginal',
 }
 
 export enum DevMenu {
