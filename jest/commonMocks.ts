@@ -11,7 +11,9 @@ jest.mock('@react-native-community/google-signin', () => {
     GoogleSigninButton,
     GoogleSignin: {
       configure: jest.fn(),
+      isSignedIn: jest.fn(),
       signInSilently: jest.fn().mockResolvedValue(undefined),
+      signOut: jest.fn(),
     },
   };
 });
