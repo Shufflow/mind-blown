@@ -72,6 +72,7 @@ Deliverfile
 /artifacts
 /.bundle
 vendor/
+bin/
 
 # CocoaPods
 ios/Pods
