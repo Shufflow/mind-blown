@@ -3,6 +3,8 @@ import messaging from '@react-native-firebase/messaging';
 
 import { sanitizeLocale } from '@utils/locales';
 
+import { googleLoginSilently } from './auth';
+
 const User = {
   isPushEnabled: async (): Promise<boolean> => {
     const userId = auth().currentUser?.uid;
@@ -56,7 +58,10 @@ const User = {
     return true;
   },
 
-  signIn: () => auth().signInAnonymously(),
+  signIn: async () => {
+    await auth().signInAnonymously();
+    await googleLoginSilently();
+  },
 };
 
 export default User;

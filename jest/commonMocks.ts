@@ -15,6 +15,12 @@ jest.mock('@react-native-community/google-signin', () => {
       signInSilently: jest.fn().mockResolvedValue(undefined),
       signOut: jest.fn(),
     },
+    statusCodes: {
+      IN_PROGRESS: '0',
+      PLAY_SERVICES_NOT_AVAILABLE: '1',
+      SIGN_IN_CANCELLED: '2',
+      SIGN_IN_REQUIRED: '3',
+    },
   };
 });
 jest.mock('react-native-push-notification', () => ({
