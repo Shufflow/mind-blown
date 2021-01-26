@@ -93,3 +93,4 @@ google_api_key.json
 !*.secret
 tmp.xcconfig
 google-services.json
+travis-ci.org.key

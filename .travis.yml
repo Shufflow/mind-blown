@@ -12,12 +12,9 @@ cache:
 
 install:
   - bundle install
-  - openssl aes-256-cbc -K $encrypted_3b9f0b9d36d1_key -iv $encrypted_3b9f0b9d36d1_iv -in secrets.tar.enc -out secrets.tar -d
-  - tar xvf secrets.tar
-  - gpg --import travis-ci.org.key
-  - git clone https://github.com/sobolevn/git-secret.git git-secret
-  - pushd git-secret; make build && sudo PREFIX="/usr/local" make install; popd
+  - HOMEBREW_NO_AUTO_UPDATE=1 brew install git-secret
   - git secret reveal
+  - gpg --import travis-ci.org.key
 
 jobs:
   include:
