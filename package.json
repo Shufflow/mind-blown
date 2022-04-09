@@ -30,7 +30,7 @@
     "knuth-shuffle": "^1.0.8",
     "lodash": "^4.17.19",
     "mocha": "^5.2.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "react": "^16.12.0",
     "react-hook-hooked": "^1.0.3",
     "react-hook-utilities": "^0.4.0",
